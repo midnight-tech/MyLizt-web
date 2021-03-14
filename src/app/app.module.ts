@@ -8,17 +8,21 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { ParseService } from './services/parse/parse.service';
+import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
+
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent},
   { path: '' , redirectTo: '/login', pathMatch:'full'}
 ]
 
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
-    HomePageComponent
+    HomePageComponent,
+    LandingPageComponent
   ],
   imports: [
     BrowserModule,
