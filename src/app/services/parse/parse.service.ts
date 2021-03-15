@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import "parse"
+import Parse, { javaScriptKey } from "parse"
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class ParseService {
       environment.ApplicationID, // This is your Application ID
       environment.JavascriptKey, // This is your Javascript key
     );
-    this.parse.enableEncryptedUser()
+    // this.parse.enableEncryptedUser()
     this.parse.enableLocalDatastore()
     this.parse.User.enableUnsafeCurrentUser()
   }

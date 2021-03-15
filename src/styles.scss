@@ -11,3 +11,15 @@ $white: #f4f4f4;
 $black1: #393e46;
 $black2: #222831;
 $black3: #1a1c20;
+
+input {
+  margin: 8px 0px;
+}
+
+.btn {
+  margin: 8px 0px 8px 0px;
+}
+
+.btn + .btn {
+  margin-left: 8px;
+}
