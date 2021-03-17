@@ -34,7 +34,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/app/sass/styles.scss"
             ],
             "scripts": []
           },

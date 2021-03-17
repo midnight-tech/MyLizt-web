@@ -1,0 +1,28 @@
+.btn {
+  font-size: $font-size-default;
+  border: none;
+
+  &:active,
+  &:focus {
+    outline: none;
+    background-color: $primary1;
+  }
+}
+
+.btn-outline-primary {
+  font-size: $font-size-default;
+  color: $primary1;
+  box-shadow: none;
+  border: none;
+
+  &:hover {
+    background-color: $primary1;
+    color: $white1;
+  }
+
+  &:focus,
+  &:active:focus {
+    box-shadow: none;
+    color: $white1;
+  }
+}

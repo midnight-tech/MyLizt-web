@@ -1,16 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
-// COLORS
-$primary1: #f0a500;
-$primary2: #cf7500;
-$primary2: #ffd369;
-
-$white: #f4f4f4;
-
-$black1: #393e46;
-$black2: #222831;
-$black3: #1a1c20;
+@import "abstract/variables";
+@import "base/utilities";
+@import "base/base";
+@import "components/footer";
 
 input {
   margin: 8px 0px;

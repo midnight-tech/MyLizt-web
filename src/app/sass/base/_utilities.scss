@@ -1,0 +1,21 @@
+// utilizado para os itens do grid da redes sociais
+.itens-flex-end {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 0;
+  padding-left: 0;
+  align-items: center;
+}
+// utilizado para os itens do grid da redes sociais
+.itens-flex-start {
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 0;
+  padding-left: 0;
+  align-items: center;
+}
+
+.border-bottom-line {
+  border-bottom: 1px solid $white1;
+  padding-bottom: 2rem;
+}

@@ -1,0 +1,167 @@
+@import "../../sass/abstract/variables";
+
+// .grid-container {
+//   background-color: $black3;
+//   font-size: $font-size-default;
+//   display: grid;
+//   grid-template-rows:
+//     minmax(20vh, 8rem) minmax(55vh, 45rem) minmax(20vh, 8rem)
+//     minmax(5vh, min-content);
+//   grid-template-columns:
+//     [void-left-start] minmax(3rem, 1fr) [void-left-end center-start]
+//     repeat(8, [col-start] minmax(min-content, 14rem) [col-end])
+//     [center-end void-right-start] minmax(3rem, 1fr) [void-right-end];
+// }
+
+.grid-container {
+  background-color: $black3;
+  font-size: $font-size-default;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
+// .content {
+//   display: grid;
+//   grid-row: 2 / 3;
+//   grid-column: center-start / center-end;
+//   grid-template-columns: repeat(auto-fit, 48rem);
+//   grid-gap: 5rem;
+//   justify-content: center;
+// }
+
+.content {
+  display: flex;
+  flex: auto;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  font-size: inherit;
+  margin-right: 10rem;
+  height: 30rem;
+  color: $white;
+
+  &__title {
+    font-size: 5rem;
+    margin-bottom: 2rem;
+  }
+
+  &__caption {
+    max-width: 50rem;
+    font-size: 4rem;
+    font-weight: 700;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  font-size: inherit;
+  background-color: $black4;
+  padding: 5rem;
+  border-radius: $the-border-radius;
+}
+
+.form-control {
+  font-size: $font-size-default;
+  height: 5rem;
+  margin-bottom: 2.5rem;
+  padding: 0.5rem 2rem;
+  border-radius: $the-border-radius;
+}
+
+.btn-login {
+  &,
+  &:link,
+  &:visited {
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: $font-size-default;
+    display: flex;
+    background-color: $primary1;
+    width: 100%;
+    height: 5rem;
+    border-radius: $the-border-radius;
+    align-items: center;
+    justify-content: center;
+    color: $black;
+    border: none;
+    cursor: pointer;
+  }
+
+  &:hover {
+    filter: brightness(1.2);
+  }
+}
+
+.grid-social-media {
+  margin-top: 2.5rem;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 2.5rem;
+  column-gap: 6rem;
+  color: $white1;
+
+  &__icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: 1rem;
+  }
+
+  &__btn {
+    display: flex;
+    padding: 1rem;
+    border-radius: $the-border-radius;
+    width: 14rem;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    text-decoration: none;
+    cursor: pointer;
+
+    &--google {
+      background-color: $white;
+
+      &--text {
+        color: #5f6368;
+      }
+    }
+
+    &--apple {
+      background-color: $black;
+
+      &--text {
+        color: $white;
+      }
+    }
+
+    &--facebook {
+      background-color: #1976d2;
+
+      &--text {
+        color: $white;
+      }
+    }
+    &--twitter {
+      background-color: #2aa9e0;
+
+      &--text {
+        color: $white;
+      }
+    }
+  }
+}
+
+.footer {
+  font-size: inherit;
+  // display: grid;
+  // grid-row: 4 / 5;
+  // grid-column: void-left-start / void-right-end;
+}

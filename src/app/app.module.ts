@@ -13,9 +13,12 @@ import { RegisterExampleComponent } from './pages/register-example/register-exam
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { ParseService } from './services/parse/parse.service';
 import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
+import { SignInComponent } from "./pages/sign-in/sign-in.component";
 
 
 const routes: Routes = [
+  { path: 'landingpage', component: LandingPageComponent },
+  { path: 'signin', component: SignInComponent },
   {
     path: 'login', component: LoginPageComponent, children: [
       { path: 'cadastro', component: RegisterExampleComponent, },
@@ -31,7 +34,8 @@ const routes: Routes = [
       }
     ]
   },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', redirectTo: '/login'}
 ]
 
 
