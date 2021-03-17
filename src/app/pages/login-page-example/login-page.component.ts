@@ -26,6 +26,9 @@ export class LoginPageComponent implements OnInit {
   logInGoogle(){
     this.authentication.signInWithGoogle()
   }
+  logInFacebook(){
+    this.authentication.signInWithFacebook()
+  }
 
   logout(){
     this.authentication.logout()
