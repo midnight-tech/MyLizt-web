@@ -1,7 +1,9 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
-  "compileOnSave": false,
+  "compileOnSave": true,
   "compilerOptions": {
+    // "typeRoots": ["node_modules/@types"],
+    "types": ["gapi" ,"gapi.auth2"],
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",

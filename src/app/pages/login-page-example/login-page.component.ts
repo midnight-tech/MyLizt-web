@@ -23,6 +23,10 @@ export class LoginPageComponent implements OnInit {
     this.authentication.signIn(this.email.value,this.password.value)
   }
 
+  logInGoogle(){
+    this.authentication.signInWithGoogle()
+  }
+
   logout(){
     this.authentication.logout()
   }
