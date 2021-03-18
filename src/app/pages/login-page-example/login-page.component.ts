@@ -30,6 +30,10 @@ export class LoginPageComponent implements OnInit {
     this.authentication.signInWithFacebook()
   }
 
+  logInTwitter(){
+    this.authentication.signInWithTwitter()
+  }
+
   logout(){
     this.authentication.logout()
   }
