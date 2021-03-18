@@ -1,7 +1,9 @@
-import { Component, NgModule } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import {  NgModule } from '@angular/core';
+import { AngularFireModule, FirebaseApp } from '@angular/fire';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { Router, RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -53,6 +55,7 @@ const routes: Routes = [
     AppRoutingModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
+    AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   exports: [RouterModule],
   providers: [ParseService, AuthenticationService],

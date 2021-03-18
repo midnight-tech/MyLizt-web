@@ -3,7 +3,7 @@
   "compileOnSave": true,
   "compilerOptions": {
     // "typeRoots": ["node_modules/@types"],
-    "types": ["gapi" ,"gapi.auth2"],
+    "types": ["gapi" ,"gapi.auth2","facebook-js-sdk"],
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
