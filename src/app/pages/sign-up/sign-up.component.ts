@@ -21,12 +21,6 @@ export class SignUpComponent implements OnInit {
   constructor(auth: AuthenticationService, router: Router) {
     this.authService = auth
     this.router = router
-    if (this.authService.isLogged) {
-      router.navigate(['/home'], { replaceUrl: true })
-      return
-      
-    }
-      
   }
 
   ngOnInit() {

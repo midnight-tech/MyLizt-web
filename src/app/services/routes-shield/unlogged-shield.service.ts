@@ -1,0 +1,20 @@
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { AuthenticationService } from '../authentication/authentication.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UnloggedShieldService implements CanActivate{
+
+  constructor(public auth: AuthenticationService, public router: Router) { }
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    if (this.auth.isLogged == false) {
+      return true
+    }
+    this.router.navigate(['/home'], { replaceUrl: true })
+    return false
+  }
+
+}
