@@ -1,0 +1,100 @@
+@import "../../sass/abstract/variables";
+
+.grid-container {
+  background-color: $black3;
+  font-size: $font-size-default;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
+.content {
+  display: flex;
+  flex: auto;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  margin-right: 10rem;
+  display: flex;
+  flex-direction: column;
+  font-size: inherit;
+  background-color: $black4;
+  padding: 5rem;
+  border-radius: $the-border-radius;
+  width: 42.5rem;
+}
+
+.form-control {
+  font-size: $font-size-default;
+  height: 5rem;
+  margin-bottom: 2.5rem;
+  padding: 0.5rem 2rem;
+  border-radius: $the-border-radius;
+}
+
+.btn-register {
+  &,
+  &:link,
+  &:visited {
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: $font-size-default;
+    display: flex;
+    background-color: $primary1;
+    width: 100%;
+    height: 5rem;
+    border-radius: $the-border-radius;
+    align-items: center;
+    justify-content: center;
+    color: $black;
+    border: none;
+    cursor: pointer;
+  }
+
+  &:hover {
+    filter: brightness(1.2);
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  font-size: inherit;
+  min-height: 30rem;
+  color: $white;
+
+  &__title {
+    font-size: 5rem;
+    margin-bottom: 2rem;
+  }
+
+  &__caption {
+    max-width: 50rem;
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 8rem;
+  }
+
+  &__btn-back {
+    align-self: baseline;
+    font-size: 1.6rem;
+    text-decoration: none;
+    color: $white;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+}
+
+.terms-caption {
+  color: rgba($white, 0.6);
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.footer {
+  font-size: inherit;
+}

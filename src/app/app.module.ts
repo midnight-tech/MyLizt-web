@@ -16,11 +16,13 @@ import { AuthenticationService } from './services/authentication/authentication.
 import { ParseService } from './services/parse/parse.service';
 import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
 import { SignInComponent } from "./pages/sign-in/sign-in.component";
+import { SignUpComponent } from "./pages/sign-up/sign-up.component";
 
 
 const routes: Routes = [
   { path: 'landingpage', component: LandingPageComponent },
   { path: 'signin', component: SignInComponent },
+  { path: 'signup', component: SignUpComponent },
   {
     path: 'login', component: LoginPageComponent, children: [
       { path: 'cadastro', component: RegisterExampleComponent, },
