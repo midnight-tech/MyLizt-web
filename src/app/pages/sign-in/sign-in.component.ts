@@ -41,7 +41,7 @@ export class SignInComponent implements OnInit {
 
     }).catch((error)=>{
       if(error == "User email is not verified."){
-        this.routes.navigate(['verification'])
+        this.routes.navigate(['/verification'])
       }
       this.email.setValue("")
       this.password.setValue("")
