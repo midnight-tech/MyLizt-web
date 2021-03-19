@@ -129,6 +129,10 @@ export class AuthenticationService implements CanActivate {
     console.log(user)
   }
 
+  async signInWithApple() {
+    throw "Not implemented"
+  }
+
   async signUpWithEmail(userName: string, email: string, password: string) {
     let user = new this.parseService.parse.User()
     user.setEmail(email)
