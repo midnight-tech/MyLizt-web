@@ -10,7 +10,6 @@ import { AppComponent } from './app.component';
 import { ChildAExampleComponent } from './pages/child-a-example/child-a-example.component';
 import { ChildBExampleComponent } from './pages/child-b-example/child-b-example.component';
 import { HomePageComponent } from './pages/home-page-example/home-page.component';
-import { LoginPageComponent } from './pages/login-page-example/login-page.component';
 import { RegisterExampleComponent } from './pages/register-example/register-example.component';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { ParseService } from './services/parse/parse.service';
@@ -20,15 +19,9 @@ import { SignUpComponent } from "./pages/sign-up/sign-up.component";
 
 
 const routes: Routes = [
-  { path: 'landingpage', component: LandingPageComponent },
+  { path: '', component: LandingPageComponent , pathMatch: 'full' },
   { path: 'signin', component: SignInComponent },
   { path: 'signup', component: SignUpComponent },
-  {
-    path: 'login', component: LoginPageComponent, children: [
-      { path: 'cadastro', component: RegisterExampleComponent, },
-
-    ]
-  },
   {
     path: 'home', component: HomePageComponent, canActivate: [AuthenticationService], children: [
       {
@@ -38,19 +31,19 @@ const routes: Routes = [
       }
     ]
   },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: '**', redirectTo: '/login'}
+  { path: '**', redirectTo: ''}
 ]
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginPageComponent,
     HomePageComponent,
     ChildAExampleComponent,
     ChildBExampleComponent,
-    RegisterExampleComponent
+    RegisterExampleComponent,
+    SignInComponent,
+    LandingPageComponent,
   ],
   imports: [
     BrowserModule,
