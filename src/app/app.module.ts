@@ -44,6 +44,7 @@ const routes: Routes = [
     RegisterExampleComponent,
     SignInComponent,
     LandingPageComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,

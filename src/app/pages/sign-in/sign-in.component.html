@@ -27,7 +27,7 @@
       <a (click)="loginWithEmail()" class="btn-login">Login</a>
       <div class="row grid-social-media">
         <div class="col border-bottom-line itens-flex-end">Forgot Password</div>
-        <div class="col border-bottom-line itens-flex-start">Sign Up</div>
+        <div class="col border-bottom-line itens-flex-start" [routerLink]="['/signup']">Sign Up</div>
         <div class="col itens-flex-end">
           <a class="grid-social-media__btn grid-social-media__btn--google" (click)="loginWithGoogle()">
             <img

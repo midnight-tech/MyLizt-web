@@ -2,19 +2,22 @@
   <div class="content">
     <div class="form">
       <input
+        [formControl]="username"
         type="text"
         id="username"
         placeholder="Username"
         class="form-control"
       />
-      <input type="email" id="email" placeholder="Email" class="form-control" />
+      <input [formControl]="email" type="email" id="email" placeholder="Email" class="form-control" />
       <input
+        [formControl]="password"
         type="password"
         id="password"
         placeholder="Password"
         class="form-control"
       />
       <input
+        [formControl]="confirm_password"
         type="password"
         id="confirm-password"
         placeholder="Confirm Passoword"
@@ -23,7 +26,7 @@
       <span class="terms-caption">
         By registering, you accept our terms of use and our privacy policy</span
       >
-      <a href="home" class="btn-register">Register</a>
+      <a class="btn-register" (click)="register()">Register</a>
     </div>
     <div class="header">
       <span class="header__title">Logo</span>
@@ -31,7 +34,7 @@
         >Lorem ipsum dolor sit amet consectetur, adipisicing elit.
         Impedit,</span
       >
-      <a class="header__btn-back"> &larr; Back to Login</a>
+      <a class="header__btn-back" [routerLink]="['/signin']"> &larr; Back to Login</a>
     </div>
   </div>
   <div class="footer footer-company">
