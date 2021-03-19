@@ -140,6 +140,7 @@ export class AuthenticationService implements CanActivate {
     user.setUsername(userName)
     try {
       let userInfo = await user.signUp()
+      await this.logout()
     } catch (e) {
       if (environment.production == false) {
         console.error(e)

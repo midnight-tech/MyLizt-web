@@ -35,7 +35,7 @@ export class SignUpComponent implements OnInit {
   register() {
     if (this.password.value == this.confirm_password.value) {
       this.authService.signUpWithEmail(this.username.value, this.email.value, this.password.value).then(() => {
-        this.router.navigate(['/verification'])
+        this.router.navigate(['/verification'],{replaceUrl : true})
       })
     }
   }
