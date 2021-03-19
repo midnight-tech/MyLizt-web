@@ -1,6 +1,6 @@
 @import "../../sass/abstract/variables";
 
-.grid-container {
+.flex-container {
   background-color: $black3;
   font-size: $font-size-default;
   display: flex;
@@ -93,8 +93,4 @@
   color: rgba($white, 0.6);
   margin-bottom: 2.5rem;
   text-align: center;
-}
-
-.footer {
-  font-size: inherit;
 }

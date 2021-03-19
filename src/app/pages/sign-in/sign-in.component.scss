@@ -13,7 +13,7 @@
 //     [center-end void-right-start] minmax(3rem, 1fr) [void-right-end];
 // }
 
-.grid-container {
+.flex-container {
   background-color: $black3;
   font-size: $font-size-default;
   display: flex;
@@ -115,6 +115,12 @@
     margin-right: 1rem;
   }
 
+  &__btn-normal {
+    text-decoration: none;
+    cursor: pointer;
+    color: $white;
+  }
+
   &__btn {
     display: flex;
     padding: 1rem;
@@ -159,9 +165,8 @@
   }
 }
 
-.footer {
-  font-size: inherit;
-  // display: grid;
-  // grid-row: 4 / 5;
-  // grid-column: void-left-start / void-right-end;
-}
+// .footer {
+// display: grid;
+// grid-row: 4 / 5;
+// grid-column: void-left-start / void-right-end;
+// }

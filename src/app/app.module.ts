@@ -15,13 +15,17 @@ import { AuthenticationService } from './services/authentication/authentication.
 import { ParseService } from './services/parse/parse.service';
 import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
 import { SignInComponent } from "./pages/sign-in/sign-in.component";
-import { SignUpComponent } from "./pages/sign-up/sign-up.component";
+import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { VerificationComponent } from './pages/verification/verification.component';
+import { FooterCompanyComponent } from './components/footer-company/footer-company.component';
+
 
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent , pathMatch: 'full' },
   { path: 'signin', component: SignInComponent },
   { path: 'signup', component: SignUpComponent },
+  { path: 'verification', component: VerificationComponent },
   {
     path: 'home', component: HomePageComponent, canActivate: [AuthenticationService], children: [
       {
@@ -44,6 +48,9 @@ const routes: Routes = [
     RegisterExampleComponent,
     SignInComponent,
     LandingPageComponent,
+    SignUpComponent,
+    VerificationComponent,
+    FooterCompanyComponent,
   ],
   imports: [
     BrowserModule,

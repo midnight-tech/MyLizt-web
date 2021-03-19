@@ -1,13 +1,13 @@
-<div class="grid-container">
+<div class="flex-container">
   <div class="content">
-    <div class="header">
+    <section class="header">
       <span class="header__title">Logo</span>
       <span class="header__caption"
         >Lorem ipsum dolor sit amet consectetur, adipisicing elit.
         Impedit,</span
       >
-    </div>
-    <div class="form">
+    </section>
+    <section class="form">
       <input
         [formControl]="email"
         [value]="email.value"
@@ -26,10 +26,17 @@
       />
       <a (click)="loginWithEmail()" class="btn-login">Login</a>
       <div class="row grid-social-media">
-        <div class="col border-bottom-line itens-flex-end">Forgot Password</div>
-        <div class="col border-bottom-line itens-flex-start">Sign Up</div>
+        <div class="col border-bottom-line itens-flex-end">
+          <a href="" class="grid-social-media__btn-normal">Forgot Password</a>
+        </div>
+        <div class="col border-bottom-line itens-flex-start">
+          <a href="" class="grid-social-media__btn-normal">Sign Up</a>
+        </div>
         <div class="col itens-flex-end">
-          <a class="grid-social-media__btn grid-social-media__btn--google" (click)="loginWithGoogle()">
+          <a
+            class="grid-social-media__btn grid-social-media__btn--google"
+            (click)="loginWithGoogle()"
+          >
             <img
               src="../../../assets/icon-google.svg"
               alt="Logo Google"
@@ -39,7 +46,10 @@
           </a>
         </div>
         <div class="col itens-flex-start">
-          <a class="grid-social-media__btn grid-social-media__btn--apple" (click)="loginWithApple()">
+          <a
+            class="grid-social-media__btn grid-social-media__btn--apple"
+            (click)="loginWithApple()"
+          >
             <img
               src="../../../assets/icon-apple.svg"
               alt="Logo Apple"
@@ -49,7 +59,10 @@
           </a>
         </div>
         <div class="col itens-flex-end">
-          <a class="grid-social-media__btn grid-social-media__btn--facebook" (click)="loginWithFacebook()">
+          <a
+            class="grid-social-media__btn grid-social-media__btn--facebook"
+            (click)="loginWithFacebook()"
+          >
             <img
               src="../../../assets/icon-facebook.svg"
               alt="Logo Facebook"
@@ -59,7 +72,10 @@
           </a>
         </div>
         <div class="col itens-flex-start">
-          <a class="grid-social-media__btn grid-social-media__btn--twitter" (click)="loginWithTwitter()">
+          <a
+            class="grid-social-media__btn grid-social-media__btn--twitter"
+            (click)="loginWithTwitter()"
+          >
             <img
               src="../../../assets/icon-twitter.svg"
               alt="Logo Twitter"
@@ -69,7 +85,7 @@
           </a>
         </div>
       </div>
-    </div>
+    </section>
   </div>
   <div class="footer footer-company">
     Developed by Midnight Tech. &copy; 2021 All Rights Reserved
