@@ -3,14 +3,13 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase/app'
 import { AngularFireAuth } from '@angular/fire/auth';
-import { CanActivate } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { ParseService } from '../parse/parse.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService implements CanActivate {
+export class AuthenticationService {
 
   parseService: ParseService
   isLogged: boolean
@@ -35,13 +34,6 @@ export class AuthenticationService implements CanActivate {
     }
     this.isLogged = false
     this.user = null
-  }
-
-  canActivate() {
-    if (this.parseService.parse.User.current()) {
-      return true
-    }
-    return false
   }
 
   async signIn(email: string, password: string) {
@@ -113,7 +105,7 @@ export class AuthenticationService implements CanActivate {
     console.log(user,'tUser')
     const newUser = new this.parseService.parse.User()
     newUser.setUsername(user.user!!.displayName!!)
-    newUser.setEmail(user.user?.email!!)
+    newUser.setEmail(user.user!!.email!!)
     await newUser.linkWith("twitter", {
       authData: {
         // @ts-ignore

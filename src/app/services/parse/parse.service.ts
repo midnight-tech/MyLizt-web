@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import Parse, { javaScriptKey } from "parse"
+import Parse from "parse"
 
 @Injectable({
   providedIn: 'root'
