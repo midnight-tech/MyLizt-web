@@ -7,7 +7,7 @@
         Impedit,</span
       >
     </section>
-    <section class="form">
+    <form class="form">
       <input
         [formControl]="email"
         [value]="email.value"
@@ -30,7 +30,12 @@
           <a href="" class="grid-social-media__btn-normal">Forgot Password</a>
         </div>
         <div class="col border-bottom-line itens-flex-start">
-          <a href="" class="grid-social-media__btn-normal" [routerLink]="['/signup']">Sign Up</a>
+          <a
+            href=""
+            class="grid-social-media__btn-normal"
+            [routerLink]="['/signup']"
+            >Sign Up</a
+          >
         </div>
         <div class="col itens-flex-end">
           <a
@@ -85,7 +90,7 @@
           </a>
         </div>
       </div>
-    </section>
+    </form>
   </div>
   <div class="footer footer-company">
     Developed by Midnight Tech. &copy; 2021 All Rights Reserved

@@ -21,6 +21,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { MenuLeftComponent } from './components/menu-left/menu-left.component';
 import { LoggedShieldService } from './services/routes-shield/logged-shield.service';
 import { UnloggedShieldService } from './services/routes-shield/unlogged-shield.service';
+import { TopBarComponent } from './components/top-bar/top-bar.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent, pathMatch: 'full', canActivate: [UnloggedShieldService] },
@@ -53,7 +54,8 @@ const routes: Routes = [
     VerificationComponent,
     FooterCompanyComponent,
     HomeComponent,
-    MenuLeftComponent
+    MenuLeftComponent,
+    TopBarComponent
   ],
   imports: [
     BrowserModule,

@@ -47,7 +47,8 @@
     padding-right: 1rem;
 
     // truncate string
-    width: 18vw;
+    // width-container-grid - 2xpaddinng-content - width-icon
+    width: calc(18vw - 4rem - 3rem);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
