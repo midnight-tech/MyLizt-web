@@ -9,10 +9,7 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 })
 export class VerificationComponent implements OnInit {
 
-  constructor(auth : AuthenticationService,router : Router) {
-    if(auth.isLogged){
-      router.navigate(['/home'],{replaceUrl: true})
-    }
+  constructor() {
   }
 
   ngOnInit() {

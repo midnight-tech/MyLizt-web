@@ -19,10 +19,6 @@ export class SignInComponent implements OnInit {
   constructor(auth : AuthenticationService,routes : Router,thisRoute : ActivatedRoute) {
     this.thisRoute = thisRoute
     this.routes = routes
-    if(auth.isLogged){
-      this.navigateLogged()
-    }
-    
     this.authService = auth
   }
 

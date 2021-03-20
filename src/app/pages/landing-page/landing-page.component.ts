@@ -9,14 +9,7 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 })
 export class LandingPageComponent implements OnInit {
 
-  constructor(public routes: Router, public thisRoute: ActivatedRoute, auth: AuthenticationService) {
-    if (auth.isLogged) {
-      this.navigateLogged()
-    }
-  }
-
-  navigateLogged() {
-    this.routes.navigate(['/home'], { replaceUrl: true, relativeTo: this.thisRoute })
+  constructor() {
   }
 
   ngOnInit() {

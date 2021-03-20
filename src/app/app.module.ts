@@ -1,4 +1,4 @@
-import {  NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { AngularFireModule, FirebaseApp } from '@angular/fire';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -10,7 +10,6 @@ import { AppComponent } from './app.component';
 import { ChildAExampleComponent } from './pages/child-a-example/child-a-example.component';
 import { ChildBExampleComponent } from './pages/child-b-example/child-b-example.component';
 import { HomePageComponent } from './pages/home-page-example/home-page.component';
-import { RegisterExampleComponent } from './pages/register-example/register-example.component';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { ParseService } from './services/parse/parse.service';
 import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
@@ -20,15 +19,17 @@ import { VerificationComponent } from './pages/verification/verification.compone
 import { FooterCompanyComponent } from './components/footer-company/footer-company.component';
 import { HomeComponent } from './pages/home/home.component';
 import { MenuLeftComponent } from './components/menu-left/menu-left.component';
+import { LoggedShieldService } from './services/routes-shield/logged-shield.service';
+import { UnloggedShieldService } from './services/routes-shield/unlogged-shield.service';
 
 const routes: Routes = [
-  { path: '', component: LandingPageComponent , pathMatch: 'full' },
-  { path: 'signin', component: SignInComponent },
-  { path: 'signup', component: SignUpComponent },
-  { path: 'verification', component: VerificationComponent },
-  { path: 'home', component: HomeComponent },
+  { path: '', component: LandingPageComponent, pathMatch: 'full', canActivate: [UnloggedShieldService] },
+  { path: 'signin', component: SignInComponent, canActivate: [UnloggedShieldService] },
+  { path: 'signup', component: SignUpComponent, canActivate: [UnloggedShieldService] },
+  { path: 'verification', component: VerificationComponent, canActivate: [UnloggedShieldService] },
+  { path: 'home2', component: HomeComponent, canActivate: [UnloggedShieldService] }, //teste
   {
-    path: 'home', component: HomePageComponent, canActivate: [AuthenticationService], children: [
+    path: 'home', component: HomeComponent, canActivate: [LoggedShieldService], children: [
       {
         path: 'page-a', component: ChildAExampleComponent
       }, {
@@ -36,7 +37,7 @@ const routes: Routes = [
       }
     ]
   },
-  { path: '**', redirectTo: ''}
+  { path: '**', redirectTo: '' }
 ]
 
 
@@ -46,7 +47,6 @@ const routes: Routes = [
     HomePageComponent,
     ChildAExampleComponent,
     ChildBExampleComponent,
-    RegisterExampleComponent,
     SignInComponent,
     LandingPageComponent,
     SignUpComponent,
