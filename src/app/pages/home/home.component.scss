@@ -1,0 +1,25 @@
+@import "../../sass/abstract/variables";
+
+.grid-container {
+  background-color: $black3;
+  display: grid;
+  grid-template-columns:
+    [menu-start] 18vw [menu-end content-start] repeat(
+      4,
+      [col-start] 1fr [col-end]
+    )
+    [content-end void-start] 0 [void-end];
+  grid-template-rows: [top-bar-start] min-content [top-bar-end];
+  column-gap: 6rem;
+}
+
+.menu-container {
+  display: grid;
+  grid-column: menu-start / menu-end;
+}
+
+.top-bar-container {
+  display: grid;
+  grid-column: content-start / content-end;
+  grid-row: top-bar-start / top-bar-end;
+}

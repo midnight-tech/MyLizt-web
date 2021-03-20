@@ -17,18 +17,20 @@ import { SignInComponent } from "./pages/sign-in/sign-in.component";
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { VerificationComponent } from './pages/verification/verification.component';
 import { FooterCompanyComponent } from './components/footer-company/footer-company.component';
+import { HomeComponent } from './pages/home/home.component';
+import { MenuLeftComponent } from './components/menu-left/menu-left.component';
 import { LoggedShieldService } from './services/routes-shield/logged-shield.service';
 import { UnloggedShieldService } from './services/routes-shield/unlogged-shield.service';
-
-
+import { TopBarComponent } from './components/top-bar/top-bar.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent, pathMatch: 'full', canActivate: [UnloggedShieldService] },
   { path: 'signin', component: SignInComponent, canActivate: [UnloggedShieldService] },
   { path: 'signup', component: SignUpComponent, canActivate: [UnloggedShieldService] },
   { path: 'verification', component: VerificationComponent, canActivate: [UnloggedShieldService] },
+  { path: 'home2', component: HomeComponent, canActivate: [UnloggedShieldService] }, //teste
   {
-    path: 'home', component: HomePageComponent, canActivate: [LoggedShieldService], children: [
+    path: 'home', component: HomeComponent, canActivate: [LoggedShieldService], children: [
       {
         path: 'page-a', component: ChildAExampleComponent
       }, {
@@ -51,6 +53,9 @@ const routes: Routes = [
     SignUpComponent,
     VerificationComponent,
     FooterCompanyComponent,
+    HomeComponent,
+    MenuLeftComponent,
+    TopBarComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
 <div class="flex-container">
   <div class="content">
-    <section class="form">
+    <form class="form">
       <input
         [formControl]="username"
         type="text"
@@ -8,7 +8,13 @@
         placeholder="Username"
         class="form-control"
       />
-      <input [formControl]="email" type="email" id="email" placeholder="Email" class="form-control" />
+      <input
+        [formControl]="email"
+        type="email"
+        id="email"
+        placeholder="Email"
+        class="form-control"
+      />
       <input
         [formControl]="password"
         type="password"
@@ -26,15 +32,17 @@
       <span class="terms-caption">
         By registering, you accept our terms of use and our privacy policy</span
       >
-      <a class="btn-register" (click)="register()" >Register</a>
-    </section>
+      <a class="btn-register" (click)="register()">Register</a>
+    </form>
     <section class="header">
       <span class="header__title">Logo</span>
       <span class="header__caption"
         >Lorem ipsum dolor sit amet consectetur, adipisicing elit.
         Impedit,</span
       >
-      <a class="header__btn-back" [routerLink]="['/signin']"> &larr; Back to Login</a>
+      <a class="header__btn-back" [routerLink]="['/signin']">
+        &larr; Back to Login</a
+      >
     </section>
   </div>
   <app-footer-company></app-footer-company>
