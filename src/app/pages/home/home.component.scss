@@ -1,0 +1,12 @@
+@import "../../sass/abstract/variables";
+
+.grid-container {
+  display: grid;
+  grid-template-columns: [menu-start] 18vw [menu-end];
+  background-color: $black3;
+}
+
+.menu-container {
+  display: grid;
+  grid-column: menu-start / menu-end;
+}

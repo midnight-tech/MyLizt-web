@@ -18,14 +18,15 @@ import { SignInComponent } from "./pages/sign-in/sign-in.component";
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { VerificationComponent } from './pages/verification/verification.component';
 import { FooterCompanyComponent } from './components/footer-company/footer-company.component';
-
-
+import { HomeComponent } from './pages/home/home.component';
+import { MenuLeftComponent } from './components/menu-left/menu-left.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent , pathMatch: 'full' },
   { path: 'signin', component: SignInComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'verification', component: VerificationComponent },
+  { path: 'home', component: HomeComponent },
   {
     path: 'home', component: HomePageComponent, canActivate: [AuthenticationService], children: [
       {
@@ -51,6 +52,8 @@ const routes: Routes = [
     SignUpComponent,
     VerificationComponent,
     FooterCompanyComponent,
+    HomeComponent,
+    MenuLeftComponent
   ],
   imports: [
     BrowserModule,

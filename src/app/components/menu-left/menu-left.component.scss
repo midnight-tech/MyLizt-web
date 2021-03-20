@@ -1,0 +1,60 @@
+@import "../../sass/abstract/variables";
+
+.content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  background-color: $black4;
+  padding: 2rem;
+
+  &__logo {
+    color: $white;
+    font-size: 4rem;
+    margin-bottom: 6rem;
+  }
+}
+
+.categories {
+  display: flex;
+  flex-direction: column;
+  color: $white;
+  margin-bottom: 6rem;
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  &__title {
+    font-size: 2.5rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    display: flex;
+    align-self: baseline;
+    cursor: pointer;
+
+    &:hover {
+      color: $primary1;
+    }
+  }
+
+  &__item {
+    background-color: transparent;
+    font-size: 1.6rem;
+    padding-right: 1rem;
+
+    // truncate string
+    width: 18vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__icon {
+    width: 3rem;
+    height: 3rem;
+  }
+}
