@@ -19,6 +19,7 @@ import { VerificationComponent } from './pages/verification/verification.compone
 import { FooterCompanyComponent } from './components/footer-company/footer-company.component';
 import { LoggedShieldService } from './services/routes-shield/logged-shield.service';
 import { UnloggedShieldService } from './services/routes-shield/unlogged-shield.service';
+import { AnimeService } from './services/anime-services/anime.service';
 
 
 
@@ -60,7 +61,7 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   exports: [RouterModule],
-  providers: [ParseService, AuthenticationService],
+  providers: [ParseService, AuthenticationService, AnimeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
