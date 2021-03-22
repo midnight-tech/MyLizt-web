@@ -1,4 +1,5 @@
 @import "../../sass/abstract/variables";
+@import "bulma/sass/components/dropdown.sass";
 
 .flex-container {
   display: flex;
@@ -17,6 +18,7 @@
   justify-content: center;
 
   &__input {
+    height: 4rem;
     font-size: 1.6rem;
     color: inherit;
     background-color: $black4;
@@ -24,13 +26,18 @@
     border-radius: 100px;
     width: 95%;
     margin-right: -4rem;
-    padding: 0.7rem 5rem 0.7rem 2rem;
+    margin-left: -10rem;
+    padding: 0.7rem 5rem 0.7rem 12rem;
     transition: all 0.2s;
 
     &:focus {
       outline: none;
       width: 100%;
       background-color: $black4;
+    }
+
+    &::placeholder {
+      opacity: 0.6;
     }
 
     &::-webkit-input-placeholder {
@@ -66,4 +73,52 @@
       filter: brightness(1.2);
     }
   }
+}
+
+.button-container {
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  height: 4rem;
+  width: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+  border-right: 1px solid rgba($white, 0.3);
+  cursor: pointer;
+  color: $primary1;
+}
+
+.dropdown-content {
+  padding: 0rem;
+  margin-top: 0.5rem;
+  background-color: rgba($black4, 0.9);
+}
+
+// Reset padding do framework
+a.dropdown-item {
+  padding-right: 1rem;
+
+  &:hover {
+    background-color: rgba($black4, 0.4);
+    color: $white;
+  }
+}
+
+.dropdown-item {
+  font-size: 1.6rem;
+  color: rgba($white, 0.6);
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 1rem;
+  border-radius: $the-border-radius;
+  cursor: pointer;
+}
+
+.dropdown-divider {
+  background-color: rgba($white, 0.2);
 }

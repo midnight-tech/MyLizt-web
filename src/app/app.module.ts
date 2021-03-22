@@ -55,7 +55,7 @@ const routes: Routes = [
     FooterCompanyComponent,
     HomeComponent,
     MenuLeftComponent,
-    TopBarComponent
+    TopBarComponent,
   ],
   imports: [
     BrowserModule,

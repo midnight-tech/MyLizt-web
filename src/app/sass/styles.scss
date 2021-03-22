@@ -1,15 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~bootstrap/dist/css/bootstrap.min.css";
+// @import "~bootstrap/dist/css/bootstrap.min.css";
 
 @import "abstract/variables";
 @import "base/utilities";
 @import "base/base";
 @import "components/footer";
-
-// .btn {
-//   margin: 8px 0px 8px 0px;
-// }
-
-.btn + .btn {
-  margin-left: 8px;
-}

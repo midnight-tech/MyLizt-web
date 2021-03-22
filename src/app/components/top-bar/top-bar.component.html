@@ -1,5 +1,21 @@
 <div class="flex-container">
   <form class="search">
+    <div [ngClass]="{ 'is-active': isActive }" class="dropdown is-right">
+      <div class="dropdown-trigger button-container" (click)="dropdown()">
+        <a class="button" aria-haspopup="true" aria-controls="dropdown-menu6">
+          <span>All</span>
+        </a>
+      </div>
+      <div class="dropdown-menu" id="dropdown-menu6" role="menu">
+        <div class="dropdown-content">
+          <a class="dropdown-item">All</a>
+          <a class="dropdown-item">Anime</a>
+          <a class="dropdown-item">Serie</a>
+          <a class="dropdown-item">Book</a>
+        </div>
+      </div>
+    </div>
+
     <input type="text" class="search__input" placeholder="Search..." />
 
     <button class="search__button-search">

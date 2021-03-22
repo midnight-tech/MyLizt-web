@@ -7,7 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopBarComponent implements OnInit {
 
+  isActive = false
+
   constructor() { }
+
+  dropdown() {
+    this.isActive = !this.isActive
+  }
 
   ngOnInit() {
   }
