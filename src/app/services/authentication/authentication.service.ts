@@ -1,5 +1,4 @@
 /// <reference path="../../../../node_modules/@types/gapi/index.d.ts">
-/// <reference path="../../../../node_modules/@types/facebook-js-sdk/index.d.ts">
 import { Injectable } from '@angular/core';
 import firebase from 'firebase/app'
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -77,27 +76,22 @@ export class AuthenticationService {
   }
 
   async signInWithFacebook() {
-    FB.login((response) => {
-      console.log(response)
-      FB.api('/me', { fields: 'email,name' }, async (userData: any) => {
-        console.log(FB)
-        const newUser = new this.parseService.parse.User()
-        console.log(userData)
-        newUser.setUsername(userData.name)
-        newUser.setEmail(userData.email)
-        await newUser.linkWith("facebook", {
+
+    const user = await this.fireAuth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
+    console.log(user)
+    let newUser = new this.parseService.parse.User()
+        newUser.setUsername(user.user!!.displayName!!)
+        newUser.setEmail(user.user!!.email!!)
+        newUser = await newUser.linkWith("facebook", {
           authData: {
-            id: response.authResponse.userID,
-            access_token: response.authResponse.accessToken,
+            // @ts-ignore
+            id: user.additionalUserInfo.profile.id,
+            // @ts-ignore
+            access_token: user.credential.accessToken,
           }
         })
         this.user = newUser
         this.isLogged = true
-      })
-    }, {
-      return_scopes: true,
-      scope: "email"
-    })
   }
 
   async signInWithTwitter() {
