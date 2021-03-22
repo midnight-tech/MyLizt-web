@@ -1,16 +1,14 @@
 /// <reference path="../../../../node_modules/@types/gapi/index.d.ts">
-/// <reference path="../../../../node_modules/@types/facebook-js-sdk/index.d.ts">
 import { Injectable } from '@angular/core';
 import firebase from 'firebase/app'
 import { AngularFireAuth } from '@angular/fire/auth';
-import { CanActivate } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { ParseService } from '../parse/parse.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService implements CanActivate {
+export class AuthenticationService {
 
   parseService: ParseService
   isLogged: boolean
@@ -35,13 +33,6 @@ export class AuthenticationService implements CanActivate {
     }
     this.isLogged = false
     this.user = null
-  }
-
-  canActivate() {
-    if (this.parseService.parse.User.current()) {
-      return true
-    }
-    return false
   }
 
   async signIn(email: string, password: string) {
@@ -85,27 +76,22 @@ export class AuthenticationService implements CanActivate {
   }
 
   async signInWithFacebook() {
-    FB.login((response) => {
-      console.log(response)
-      FB.api('/me', { fields: 'email,name' }, async (userData: any) => {
-        console.log(FB)
-        const newUser = new this.parseService.parse.User()
-        console.log(userData)
-        newUser.setUsername(userData.name)
-        newUser.setEmail(userData.email)
-        await newUser.linkWith("facebook", {
+
+    const user = await this.fireAuth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
+    console.log(user)
+    let newUser = new this.parseService.parse.User()
+        newUser.setUsername(user.user!!.displayName!!)
+        newUser.setEmail(user.user!!.email!!)
+        newUser = await newUser.linkWith("facebook", {
           authData: {
-            id: response.authResponse.userID,
-            access_token: response.authResponse.accessToken,
+            // @ts-ignore
+            id: user.additionalUserInfo.profile.id,
+            // @ts-ignore
+            access_token: user.credential.accessToken,
           }
         })
         this.user = newUser
         this.isLogged = true
-      })
-    }, {
-      return_scopes: true,
-      scope: "email"
-    })
   }
 
   async signInWithTwitter() {
@@ -113,7 +99,7 @@ export class AuthenticationService implements CanActivate {
     console.log(user,'tUser')
     const newUser = new this.parseService.parse.User()
     newUser.setUsername(user.user!!.displayName!!)
-    newUser.setEmail(user.user?.email!!)
+    newUser.setEmail(user.user!!.email!!)
     await newUser.linkWith("twitter", {
       authData: {
         // @ts-ignore
