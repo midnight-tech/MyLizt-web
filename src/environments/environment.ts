@@ -13,8 +13,11 @@ export const environment = {
     projectId: "mylizt-34b3f",
     storageBucket: "mylizt-34b3f.appspot.com",
     messagingSenderId: "903354288062",
-    appId: "1:903354288062:web:9c7edf9c443b33567a9bef"
-  }
+    appId: "1:903354288062:web:9c7edf9c443b33567a9bef",
+  },
+  url_serie_proxy_base : "https://proxy-mylizt.herokuapp.com"
+  // url_serie_proxy_base : "http://localhost:4201"
+
 };
 
 /*
