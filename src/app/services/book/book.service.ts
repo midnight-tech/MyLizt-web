@@ -18,4 +18,15 @@ export class BookService {
     return books.data.items as bookCatalogo[]
   }
 
+  async search(query : string, isAll = false){
+    const limit = isAll ? 3 : 9 
+    try{
+      const result = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=${limit}`)
+      return result.data.items as bookCatalogo[]
+    } catch(e){
+      console.error(e)
+      throw "Error"
+    }
+  }
+
 }

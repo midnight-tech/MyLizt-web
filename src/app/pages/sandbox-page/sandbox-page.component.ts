@@ -20,15 +20,36 @@ export class SandboxPageComponent implements OnInit {
     public bookService: BookService,
     public serieService: SerieService
   ) {
-    animeService.getHomeCatalogo().then((animes)=>{
-      this.animes = animes
-    })
-    bookService.getHomeCatalogo().then((books)=>{
-      this.books = books
-    })
-    serieService.getHomeCatalogo().then((series) => {
-      this.series = series
-    })
+    //        SEARCH
+    // animeService.search('the promise',false).then((data)=>{
+    //   console.log("false --->", data)
+    // })
+    // animeService.search('the promisse',true).then((data)=>{
+    //   console.log("true --->", data)
+    // })
+    // bookService.search('a passagem justin croni', false).then((data) => {
+    //   console.log("false --->", data)
+    // })
+    // bookService.search('a passagem justin croni', true).then((data) => {
+    //   console.log("true --->", data)
+    // })
+    // serieService.search('stranger things', false).then((data) => {
+    //   console.log("false --->", data)
+    // })
+    // serieService.search('stranger things', true).then((data) => {
+    //   console.log("true --->", data)
+    // })
+
+    //        HOME CATALOGO
+    // animeService.getHomeCatalogo().then((animes)=>{
+    //   this.animes = animes
+    // })
+    // bookService.getHomeCatalogo().then((books)=>{
+    //   this.books = books
+    // })
+    // serieService.getHomeCatalogo().then((series) => {
+    //   this.series = series
+    // })
   }
 
   ngOnInit() {

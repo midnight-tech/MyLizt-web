@@ -12,13 +12,26 @@ export class SerieService {
 
   }
 
-  async getHomeCatalogo(){
+  async getHomeCatalogo() {
     const series = await axios.get(`${environment.url_serie_proxy_base}/api/TMDB/catalogo`)
-    const filter : serieCatalogo[] = series.data.results.slice(0,5)
-    return filter.map((serie)=>{
+    const filter: serieCatalogo[] = series.data
+    return filter.map((serie) => {
       serie.backdrop_path = `https://image.tmdb.org/t/p/original${serie.backdrop_path}`
       return serie
     })
   }
 
+  async search(query: string, isAll = false) {
+    const limit = isAll ? 3 : 9
+    try{
+    const result = await axios.get(`${environment.url_serie_proxy_base}/api/TMDB/search?q=${query}&limit=${limit}`)
+    return result.data.map((serie: serieCatalogo) => {
+      serie.backdrop_path = `https://image.tmdb.org/t/p/original${serie.backdrop_path}`
+      return serie
+    }) as serieCatalogo[]
+    } catch(e){
+      console.error(e)
+      throw "Error"
+    }
+  }
 }

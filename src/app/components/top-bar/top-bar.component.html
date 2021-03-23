@@ -3,27 +3,22 @@
     <div [ngClass]="{ 'is-active': isActive }" class="dropdown is-right">
       <div class="dropdown-trigger button-container" (click)="dropdown()">
         <a class="button" aria-haspopup="true" aria-controls="dropdown-menu6">
-          <span>All</span>
+          <span>{{searchOptions[searchIndex]}}</span>
         </a>
       </div>
       <div class="dropdown-menu" id="dropdown-menu6" role="menu">
+        <div (click)="dropdown()" class="membrana"></div>
         <div class="dropdown-content">
-          <a class="dropdown-item">All</a>
-          <a class="dropdown-item">Anime</a>
-          <a class="dropdown-item">Serie</a>
-          <a class="dropdown-item">Book</a>
+          <a class="dropdown-item" *ngFor="let option of searchOptions; index as i"
+          (click)="setSearchIndex(i)">{{option}}</a>
         </div>
       </div>
     </div>
 
-    <input type="text" class="search__input" placeholder="Search..." />
+    <input type="text" class="search__input" placeholder="Search..." [formControl]="searchField" />
 
     <button class="search__button-search">
-      <img
-        src="../../../assets/icon-search.svg"
-        alt="icon-search"
-        class="search__icon"
-      />
+      <img src="../../../assets/icon-search.svg" alt="icon-search" class="search__icon" />
     </button>
 
     <!-- <button class="search__button-search">
