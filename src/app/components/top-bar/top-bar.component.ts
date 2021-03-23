@@ -6,7 +6,7 @@ import { AnimeService } from 'src/app/services/anime/anime.service';
 import { BookService } from 'src/app/services/book/book.service';
 import { SerieService } from 'src/app/services/serie/serie.service';
 
-type search = 'ALL' | 'ANIME' | 'SERIE' | 'BOOK'
+type search = 'ANIME' | 'SERIE' | 'BOOK'
 
 
 @Component({
@@ -23,7 +23,6 @@ export class TopBarComponent implements OnInit {
   searchField = new FormControl("", { updateOn: 'change'})
 
   searchOptions: search[] = [
-    'ALL',
     'ANIME',
     'SERIE',
     'BOOK'
@@ -34,6 +33,7 @@ export class TopBarComponent implements OnInit {
   searchIndex = 0
 
   isActive = false
+  isActiveAccount = false
   isActiveSearch = false;
 
   constructor(
@@ -59,6 +59,7 @@ export class TopBarComponent implements OnInit {
     this.searchField.enable({emitEvent: true})
   }
 
+  // Definir a categoria no Search
   setSearchIndex(index: number) {
     this.searchIndex = index
     this.isActive = false;
@@ -66,6 +67,11 @@ export class TopBarComponent implements OnInit {
 
   dropdown() {
     this.isActive = !this.isActive
+
+  }
+
+  dropdownAccount() {
+    this.isActiveAccount = !this.isActiveAccount
   }
 
   closeSearchModal() {
@@ -74,17 +80,6 @@ export class TopBarComponent implements OnInit {
 
   search(searchtype: search) {
     switch (searchtype) {
-      case 'ALL':
-        this.animeService.search(this.searchField.value).then((value) => {
-          this.animes = value
-        })
-        this.bookService.search(this.searchField.value).then((value) => {
-          this.books = value
-        })
-        this.serieService.search(this.searchField.value).then((value) => {
-          this.series = value
-        })
-        break
       case 'ANIME':
         this.books = []
         this.series = []

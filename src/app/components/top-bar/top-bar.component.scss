@@ -23,7 +23,7 @@
     color: inherit;
     background-color: $black4;
     border: none;
-    border-radius: 100px;
+    border-radius: 4px;
     width: 95%;
     margin-right: -4rem;
     margin-left: -10rem;
@@ -117,16 +117,52 @@ a.dropdown-item {
   padding: 1rem 1rem;
   border-radius: $the-border-radius;
   cursor: pointer;
+
+  &--account {
+    padding: 1.5rem 2rem;
+  }
 }
 
 .dropdown-divider {
   background-color: rgba($white, 0.2);
 }
 
-.membrana{
+.membrana {
   position: fixed;
   top: 0;
   left: 0;
-	width:100%;
-	height:100%;
+  width: 100%;
+  height: 100%;
+}
+
+.account {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  &__user {
+    font-size: 2rem;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  &__item {
+    letter-spacing: 0.5rem;
+  }
+
+  &__icon {
+    height: 2.5rem;
+    width: 2.5rem;
+    margin-right: 1rem;
+
+    &--notification {
+      margin-left: 1rem;
+    }
+  }
 }

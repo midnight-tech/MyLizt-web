@@ -3,22 +3,35 @@
     <div [ngClass]="{ 'is-active': isActive }" class="dropdown is-right">
       <div class="dropdown-trigger button-container" (click)="dropdown()">
         <a class="button" aria-haspopup="true" aria-controls="dropdown-menu6">
-          <span>{{searchOptions[searchIndex]}}</span>
+          <span>{{ searchOptions[searchIndex] }}</span>
         </a>
       </div>
       <div class="dropdown-menu" id="dropdown-menu6" role="menu">
         <div (click)="dropdown()" class="membrana"></div>
         <div class="dropdown-content">
-          <a class="dropdown-item" *ngFor="let option of searchOptions; index as i"
-          (click)="setSearchIndex(i)">{{option}}</a>
+          <a
+            class="dropdown-item"
+            *ngFor="let option of searchOptions; index as i"
+            (click)="setSearchIndex(i)"
+            >{{ option }}</a
+          >
         </div>
       </div>
     </div>
 
-    <input type="text" class="search__input" placeholder="Search..." [formControl]="searchField" />
+    <input
+      type="text"
+      class="search__input"
+      placeholder="Search..."
+      [formControl]="searchField"
+    />
 
     <button class="search__button-search">
-      <img src="../../../assets/icon-search.svg" alt="icon-search" class="search__icon" />
+      <img
+        src="../../../assets/icon-search.svg"
+        alt="icon-search"
+        class="search__icon"
+      />
     </button>
 
     <!-- <button class="search__button-search">
@@ -28,4 +41,41 @@
       </svg>
     </button> -->
   </form>
+
+  <div class="account">
+    <img
+      src="../../../assets/icon-notification.svg"
+      alt="icon-notification"
+      class="account__icon account__icon--notification"
+    />
+
+    <div [ngClass]="{ 'is-active': isActiveAccount }" class="dropdown is-right">
+      <div class="dropdown-trigger account__user" (click)="dropdownAccount()">
+        <a class="button" aria-haspopup="true" aria-controls="dropdown-menu6">
+          <span>Username</span>
+        </a>
+      </div>
+      <div class="dropdown-menu" id="dropdown-menu6" role="menu">
+        <div (click)="dropdownAccount()" class="membrana"></div>
+        <div class="dropdown-content">
+          <div class="account__content dropdown-item dropdown-item--account">
+            <img
+              src="../../../assets/icon-friends.svg"
+              alt="icon-friends"
+              class="account__icon"
+            />
+            <a class="account__item">Friends</a>
+          </div>
+          <div class="account__content dropdown-item dropdown-item--account">
+            <img
+              src="../../../assets/icon-logout.svg"
+              alt="icon-logout"
+              class="account__icon"
+            />
+            <a class="account__item">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
