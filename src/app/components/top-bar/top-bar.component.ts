@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { type } from 'node:os';
 import { bookCatalogo, CatalogoAnime, serieCatalogo } from 'src/app/data/interfaces';
 import { AnimeService } from 'src/app/services/anime/anime.service';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { BookService } from 'src/app/services/book/book.service';
 import { SerieService } from 'src/app/services/serie/serie.service';
 
@@ -20,7 +22,7 @@ export class TopBarComponent implements OnInit {
   series: serieCatalogo[] = []
   books: bookCatalogo[] = []
 
-  searchField = new FormControl("", { updateOn: 'change'})
+  searchField = new FormControl("", { updateOn: 'change' })
 
   searchOptions: search[] = [
     'ANIME',
@@ -35,11 +37,15 @@ export class TopBarComponent implements OnInit {
   isActive = false
   isActiveAccount = false
   isActiveSearch = false;
+  username = "USERNAME"
+  timeout? : NodeJS.Timeout
 
   constructor(
     public animeService: AnimeService,
     public serieService: SerieService,
-    public bookService: BookService
+    public bookService: BookService,
+    public authService: AuthenticationService,
+    public router: Router
   ) {
     this.searchField.valueChanges.subscribe(() => {
       console.log(this.searchField.value.length)
@@ -47,16 +53,20 @@ export class TopBarComponent implements OnInit {
         this.isActiveSearch = false
         return
       }
-      setTimeout(()=>{
+      this.isActiveSearch = true;
+      clearTimeout(this.timeout!!)
+      this.timeout = setTimeout(() => {
         if (this.searchField.value.length < 3) { return }
-        this.isActiveSearch = true;
-        // this.search(this.searchOptions[this.searchIndex])
-      },1000)
+        this.search(this.searchOptions[this.searchIndex])
+      }, 1000)
     })
+    if (authService.user) {
+      this.username = authService.user.getUsername()!!
+    }
   }
 
   ngOnInit() {
-    this.searchField.enable({emitEvent: true})
+    this.searchField.enable({ emitEvent: true })
   }
 
   // Definir a categoria no Search
@@ -104,5 +114,9 @@ export class TopBarComponent implements OnInit {
     }
   }
 
-
+  logout() {
+    this.authService.logout().then(()=>{
+      this.router.navigate(["/signin"], { replaceUrl: true })
+    })
+  }
 }

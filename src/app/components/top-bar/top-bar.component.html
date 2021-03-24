@@ -52,7 +52,7 @@
     <div [ngClass]="{ 'is-active': isActiveAccount }" class="dropdown is-right">
       <div class="dropdown-trigger account__user" (click)="dropdownAccount()">
         <a class="button" aria-haspopup="true" aria-controls="dropdown-menu6">
-          <span>Username</span>
+          <span>{{username}}</span>
         </a>
       </div>
       <div class="dropdown-menu" id="dropdown-menu6" role="menu">
@@ -66,7 +66,7 @@
             />
             <a class="account__item">Friends</a>
           </div>
-          <div class="account__content dropdown-item dropdown-item--account">
+          <div class="account__content dropdown-item dropdown-item--account" (click)="logout()">
             <img
               src="../../../assets/icon-logout.svg"
               alt="icon-logout"
