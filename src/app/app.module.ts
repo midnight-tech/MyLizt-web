@@ -39,7 +39,7 @@ const routes: Routes = [
   {
     path: 'home', component: HomeComponent, canActivate: [LoggedShieldService], children: [
       {
-        path: 'page-a', component: ChildAExampleComponent
+        path: '', component: ChildAExampleComponent
       }, {
         path: 'page-b', component: ChildBExampleComponent
       }
