@@ -1,3 +1,4 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -24,6 +25,12 @@ export class TopBarComponent implements OnInit {
 
   searchField = new FormControl("", { updateOn: 'change' })
 
+  private cleanList() {
+    this.animes = []
+    this.series = []
+    this.books = []
+  }
+
   searchOptions: search[] = [
     'ANIME',
     'SERIE',
@@ -38,7 +45,7 @@ export class TopBarComponent implements OnInit {
   isActiveAccount = false
   isActiveSearch = false;
   username = "USERNAME"
-  timeout? : NodeJS.Timeout
+  timeout?: NodeJS.Timeout
 
   constructor(
     public animeService: AnimeService,
@@ -48,17 +55,7 @@ export class TopBarComponent implements OnInit {
     public router: Router
   ) {
     this.searchField.valueChanges.subscribe(() => {
-      console.log(this.searchField.value.length)
-      if (this.searchField.value.length < 3) {
-        this.isActiveSearch = false
-        return
-      }
-      this.isActiveSearch = true;
-      clearTimeout(this.timeout!!)
-      this.timeout = setTimeout(() => {
-        if (this.searchField.value.length < 3) { return }
-        this.search(this.searchOptions[this.searchIndex])
-      }, 1000)
+     this.searchEvent()
     })
     if (authService.user) {
       this.username = authService.user.getUsername()!!
@@ -68,6 +65,21 @@ export class TopBarComponent implements OnInit {
   ngOnInit() {
     this.searchField.enable({ emitEvent: true })
   }
+
+  searchEvent(){
+    console.log(this.searchField.value.length)
+      if (this.searchField.value.length < 3) {
+        this.cleanList()
+        this.isActiveSearch = false
+        return
+      }
+      this.isActiveSearch = true;
+      clearTimeout(this.timeout!!)
+      this.timeout = setTimeout(() => {
+        if (this.searchField.value.length < 3) { return }
+        this.search(this.searchOptions[this.searchIndex])
+      }, 1000)
+  }  
 
   // Definir a categoria no Search
   setSearchIndex(index: number) {
@@ -89,24 +101,19 @@ export class TopBarComponent implements OnInit {
   }
 
   search(searchtype: search) {
+    this.cleanList()
     switch (searchtype) {
       case 'ANIME':
-        this.books = []
-        this.series = []
         this.animeService.partialSearch(this.searchField.value, true).then((value) => {
           this.animes = value
         })
         break
       case 'BOOK':
-        this.animes = []
-        this.series = []
         this.bookService.partialSearch(this.searchField.value, true).then((value) => {
           this.books = value
         })
         break
       case 'SERIE':
-        this.animes = []
-        this.books = []
         this.serieService.partialSearch(this.searchField.value, true).then((value) => {
           this.series = value
         })
@@ -115,7 +122,7 @@ export class TopBarComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout().then(()=>{
+    this.authService.logout().then(() => {
       this.router.navigate(["/signin"], { replaceUrl: true })
     })
   }

@@ -26,6 +26,7 @@ import { SandboxPageComponent } from './pages/sandbox-page/sandbox-page.componen
 import { BookService } from './services/book/book.service';
 import { SerieService } from './services/serie/serie.service';
 import { HomeService } from './services/home-service/home.service';
+import { HomeSearchComponent } from './pages/home-search/home-search.component';
 
 
 
@@ -40,6 +41,9 @@ const routes: Routes = [
     path: 'home', component: HomeComponent, canActivate: [LoggedShieldService], children: [
       {
         path: '', component: ChildAExampleComponent
+      },
+      {
+        path: 'search', component: HomeSearchComponent
       }
     ]
   },
@@ -60,7 +64,8 @@ const routes: Routes = [
     HomeComponent,
     MenuLeftComponent,
     TopBarComponent,
-    SandboxPageComponent
+    SandboxPageComponent,
+    HomeSearchComponent
   ],
   imports: [
     BrowserModule,

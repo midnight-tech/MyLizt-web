@@ -74,8 +74,8 @@
               <div class="dropdown-container-item">
                 <div *ngIf="book.volumeInfo.imageLinks; else notImageFound">
                   <img
-                    [src]="book.volumeInfo.imageLinks"
-                    alt="Cover"
+                    [src]="book.volumeInfo.imageLinks.thumbnail"
+                    [alt]="book.volumeInfo.imageLinks.thumbnail"
                     class="dropdown-container-item__cover"
                   />
                 </div>
