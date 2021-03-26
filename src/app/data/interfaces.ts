@@ -35,3 +35,5 @@ export interface serieCatalogo {
   vote_average: number,
   popularity: number
 }
+
+export type search = 'ANIME' | 'SERIE' | 'BOOK'

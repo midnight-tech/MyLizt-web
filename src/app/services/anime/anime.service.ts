@@ -15,7 +15,7 @@ export class AnimeService {
     return catalogo.data.results as CatalogoAnime[]
   }
 
-  async search(query : string, isAll = false){
+  async partialSearch(query : string, isAll = false){
     const limit = isAll ? 9 : 3
     try{
       let result = await axios.get(`https://api.jikan.moe/v3/search/anime?q=${query}&limit=${limit}`)
@@ -25,4 +25,6 @@ export class AnimeService {
       throw "Error"
     }
   }
+
+
 }

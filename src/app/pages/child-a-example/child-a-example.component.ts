@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { bookCatalogo, CatalogoAnime, serieCatalogo } from 'src/app/data/interfaces';
+import { HomeService } from 'src/app/services/home-service/home.service';
 
 @Component({
   selector: 'app-child-a-example',
@@ -7,7 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChildAExampleComponent implements OnInit {
 
-  constructor() { }
+
+
+  constructor(
+    public homeService : HomeService
+  ) {
+  }
+
+
 
   ngOnInit() {
   }

@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ChildAExampleComponent } from './pages/child-a-example/child-a-example.component';
-import { ChildBExampleComponent } from './pages/child-b-example/child-b-example.component';
 import { HomePageComponent } from './pages/home-page-example/home-page.component';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { ParseService } from './services/parse/parse.service';
@@ -26,11 +25,12 @@ import { AnimeService } from './services/anime/anime.service';
 import { SandboxPageComponent } from './pages/sandbox-page/sandbox-page.component';
 import { BookService } from './services/book/book.service';
 import { SerieService } from './services/serie/serie.service';
+import { HomeService } from './services/home-service/home.service';
 
 
 
 const routes: Routes = [
-  { path: 'sandbox', component : SandboxPageComponent, pathMatch: 'full'},
+  { path: 'sandbox', component: SandboxPageComponent, pathMatch: 'full' },
   { path: '', component: LandingPageComponent, pathMatch: 'full', canActivate: [UnloggedShieldService] },
   { path: 'signin', component: SignInComponent, canActivate: [UnloggedShieldService] },
   { path: 'signup', component: SignUpComponent, canActivate: [UnloggedShieldService] },
@@ -39,9 +39,7 @@ const routes: Routes = [
   {
     path: 'home', component: HomeComponent, canActivate: [LoggedShieldService], children: [
       {
-        path: 'page-a', component: ChildAExampleComponent
-      }, {
-        path: 'page-b', component: ChildBExampleComponent
+        path: '', component: ChildAExampleComponent
       }
     ]
   },
@@ -54,7 +52,6 @@ const routes: Routes = [
     AppComponent,
     HomePageComponent,
     ChildAExampleComponent,
-    ChildBExampleComponent,
     SignInComponent,
     LandingPageComponent,
     SignUpComponent,
@@ -73,7 +70,7 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   exports: [RouterModule],
-  providers: [ParseService, AuthenticationService, AnimeService,BookService, SerieService],
+  providers: [ParseService, AuthenticationService, AnimeService, BookService, SerieService, HomeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

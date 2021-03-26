@@ -18,7 +18,7 @@ export class BookService {
     return books.data.items as bookCatalogo[]
   }
 
-  async search(query : string, isAll = false){
+  async partialSearch(query : string, isAll = false){
     const limit = isAll ? 9 : 3 
     try{
       const result = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=${limit}`)

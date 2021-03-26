@@ -21,7 +21,7 @@ export class SerieService {
     })
   }
 
-  async search(query: string, isAll = false) {
+  async partialSearch(query: string, isAll = false) {
     const limit = isAll ? 9 : 3
     try{
     const result = await axios.get(`${environment.url_serie_proxy_base}/api/TMDB/search?q=${query}&limit=${limit}`)

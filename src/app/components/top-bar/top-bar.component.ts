@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { type } from 'node:os';
-import { bookCatalogo, CatalogoAnime, serieCatalogo } from 'src/app/data/interfaces';
+import { bookCatalogo, CatalogoAnime, search, serieCatalogo } from 'src/app/data/interfaces';
 import { AnimeService } from 'src/app/services/anime/anime.service';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { BookService } from 'src/app/services/book/book.service';
 import { SerieService } from 'src/app/services/serie/serie.service';
 
-type search = 'ANIME' | 'SERIE' | 'BOOK'
+
 
 
 @Component({
@@ -93,21 +93,21 @@ export class TopBarComponent implements OnInit {
       case 'ANIME':
         this.books = []
         this.series = []
-        this.animeService.search(this.searchField.value, true).then((value) => {
+        this.animeService.partialSearch(this.searchField.value, true).then((value) => {
           this.animes = value
         })
         break
       case 'BOOK':
         this.animes = []
         this.series = []
-        this.bookService.search(this.searchField.value, true).then((value) => {
+        this.bookService.partialSearch(this.searchField.value, true).then((value) => {
           this.books = value
         })
         break
       case 'SERIE':
         this.animes = []
         this.books = []
-        this.serieService.search(this.searchField.value, true).then((value) => {
+        this.serieService.partialSearch(this.searchField.value, true).then((value) => {
           this.series = value
         })
         break
