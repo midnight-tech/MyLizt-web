@@ -120,6 +120,7 @@ export class TopBarComponent implements OnInit {
         break
     }
   }
+  
 
   logout() {
     this.authService.logout().then(() => {

@@ -18,15 +18,20 @@ export class BookService {
     return books.data.items as bookCatalogo[]
   }
 
-  async partialSearch(query : string, isAll = false){
-    const limit = isAll ? 9 : 3 
-    try{
+  async partialSearch(query: string, isAll = false) {
+    const limit = isAll ? 9 : 3
+    try {
       const result = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=${limit}`)
       return result.data.items as bookCatalogo[]
-    } catch(e){
+    } catch (e) {
       console.error(e)
       throw "Error"
     }
+  }
+
+  async search(query: string, page: number = 1) {
+    const results = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=12&startIndex=${(page - 1) * 12}`)
+    return { content: results.data.items as bookCatalogo[], lastPage: Math.floor((results.data.totalItems - 1) / 12) }
   }
 
 }

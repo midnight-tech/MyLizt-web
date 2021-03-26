@@ -1,4 +1,5 @@
-export interface CatalogoAnime {
+export type CatalogoAnime =  {
+  discriminator: 'CatalogoAnime'
   mal_id : number,
   image_url : string,
   title: string,
@@ -12,7 +13,11 @@ export interface CatalogoAnime {
   rated?: string
 }
 
-export interface bookCatalogo{
+export function instaceOfCatalogoAnime(object:any): object is CatalogoAnime{
+  return object.discriminator === "CatalogoAnime"
+}
+
+export type bookCatalogo = {
   id: string,
   volumeInfo : {
     authors: string[],
@@ -26,7 +31,7 @@ export interface bookCatalogo{
   }
 }
 
-export interface serieCatalogo {
+export type serieCatalogo = {
   backdrop_path: string,
   id: number,
   name: string,
