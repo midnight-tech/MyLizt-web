@@ -26,7 +26,9 @@ export class SerieService {
     try{
     const result = await axios.get(`${environment.url_serie_proxy_base}/api/TMDB/search?q=${query}&limit=${limit}`)
     return result.data.map((serie: serieCatalogo) => {
-      serie.backdrop_path = `https://image.tmdb.org/t/p/original${serie.backdrop_path}`
+      if(serie.backdrop_path != null) {
+        serie.backdrop_path = `https://image.tmdb.org/t/p/original${serie.backdrop_path}`
+      }
       return serie
     }) as serieCatalogo[]
     } catch(e){

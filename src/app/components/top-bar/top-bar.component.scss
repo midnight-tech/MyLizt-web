@@ -5,13 +5,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // background-color: red;
   padding: 1rem;
   color: $white;
 }
 
 .search {
-  // background-color: green;
   flex: 0 0 60%;
   display: flex;
   align-items: center;
@@ -95,11 +93,11 @@
   background-color: $black4;
   border-top-right-radius: $the-border-radius;
   border-bottom-right-radius: $the-border-radius;
-
 }
 
-.is-active .input-container{
-  input,.search__button-search{
+.is-active .input-container {
+  input,
+  .search__button-search {
     z-index: 100;
   }
 }
@@ -132,6 +130,14 @@
   padding: 0rem;
   margin-top: 0.5rem;
   background-color: rgba($black4, 0.9);
+  position: relative;
+  z-index: 100;
+
+  &--search {
+    &:last-child {
+      padding-bottom: 1rem;
+    }
+  }
 
   &__search {
     display: flex;
@@ -147,21 +153,6 @@
 .is-active {
   z-index: 2;
 }
-
-// .is-active {
-//   .dropdown-menu {
-//     .dropdown-content__search {
-//       display: flex;
-//       background-color: red;
-//       width: 100%;
-
-//       .dropdown-item {
-//         display: flex;
-//         width: 100%;
-//       }
-//     }
-//   }
-// }
 
 // Reset padding do framework
 a.dropdown-item {
@@ -194,17 +185,34 @@ a.dropdown-item {
   background-color: rgba($white, 0.2);
 }
 
-// itens do search dropdown
 .dropdown-container-item {
-  display: flex;
+  display: grid;
+  grid-template-columns: [image-start] 12.5rem [image-end description-start] 1fr [description-end];
+  grid-template-rows: 7rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  padding-top: 1rem;
+  cursor: pointer;
+
+  &__container-image {
+    display: grid;
+    grid-column: image-start / image-end;
+    grid-row: 1 / -1;
+  }
 
   &__cover {
-    height: 7rem;
-    width: 7rem;
+    height: 100%;
+    width: 100%;
     object-fit: cover;
+    border-radius: $the-border-radius;
+  }
 
-    // height: 10rem;
-    // width: 8rem;
+  &__container-title {
+    display: grid;
+    grid-column: description-start / description-end;
+    grid-row: 1 / -1;
+    text-align: center;
+    font-size: 1.4rem;
   }
 }
 
