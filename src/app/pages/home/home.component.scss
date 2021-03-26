@@ -10,13 +10,19 @@
       [col-start] 1fr [col-end]
     )
     [content-end void-start] 0 [void-end];
-  grid-template-rows: [top-bar-start] min-content [top-bar-end];
+  grid-template-rows:
+    [top-bar-start] min-content [top-bar-end content-sart] repeat(
+      6,
+      [col-start] 1fr [col-end]
+    )
+    [content-end];
   column-gap: 6rem;
 }
 
 .menu-container {
   display: grid;
   grid-column: menu-start / menu-end;
+  grid-row: top-bar-start / -1;
 }
 
 .top-bar-container {
