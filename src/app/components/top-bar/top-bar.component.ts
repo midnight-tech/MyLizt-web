@@ -7,6 +7,7 @@ import { bookCatalogo, CatalogoAnime, search, serieCatalogo } from 'src/app/data
 import { AnimeService } from 'src/app/services/anime/anime.service';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { BookService } from 'src/app/services/book/book.service';
+import { HomeService } from 'src/app/services/home-service/home.service';
 import { SerieService } from 'src/app/services/serie/serie.service';
 
 
@@ -52,10 +53,11 @@ export class TopBarComponent implements OnInit {
     public serieService: SerieService,
     public bookService: BookService,
     public authService: AuthenticationService,
-    public router: Router
+    public router: Router,
+    public homeContext: HomeService
   ) {
     this.searchField.valueChanges.subscribe(() => {
-     this.searchEvent()
+      this.searchEvent()
     })
     if (authService.user) {
       this.username = authService.user.getUsername()!!
@@ -66,20 +68,27 @@ export class TopBarComponent implements OnInit {
     this.searchField.enable({ emitEvent: true })
   }
 
-  searchEvent(){
+  searchEvent() {
     console.log(this.searchField.value.length)
-      if (this.searchField.value.length < 3) {
-        this.cleanList()
-        this.isActiveSearch = false
-        return
-      }
-      this.isActiveSearch = true;
-      clearTimeout(this.timeout!!)
-      this.timeout = setTimeout(() => {
-        if (this.searchField.value.length < 3) { return }
-        this.search(this.searchOptions[this.searchIndex])
-      }, 1000)
-  }  
+    if (this.searchField.value.length < 3) {
+      this.cleanList()
+      this.isActiveSearch = false
+      return
+    }
+    this.isActiveSearch = true;
+    clearTimeout(this.timeout!!)
+    this.timeout = setTimeout(() => {
+      if (this.searchField.value.length < 3) { return }
+      this.search(this.searchOptions[this.searchIndex])
+    }, 1000)
+  }
+
+  totalSearch() {
+    if (this.searchField.value.length >= 3) {
+      this.homeContext.pageSearch(this.searchField.value, 1, this.searchOptions[this.searchIndex])
+      this.router.navigateByUrl('home/search',)
+    }
+  }
 
   // Definir a categoria no Search
   setSearchIndex(index: number) {
@@ -120,7 +129,7 @@ export class TopBarComponent implements OnInit {
         break
     }
   }
-  
+
 
   logout() {
     this.authService.logout().then(() => {

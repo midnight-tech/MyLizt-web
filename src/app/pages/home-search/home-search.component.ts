@@ -10,7 +10,8 @@ export class HomeSearchComponent implements OnInit {
 
   constructor(public homeContext: HomeService) { }
 
-  ngOnInit() {
+  ngOnInit(
+  ) {
   }
 
 }

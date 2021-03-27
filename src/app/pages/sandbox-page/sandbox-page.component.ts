@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { bookCatalogo, CatalogoAnime, serieCatalogo } from 'src/app/data/interfaces';
 import { AnimeService } from 'src/app/services/anime/anime.service';
 import { BookService } from 'src/app/services/book/book.service';
+import { HomeService } from 'src/app/services/home-service/home.service';
 import { SerieService } from 'src/app/services/serie/serie.service';
 
 @Component({
@@ -18,8 +19,9 @@ export class SandboxPageComponent implements OnInit {
   constructor(
     public animeService: AnimeService,
     public bookService: BookService,
-    public serieService: SerieService
+    public serieService: SerieService,
   ) {
+
     //        SEARCH
     // animeService.search('the promise',false).then((data)=>{
     //   console.log("false --->", data)
