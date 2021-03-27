@@ -59,7 +59,10 @@
           <div class="dropdown-content dropdown-content--search">
             <div *ngFor="let anime of animes; index as i">
               <div class="dropdown-container-item">
-                <div class="dropdown-container-item__container-image">
+                <div
+                  class="dropdown-container-item__container-image"
+                  *ngIf="anime.image_url; else notImageFound"
+                >
                   <img
                     [src]="anime.image_url"
                     alt="Cover"
@@ -67,32 +70,69 @@
                   />
                 </div>
                 <div class="dropdown-container-item__container-title">
-                  <p class="dropdown-item">{{ anime.title }}</p>
+                  <p class="dropdown-item dropdown-item--search-title">
+                    {{ anime.title }}
+                  </p>
+                  <p class="dropdown-item dropdown-item--search-extra-info">
+                    Aired: {{ anime.start_date }} to {{ anime.end_date }}
+                  </p>
+                  <p class="dropdown-item dropdown-item--search-extra-info">
+                    Score: {{ anime.score }}
+                  </p>
+                  <p class="dropdown-item dropdown-item--search-extra-info">
+                    Status: {{ anime.airing }}
+                  </p>
                 </div>
               </div>
             </div>
             <div *ngFor="let serie of series; index as i">
               <div class="dropdown-container-item">
-                <div *ngIf="serie.backdrop_path; else notImageFound">
+                <div
+                  class="dropdown-container-item__container-image"
+                  *ngIf="serie.backdrop_path; else notImageFound"
+                >
                   <img
                     [src]="serie.backdrop_path"
                     alt="Cover"
                     class="dropdown-container-item__cover"
                   />
                 </div>
-                <a class="dropdown-item">{{ serie.name }}</a>
+                <div class="dropdown-container-item__container-title">
+                  <p class="dropdown-item dropdown-item--search-title">
+                    {{ serie.name }}
+                  </p>
+                  <p class="dropdown-item dropdown-item--search-extra-info">
+                    Score: {{ serie.vote_average }}
+                  </p>
+                </div>
               </div>
             </div>
             <div *ngFor="let book of books; index as i">
               <div class="dropdown-container-item">
-                <div *ngIf="book.volumeInfo.imageLinks; else notImageFound">
+                <div
+                  class="dropdown-container-item__container-image"
+                  *ngIf="book.volumeInfo.imageLinks; else notImageFound"
+                >
                   <img
                     [src]="book.volumeInfo.imageLinks.thumbnail"
                     [alt]="book.volumeInfo.imageLinks.thumbnail"
                     class="dropdown-container-item__cover"
                   />
                 </div>
-                <a class="dropdown-item">{{ book.volumeInfo.title }}</a>
+                <div class="dropdown-container-item__container-title">
+                  <p class="dropdown-item dropdown-item--search-title">
+                    {{ book.volumeInfo.title }}
+                  </p>
+                  <p class="dropdown-item dropdown-item--search-extra-info">
+                    Language: {{ book.volumeInfo.language }}
+                  </p>
+                  <p class="dropdown-item dropdown-item--search-extra-info">
+                    Subtitle: {{ book.volumeInfo.subtitle }}
+                  </p>
+                  <p class="dropdown-item dropdown-item--search-extra-info">
+                    Authors: {{ book.volumeInfo.authors }}
+                  </p>
+                </div>
               </div>
             </div>
           </div>

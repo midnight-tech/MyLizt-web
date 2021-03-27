@@ -134,9 +134,7 @@
   z-index: 100;
 
   &--search {
-    &:last-child {
-      padding-bottom: 1rem;
-    }
+    padding: 0.5rem 0;
   }
 
   &__search {
@@ -152,6 +150,40 @@
 
 .is-active {
   z-index: 2;
+}
+
+.dropdown-container-item {
+  display: grid;
+  grid-template-columns: [image-start] 12.5rem [image-end description-start] 1fr [description-end];
+  grid-template-rows: 7rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+
+  &:hover {
+    grid-template-rows: 22.3rem;
+    background-color: rgba($black3, 0.8);
+  }
+
+  &__container-image {
+    display: grid;
+    grid-column: image-start / image-end;
+    grid-row: 1 / -1;
+  }
+
+  &__cover {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: $the-border-radius;
+  }
+
+  &__container-title {
+    display: grid;
+    grid-column: description-start / description-end;
+    grid-row: 1 / -1;
+    text-align: center;
+    font-size: 1.4rem;
+  }
 }
 
 // Reset padding do framework
@@ -179,41 +211,41 @@ a.dropdown-item {
   &--account {
     padding: 1.5rem 2rem;
   }
+
+  &--search-title {
+    align-items: center;
+  }
+
+  &--search-extra-info {
+    display: none;
+  }
+}
+
+// Hover dos itens do Search
+.dropdown-container-item:hover {
+  .dropdown-container-item__container-title,
+  .dropdown-item {
+    align-content: center;
+    text-align: start;
+  }
+
+  .dropdown-item--search-title {
+    display: flex;
+    align-items: flex-start;
+    font-size: 1.4rem;
+    color: $primary1;
+  }
+
+  .dropdown-item--search-extra-info {
+    display: flex;
+    align-items: flex-start;
+    font-size: 1.4rem;
+    text-transform: initial;
+  }
 }
 
 .dropdown-divider {
   background-color: rgba($white, 0.2);
-}
-
-.dropdown-container-item {
-  display: grid;
-  grid-template-columns: [image-start] 12.5rem [image-end description-start] 1fr [description-end];
-  grid-template-rows: 7rem;
-  padding-right: 1rem;
-  padding-left: 1rem;
-  padding-top: 1rem;
-  cursor: pointer;
-
-  &__container-image {
-    display: grid;
-    grid-column: image-start / image-end;
-    grid-row: 1 / -1;
-  }
-
-  &__cover {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    border-radius: $the-border-radius;
-  }
-
-  &__container-title {
-    display: grid;
-    grid-column: description-start / description-end;
-    grid-row: 1 / -1;
-    text-align: center;
-    font-size: 1.4rem;
-  }
 }
 
 .membrana {
