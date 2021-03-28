@@ -58,6 +58,44 @@
           <div (click)="closeSearchModal()" class="membrana"></div>
           <div class="dropdown-content dropdown-content--search">
             <div *ngFor="let anime of animes; index as i">
+              <!-- Templates for Aired Anime -->
+              <ng-template #dateEndNull>
+                <ng-container *ngIf="anime.start_date; else dateStartNull">
+                  <p class="dropdown-item dropdown-item--search-extra-info">
+                    Aired: {{ anime.start_date | date: "MMM d, y" }} to ?
+                  </p>
+                </ng-container>
+              </ng-template>
+              <ng-template #dateStartNull>
+                <p class="dropdown-item dropdown-item--search-extra-info">
+                  Aired: Not Available
+                </p>
+              </ng-template>
+              <!-- Template for Score Anime -->
+              <ng-template #scoreNull>
+                <p class="dropdown-item dropdown-item--search-extra-info">
+                  Score: N/A
+                </p>
+              </ng-template>
+              <!-- Template for Status Anime -->
+              <ng-template #finished>
+                <ng-container
+                  *ngIf="
+                    !anime.airing && anime.start_date && anime.end_date;
+                    else notYetAired
+                  "
+                >
+                  <p class="dropdown-item dropdown-item--search-extra-info">
+                    Status: Finished Airing
+                  </p>
+                </ng-container>
+              </ng-template>
+              <ng-template #notYetAired>
+                <p class="dropdown-item dropdown-item--search-extra-info">
+                  Status: Not yet aired
+                </p>
+              </ng-template>
+
               <div class="dropdown-container-item">
                 <div
                   class="dropdown-container-item__container-image"
@@ -73,14 +111,24 @@
                   <p class="dropdown-item dropdown-item--search-title">
                     {{ anime.title }}
                   </p>
-                  <p class="dropdown-item dropdown-item--search-extra-info">
-                    Aired: {{ anime.start_date }} to {{ anime.end_date }}
+                  <p
+                    class="dropdown-item dropdown-item--search-extra-info"
+                    *ngIf="anime.start_date && anime.end_date; else dateEndNull"
+                  >
+                    Aired: {{ anime.start_date | date: "MMM d, y" }} to
+                    {{ anime.end_date | date: "MMM d, y" }}
                   </p>
-                  <p class="dropdown-item dropdown-item--search-extra-info">
+                  <p
+                    class="dropdown-item dropdown-item--search-extra-info"
+                    *ngIf="anime.score; else scoreNull"
+                  >
                     Score: {{ anime.score }}
                   </p>
-                  <p class="dropdown-item dropdown-item--search-extra-info">
-                    Status: {{ anime.airing }}
+                  <p
+                    class="dropdown-item dropdown-item--search-extra-info"
+                    *ngIf="anime.airing && anime.score != 0; else finished"
+                  >
+                    Status: Currently Airing
                   </p>
                 </div>
               </div>
