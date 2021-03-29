@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HomeService } from 'src/app/services/home-service/home.service';
+import { HomeContextService } from 'src/app/services/home-context/home.service';
 
 @Component({
   selector: 'app-home-search',
@@ -8,7 +8,7 @@ import { HomeService } from 'src/app/services/home-service/home.service';
 })
 export class HomeSearchComponent implements OnInit {
 
-  constructor(public homeContext: HomeService) { }
+  constructor(public homeContext: HomeContextService) { }
 
   ngOnInit(
   ) {

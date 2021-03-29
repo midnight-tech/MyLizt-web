@@ -1,13 +1,14 @@
-import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { type } from 'node:os';
-import { bookCatalogo, CatalogoAnime, search, serieCatalogo } from 'src/app/data/interfaces';
+import { BookCatalogo } from 'src/app/data/BookCatalogo';
+import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
+import { CatalogoAnimeInterface, search, SerieCatalogoInterface } from 'src/app/data/interfaces';
+import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { AnimeService } from 'src/app/services/anime/anime.service';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { BookService } from 'src/app/services/book/book.service';
-import { HomeService } from 'src/app/services/home-service/home.service';
+import { HomeContextService } from 'src/app/services/home-context/home.service';
 import { SerieService } from 'src/app/services/serie/serie.service';
 
 
@@ -20,9 +21,9 @@ import { SerieService } from 'src/app/services/serie/serie.service';
 })
 export class TopBarComponent implements OnInit {
 
-  animes: CatalogoAnime[] = []
-  series: serieCatalogo[] = []
-  books: bookCatalogo[] = []
+  animes: AnimeCatalogo[] = []
+  series: SerieCatalogo[] = []
+  books: BookCatalogo[] = []
 
   searchField = new FormControl("", { updateOn: 'change' })
 
@@ -38,7 +39,7 @@ export class TopBarComponent implements OnInit {
     'BOOK'
   ]
 
-  result: CatalogoAnime[] | bookCatalogo[] | serieCatalogo[] = []
+  result: CatalogoAnimeInterface[] | BookCatalogo[] | SerieCatalogoInterface[] = []
 
   searchIndex = 0
 
@@ -54,7 +55,7 @@ export class TopBarComponent implements OnInit {
     public bookService: BookService,
     public authService: AuthenticationService,
     public router: Router,
-    public homeContext: HomeService
+    public homeContext: HomeContextService
   ) {
     this.searchField.valueChanges.subscribe(() => {
       this.searchEvent()
@@ -85,8 +86,9 @@ export class TopBarComponent implements OnInit {
 
   totalSearch() {
     if (this.searchField.value.length >= 3) {
+      this.isActiveSearch = false
       this.homeContext.pageSearch(this.searchField.value, 1, this.searchOptions[this.searchIndex])
-      this.router.navigateByUrl('home/search',)
+      this.router.navigateByUrl('home/search')
     }
   }
 

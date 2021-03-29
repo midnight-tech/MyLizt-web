@@ -135,7 +135,7 @@
               </div>
             </div>
             <div *ngFor="let serie of series; index as i">
-              <div class="dropdown-container-item">
+              <div class="dropdown-container-item" (mouseenter)="serie.getComplete()">
                 <div
                   class="dropdown-container-item__container-image"
                   *ngIf="serie.backdrop_path; else notImageFound"
@@ -150,14 +150,22 @@
                   <p class="dropdown-item dropdown-item--search-title">
                     {{ serie.name }}
                   </p>
-                  <p class="dropdown-item dropdown-item--search-extra-info">
-                    Score: {{ serie.vote_average }}
-                  </p>
+                  <div *ngIf="serie.complete">
+                    <p class="dropdown-item dropdown-item--search-extra-info">
+                      aired: {{ serie.complete.first_air_date}} to {{serie.complete.last_air_date}}
+                    </p>
+                    <p class="dropdown-item dropdown-item--search-extra-info">
+                      Score: {{ serie.vote_average }}
+                    </p>
+                    <p class="dropdown-item dropdown-item--search-extra-info">
+                      status: {{ serie.complete.status }}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
             <div *ngFor="let book of books; index as i">
-              <div class="dropdown-container-item">
+              <div class="dropdown-container-item" (mouseenter)="book.getComplete()">
                 <div
                   class="dropdown-container-item__container-image"
                   *ngIf="book.volumeInfo.imageLinks; else notImageFound"
@@ -172,15 +180,17 @@
                   <p class="dropdown-item dropdown-item--search-title">
                     {{ book.volumeInfo.title }}
                   </p>
-                  <p class="dropdown-item dropdown-item--search-extra-info">
-                    Language: {{ book.volumeInfo.language }}
-                  </p>
-                  <p class="dropdown-item dropdown-item--search-extra-info">
-                    Subtitle: {{ book.volumeInfo.subtitle }}
-                  </p>
-                  <p class="dropdown-item dropdown-item--search-extra-info">
-                    Authors: {{ book.volumeInfo.authors }}
-                  </p>
+                  <div *ngIf="book.complete">
+                    <p class="dropdown-item dropdown-item--search-extra-info">
+                      aired: {{ book.complete.volumeInfo.publishedDate }}
+                    </p>
+                    <p class="dropdown-item dropdown-item--search-extra-info">
+                      score: {{ book.complete.volumeInfo.averageRating }}
+                    </p>
+                    <p class="dropdown-item dropdown-item--search-extra-info">
+                      authors: {{ book.complete.volumeInfo.authors }}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

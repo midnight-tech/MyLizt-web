@@ -25,7 +25,7 @@ import { AnimeService } from './services/anime/anime.service';
 import { SandboxPageComponent } from './pages/sandbox-page/sandbox-page.component';
 import { BookService } from './services/book/book.service';
 import { SerieService } from './services/serie/serie.service';
-import { HomeService } from './services/home-service/home.service';
+import { HomeContextService } from './services/home-context/home.service';
 import { HomeSearchComponent } from './pages/home-search/home-search.component';
 
 
@@ -75,7 +75,7 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   exports: [RouterModule],
-  providers: [ParseService, AuthenticationService, AnimeService, BookService, SerieService, HomeService],
+  providers: [ParseService, AuthenticationService, AnimeService, BookService, SerieService, HomeContextService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

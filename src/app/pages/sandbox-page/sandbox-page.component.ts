@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { bookCatalogo, CatalogoAnime, serieCatalogo } from 'src/app/data/interfaces';
+import { type } from 'node:os';
+import { BookCatalogo } from 'src/app/data/BookCatalogo';
+import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
+import { CatalogoAnimeInterface, SerieCatalogoInterface } from 'src/app/data/interfaces';
+import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { AnimeService } from 'src/app/services/anime/anime.service';
 import { BookService } from 'src/app/services/book/book.service';
-import { HomeService } from 'src/app/services/home-service/home.service';
+import { HomeContextService } from 'src/app/services/home-context/home.service';
 import { SerieService } from 'src/app/services/serie/serie.service';
 
 @Component({
@@ -12,9 +16,9 @@ import { SerieService } from 'src/app/services/serie/serie.service';
 })
 export class SandboxPageComponent implements OnInit {
 
-  animes: CatalogoAnime[] = []
-  books: bookCatalogo[] = []
-  series: serieCatalogo[] = []
+  animes: AnimeCatalogo[] = []
+  books: BookCatalogo[] = []
+  series: SerieCatalogo[] = []
 
   constructor(
     public animeService: AnimeService,
@@ -41,6 +45,15 @@ export class SandboxPageComponent implements OnInit {
     // serieService.search('stranger things', true).then((data) => {
     //   console.log("true --->", data)
     // })
+    // animeService.getAnimeComplete(1).then((value)=>{
+    //   console.log(value)
+    // })
+    // bookService.getBookComplete("gzYQCwAAQBAJ").then((value)=>{
+    //   console.log(value)
+    // })
+    serieService.partialSearch("the",true).then((value)=>{
+      console.log(value[0],typeof value[0])
+    })
 
     //        HOME CATALOGO
     // animeService.getHomeCatalogo().then((animes)=>{
