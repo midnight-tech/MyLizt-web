@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
   <p>
     home-search works!
   </p>
@@ -16,5 +16,34 @@
     <div *ngFor="let content of homeContext.serieResult">
       {{content.name}}
     </div>
+  </div>
+</div> -->
+
+<div class="container-grid">
+  <div class="title">
+    <h1>Resultados</h1>
+  </div>
+
+  <div class="pagination-top">
+    <p>1 2 3 4 5 6 7 8 9 10</p>
+  </div>
+
+  <div class="list">
+    <div class="list__card" *ngFor="let content of homeContext.animeResult">
+      <!-- {{ content.title }} -->
+      <app-card></app-card>
+    </div>
+    <div class="list__card" *ngFor="let content of homeContext.bookResult">
+      <!-- {{ content.volumeInfo.title }} -->
+      <app-card></app-card>
+    </div>
+    <div class="list__card" *ngFor="let content of homeContext.serieResult">
+      <!-- {{ content.name }} -->
+      <app-card></app-card>
+    </div>
+  </div>
+
+  <div class="pagination-bottom">
+    <p>1 2 3 4 5 6 7 8 9 10</p>
   </div>
 </div>

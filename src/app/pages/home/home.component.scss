@@ -4,19 +4,20 @@
 .grid-container {
   background-color: $black3;
   display: grid;
+  min-height: 100vh;
   grid-template-columns:
-    [menu-start] 18vw [menu-end content-start] repeat(
-      4,
-      [col-start] 1fr [col-end]
+    [menu-start] 18vw [menu-end void-left-start ] minmax(12rem, 1fr)
+    [ void-left-end content-start] repeat(
+      8,
+      [col-start] minmax(min-content, 40rem) [col-end]
     )
-    [content-end void-start] 0 [void-end];
+    [content-end void-right-start] minmax(12rem, 1fr) [void-right-end];
   grid-template-rows:
-    [top-bar-start] min-content [top-bar-end content-sart] repeat(
-      6,
-      [col-start] 1fr [col-end]
+    [top-bar-start] minmax(auto, 6rem) [top-bar-end content-start] repeat(
+      7,
+      [col-start] auto [col-end]
     )
     [content-end];
-  column-gap: 6rem;
 }
 
 .menu-container {
@@ -29,4 +30,17 @@
   display: grid;
   grid-column: content-start / content-end;
   grid-row: top-bar-start / top-bar-end;
+}
+
+.contents {
+  display: grid;
+  grid-column: content-start / content-end;
+  grid-row: content-start / content-end;
+}
+
+// Class utilizada para esconder o router que ocupa espaco quando o componente nao ocupa todo o espaco
+.hidden-router {
+  flex: 1 1 auto;
+  display: flex;
+  overflow: hidden;
 }
