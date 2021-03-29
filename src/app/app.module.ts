@@ -11,8 +11,8 @@ import { ChildAExampleComponent } from './pages/child-a-example/child-a-example.
 import { HomePageComponent } from './pages/home-page-example/home-page.component';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { ParseService } from './services/parse/parse.service';
-import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
-import { SignInComponent } from "./pages/sign-in/sign-in.component";
+import { LandingPageComponent } from './pages/landing-page/landing-page.component';
+import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { VerificationComponent } from './pages/verification/verification.component';
 import { FooterCompanyComponent } from './components/footer-company/footer-company.component';
@@ -27,29 +27,53 @@ import { BookService } from './services/book/book.service';
 import { SerieService } from './services/serie/serie.service';
 import { HomeService } from './services/home-service/home.service';
 import { HomeSearchComponent } from './pages/home-search/home-search.component';
-
-
+import { CardComponent } from './components/card/card.component';
 
 const routes: Routes = [
   { path: 'sandbox', component: SandboxPageComponent, pathMatch: 'full' },
-  { path: '', component: LandingPageComponent, pathMatch: 'full', canActivate: [UnloggedShieldService] },
-  { path: 'signin', component: SignInComponent, canActivate: [UnloggedShieldService] },
-  { path: 'signup', component: SignUpComponent, canActivate: [UnloggedShieldService] },
-  { path: 'verification', component: VerificationComponent, canActivate: [UnloggedShieldService] },
-  { path: 'home2', component: HomeComponent, canActivate: [UnloggedShieldService] }, //teste
   {
-    path: 'home', component: HomeComponent, canActivate: [LoggedShieldService], children: [
+    path: '',
+    component: LandingPageComponent,
+    pathMatch: 'full',
+    canActivate: [UnloggedShieldService],
+  },
+  {
+    path: 'signin',
+    component: SignInComponent,
+    canActivate: [UnloggedShieldService],
+  },
+  {
+    path: 'signup',
+    component: SignUpComponent,
+    canActivate: [UnloggedShieldService],
+  },
+  {
+    path: 'verification',
+    component: VerificationComponent,
+    canActivate: [UnloggedShieldService],
+  },
+  {
+    path: 'home2',
+    component: HomeComponent,
+    canActivate: [UnloggedShieldService],
+  }, //teste
+  {
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [LoggedShieldService],
+    children: [
       {
-        path: '', component: ChildAExampleComponent
+        path: '',
+        component: ChildAExampleComponent,
       },
       {
-        path: 'search', component: HomeSearchComponent
-      }
-    ]
+        path: 'search',
+        component: HomeSearchComponent,
+      },
+    ],
   },
-  { path: '**', redirectTo: '' }
-]
-
+  { path: '**', redirectTo: '' },
+];
 
 @NgModule({
   declarations: [
@@ -65,17 +89,25 @@ const routes: Routes = [
     MenuLeftComponent,
     TopBarComponent,
     SandboxPageComponent,
-    HomeSearchComponent
+    HomeSearchComponent,
+    CardComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
-    AngularFireModule.initializeApp(environment.firebaseConfig)
+    AngularFireModule.initializeApp(environment.firebaseConfig),
   ],
   exports: [RouterModule],
-  providers: [ParseService, AuthenticationService, AnimeService, BookService, SerieService, HomeService],
-  bootstrap: [AppComponent]
+  providers: [
+    ParseService,
+    AuthenticationService,
+    AnimeService,
+    BookService,
+    SerieService,
+    HomeService,
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

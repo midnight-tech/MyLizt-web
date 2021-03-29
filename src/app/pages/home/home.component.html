@@ -1,9 +1,15 @@
-<div class="grid-container">
+<div class="grid-container" fxFlexFill>
   <div class="menu-container">
     <app-menu-left></app-menu-left>
   </div>
+
   <div class="top-bar-container">
     <app-top-bar></app-top-bar>
   </div>
-  <router-outlet ></router-outlet>
+
+  <div class="contents">
+    <div fxFlex>
+      <router-outlet class="hidden-router"></router-outlet>
+    </div>
+  </div>
 </div>
