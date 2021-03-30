@@ -51,9 +51,9 @@ export class SandboxPageComponent implements OnInit {
     // bookService.getBookComplete("gzYQCwAAQBAJ").then((value)=>{
     //   console.log(value)
     // })
-    serieService.partialSearch("the",true).then((value)=>{
-      console.log(value[0],typeof value[0])
-    })
+    // serieService.partialSearch("the",true).then((value)=>{
+    //   console.log(value[0],typeof value[0])
+    // })
 
     //        HOME CATALOGO
     // animeService.getHomeCatalogo().then((animes)=>{

@@ -61,6 +61,6 @@ export class HomeContextService {
       this.seriePages = result.pages
       this.lastPageSerie = Math.ceil(page / 5)
     }
-    this.serieResult = this.seriePages[page % 5]
+    this.serieResult = this.seriePages[(page % 5) - 1]
   }
 }

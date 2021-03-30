@@ -1,94 +1,189 @@
-<div class="card">
-  <div class="card__side">
-    <div class="card__side--image">
-      <div class="card__side--image--flip">
-        <img
-          class="card__picture"
-          src="https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-          alt="teste"
-        />
-      </div>
-      <div class="card__side--image--flip card__side--image--flip--back">
-        <div class="card__side--image--flip--back--synopsis">
-          <p class="card__side--image--flip--back--synopsis--text">
-            The Great War finally came to an end after four long years of
-            conflict; fractured in two, the continent of Telesis slowly began to
-            flourish once again. Caught up in the bloodshed was Violet
-            Evergarden, a young girl raised for the sole purpose of decimating
-            enemy lines. Hospitalized and maimed in a bloody skirmish during the
-            War's final leg, she was left with only words from the person she
-            held dearest, but with no understanding of their meaning. Recovering
-            from her wounds, Violet starts a new life working at CH Postal
-            Services after a falling out with her new intended guardian family.
-            There, she witnesses by pure chance the work of an "Auto Memory
-            Doll," amanuenses that transcribe people's thoughts and feelings
-            into words on paper. Moved by the notion, Violet begins work as an
-            Auto Memory Doll, a trade that will take her on an adventure, one
-            that will reshape the lives of her clients and hopefully lead to
-            self-discovery. [Written by MAL Rewrite].
-          </p>
+<div *ngIf="anime" (mouseenter)="anime.getComplete()">
+  <div class="card">
+    <div class="card__side">
+      <div class="card__side--image">
+        <div class="card__side--image--flip">
+          <img class="card__picture"
+            [src]="anime.image_url"
+            alt="teste" />
         </div>
-        <div class="card__side--image--flip--back--description">
-          <div class="card__side--image--flip--back--description--category">
-            <p>Slice of Life, Drama, Fantasy</p>
+        <div class="card__side--image--flip card__side--image--flip--back">
+          <div class="card__side--image--flip--back--synopsis">
+            {{anime.complete?.synopsis}}
           </div>
-          <div class="card__side--image--flip--back--description--info">
-            <div class="card__side--image--flip--back--description--info--flex">
-              <div
-                class="card__side--image--flip--back--description--info--content"
-              >
-                <p
-                  class="card__side--image--flip--back--description--info--flex-text"
-                >
-                  Episodes
-                </p>
-                <p
-                  class="card__side--image--flip--back--description--info--flex-text"
-                >
-                  14
-                </p>
-              </div>
-              <div
-                class="card__side--image--flip--back--description--info--content"
-              >
-                <p
-                  class="card__side--image--flip--back--description--info--flex-text"
-                >
-                  Score
-                </p>
-                <p
-                  class="card__side--image--flip--back--description--info--flex-text"
-                >
-                  8.64
-                </p>
+          <div class="card__side--image--flip--back--description">
+            <div class="card__side--image--flip--back--description--category">
+              <p>
+                <span *ngFor="let category of anime.complete?.genres">
+                  {{category.name}}
+                </span>
+              </p>
+            </div>
+            <div class="card__side--image--flip--back--description--info">
+              <div class="card__side--image--flip--back--description--info--flex">
+                <div class="card__side--image--flip--back--description--info--content">
+                  <p class="card__side--image--flip--back--description--info--flex-text">
+                    Episodes
+                  </p>
+                  <p class="card__side--image--flip--back--description--info--flex-text">
+                    {{anime.complete?.episodes}}
+                  </p>
+                </div>
+                <div class="card__side--image--flip--back--description--info--content">
+                  <p class="card__side--image--flip--back--description--info--flex-text">
+                    Score
+                  </p>
+                  <p class="card__side--image--flip--back--description--info--flex-text">
+                    {{anime.complete?.score}}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="card__side--title">
-      <h1 class="card__title">Violet Evergarden</h1>
-    </div>
+      <div class="card__side--title">
+        <h1 class="card__title">{{anime.title}}</h1>
+      </div>
 
-    <div class="card__side--buttons">
-      <div class="container-flex">
-        <div class="card__button-container card__button-container--add">
-          <img
-            src="../../../assets/icon-notification.svg"
-            alt="Icon"
-            class="card__icon"
-          />
-          <a class="card__button">Add to list</a>
+      <div class="card__side--buttons">
+        <div class="container-flex">
+          <div class="card__button-container card__button-container--add">
+            <img src="../../../assets/icon-notification.svg" alt="Icon" class="card__icon" />
+            <a class="card__button">Add to list</a>
+          </div>
+          <div class="card__button-container card__button-container--recommend">
+            <img src="../../../assets/icon-search.svg" alt="Icon" class="card__icon" />
+            <a class="card__button">Recommend to...</a>
+          </div>
         </div>
-        <div class="card__button-container card__button-container--recommend">
-          <img
-            src="../../../assets/icon-search.svg"
-            alt="Icon"
-            class="card__icon"
-          />
-          <a class="card__button">Recommend to...</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="book" (mouseenter)="book.getComplete()">
+  <div class="card">
+    <div class="card__side">
+      <div class="card__side--image">
+        <div class="card__side--image--flip">
+          <img class="card__picture"
+            src="https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+            alt="teste" />
+        </div>
+        <div class="card__side--image--flip card__side--image--flip--back">
+          <div class="card__side--image--flip--back--synopsis">
+            <p class="card__side--image--flip--back--synopsis--text">
+              {{book.complete?.volumeInfo?.description}}
+            </p>
+          </div>
+          <div class="card__side--image--flip--back--description">
+            <div class="card__side--image--flip--back--description--category">
+              <p>{{book.complete?.volumeInfo?.categories}}</p>
+            </div>
+            <div class="card__side--image--flip--back--description--info">
+              <div class="card__side--image--flip--back--description--info--flex">
+                <div class="card__side--image--flip--back--description--info--content">
+                  <p class="card__side--image--flip--back--description--info--flex-text">
+                    pages
+                  </p>
+                  <p class="card__side--image--flip--back--description--info--flex-text">
+                    {{book.complete?.volumeInfo?.pageCount}}
+                  </p>
+                </div>
+                <div class="card__side--image--flip--back--description--info--content">
+                  <p class="card__side--image--flip--back--description--info--flex-text">
+                    Score
+                  </p>
+                  <p class="card__side--image--flip--back--description--info--flex-text">
+                    {{book.complete?.volumeInfo?.averageRating}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card__side--title">
+        <h1 class="card__title">{{book.volumeInfo.title}}</h1>
+      </div>
+
+      <div class="card__side--buttons">
+        <div class="container-flex">
+          <div class="card__button-container card__button-container--add">
+            <img src="../../../assets/icon-notification.svg" alt="Icon" class="card__icon" />
+            <a class="card__button">Add to list</a>
+          </div>
+          <div class="card__button-container card__button-container--recommend">
+            <img src="../../../assets/icon-search.svg" alt="Icon" class="card__icon" />
+            <a class="card__button">Recommend to...</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="serie" (mouseenter)="serie.getComplete()">
+  <div class="card">
+    <div class="card__side">
+      <div class="card__side--image">
+        <div class="card__side--image--flip">
+          <img class="card__picture"
+            [src]="serie.backdrop_path"
+            alt="teste" />
+        </div>
+        <div class="card__side--image--flip card__side--image--flip--back">
+          <div class="card__side--image--flip--back--synopsis">
+            <p class="card__side--image--flip--back--synopsis--text">
+              {{serie.complete?.overview}}
+            </p>
+          </div>
+          <div class="card__side--image--flip--back--description">
+            <div class="card__side--image--flip--back--description--category">
+              <p>
+                <span *ngFor="let genre of serie.complete?.genres">{{genre.name}}</span>
+              </p>
+            </div>
+            <div class="card__side--image--flip--back--description--info">
+              <div class="card__side--image--flip--back--description--info--flex">
+                <div class="card__side--image--flip--back--description--info--content">
+                  <p class="card__side--image--flip--back--description--info--flex-text">
+                    Seasons
+                  </p>
+                  <p class="card__side--image--flip--back--description--info--flex-text">
+                    {{serie.complete?.number_of_seasons}}
+                  </p>
+                </div>
+                <div class="card__side--image--flip--back--description--info--content">
+                  <p class="card__side--image--flip--back--description--info--flex-text">
+                    Score
+                  </p>
+                  <p class="card__side--image--flip--back--description--info--flex-text">
+                    {{serie.complete?.vote_average}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card__side--title">
+        <h1 class="card__title">{{serie.name}}</h1>
+      </div>
+
+      <div class="card__side--buttons">
+        <div class="container-flex">
+          <div class="card__button-container card__button-container--add">
+            <img src="../../../assets/icon-notification.svg" alt="Icon" class="card__icon" />
+            <a class="card__button">Add to list</a>
+          </div>
+          <div class="card__button-container card__button-container--recommend">
+            <img src="../../../assets/icon-search.svg" alt="Icon" class="card__icon" />
+            <a class="card__button">Recommend to...</a>
+          </div>
         </div>
       </div>
     </div>

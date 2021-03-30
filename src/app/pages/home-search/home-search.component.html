@@ -31,15 +31,15 @@
   <div class="list">
     <div class="list__card" *ngFor="let content of homeContext.animeResult">
       <!-- {{ content.title }} -->
-      <app-card></app-card>
+      <app-card [anime]="content"></app-card>
     </div>
     <div class="list__card" *ngFor="let content of homeContext.bookResult">
       <!-- {{ content.volumeInfo.title }} -->
-      <app-card></app-card>
+      <app-card [book]="content"></app-card>
     </div>
     <div class="list__card" *ngFor="let content of homeContext.serieResult">
       <!-- {{ content.name }} -->
-      <app-card></app-card>
+      <app-card [serie]="content"></app-card>
     </div>
   </div>
 

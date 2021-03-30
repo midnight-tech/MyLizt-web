@@ -11,7 +11,7 @@ export interface CatalogoAnimeInterface {
   end_date: string,
   rated?: string
   complete?: CompleteAnime
-  getComplete : Function
+  getComplete: Function
 }
 
 export type CompleteAnime = {
@@ -122,8 +122,8 @@ export interface BookCatalogoInterface {
     subtitle: string,
     title: string
   }
-  complete? : CompleteBook,
-  getComplete : Function
+  complete?: CompleteBook,
+  getComplete: Function
 }
 
 export type CompleteBook = {
@@ -173,7 +173,7 @@ export type CompleteBook = {
   }
 }
 
-export interface SerieCatalogoInterface  {
+export interface SerieCatalogoInterface {
   backdrop_path: string,
   id: number,
   name: string,
@@ -182,7 +182,7 @@ export interface SerieCatalogoInterface  {
   vote_average: number,
   popularity: number,
   complete?: CompleteSerie,
-  getComplete() : void
+  getComplete(): void
 }
 
 export type CompleteSerie = {
@@ -279,3 +279,8 @@ export type CompleteSerie = {
 }
 
 export type search = 'ANIME' | 'SERIE' | 'BOOK'
+
+export interface friends {
+  "user": Parse.User | null,
+  "listRecomendation": Parse.Object | null,
+}

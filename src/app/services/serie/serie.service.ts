@@ -54,7 +54,7 @@ export class SerieService {
     });
     let pages = [];
     for (let i = 0, j = withImage.length; i < j; i += 12) {
-      pages.push(result.data.content.slice(i, i + 12));
+      pages.push(withImage.slice(i, i + 12));
     }
     return { pages, lastPage: result.data.lastPage };
   }
@@ -62,6 +62,9 @@ export class SerieService {
   async getSerieComplete(id:number = 1){
     try{
       const result = await axios.get<CompleteSerie>(`${environment.url_serie_proxy_base}/api/TMDB/complete/${id}`)
+      if(result.data.backdrop_path != null){
+        result.data.backdrop_path = `https://image.tmdb.org/t/p/original${result.data.backdrop_path}`
+      }
       return result.data
     }
     catch (e){

@@ -1,3 +1,4 @@
+import { environment } from "src/environments/environment";
 import { SerieService } from "../services/serie/serie.service";
 import { CompleteSerie, SerieCatalogoInterface } from "./interfaces";
 
@@ -26,10 +27,16 @@ export class SerieCatalogo implements SerieCatalogoInterface {
     getComplete() {
         if (this.functionCalled == false) {
             this.functionCalled = true
-            console.log(this.complete, "fui chamado")
             if (!this.complete) {
                 this.serieService.getSerieComplete(this.id).then((value) => {
                     this.complete = value
+                    this.functionCalled = false
+                }).catch((error)=>{
+                    if(environment.production == false){
+                        console.log(error)
+                    }
+                }).finally(()=>{
+                    this.functionCalled = false
                 })
             }
             

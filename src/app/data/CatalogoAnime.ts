@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { AnimeService } from '../services/anime/anime.service';
 import { CatalogoAnimeInterface, CompleteAnime } from './interfaces'
 
@@ -15,6 +16,7 @@ export class AnimeCatalogo implements CatalogoAnimeInterface {
     end_date: string;
     rated?: string;
     complete?: CompleteAnime;
+    private functionCalled = false
 
     constructor(data: CatalogoAnimeInterface, private animeService: AnimeService) {
         this.mal_id = data.mal_id
@@ -31,10 +33,22 @@ export class AnimeCatalogo implements CatalogoAnimeInterface {
         this.complete = data.complete;
     }
 
-    getComplete(){
-        this.animeService.getAnimeComplete(this.mal_id).then((value)=>{
-            this.complete = value
-        })
+    getComplete() {
+        if (this.functionCalled == false) {
+            this.functionCalled = true
+            if (!this.complete) {
+                this.animeService.getAnimeComplete(this.mal_id).then((value) => {
+                    this.complete = value
+                    this.functionCalled = false
+                }).catch((error)=>{
+                    if(environment.production == false){
+                        console.log(error)
+                    }
+                }).finally(()=>{
+                    this.functionCalled = false
+                })
+            }
+        }
     }
 
 

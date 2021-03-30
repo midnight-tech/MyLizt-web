@@ -70,7 +70,6 @@ export class TopBarComponent implements OnInit {
   }
 
   searchEvent() {
-    console.log(this.searchField.value.length)
     if (this.searchField.value.length < 3) {
       this.cleanList()
       this.isActiveSearch = false

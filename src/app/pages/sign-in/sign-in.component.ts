@@ -32,7 +32,6 @@ export class SignInComponent implements OnInit {
   loginWithEmail() {
     this.authService.signIn(this.email.value,this.password.value).then(()=>{
       // Success
-      console.log("logado")
       this.navigateLogged()
 
     }).catch((error)=>{
