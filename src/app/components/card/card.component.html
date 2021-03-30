@@ -3,38 +3,54 @@
     <div class="card__side">
       <div class="card__side--image">
         <div class="card__side--image--flip">
-          <img class="card__picture"
-            [src]="anime.image_url"
-            alt="teste" />
+          <img class="card__picture" [src]="anime.image_url" alt="teste" />
         </div>
         <div class="card__side--image--flip card__side--image--flip--back">
           <div class="card__side--image--flip--back--synopsis">
-            {{anime.complete?.synopsis}}
+            <p class="card__side--image--flip--back--synopsis--text">
+              {{ anime.complete?.synopsis }}
+            </p>
           </div>
           <div class="card__side--image--flip--back--description">
             <div class="card__side--image--flip--back--description--category">
-              <p>
+              <p
+                class="card__side--image--flip--back--description--category--text"
+              >
                 <span *ngFor="let category of anime.complete?.genres">
-                  {{category.name}}
+                  {{ category.name }}
                 </span>
               </p>
             </div>
             <div class="card__side--image--flip--back--description--info">
-              <div class="card__side--image--flip--back--description--info--flex">
-                <div class="card__side--image--flip--back--description--info--content">
-                  <p class="card__side--image--flip--back--description--info--flex-text">
+              <div
+                class="card__side--image--flip--back--description--info--flex"
+              >
+                <div
+                  class="card__side--image--flip--back--description--info--content"
+                >
+                  <p
+                    class="card__side--image--flip--back--description--info--flex-text"
+                  >
                     Episodes
                   </p>
-                  <p class="card__side--image--flip--back--description--info--flex-text">
-                    {{anime.complete?.episodes}}
+                  <p
+                    class="card__side--image--flip--back--description--info--flex-text"
+                  >
+                    {{ anime.complete?.episodes }}
                   </p>
                 </div>
-                <div class="card__side--image--flip--back--description--info--content">
-                  <p class="card__side--image--flip--back--description--info--flex-text">
+                <div
+                  class="card__side--image--flip--back--description--info--content"
+                >
+                  <p
+                    class="card__side--image--flip--back--description--info--flex-text"
+                  >
                     Score
                   </p>
-                  <p class="card__side--image--flip--back--description--info--flex-text">
-                    {{anime.complete?.score}}
+                  <p
+                    class="card__side--image--flip--back--description--info--flex-text"
+                  >
+                    {{ anime.complete?.score }}
                   </p>
                 </div>
               </div>
@@ -44,17 +60,25 @@
       </div>
 
       <div class="card__side--title">
-        <h1 class="card__title">{{anime.title}}</h1>
+        <h1 class="card__title">{{ anime.title }}</h1>
       </div>
 
       <div class="card__side--buttons">
         <div class="container-flex">
           <div class="card__button-container card__button-container--add">
-            <img src="../../../assets/icon-notification.svg" alt="Icon" class="card__icon" />
+            <img
+              src="../../../assets/icon-notification.svg"
+              alt="Icon"
+              class="card__icon"
+            />
             <a class="card__button">Add to list</a>
           </div>
           <div class="card__button-container card__button-container--recommend">
-            <img src="../../../assets/icon-search.svg" alt="Icon" class="card__icon" />
+            <img
+              src="../../../assets/icon-search.svg"
+              alt="Icon"
+              class="card__icon"
+            />
             <a class="card__button">Recommend to...</a>
           </div>
         </div>
@@ -67,36 +91,56 @@
     <div class="card__side">
       <div class="card__side--image">
         <div class="card__side--image--flip">
-          <img class="card__picture"
+          <img
+            class="card__picture"
             src="https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-            alt="teste" />
+            alt="teste"
+          />
         </div>
         <div class="card__side--image--flip card__side--image--flip--back">
           <div class="card__side--image--flip--back--synopsis">
             <p class="card__side--image--flip--back--synopsis--text">
-              {{book.complete?.volumeInfo?.description}}
+              {{ book.complete?.volumeInfo?.description }}
             </p>
           </div>
           <div class="card__side--image--flip--back--description">
             <div class="card__side--image--flip--back--description--category">
-              <p>{{book.complete?.volumeInfo?.categories}}</p>
+              <p
+                class="card__side--image--flip--back--description--category--text"
+              >
+                {{ book.complete?.volumeInfo?.categories }}
+              </p>
             </div>
             <div class="card__side--image--flip--back--description--info">
-              <div class="card__side--image--flip--back--description--info--flex">
-                <div class="card__side--image--flip--back--description--info--content">
-                  <p class="card__side--image--flip--back--description--info--flex-text">
+              <div
+                class="card__side--image--flip--back--description--info--flex"
+              >
+                <div
+                  class="card__side--image--flip--back--description--info--content"
+                >
+                  <p
+                    class="card__side--image--flip--back--description--info--flex-text"
+                  >
                     pages
                   </p>
-                  <p class="card__side--image--flip--back--description--info--flex-text">
-                    {{book.complete?.volumeInfo?.pageCount}}
+                  <p
+                    class="card__side--image--flip--back--description--info--flex-text"
+                  >
+                    {{ book.complete?.volumeInfo?.pageCount }}
                   </p>
                 </div>
-                <div class="card__side--image--flip--back--description--info--content">
-                  <p class="card__side--image--flip--back--description--info--flex-text">
+                <div
+                  class="card__side--image--flip--back--description--info--content"
+                >
+                  <p
+                    class="card__side--image--flip--back--description--info--flex-text"
+                  >
                     Score
                   </p>
-                  <p class="card__side--image--flip--back--description--info--flex-text">
-                    {{book.complete?.volumeInfo?.averageRating}}
+                  <p
+                    class="card__side--image--flip--back--description--info--flex-text"
+                  >
+                    {{ book.complete?.volumeInfo?.averageRating }}
                   </p>
                 </div>
               </div>
@@ -106,17 +150,25 @@
       </div>
 
       <div class="card__side--title">
-        <h1 class="card__title">{{book.volumeInfo.title}}</h1>
+        <h1 class="card__title">{{ book.volumeInfo.title }}</h1>
       </div>
 
       <div class="card__side--buttons">
         <div class="container-flex">
           <div class="card__button-container card__button-container--add">
-            <img src="../../../assets/icon-notification.svg" alt="Icon" class="card__icon" />
+            <img
+              src="../../../assets/icon-notification.svg"
+              alt="Icon"
+              class="card__icon"
+            />
             <a class="card__button">Add to list</a>
           </div>
           <div class="card__button-container card__button-container--recommend">
-            <img src="../../../assets/icon-search.svg" alt="Icon" class="card__icon" />
+            <img
+              src="../../../assets/icon-search.svg"
+              alt="Icon"
+              class="card__icon"
+            />
             <a class="card__button">Recommend to...</a>
           </div>
         </div>
@@ -130,38 +182,54 @@
     <div class="card__side">
       <div class="card__side--image">
         <div class="card__side--image--flip">
-          <img class="card__picture"
-            [src]="serie.backdrop_path"
-            alt="teste" />
+          <img class="card__picture" [src]="serie.backdrop_path" alt="teste" />
         </div>
         <div class="card__side--image--flip card__side--image--flip--back">
           <div class="card__side--image--flip--back--synopsis">
             <p class="card__side--image--flip--back--synopsis--text">
-              {{serie.complete?.overview}}
+              {{ serie.complete?.overview }}
             </p>
           </div>
           <div class="card__side--image--flip--back--description">
             <div class="card__side--image--flip--back--description--category">
-              <p>
-                <span *ngFor="let genre of serie.complete?.genres">{{genre.name}}</span>
+              <p
+                class="card__side--image--flip--back--description--category--text"
+              >
+                <span *ngFor="let genre of serie.complete?.genres">{{
+                  genre.name
+                }}</span>
               </p>
             </div>
             <div class="card__side--image--flip--back--description--info">
-              <div class="card__side--image--flip--back--description--info--flex">
-                <div class="card__side--image--flip--back--description--info--content">
-                  <p class="card__side--image--flip--back--description--info--flex-text">
+              <div
+                class="card__side--image--flip--back--description--info--flex"
+              >
+                <div
+                  class="card__side--image--flip--back--description--info--content"
+                >
+                  <p
+                    class="card__side--image--flip--back--description--info--flex-text"
+                  >
                     Seasons
                   </p>
-                  <p class="card__side--image--flip--back--description--info--flex-text">
-                    {{serie.complete?.number_of_seasons}}
+                  <p
+                    class="card__side--image--flip--back--description--info--flex-text"
+                  >
+                    {{ serie.complete?.number_of_seasons }}
                   </p>
                 </div>
-                <div class="card__side--image--flip--back--description--info--content">
-                  <p class="card__side--image--flip--back--description--info--flex-text">
+                <div
+                  class="card__side--image--flip--back--description--info--content"
+                >
+                  <p
+                    class="card__side--image--flip--back--description--info--flex-text"
+                  >
                     Score
                   </p>
-                  <p class="card__side--image--flip--back--description--info--flex-text">
-                    {{serie.complete?.vote_average}}
+                  <p
+                    class="card__side--image--flip--back--description--info--flex-text"
+                  >
+                    {{ serie.complete?.vote_average }}
                   </p>
                 </div>
               </div>
@@ -171,17 +239,25 @@
       </div>
 
       <div class="card__side--title">
-        <h1 class="card__title">{{serie.name}}</h1>
+        <h1 class="card__title">{{ serie.name }}</h1>
       </div>
 
       <div class="card__side--buttons">
         <div class="container-flex">
           <div class="card__button-container card__button-container--add">
-            <img src="../../../assets/icon-notification.svg" alt="Icon" class="card__icon" />
+            <img
+              src="../../../assets/icon-notification.svg"
+              alt="Icon"
+              class="card__icon"
+            />
             <a class="card__button">Add to list</a>
           </div>
           <div class="card__button-container card__button-container--recommend">
-            <img src="../../../assets/icon-search.svg" alt="Icon" class="card__icon" />
+            <img
+              src="../../../assets/icon-search.svg"
+              alt="Icon"
+              class="card__icon"
+            />
             <a class="card__button">Recommend to...</a>
           </div>
         </div>

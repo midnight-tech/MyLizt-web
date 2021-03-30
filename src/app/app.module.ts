@@ -28,6 +28,7 @@ import { SerieService } from './services/serie/serie.service';
 import { HomeContextService } from './services/home-context/home.service';
 import { HomeSearchComponent } from './pages/home-search/home-search.component';
 import { CardComponent } from './components/card/card.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 const routes: Routes = [
   { path: 'sandbox', component: SandboxPageComponent, pathMatch: 'full' },
@@ -91,6 +92,7 @@ const routes: Routes = [
     SandboxPageComponent,
     HomeSearchComponent,
     CardComponent,
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,

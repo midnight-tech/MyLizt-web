@@ -1,0 +1,29 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "../../sass/abstract/variables";
+
+.page-item {
+  min-height: 3.5rem;
+  min-width: 3.5rem;
+}
+
+.page-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $white;
+  background-color: $black4;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  height: 100%;
+
+  &:hover {
+    background-color: rgba($black3, 0.7);
+    color: $primary1;
+    border: none;
+  }
+}
+
+.pagination {
+  margin-bottom: 0;
+}

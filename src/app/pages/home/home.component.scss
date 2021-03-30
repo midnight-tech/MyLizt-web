@@ -14,10 +14,10 @@
     [content-end void-right-start] minmax(12rem, 1fr) [void-right-end];
   grid-template-rows:
     [top-bar-start] minmax(auto, 6rem) [top-bar-end content-start] repeat(
-      7,
+      6,
       [col-start] auto [col-end]
     )
-    [content-end];
+    [content-end footer-start] min-content [footer-end];
 }
 
 .menu-container {
@@ -36,6 +36,13 @@
   display: grid;
   grid-column: content-start / content-end;
   grid-row: content-start / content-end;
+}
+
+.footer {
+  display: grid;
+  grid-column: content-start / content-end;
+  grid-row: footer-start / footer-end;
+  font-size: 1.6rem;
 }
 
 // Class utilizada para esconder o router que ocupa espaco quando o componente nao ocupa todo o espaco

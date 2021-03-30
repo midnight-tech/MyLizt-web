@@ -1,12 +1,14 @@
+@import "../../sass/abstract/variables";
+
 .container-grid {
   display: grid;
   grid-template-columns:
     [content-start] repeat(4, [col-start] minmax(min-content, 1fr) [col-end])
     [content-end];
   grid-template-rows:
-    [title-start] 10rem [title-end pagination-top-start] 5rem
+    [title-start] min-content [title-end pagination-top-start] min-content
     [pagination-top-end cards-start] minmax(auto, 1fr)
-    [cards-end pagination-bottom-start] 5rem
+    [cards-end pagination-bottom-start] min-content
     [pagination-bottom-end];
   height: 100%;
 }
@@ -15,18 +17,36 @@
   display: grid;
   grid-column: content-start / content-end;
   grid-row: title-start / title-end;
+
+  &__text {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: $primary1;
+    font-size: 4rem;
+    text-transform: uppercase;
+    font-weight: 100;
+    padding: 5rem 0;
+    letter-spacing: 1rem;
+  }
 }
 
-.pagination-top {
+.pagination {
   display: grid;
-  grid-column: content-start / content-end;
-  grid-row: pagination-top-start / pagination-top-end;
-}
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
 
-.pagination-bottom {
-  display: grid;
-  grid-column: content-start / content-end;
-  grid-row: pagination-bottom-start / pagination-bottom-end;
+  &--top {
+    grid-column: content-start / content-end;
+    grid-row: pagination-top-start / pagination-top-end;
+    padding-top: 0rem;
+  }
+
+  &--bottom {
+    grid-column: content-start / content-end;
+    grid-row: pagination-bottom-start / pagination-bottom-end;
+  }
 }
 
 .list {

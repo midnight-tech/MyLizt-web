@@ -73,6 +73,10 @@
               grid-row: category-start / category-end;
               background-color: $black4;
               padding: 1rem;
+
+              &--text {
+                overflow: hidden;
+              }
             }
 
             &--info {
