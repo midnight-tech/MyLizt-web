@@ -1,9 +1,9 @@
 .grid-container-detail {
   display: grid;
   grid-template-columns:
-    [void-start] 2rem [void-end header-start about-start] minmax(
+    [void-start header-start] 2rem [void-end about-start] minmax(
       min-content,
-      14rem
+      24rem
     )
     [about-end synopsis-start] minmax(min-content, 1fr)
     [synopsis-end header-end];

@@ -1,0 +1,41 @@
+@import "../../sass/abstract/variables";
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin-top: 2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid $white;
+  width: 100%;
+  color: $white;
+
+  &__text {
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    letter-spacing: 0.3rem;
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  color: $white;
+  line-height: 2;
+
+  &__type {
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-right: 0.5rem;
+  }
+
+  &__value {
+    text-transform: none;
+    font-weight: normal;
+    margin-right: 0;
+  }
+}

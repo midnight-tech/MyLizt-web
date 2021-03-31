@@ -31,6 +31,7 @@ import { CardComponent } from './components/card/card.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { HeaderDetailComponent } from './components/header-detail/header-detail.component';
 import { DetailComponent } from './pages/detail/detail.component';
+import { AboutDetailComponent } from './components/about-detail/about-detail.component';
 
 const routes: Routes = [
   { path: 'sandbox', component: SandboxPageComponent, pathMatch: 'full' },
@@ -101,6 +102,7 @@ const routes: Routes = [
     PaginationComponent,
     HeaderDetailComponent,
     DetailComponent,
+    AboutDetailComponent,
   ],
   imports: [
     BrowserModule,
