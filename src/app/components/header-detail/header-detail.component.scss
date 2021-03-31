@@ -1,0 +1,258 @@
+@import "../../sass/abstract/variables";
+
+.grid-container-header {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns:
+    [void-start back-cover-start] 2rem [void-end title-start front-cover-start] minmax(
+      auto,
+      24rem
+    )
+    [front-cover-end score-start] auto
+    [score-end my-score-start] auto
+    [my-score-end serie-info-start] minmax(auto, 1fr)
+    [serie-info-end void-space-start] 1fr
+    [void-space-end episodes-start] auto
+    [episodes-end buttons-start] auto
+    [buttons-end back-cover-end title-end];
+
+  grid-template-rows:
+    [back-cover-start title-start] minmax(auto, 8rem)
+    [title-end front-cover-start] minmax(auto, 15rem)
+    [cover-info-start] minmax(auto, 7rem)
+    [cover-info-end back-cover-end info-out-cover-start] minmax(auto, 14rem)
+    [info-out-cover-end front-cover-end];
+}
+
+.backcover {
+  grid-column: back-cover-start / back-cover-end;
+  grid-row: back-cover-start / back-cover-end;
+  z-index: 0;
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: $the-border-radius;
+    filter: brightness(0.4);
+  }
+}
+
+.title {
+  grid-column: title-start / title-end;
+  grid-row: title-start / title-end;
+  z-index: 1;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  &__text {
+    text-transform: uppercase;
+    color: $white;
+  }
+
+  &__second-text {
+    text-transform: uppercase;
+    color: rgba($white, 0.8);
+    font-size: 1.6rem;
+  }
+}
+
+.frontcover {
+  grid-column: front-cover-start / front-cover-end;
+  grid-row: front-cover-start / front-cover-end;
+  z-index: 1;
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: $the-border-radius;
+  }
+}
+
+.cover-info {
+  grid-column: front-cover-end / back-cover-end;
+  grid-row: cover-info-start / cover-info-end;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+
+  &__flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__title {
+    font-size: 2rem;
+    color: $white;
+    text-transform: uppercase;
+  }
+
+  &__info {
+    font-size: 2rem;
+    color: $white;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+}
+
+.score {
+  grid-column: score-start / score-end;
+  grid-row: info-out-cover-start / info-out-cover-end;
+  z-index: 1;
+  margin: 2rem 0;
+  padding: 0 2rem;
+  border-right: 1px solid $white;
+  display: flex;
+  align-self: baseline;
+
+  &__flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 2rem;
+    color: $white;
+    text-transform: uppercase;
+  }
+
+  &__info {
+    font-size: 2.6rem;
+    color: $white;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  &__caption {
+    font-size: 1.6rem;
+    color: $white;
+    text-transform: uppercase;
+  }
+}
+
+.my-score {
+  grid-column: my-score-start / my-score-end;
+  grid-row: info-out-cover-start / info-out-cover-end;
+  z-index: 1;
+  margin: 2rem 0;
+  padding: 0 2rem;
+  display: flex;
+  align-self: baseline;
+
+  &__flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 2rem;
+    color: $white;
+    text-transform: uppercase;
+  }
+
+  &__info {
+    font-size: 2.6rem;
+    color: $primary1;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+}
+
+.episodes {
+  grid-column: episodes-start / episodes-end;
+  grid-row: info-out-cover-start / info-out-cover-end;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  align-self: center;
+
+  &__flex {
+    display: flex;
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 2rem;
+    color: $white;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  &__info {
+    font-size: 2rem;
+    color: $white;
+    text-transform: uppercase;
+  }
+
+  &__icon {
+    height: 3rem;
+    width: 3rem;
+    margin: 0 0.5rem;
+    cursor: pointer;
+  }
+}
+
+.button {
+  grid-column: buttons-start / buttons-end;
+  grid-row: info-out-cover-start / info-out-cover-end;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  padding: 1.5rem 0;
+
+  &__flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    font-size: 1.4rem;
+    border-radius: $the-border-radius;
+    cursor: pointer;
+
+    &--recommend {
+      color: $primary1;
+      background-color: transparent;
+      border: 1px solid $primary1;
+      margin-bottom: 1.5rem;
+
+      &:hover {
+        color: $white;
+        background-color: $primary1;
+      }
+    }
+
+    &--remove {
+      background-color: $primary1;
+      color: $white;
+
+      &:hover {
+        color: $black3;
+        filter: brightness(1.2);
+      }
+    }
+  }
+
+  &__icon {
+    height: 3rem;
+    width: 3rem;
+    margin-right: 0.5rem;
+  }
+}
