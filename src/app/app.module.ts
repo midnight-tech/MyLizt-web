@@ -29,6 +29,8 @@ import { HomeContextService } from './services/home-context/home.service';
 import { HomeSearchComponent } from './pages/home-search/home-search.component';
 import { CardComponent } from './components/card/card.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { HeaderDetailComponent } from './components/header-detail/header-detail.component';
+import { DetailComponent } from './pages/detail/detail.component';
 
 const routes: Routes = [
   { path: 'sandbox', component: SandboxPageComponent, pathMatch: 'full' },
@@ -71,6 +73,10 @@ const routes: Routes = [
         path: 'search',
         component: HomeSearchComponent,
       },
+      {
+        path: 'detail',
+        component: DetailComponent,
+      },
     ],
   },
   { path: '**', redirectTo: '' },
@@ -93,6 +99,8 @@ const routes: Routes = [
     HomeSearchComponent,
     CardComponent,
     PaginationComponent,
+    HeaderDetailComponent,
+    DetailComponent,
   ],
   imports: [
     BrowserModule,

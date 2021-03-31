@@ -1,0 +1,26 @@
+.grid-container-detail {
+  display: grid;
+  grid-template-columns:
+    [void-start] 2rem [void-end header-start about-start] minmax(
+      min-content,
+      14rem
+    )
+    [about-end synopsis-start] minmax(min-content, 1fr)
+    [synopsis-end header-end];
+  grid-template-rows:
+    [header-start] min-content [header-end content-start] minmax(
+      min-content,
+      1fr
+    )
+    [content-end];
+}
+
+.header {
+  grid-column: header-start / header-end;
+  grid-row: header-start / header-end;
+}
+
+.about {
+  grid-column: about-start / about-end;
+  grid-row: content-start / content-end;
+}
