@@ -25,7 +25,7 @@
   </div>
 
   <div class="pagination pagination--top">
-    <app-pagination></app-pagination>
+    <app-pagination [atualPage]="homeContext.page" [totalPage]="homeContext.totalPage"></app-pagination>
   </div>
 
   <div class="list">
@@ -44,6 +44,6 @@
   </div>
 
   <div class="pagination pagination--bottom">
-    <app-pagination></app-pagination>
+    <app-pagination [atualPage]="homeContext.page" [totalPage]="homeContext.totalPage"></app-pagination>
   </div>
 </div>
