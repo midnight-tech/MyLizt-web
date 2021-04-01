@@ -7,17 +7,14 @@ import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
-  styleUrls: ['./card.component.scss']
+  styleUrls: ['./card.component.scss'],
 })
 export class CardComponent implements OnInit {
+  @Input() anime?: AnimeCatalogo;
+  @Input() serie?: SerieCatalogo;
+  @Input() book?: BookCatalogo;
 
-  @Input() anime?: AnimeCatalogo
-  @Input() serie?: SerieCatalogo
-  @Input() book?: BookCatalogo
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

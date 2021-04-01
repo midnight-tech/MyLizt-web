@@ -1,15 +1,23 @@
-<div class="flex-container">
+<!--ANIME  -->
+<div class="flex-container" *ngIf="type == 'ANIME'">
   <div class="title">
     <h1 class="title__text">Alternative Titles</h1>
   </div>
   <div class="info">
-    <p class="info__type">English:</p>
-    <p class="info__value">Violet Evergarden</p>
+    <span class="info__type"
+      >English: <span class="info__value">{{ anime.title_english }}</span></span
+    >
   </div>
   <div class="info">
     <span class="info__type"
       >Japanese:
-      <span class="info__value">ヴァイオレット・エヴァーガーデン</span></span
+      <span class="info__value">{{ anime.title_japanese }}</span></span
+    >
+  </div>
+  <div class="info" *ngIf="anime.title_synonyms">
+    <span class="info__type"
+      >Japanese:
+      <span class="info__value">{{ anime.title_synonyms }}</span></span
     >
   </div>
 
@@ -17,33 +25,33 @@
     <h1 class="title__text">Information</h1>
   </div>
   <div class="info">
-    <span class="info__type">Type: <span class="info__value">TV</span></span>
-  </div>
-  <div class="info">
     <span class="info__type"
-      >Episodes: <span class="info__value">13</span></span
+      >Type: <span class="info__value">{{ anime.type }}</span></span
     >
   </div>
   <div class="info">
     <span class="info__type"
-      >Status: <span class="info__value">Finished Airing</span></span
+      >Episodes: <span class="info__value">{{ anime.episodes }}</span></span
     >
   </div>
   <div class="info">
     <span class="info__type"
-      >Aired:
-      <span class="info__value">Jan 11, 2018 to Apr 5, 2018 </span></span
+      >Status: <span class="info__value">{{ anime.status }}</span></span
     >
   </div>
   <div class="info">
     <span class="info__type"
-      >Premiered: <span class="info__value">Winter 2018</span></span
+      >Aired: <span class="info__value">{{ anime.aired.string }}</span></span
     >
   </div>
   <div class="info">
     <span class="info__type"
-      >Brodcast:
-      <span class="info__value">Thursdays at 00:00 (JST) </span></span
+      >Premiered: <span class="info__value">{{ anime.premiered }}</span></span
+    >
+  </div>
+  <div class="info">
+    <span class="info__type"
+      >Brodcast: <span class="info__value">{{ anime.broadcast }}</span></span
     >
   </div>
   <div class="info">
@@ -66,7 +74,7 @@
   </div>
   <div class="info">
     <span class="info__type"
-      >Sources: <span class="info__value">Light novel</span></span
+      >Sources: <span class="info__value">{{ anime.source }}</span></span
     >
   </div>
   <div class="info">
@@ -77,12 +85,12 @@
   </div>
   <div class="info">
     <span class="info__type"
-      >Duration: <span class="info__value">24 min per ep</span></span
+      >Duration: <span class="info__value">{{ anime.duration }}</span></span
     >
   </div>
   <div class="info">
     <span class="info__type"
-      >Rating: <span class="info__value">PG-13 - Teens 13 or older</span></span
+      >Rating: <span class="info__value">{{ anime.rating }}</span></span
     >
   </div>
 
@@ -117,7 +125,7 @@
     <h1 class="title__text">Opening theme</h1>
   </div>
   <div class="info">
-    <span class="info__value">"Sincerely" by TRUE</span>
+    <span class="info__value">{{ anime.opening_themes }}</span>
   </div>
 
   <div class="title">
@@ -130,5 +138,103 @@
   </div>
   <div class="info">
     <span class="info__value">#2: "Believe in..." by Aira Yuuki (ep 9)</span>
+  </div>
+</div>
+
+<!-- SERIE -->
+<div class="flex-container" *ngIf="type == 'SERIE'">
+  <div class="title">
+    <h1 class="title__text">Tagline</h1>
+  </div>
+  <div class="info">
+    <span class="info__value">Between darkness and deliverance</span>
+  </div>
+
+  <div class="title">
+    <h1 class="title__text">Information</h1>
+  </div>
+  <div class="info">
+    <span class="info__type"
+      >Type: <span class="info__value">Scripted</span></span
+    >
+  </div>
+  <div class="info">
+    <span class="info__type"
+      >Episodes: <span class="info__value">22</span></span
+    >
+  </div>
+  <div class="info">
+    <span class="info__type"
+      >Status: <span class="info__value">Ended</span></span
+    >
+  </div>
+  <div class="info">
+    <span class="info__type"
+      >Aired: <span class="info__value">Sep 28, 2006</span></span
+    >
+  </div>
+  <div class="info">
+    <span class="info__type"
+      >Producers:
+      <span class="info__value"
+        >Kripke Enterprises, Supernatural Films, Wonderland Sound and Vision,
+        Warner Bros. Television</span
+      ></span
+    >
+  </div>
+  <div class="info">
+    <span class="info__type"
+      >Genres:
+      <span class="info__value">Drama, Mystery, Sci-Fi & Fantasy</span></span
+    >
+  </div>
+  <div class="info">
+    <span class="info__type"
+      >Original Country: <span class="info__value">US</span></span
+    >
+  </div>
+</div>
+
+<!-- BOOK -->
+<div class="flex-container" *ngIf="type == 'BOOK'">
+  <div class="title">
+    <h1 class="title__text">Authors</h1>
+  </div>
+  <div class="info">
+    <span class="info__value">J.K. Rowling</span>
+  </div>
+
+  <div class="title">
+    <h1 class="title__text">Information</h1>
+  </div>
+  <div class="info">
+    <span class="info__type">Type: <span class="info__value">Book</span></span>
+  </div>
+  <div class="info">
+    <span class="info__type">Pages: <span class="info__value">318</span></span>
+  </div>
+  <div class="info">
+    <span class="info__type"
+      >Categories:
+      <span class="info__value"
+        >Fiction / Action & Adventure, Fiction / Fantasy / Contemporary,
+        Juvenile Fiction / Action & Adventure / General</span
+      ></span
+    >
+  </div>
+  <div class="info">
+    <span class="info__type"
+      >Publisher: <span class="info__value">Pottermore Publishing</span></span
+    >
+  </div>
+  <div class="info">
+    <span class="info__type"
+      >Published Date:: <span class="info__value">Dez 08, 2015 </span></span
+    >
+  </div>
+  <div class="info">
+    <span class="info__type"
+      >ISBN: <span class="info__value">9781781103708, 1781103704</span></span
+    >
   </div>
 </div>

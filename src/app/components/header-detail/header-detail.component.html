@@ -7,9 +7,13 @@
     />
   </div>
 
-  <div class="title">
-    <h1 class="title__text">Violet Evergarden</h1>
-    <h2 class="title__second-text">Violet Evergarden</h2>
+  <div class="title" *ngIf="type == 'ANIME'">
+    <h1 class="title__text">{{ anime.title }}</h1>
+    <h2 class="title__second-text">{{ anime.title_english }}</h2>
+  </div>
+
+  <div class="title" *ngIf="type == 'BOOK'">
+    <h1 class="title__text">{{ book.volumeInfo.title }}</h1>
   </div>
 
   <div class="frontcover">
@@ -20,18 +24,40 @@
     />
   </div>
 
-  <div class="cover-info">
+  <div class="cover-info" *ngIf="type == 'ANIME'">
     <div class="cover-info__flex">
       <p class="cover-info__title">Ranked</p>
-      <p class="cover-info__info">#57</p>
+      <p class="cover-info__info">#{{ anime.rank }}</p>
     </div>
     <div class="cover-info__flex">
       <p class="cover-info__title">Popularity</p>
-      <p class="cover-info__info">#65</p>
+      <p class="cover-info__info">#{{ anime.popularity }}</p>
     </div>
     <div class="cover-info__flex">
       <p class="cover-info__title">Members</p>
-      <p class="cover-info__info">1074634</p>
+      <p class="cover-info__info">{{ anime.members }}</p>
+    </div>
+  </div>
+
+  <div class="cover-info" *ngIf="type == 'SERIE'">
+    <div class="cover-info__flex--serie">
+      <img
+        class="cover-info__icon"
+        src="../../../assets/icon-search.svg"
+        alt="Back"
+      />
+      <p class="cover-info__title--serie">Season 1</p>
+    </div>
+    <div class="cover-info__flex">
+      <p class="cover-info__info">Supernatural (Season 2)</p>
+    </div>
+    <div class="cover-info__flex--serie">
+      <p class="cover-info__title--serie">Season 3</p>
+      <img
+        class="cover-info__icon"
+        src="../../../assets/icon-search.svg"
+        alt="Back"
+      />
     </div>
   </div>
 
@@ -47,6 +73,13 @@
     <div class="my-score__flex">
       <p class="my-score__title">My Score</p>
       <p class="my-score__info">9.7</p>
+    </div>
+  </div>
+
+  <div class="popularity-serie" *ngIf="type == 'SERIE'">
+    <div class="popularity-serie__flex">
+      <p class="popularity-serie__title">Popularity</p>
+      <p class="popularity-serie__info">{{ serie.popularity }}</p>
     </div>
   </div>
 
