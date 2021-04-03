@@ -9,7 +9,6 @@ import { AppComponent } from './app.component';
 import { ChildAExampleComponent } from './pages/child-a-example/child-a-example.component';
 import { HomePageComponent } from './pages/home-page-example/home-page.component';
 import { AuthenticationService } from './services/authentication/authentication.service';
-import { ParseService } from './services/parse/parse.service';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
@@ -28,7 +27,10 @@ import { HomeContextService } from './services/home-context/home.service';
 import { HomeSearchComponent } from './pages/home-search/home-search.component';
 import { CardComponent } from './components/card/card.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
-import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { HeaderDetailComponent } from './components/header-detail/header-detail.component';
+import { DetailComponent } from './pages/detail/detail.component';
+import { AboutDetailComponent } from './components/about-detail/about-detail.component';
 
 const routes: Routes = [
   { path: 'sandbox', component: SandboxPageComponent, pathMatch: 'full' },
@@ -71,6 +73,10 @@ const routes: Routes = [
         path: 'search',
         component: HomeSearchComponent,
       },
+      {
+        path: 'detail',
+        component: DetailComponent,
+      },
     ],
   },
   { path: '**', redirectTo: '' },
@@ -93,6 +99,9 @@ const routes: Routes = [
     HomeSearchComponent,
     CardComponent,
     PaginationComponent,
+    HeaderDetailComponent,
+    DetailComponent,
+    AboutDetailComponent,
   ],
   imports: [
     BrowserModule,
