@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';

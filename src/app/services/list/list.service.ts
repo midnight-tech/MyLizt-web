@@ -75,11 +75,11 @@ export class ListService {
         } 
     }
 
-    async removeFromList(content: Parse.Object) {
+    async removeFromList() {
 
     }
 
-    async updateOneContent(contents: Parse.Object[]) {
+    async updateOneContent() {
 
     }
 

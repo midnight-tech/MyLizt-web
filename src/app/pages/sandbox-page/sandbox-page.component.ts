@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { type } from 'node:os';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';
 import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
 import { CatalogoAnimeInterface, SerieCatalogoInterface } from 'src/app/data/interfaces';
