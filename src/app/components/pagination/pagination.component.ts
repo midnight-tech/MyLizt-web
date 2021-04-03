@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { totalmem } from 'node:os';
 import { HomeContextService } from 'src/app/services/home-context/home.service';
 
 @Component({

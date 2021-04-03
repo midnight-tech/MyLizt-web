@@ -1,3 +1,10 @@
+import { BookCatalogo } from "./BookCatalogo"
+import { AnimeCatalogo } from "./CatalogoAnime"
+import { SerieCatalogo } from "./SerieCatalogo"
+import { AngularFirestoreDocument } from '@angular/fire/firestore'
+import { EPROTO } from "node:constants"
+// import { List } from "./List"
+
 export interface CatalogoAnimeInterface {
   mal_id: number,
   image_url: string,
@@ -280,7 +287,51 @@ export type CompleteSerie = {
 
 export type search = 'ANIME' | 'SERIE' | 'BOOK'
 
+export interface UserInterface {
+  uid?: string,
+  username: string,
+  createdAt?: Date,
+  updatedAt?: Date,
+  myList: firebase.default.firestore.DocumentReference,
+  friends: friends[],
+  notifications: notification[]
+}
+
+export interface notification {
+  type: string,
+  message: string
+}
 export interface friends {
-  "user": Parse.User | null,
-  "listRecomendation": Parse.Object | null,
+  user: firebase.default.firestore.DocumentReference
+  listRecomendation: firebase.default.firestore.DocumentReference
+}
+
+export interface listInterface {
+  uid?: string
+  anime: content<contentAnime>[],
+  serie: content<contentSerie>[],
+  book: content<contentBook>[]
+  createdAt: Date
+
+}
+
+export interface contentAnime {
+  epStoped: number
+}
+
+export interface contentBook {
+  season: number, epStoped: number
+}
+
+export interface contentSerie {
+  pageStoped: number
+}
+
+export interface content<T> {
+  "contentId": string | number, // id da api
+  "contentType": search,
+  "myrating"?: number,
+  "createdAt"?: Date, // timestamp
+  "updatedAt"?: Date,
+  "watched": boolean
 }

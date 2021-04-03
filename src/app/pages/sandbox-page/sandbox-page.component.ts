@@ -5,8 +5,10 @@ import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
 import { CatalogoAnimeInterface, SerieCatalogoInterface } from 'src/app/data/interfaces';
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { AnimeService } from 'src/app/services/anime/anime.service';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { BookService } from 'src/app/services/book/book.service';
 import { HomeContextService } from 'src/app/services/home-context/home.service';
+import { ListService } from 'src/app/services/list/list.service';
 import { SerieService } from 'src/app/services/serie/serie.service';
 
 @Component({
@@ -24,47 +26,9 @@ export class SandboxPageComponent implements OnInit {
     public animeService: AnimeService,
     public bookService: BookService,
     public serieService: SerieService,
+    public listService : ListService
   ) {
-
-    //        SEARCH
-    // animeService.search('the promise',false).then((data)=>{
-    //   console.log("false --->", data)
-    // })
-    // animeService.search('the promisse',true).then((data)=>{
-    //   console.log("true --->", data)
-    // })
-    // bookService.search('a passagem justin croni', false).then((data) => {
-    //   console.log("false --->", data)
-    // })
-    // bookService.search('a passagem justin croni', true).then((data) => {
-    //   console.log("true --->", data)
-    // })
-    // serieService.search('stranger things', false).then((data) => {
-    //   console.log("false --->", data)
-    // })
-    // serieService.search('stranger things', true).then((data) => {
-    //   console.log("true --->", data)
-    // })
-    // animeService.getAnimeComplete(1).then((value)=>{
-    //   console.log(value)
-    // })
-    // bookService.getBookComplete("gzYQCwAAQBAJ").then((value)=>{
-    //   console.log(value)
-    // })
-    // serieService.partialSearch("the",true).then((value)=>{
-    //   console.log(value[0],typeof value[0])
-    // })
-
-    //        HOME CATALOGO
-    // animeService.getHomeCatalogo().then((animes)=>{
-    //   this.animes = animes
-    // })
-    // bookService.getHomeCatalogo().then((books)=>{
-    //   this.books = books
-    // })
-    // serieService.getHomeCatalogo().then((series) => {
-    //   this.series = series
-    // })
+     listService.getMyList()
   }
 
   ngOnInit() {

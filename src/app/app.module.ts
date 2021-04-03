@@ -1,10 +1,9 @@
-import { NgModule } from '@angular/core';
+import { NgModule , APP_INITIALIZER, NgZone } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { environment } from 'src/environments/environment';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ChildAExampleComponent } from './pages/child-a-example/child-a-example.component';
@@ -29,6 +28,7 @@ import { HomeContextService } from './services/home-context/home.service';
 import { HomeSearchComponent } from './pages/home-search/home-search.component';
 import { CardComponent } from './components/card/card.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestore';
 
 const routes: Routes = [
   { path: 'sandbox', component: SandboxPageComponent, pathMatch: 'full' },
@@ -100,10 +100,10 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule.enablePersistence()
   ],
   exports: [RouterModule],
   providers: [
-    ParseService,
     AuthenticationService,
     AnimeService,
     BookService,

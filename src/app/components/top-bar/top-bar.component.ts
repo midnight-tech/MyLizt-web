@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';
@@ -19,7 +19,7 @@ import { SerieService } from 'src/app/services/serie/serie.service';
   templateUrl: './top-bar.component.html',
   styleUrls: ['./top-bar.component.scss']
 })
-export class TopBarComponent implements OnInit {
+export class TopBarComponent implements OnInit, OnChanges {
 
   animes: AnimeCatalogo[] = []
   series: SerieCatalogo[] = []
@@ -46,8 +46,8 @@ export class TopBarComponent implements OnInit {
   isActive = false
   isActiveAccount = false
   isActiveSearch = false;
-  username = "USERNAME"
   timeout?: NodeJS.Timeout
+  username = 'USERNAME'
 
   constructor(
     public animeService: AnimeService,
@@ -57,16 +57,18 @@ export class TopBarComponent implements OnInit {
     public router: Router,
     public homeContext: HomeContextService
   ) {
+    this.username = authService.user?.displayName!
     this.searchField.valueChanges.subscribe(() => {
       this.searchEvent()
     })
-    if (authService.user) {
-      this.username = authService.user.getUsername()!!
-    }
   }
 
   ngOnInit() {
     this.searchField.enable({ emitEvent: true })
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.username = this.authService.user?.displayName!!
   }
 
   searchEvent() {
