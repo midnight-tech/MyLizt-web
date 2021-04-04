@@ -1,12 +1,13 @@
+import { CollectionReference, DocumentData } from "@angular/fire/firestore";
 import { ListService } from "../services/list/list.service";
-import { content, contentAnime, contentBook, contentSerie, listInterface, search } from "./interfaces"
+import { listInterface } from "./interfaces"
 
 export class List implements listInterface {
     uid?: string | undefined;
-    createdAt : Date
-    anime : content<contentAnime>[]
-    serie : content<contentSerie>[]
-    book : content<contentBook>[]
+    createdAt: Date
+    anime: CollectionReference<DocumentData>
+    serie: CollectionReference<DocumentData>
+    book: CollectionReference<DocumentData>
 
     constructor(data: listInterface, private listService: ListService) {
         this.uid = data.uid
@@ -15,5 +16,5 @@ export class List implements listInterface {
         this.book = data.book
         this.createdAt = data.createdAt
     }
-    
+
 }

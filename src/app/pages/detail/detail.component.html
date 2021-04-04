@@ -1,8 +1,12 @@
 <div class="grid-container-detail">
   <div class="header">
-    <app-header-detail></app-header-detail>
+    <app-header-detail *ngIf="anime" [anime]="anime" [type]="'ANIME'" ></app-header-detail>
+    <app-header-detail *ngIf="book" [book]="book" [type]="'BOOK'"></app-header-detail>
+    <app-header-detail *ngIf="serie" [serie]="serie" [type]="'SERIE'"></app-header-detail>
   </div>
   <div class="about">
-    <app-about-detail></app-about-detail>
+    <app-about-detail *ngIf="anime" [anime]="anime" [type]="'ANIME'" ></app-about-detail>
+    <app-about-detail *ngIf="book" [book]="book" [type]="'BOOK'" ></app-about-detail>
+    <app-about-detail *ngIf="serie" [serie]="serie" [type]="'SERIE'" ></app-about-detail>
   </div>
 </div>

@@ -1,9 +1,4 @@
-import { BookCatalogo } from "./BookCatalogo"
-import { AnimeCatalogo } from "./CatalogoAnime"
-import { SerieCatalogo } from "./SerieCatalogo"
-import { AngularFirestoreDocument } from '@angular/fire/firestore'
-import { EPROTO } from "node:constants"
-// import { List } from "./List"
+import { CollectionReference, DocumentData, } from '@angular/fire/firestore'
 
 export interface CatalogoAnimeInterface {
   mal_id: number,
@@ -308,9 +303,9 @@ export interface friends {
 
 export interface listInterface {
   uid?: string
-  anime: content<contentAnime>[],
-  serie: content<contentSerie>[],
-  book: content<contentBook>[]
+  anime :CollectionReference<DocumentData>
+  serie : CollectionReference<DocumentData>
+  book :  CollectionReference<DocumentData>
   createdAt: Date
 
 }

@@ -20,10 +20,4 @@ export class HeaderDetailComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
-
-  public get content() {
-    if (this.type == 'ANIME') return this.anime;
-    else if (this.type == 'SERIE') return this.serie;
-    else return this.book;
-  }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';
 import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
-import { CatalogoAnimeInterface, search, SerieCatalogoInterface } from 'src/app/data/interfaces';
+import { CompleteAnime, CompleteBook, CompleteSerie, search, SerieCatalogoInterface } from 'src/app/data/interfaces';
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { AnimeService } from '../anime/anime.service';
 import { BookService } from '../book/book.service';
@@ -21,13 +21,24 @@ export class HomeContextService {
   lastPageSerie: number | null = null
   seriePages: SerieCatalogo[][] = []
   private query = ""
-  private searchType? : search = "ANIME"
+  private searchType?: search = "ANIME"
+  private detailContent: CompleteAnime | CompleteSerie | CompleteBook | null
 
   constructor(
     public animeService: AnimeService,
     public bookService: BookService,
     public serieService: SerieService,
-  ) { }
+  ) {
+    this.detailContent = null
+  }
+
+  setDetail(detail: CompleteAnime | CompleteSerie | CompleteBook) {
+    this.detailContent = detail
+  }
+
+  getDetail() {
+    return this.detailContent
+  }
 
   initContent() {
     this.page = 1
@@ -38,9 +49,9 @@ export class HomeContextService {
     this.lastPageSerie = null
   }
 
-  changePage(page : number) {
-    if(page != this.page && page > 0 && page <= this.totalPage){
-      this.pageSearch(this.query,page,this.searchType!!,true)
+  changePage(page: number) {
+    if (page != this.page && page > 0 && page <= this.totalPage) {
+      this.pageSearch(this.query, page, this.searchType!!, true)
     }
   }
 
@@ -50,8 +61,8 @@ export class HomeContextService {
     this.bookResult = []
   }
 
-  pageSearch(query: string, page: number = 1, searchType: search,pagination = false) {
-    if(pagination){
+  pageSearch(query: string, page: number = 1, searchType: search, pagination = false) {
+    if (pagination) {
       this.clearContents()
     } else {
       this.initContent()
@@ -77,7 +88,7 @@ export class HomeContextService {
         })
         break;
       case 'SERIE':
-        this.seriePageManager(query, page).then(()=>{
+        this.seriePageManager(query, page).then(() => {
           this.searchType = searchType
           this.query = query
           this.page = page

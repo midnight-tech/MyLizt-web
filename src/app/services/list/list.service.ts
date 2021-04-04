@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentData } from '@angular/fire/firestore';
 import { content, contentAnime, contentBook, contentSerie, listInterface, search, UserInterface } from 'src/app/data/interfaces';
 import { List } from 'src/app/data/List';
 import { AuthenticationService } from '../authentication/authentication.service';
@@ -30,49 +30,42 @@ export class ListService {
         throw "Not Implemented"
     }
 
-    async contentInMyList (id: string| number,type: search){
-        const myList = await this.getMyList()
-        if(type == 'ANIME'){
-            return myList.anime.find((value)=>{
-                return value.contentId == id
-            }) == undefined
+    async contentInMyList(id: string | number, type: search) {
+        if(type == "ANIME"){
+            let animeQuery = await this.auth.userFirestore?.myList.collection('anime').doc(id.toString()).get()
+            return animeQuery?.exists!!
         } else if (type == 'BOOK'){
-            return myList.book.find((value)=>{
-                return value.contentId == id
-            }) == undefined
+            let bookQuery = await this.auth.userFirestore?.myList.collection('book').doc(id.toString()).get()
+            return bookQuery?.exists!!
         } else {
-            return myList.serie.find((value)=>{
-                return value.contentId == id
-            }) == undefined
+            let serieQuery = await this.auth.userFirestore?.myList.collection('serie').doc(id.toString()).get()
+            return serieQuery?.exists!!
         }
     }
 
-    async addContent(id: string| number, type : search) {
-        if(type == 'ANIME'){
-            this.myList?.anime.push({
-                contentId: id as number,
-                contentType: type,
-                watched : false,
-                createdAt: new Date(Date.now())
-            })
-            this.auth.userFirestore?.myList.update({anime: this.myList!!.anime})
-        } else if (type == 'BOOK'){
-            this.myList?.book.push({
+    async addContent(id: string | number, type: search) {
+        if (type == 'ANIME') {
+            this.auth.userFirestore?.myList.collection('anime').doc(id.toString()).set({
                 contentId: id as string,
                 contentType: type,
-                watched : false,
+                watched: false,
                 createdAt: new Date(Date.now())
             })
-            this.auth.userFirestore?.myList.update({book: this.myList!!.book})
-        } else {
-            this.myList?.serie.push({
-                contentId: id as number,
+        } else if (type == 'BOOK') {
+            this.auth.userFirestore?.myList.collection('book').doc(id.toString()).set({
+                contentId: id as string,
                 contentType: type,
-                watched : false,
+                watched: false,
                 createdAt: new Date(Date.now())
             })
-            this.auth.userFirestore?.myList.update({serie: this.myList!!.serie})
-        } 
+        } else {
+            this.auth.userFirestore?.myList.collection('serie').doc(id.toString()).set({
+                contentId: id as string,
+                contentType: type,
+                watched: false,
+                createdAt: new Date(Date.now())
+            })
+        }
     }
 
     async removeFromList() {
@@ -87,13 +80,20 @@ export class ListService {
 
     }
 
-    async getHomeContent(){
-        const myList = await this.getMyList()
-        return {
-            anime: myList.anime.slice(0,5),
-            book : myList.book.slice(0,5),
-            serie : myList.serie.slice(0,5)
-        }
+    async getHomeContent() {
+        let animeQuery = await this.auth.userFirestore?.myList.collection('anime').limit(5).get()
+        let bookQuery = await this.auth.userFirestore?.myList.collection('book').limit(5).get()
+        let serieQuery = await this.auth.userFirestore?.myList.collection('serie').limit(5).get()
+        let anime = animeQuery?.docs.map((value)=>{
+            return value.data() as content<contentAnime>
+        })
+        let book = bookQuery?.docs.map((value)=>{
+            return value.data() as content<contentBook>
+        })
+        let serie = serieQuery?.docs.map((value)=>{
+            return value.data() as content<contentSerie>
+        })
+        return {anime,book,serie}
     }
 
 }

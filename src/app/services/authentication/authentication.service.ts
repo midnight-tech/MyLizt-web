@@ -24,7 +24,7 @@ export class AuthenticationService {
             this.isLogged = true
             fireStore.firestore.collection('User').doc(user.uid).get().then((value)=>{
               this.userFirestore = value.data() as UserInterface
-              router.navigate(['home'])
+              router.navigate(['home','detail'])
             })
             return
           }
@@ -86,9 +86,6 @@ export class AuthenticationService {
     console.log(uid)
     let list = this.fireStore.firestore.collection('List').doc()
     list.set({
-      anime : [],
-      book : [],
-      serie : [],
       createdAt : new Date(Date.now())
     } as listInterface)
     await this.fireStore.firestore.collection('User').doc(uid).set({

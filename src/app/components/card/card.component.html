@@ -1,7 +1,7 @@
 <div *ngIf="anime" (mouseenter)="anime.getComplete()">
   <div class="card">
     <div class="card__side">
-      <div class="card__side--image">
+      <div class="card__side--image" (click)="navigateToDetail()">
         <div class="card__side--image--flip">
           <img class="card__picture" [src]="anime.image_url" alt="teste" />
         </div>
@@ -60,12 +60,12 @@
       </div>
 
       <div class="card__side--title">
-        <h1 class="card__title">{{ anime.title }}</h1>
+        <h1 class="card__title" (click)="navigateToDetail()">{{ anime.title }}</h1>
       </div>
 
       <div class="card__side--buttons">
         <div class="container-flex">
-          <div class="card__button-container card__button-container--add" *ngIf="inMyList" (click)="addToMyList()">
+          <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
             <img
               src="../../../assets/icon-notification.svg"
               alt="Icon"
@@ -89,7 +89,7 @@
 <div *ngIf="book" (mouseenter)="book.getComplete()">
   <div class="card">
     <div class="card__side">
-      <div class="card__side--image">
+      <div class="card__side--image" (click)="navigateToDetail()">
         <div class="card__side--image--flip">
           <img
             class="card__picture"
@@ -149,13 +149,13 @@
         </div>
       </div>
 
-      <div class="card__side--title">
-        <h1 class="card__title">{{ book.volumeInfo.title }}</h1>
+      <div class="card__side--title" >
+        <h1 class="card__title" (click)="navigateToDetail()">{{ book.volumeInfo.title }}</h1>
       </div>
 
       <div class="card__side--buttons">
         <div class="container-flex" >
-          <div class="card__button-container card__button-container--add" *ngIf="inMyList" (click)="addToMyList()">
+          <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
             <img
               src="../../../assets/icon-notification.svg"
               alt="Icon"
@@ -180,7 +180,7 @@
 <div *ngIf="serie" (mouseenter)="serie.getComplete()">
   <div class="card">
     <div class="card__side">
-      <div class="card__side--image">
+      <div class="card__side--image" (click)="navigateToDetail()">
         <div class="card__side--image--flip">
           <img class="card__picture" [src]="serie.backdrop_path" alt="teste" />
         </div>
@@ -238,13 +238,13 @@
         </div>
       </div>
 
-      <div class="card__side--title">
-        <h1 class="card__title">{{ serie.name }}</h1>
+      <div class="card__side--title" >
+        <h1 class="card__title" (click)="navigateToDetail()">{{ serie.name }}</h1>
       </div>
 
       <div class="card__side--buttons">
         <div class="container-flex">
-          <div class="card__button-container card__button-container--add" *ngIf="inMyList" (click)="addToMyList()">
+          <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
             <img
               src="../../../assets/icon-notification.svg"
               alt="Icon"

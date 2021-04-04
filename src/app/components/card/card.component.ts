@@ -1,7 +1,9 @@
 import { Component, Input, NgZone, OnChanges, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';
 import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
+import { HomeContextService } from 'src/app/services/home-context/home.service';
 import { ListService } from 'src/app/services/list/list.service';
 
 @Component({
@@ -19,11 +21,12 @@ export class CardComponent implements OnInit {
 
   constructor(
     public listService: ListService,
-    public ngZone : NgZone
+    public router: Router,
+    public homeContext: HomeContextService
   ) { }
 
   ngOnInit() {
-    if(this.notRended){
+    if (this.notRended) {
       this.isInMyList()
       this.notRended = false
     }
@@ -61,6 +64,16 @@ export class CardComponent implements OnInit {
       this.listService.contentInMyList(this.serie.id, 'SERIE').then((value) => {
         this.inMyList = value
       })
+    }
+  }
+
+  navigateToDetail() {
+    if (this.anime) {
+      this.router.navigate(['home', 'detail', 'anime' ,this.anime.mal_id])
+    } else if (this.book) {
+      this.router.navigate(['home', 'detail', 'book' , this.book.id])
+    } else if (this.serie) {
+      this.router.navigate(['home', 'detail', 'serie' ,this.serie.id])
     }
   }
 

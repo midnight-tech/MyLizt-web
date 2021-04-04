@@ -74,7 +74,7 @@ const routes: Routes = [
         component: HomeSearchComponent,
       },
       {
-        path: 'detail',
+        path: 'detail/:type/:id',
         component: DetailComponent,
       },
     ],

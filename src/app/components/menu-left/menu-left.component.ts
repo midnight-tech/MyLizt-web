@@ -33,18 +33,18 @@ export class MenuLeftComponent implements OnInit {
     this.listService.getHomeContent().then(({ anime, book, serie }) => {
       let result = 0
       
-      for (let i of anime) {
+      for (let i of anime!!) {
         this.animeService.getAnimeComplete(i.contentId as number).then((value) => {
           this.anime.push(value)
         })
       }
 
-      for (let i of book) {
+      for (let i of book!!) {
         this.bookService.getBookComplete(i.contentId as string).then((value) => {
           this.book.push(value)
         })
       }
-      for (let i of serie) {
+      for (let i of serie!!) {
         this.serieService.getSerieComplete(i.contentId as number).then((value) => {
           this.serie.push(value)
         })

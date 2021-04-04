@@ -1,10 +1,12 @@
 <div class="grid-container-header">
   <div class="backcover">
-    <img
-      class="backcover__image"
+    <img *ngIf="type == 'ANIME' " class="backcover__image" [src]="anime.image_url" alt="BackCover" />
+    <img *ngIf="type == 'SERIE' " class="backcover__image"
       src="https://images.unsplash.com/photo-1485550409059-9afb054cada4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=701&q=80"
-      alt="BackCover"
-    />
+      alt="BackCover" />
+    <img *ngIf="type == 'BOOK' " class="backcover__image"
+      src="https://images.unsplash.com/photo-1485550409059-9afb054cada4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=701&q=80"
+      alt="BackCover" />
   </div>
 
   <div class="title" *ngIf="type == 'ANIME'">
@@ -17,11 +19,13 @@
   </div>
 
   <div class="frontcover">
-    <img
-      class="frontcover__image"
+    <img *ngIf="type == 'ANIME' " class="frontcover__image" [src]="anime.image_url" alt="FrontCover" />
+    <img *ngIf="type == 'SERIE' " class="frontcover__image"
       src="https://images.unsplash.com/photo-1485550409059-9afb054cada4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=701&q=80"
-      alt="FrontCover"
-    />
+      alt="FrontCover" />
+    <img *ngIf="type == 'BOOK'" class="frontcover__image"
+      src="https://images.unsplash.com/photo-1485550409059-9afb054cada4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=701&q=80"
+      alt="FrontCover" />
   </div>
 
   <div class="cover-info" *ngIf="type == 'ANIME'">
@@ -41,11 +45,7 @@
 
   <div class="cover-info" *ngIf="type == 'SERIE'">
     <div class="cover-info__flex--serie">
-      <img
-        class="cover-info__icon"
-        src="../../../assets/icon-search.svg"
-        alt="Back"
-      />
+      <img class="cover-info__icon" src="../../../assets/icon-search.svg" alt="Back" />
       <p class="cover-info__title--serie">Season 1</p>
     </div>
     <div class="cover-info__flex">
@@ -53,18 +53,16 @@
     </div>
     <div class="cover-info__flex--serie">
       <p class="cover-info__title--serie">Season 3</p>
-      <img
-        class="cover-info__icon"
-        src="../../../assets/icon-search.svg"
-        alt="Back"
-      />
+      <img class="cover-info__icon" src="../../../assets/icon-search.svg" alt="Back" />
     </div>
   </div>
 
   <div class="score">
     <div class="score__flex">
       <p class="score__title">Score</p>
-      <p class="score__info">8.64</p>
+      <p *ngIf="type == 'ANIME'" class="score__info"> {{anime.score}} </p>
+      <p *ngIf="type == 'SERIE'" class="score__info"> {{serie.vote_average}} </p>
+      <p *ngIf="type == 'BOOK'" class="score__info"> {{book.volumeInfo.averageRating}} </p>
       <p class="score__caption">541015 users</p>
     </div>
   </div>
@@ -86,36 +84,20 @@
   <div class="episodes">
     <p class="episodes__title">Watched</p>
     <div class="episodes__flex">
-      <img
-        class="episodes__icon"
-        src="../../../assets/icon-search.svg"
-        alt="Less"
-      />
+      <img class="episodes__icon" src="../../../assets/icon-search.svg" alt="Less" />
       <p class="episodes__info">1 / 14</p>
-      <img
-        class="episodes__icon"
-        src="../../../assets/icon-notification.svg"
-        alt="More"
-      />
+      <img class="episodes__icon" src="../../../assets/icon-notification.svg" alt="More" />
     </div>
   </div>
 
   <div class="button">
     <div class="button__flex button__flex--recommend">
-      <img
-        class="button__icon"
-        src="../../../assets/icon-search.svg"
-        alt="Share"
-      />
+      <img class="button__icon" src="../../../assets/icon-search.svg" alt="Share" />
       <a class="button__text">Recomend to...</a>
     </div>
 
     <div class="button__flex button__flex--remove">
-      <img
-        class="button__icon"
-        src="../../../assets/icon-notification.svg"
-        alt="Remove"
-      />
+      <img class="button__icon" src="../../../assets/icon-notification.svg" alt="Remove" />
       <a class="button__text">Remove</a>
     </div>
   </div>
