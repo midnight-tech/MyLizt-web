@@ -15,7 +15,7 @@ export class SerieService {
       `${environment.url_serie_proxy_base}/api/TMDB/catalogo`
     );
     return series.data.map((serie) => {
-      serie.backdrop_path = `https://image.tmdb.org/t/p/original${serie.backdrop_path}`;
+      serie =  this.setImage(serie) as SerieCatalogo
       return new SerieCatalogo(serie,this);
     });
   }
@@ -27,9 +27,7 @@ export class SerieService {
         `${environment.url_serie_proxy_base}/api/TMDB/search?q=${query}&limit=${limit}`
       );
       return result.data.map((serie) => {
-        if (serie.backdrop_path != null) {
-          serie.backdrop_path = `https://image.tmdb.org/t/p/original${serie.backdrop_path}`;
-        }
+        serie =  this.setImage(serie) as SerieCatalogo
         return new SerieCatalogo(serie,this);
       });
     } catch (e) {
@@ -47,9 +45,7 @@ export class SerieService {
       `${environment.url_serie_proxy_base}/api/TMDB/complete_search?q=${query}&page=${page}`
     );
     let withImage = result.data.content.map((serie) => {
-      if (serie.backdrop_path != null) {
-        serie.backdrop_path = `https://image.tmdb.org/t/p/original${serie.backdrop_path}`;
-      }
+      serie =  this.setImage(serie) as SerieCatalogo
       return new SerieCatalogo(serie,this);
     });
     let pages = [];
@@ -62,10 +58,8 @@ export class SerieService {
   async getSerieComplete(id:number = 1){
     try{
       const result = await axios.get<CompleteSerie>(`${environment.url_serie_proxy_base}/api/TMDB/complete/${id}`)
-      if(result.data.backdrop_path != null){
-        result.data.backdrop_path = `https://image.tmdb.org/t/p/original${result.data.backdrop_path}`
-      }
-      return result.data
+      let serie = this.setImage(result.data) as CompleteSerie
+      return serie
     }
     catch (e){
       if(environment.production == false){
@@ -74,4 +68,19 @@ export class SerieService {
       throw "Erro ao coletar as informaçoes deste anime"
     }
   }
+
+  setImage(value : SerieCatalogo | CompleteSerie){
+    if (value.backdrop_path != null) {
+      value.backdrop_path = `https://image.tmdb.org/t/p/original${value.backdrop_path}`;
+    }else {
+      value.backdrop_path = `./assets/notFoundImage.png`
+    }
+    if(value.poster_path != null){
+      value.poster_path = `https://image.tmdb.org/t/p/original${value.poster_path}`;
+    } else {
+      value.poster_path = `./assets/notFoundImage.png`;
+    }
+    return value
+  }
+
 }

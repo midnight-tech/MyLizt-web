@@ -31,6 +31,7 @@ export class AuthenticationService {
           router.navigateByUrl('/verification')
           this.logout()
         }
+        router.navigate([''])
         this.isLogged = false
         this.user = user
       })

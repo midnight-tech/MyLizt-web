@@ -2,10 +2,10 @@
   <div class="backcover">
     <img *ngIf="type == 'ANIME' " class="backcover__image" [src]="anime.image_url" alt="BackCover" />
     <img *ngIf="type == 'SERIE' " class="backcover__image"
-      src="https://images.unsplash.com/photo-1485550409059-9afb054cada4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=701&q=80"
+      [src]="serie.backdrop_path"
       alt="BackCover" />
     <img *ngIf="type == 'BOOK' " class="backcover__image"
-      src="https://images.unsplash.com/photo-1485550409059-9afb054cada4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=701&q=80"
+      [src]="book.volumeInfo.image"
       alt="BackCover" />
   </div>
 
@@ -21,10 +21,10 @@
   <div class="frontcover">
     <img *ngIf="type == 'ANIME' " class="frontcover__image" [src]="anime.image_url" alt="FrontCover" />
     <img *ngIf="type == 'SERIE' " class="frontcover__image"
-      src="https://images.unsplash.com/photo-1485550409059-9afb054cada4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=701&q=80"
+      [src]="serie.poster_path"
       alt="FrontCover" />
     <img *ngIf="type == 'BOOK'" class="frontcover__image"
-      src="https://images.unsplash.com/photo-1485550409059-9afb054cada4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=701&q=80"
+      [src]="book.volumeInfo.image"
       alt="FrontCover" />
   </div>
 

@@ -141,11 +141,9 @@
             <div *ngFor="let serie of series; index as i">
               <div class="dropdown-container-item" (mouseenter)="serie.getComplete()" (click)="navigateToDetail(serie.id.toString() ,'serie')">
                 <div
-                  class="dropdown-container-item__container-image"
-                  *ngIf="serie.backdrop_path; else notImageFound"
-                >
+                  class="dropdown-container-item__container-image">
                   <img
-                    [src]="serie.backdrop_path"
+                    [src]="serie.poster_path"
                     alt="Cover"
                     class="dropdown-container-item__cover"
                   />
@@ -171,12 +169,10 @@
             <div *ngFor="let book of books; index as i">
               <div class="dropdown-container-item" (mouseenter)="book.getComplete()" (click)="navigateToDetail(book.id ,'book')">
                 <div
-                  class="dropdown-container-item__container-image"
-                  *ngIf="book.volumeInfo.imageLinks; else notImageFound"
-                >
+                  class="dropdown-container-item__container-image">
                   <img
-                    [src]="book.volumeInfo.imageLinks.thumbnail"
-                    [alt]="book.volumeInfo.imageLinks.thumbnail"
+                    [src]="book.volumeInfo.image"
+                    [alt]="book.volumeInfo.image"
                     class="dropdown-container-item__cover"
                   />
                 </div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
-import { CatalogoAnimeInterface, CompleteAnime } from 'src/app/data/interfaces';
+import { CompleteAnime } from 'src/app/data/interfaces';
 import { environment } from 'src/environments/environment';
 
 

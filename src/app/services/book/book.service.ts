@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';
-import { BookCatalogoInterface, CompleteBook } from 'src/app/data/interfaces';
+import { CompleteBook } from 'src/app/data/interfaces';
 import { environment } from 'src/environments/environment';
 
 
@@ -20,7 +20,10 @@ export class BookService {
     }
 
     let books = await axios.get<request>("https://www.googleapis.com/books/v1/volumes?q=a&orderBy=newest&maxResults=5&startIndex=1")
-    return books.data.items.map((value) => new BookCatalogo(value, this))
+    return books.data.items.map((value) => {
+      value = this.selectImage(value) as BookCatalogo
+      return new BookCatalogo(value, this)
+    })
   }
 
   async partialSearch(query: string, isAll = false) {
@@ -30,7 +33,10 @@ export class BookService {
     const limit = isAll ? 9 : 3
     try {
       const result = await axios.get<request>(`https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=${limit}`)
-      return result.data.items.map((value) => new BookCatalogo(value, this))
+      return result.data.items.map((value) => {
+        value = this.selectImage(value) as BookCatalogo
+        return new BookCatalogo(value, this)
+      })
     } catch (e) {
       console.error(e)
       throw "Error"
@@ -44,7 +50,10 @@ export class BookService {
     }
     const results = await axios.get<request>(`https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=12&startIndex=${(page - 1) * 12}`)
     return {
-      content: results.data.items.map((value) => new BookCatalogo(value, this)),
+      content: results.data.items.map((value) => {
+        value = this.selectImage(value) as BookCatalogo
+        return new BookCatalogo(value, this)
+      }),
       lastPage: Math.floor((results.data.totalItems - 1) / 12)
     }
   }
@@ -52,7 +61,9 @@ export class BookService {
   async getBookComplete(id: string = "") {
     try {
       const result = await axios.get<CompleteBook>(`https://www.googleapis.com/books/v1/volumes/${id}`)
-      return result.data
+      let book = this.selectImage(result.data) as CompleteBook
+      book.volumeInfo.averageRating *= 2
+      return book
     }
     catch (e) {
       if (environment.production == false) {
@@ -60,6 +71,26 @@ export class BookService {
       }
       throw "Erro ao coletar as informaçoes deste anime"
     }
+  }
+
+
+  selectImage(value: BookCatalogo | CompleteBook) {
+    if (!value.volumeInfo.imageLinks) {
+      value.volumeInfo.image = './assets/notFoundImage.png'
+    } else {
+      if (value.volumeInfo.imageLinks.large) {
+        value.volumeInfo.image = value.volumeInfo.imageLinks.large
+      } else if (value.volumeInfo.imageLinks.medium) {
+        value.volumeInfo.image = value.volumeInfo.imageLinks.medium
+      } else if (value.volumeInfo.imageLinks.small) {
+        value.volumeInfo.image = value.volumeInfo.imageLinks.small
+      } else if (value.volumeInfo.imageLinks.thumbnail) {
+        value.volumeInfo.image = value.volumeInfo.imageLinks.thumbnail
+      } else if (value.volumeInfo.imageLinks.smallThumbnail) {
+        value.volumeInfo.image = value.volumeInfo.imageLinks.smallThumbnail
+      }
+    }
+    return value
   }
 
 }

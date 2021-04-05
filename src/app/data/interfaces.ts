@@ -78,7 +78,7 @@ export type CompleteAnime = {
         "name": string,
         "url": string
       },
-      
+
     ],
     "Sequel": [
       {
@@ -143,11 +143,16 @@ export interface BookCatalogoInterface {
     authors: string[],
     description: string,
     imageLinks?: {
-      thumbnail: string
+      smallThumbnail?: string,
+      thumbnail?: string,
+      small?: string,
+      medium?: string,
+      large?: string,
     }
     language: string,
     subtitle: string,
-    title: string
+    title: string,
+    image: string
   }
   complete?: CompleteBook,
   getComplete: Function
@@ -196,7 +201,8 @@ export type CompleteBook = {
     },
     "language": string,
     "infoLink": string,
-    "canonicalVolumeLink": string
+    "canonicalVolumeLink": string,
+    "image" : string
   }
 }
 
@@ -328,9 +334,9 @@ export interface friends {
 
 export interface listInterface {
   uid?: string
-  anime :CollectionReference<DocumentData>
-  serie : CollectionReference<DocumentData>
-  book :  CollectionReference<DocumentData>
+  anime: CollectionReference<DocumentData>
+  serie: CollectionReference<DocumentData>
+  book: CollectionReference<DocumentData>
   createdAt: Date
 
 }

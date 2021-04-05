@@ -7,10 +7,17 @@ export class BookCatalogo implements BookCatalogoInterface {
     volumeInfo: {
         authors: string[];
         description: string;
-        imageLinks?: { thumbnail: string; } | undefined;
+        imageLinks?: {
+            smallThumbnail?: string,
+            thumbnail?: string,
+            small?: string,
+            medium?: string,
+            large?: string,
+        }
         language: string;
         subtitle: string;
         title: string;
+        image: string;
     };
     complete?: CompleteBook;
     private functionCalled = false
@@ -27,11 +34,11 @@ export class BookCatalogo implements BookCatalogoInterface {
             if (!this.complete) {
                 this.bookService.getBookComplete(this.id).then((value) => {
                     this.complete = value
-                }).catch((error)=>{
-                    if(environment.production == false){
+                }).catch((error) => {
+                    if (environment.production == false) {
                         console.log(error)
                     }
-                }).finally(()=>{
+                }).finally(() => {
                     this.functionCalled = false
                 })
             }
