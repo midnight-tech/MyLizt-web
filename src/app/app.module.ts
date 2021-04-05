@@ -32,6 +32,8 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { HeaderDetailComponent } from './components/header-detail/header-detail.component';
 import { DetailComponent } from './pages/detail/detail.component';
 import { AboutDetailComponent } from './components/about-detail/about-detail.component';
+import { CarrouselComponent } from './components/carrousel/carrousel.component';
+import { HomeCarrouselComponent } from './pages/home-carrousel/home-carrousel.component';
 
 const routes: Routes = [
   { path: 'sandbox', component: SandboxPageComponent, pathMatch: 'full' },
@@ -68,7 +70,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: ChildAExampleComponent,
+        component: HomeCarrouselComponent,
       },
       {
         path: 'search',
@@ -103,6 +105,8 @@ const routes: Routes = [
     HeaderDetailComponent,
     DetailComponent,
     AboutDetailComponent,
+    CarrouselComponent,
+    HomeCarrouselComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,99 @@
+@import url("https://fonts.googleapis.com/css?family=DM~Sans:400,500,700&display=swap");
+
+input[type="radio"] {
+  display: none;
+}
+
+.card {
+  // position: absolute;
+  // left: 0;
+  // right: 0;
+
+  width: 50%;
+  // height: 100%;
+  transition: transform 0.4s ease;
+  cursor: pointer;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  // flex-direction: row;
+  background-color: chartreuse;
+}
+
+.cards {
+  display: flex;
+  width: 100%;
+  height: 100%;
+
+  // position: relative;
+  // max-height: 40rem;
+  // margin-bottom: 20px;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+// #item-1:checked ~ .cards #song-4,
+// #item-2:checked ~ .cards #song-5,
+// #item-3:checked ~ .cards #song-1,
+// #item-4:checked ~ .cards #song-2,
+// #item-5:checked ~ .cards #song-3 {
+//   transform: translatex(-60%) scale(0.8);
+//   opacity: 1;
+//   z-index: 0;
+// }
+
+// #item-1:checked ~ .cards #song-5,
+// #item-2:checked ~ .cards #song-1,
+// #item-3:checked ~ .cards #song-2,
+// #item-4:checked ~ .cards #song-3,
+// #item-5:checked ~ .cards #song-4 {
+//   transform: translatex(-35%) scale(0.9);
+//   opacity: 1;
+//   z-index: 1;
+// }
+
+// #item-1:checked ~ .cards #song-1,
+// #item-2:checked ~ .cards #song-2,
+// #item-3:checked ~ .cards #song-3,
+// #item-4:checked ~ .cards #song-4,
+// #item-5:checked ~ .cards #song-5 {
+//   transform: translatex(0) scale(1);
+//   opacity: 1;
+//   z-index: 2;
+// }
+
+// #item-1:checked ~ .cards #song-2,
+// #item-2:checked ~ .cards #song-3,
+// #item-3:checked ~ .cards #song-4,
+// #item-4:checked ~ .cards #song-5,
+// #item-5:checked ~ .cards #song-1 {
+//   transform: translatex(35%) scale(0.9);
+//   opacity: 1;
+//   z-index: 1;
+// }
+
+// #item-1:checked ~ .cards #song-3,
+// #item-2:checked ~ .cards #song-4,
+// #item-3:checked ~ .cards #song-5,
+// #item-4:checked ~ .cards #song-1,
+// #item-5:checked ~ .cards #song-2 {
+//   transform: translatex(60%) scale(0.8);
+//   opacity: 1;
+//   z-index: 0;
+// }
+
+img {
+  // box-shadow: 0px 0px 5px 0px rgba(81, 81, 81, 0.47);
+}
