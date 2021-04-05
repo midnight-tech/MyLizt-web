@@ -44,15 +44,15 @@
   </div>
 
   <div class="cover-info" *ngIf="type == 'SERIE'">
-    <div class="cover-info__flex--serie">
+    <div *ngIf="seasonAtual != 0" (click)="changeSeason(seasonAtual - 1)" class="cover-info__flex--serie">
       <img class="cover-info__icon" src="../../../assets/icon-search.svg" alt="Back" />
-      <p class="cover-info__title--serie">Season 1</p>
+      <p class="cover-info__title--serie">{{serie.seasons[seasonAtual - 1].name}} </p>
     </div>
     <div class="cover-info__flex">
-      <p class="cover-info__info">Supernatural (Season 2)</p>
+      <p class="cover-info__info">{{serie.name}} ({{serie.seasons[seasonAtual].name}} )</p>
     </div>
-    <div class="cover-info__flex--serie">
-      <p class="cover-info__title--serie">Season 3</p>
+    <div *ngIf="seasonAtual != serie.seasons.length - 1" (click)="changeSeason(seasonAtual + 1)" class="cover-info__flex--serie">
+      <p class="cover-info__title--serie">{{serie.seasons[seasonAtual + 1 ].name}} </p>
       <img class="cover-info__icon" src="../../../assets/icon-search.svg" alt="Back" />
     </div>
   </div>
@@ -63,11 +63,12 @@
       <p *ngIf="type == 'ANIME'" class="score__info"> {{anime.score}} </p>
       <p *ngIf="type == 'SERIE'" class="score__info"> {{serie.vote_average}} </p>
       <p *ngIf="type == 'BOOK'" class="score__info"> {{book.volumeInfo.averageRating}} </p>
-      <p class="score__caption">541015 users</p>
+      <p *ngIf="type == 'ANIME'"  class="score__caption">{{anime.scored_by}} users</p>
+      <p *ngIf="type == 'SERIE'"  class="score__caption">{{serie.vote_count}} users</p>
     </div>
   </div>
 
-  <div class="my-score">
+  <div class="my-score" *ngIf="onMyList">
     <div class="my-score__flex">
       <p class="my-score__title">My Score</p>
       <p class="my-score__info">9.7</p>
@@ -81,11 +82,13 @@
     </div>
   </div>
 
-  <div class="episodes">
+  <div class="episodes" *ngIf="onMyList">
     <p class="episodes__title">Watched</p>
     <div class="episodes__flex">
       <img class="episodes__icon" src="../../../assets/icon-search.svg" alt="Less" />
-      <p class="episodes__info">1 / 14</p>
+      <p *ngIf="type=='ANIME'" class="episodes__info">1 / {{anime.episodes}}</p>
+      <p *ngIf="type=='SERIE'" class="episodes__info">1 / {{serie.seasons[seasonAtual].episode_count}}</p>
+      <p *ngIf="type=='BOOK'" class="episodes__info">1 / {{book.volumeInfo.pageCount}}</p>
       <img class="episodes__icon" src="../../../assets/icon-notification.svg" alt="More" />
     </div>
   </div>
@@ -96,7 +99,11 @@
       <a class="button__text">Recomend to...</a>
     </div>
 
-    <div class="button__flex button__flex--remove">
+    <div *ngIf="onMyList == false" (click)="addToMyList()" class="button__flex button__flex--remove">
+      <img class="button__icon" src="../../../assets/icon-notification.svg" alt="Remove" />
+      <a class="button__text">Add to list</a>
+    </div>
+    <div *ngIf="onMyList == true" class="button__flex button__flex--remove">
       <img class="button__icon" src="../../../assets/icon-notification.svg" alt="Remove" />
       <a class="button__text">Remove</a>
     </div>

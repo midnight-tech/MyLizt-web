@@ -3,7 +3,7 @@
   <div class="categories">
     <a class="categories categories__title">Anime</a>
     <div class="categories__container" *ngFor="let iten of anime">
-      <span class="categories__item">{{ iten.title }}</span>
+      <span (click)="navigateToDetail(iten.mal_id.toString(),'anime')" class="categories__item">{{ iten.title }}</span>
       <img
         src="../../../assets/icon-done.svg"
         alt="done"
@@ -14,7 +14,7 @@
   <div class="categories">
     <a class="categories categories__title">Serie</a>
     <div class="categories__container" *ngFor="let iten of serie">
-      <span class="categories__item">{{ iten.name }}</span>
+      <span (click)="navigateToDetail(iten.id.toString(),'serie')" class="categories__item">{{ iten.name }}</span>
       <img
         src="../../../assets/icon-done.svg"
         alt="done"
@@ -25,7 +25,7 @@
   <div class="categories">
     <a class="categories categories__title">Book</a>
     <div class="categories__container" *ngFor="let iten of book">
-      <span class="categories__item">{{ iten.volumeInfo.title }}</span>
+      <span (click)="navigateToDetail(iten.id,'book')" class="categories__item">{{ iten.volumeInfo.title }}</span>
       <img
         src="../../../assets/icon-done.svg"
         alt="done"

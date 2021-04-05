@@ -13,7 +13,7 @@ export class UnloggedShieldService implements CanActivate{
     if (this.auth.isLogged == false) {
       return true
     }
-    this.router.navigate(['/home'], { replaceUrl: true })
+    this.router.navigate(['home'], { replaceUrl: true })
     return false
   }
 

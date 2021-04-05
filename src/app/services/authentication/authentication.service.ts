@@ -24,7 +24,7 @@ export class AuthenticationService {
             this.isLogged = true
             fireStore.firestore.collection('User').doc(user.uid).get().then((value)=>{
               this.userFirestore = value.data() as UserInterface
-              router.navigate(['home','detail'])
+              router.navigate(['home'])
             })
             return
           }

@@ -16,6 +16,7 @@ export class AboutDetailComponent implements OnInit {
   @Input() serie!: CompleteSerie;
   @Input() book!: CompleteBook;
   @Input() type!: search;
+  @Input() season!: number
 
   constructor() {}
 

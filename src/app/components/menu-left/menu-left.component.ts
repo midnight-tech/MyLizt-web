@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CompleteAnime, CompleteBook, CompleteSerie, content, contentAnime, contentBook, contentSerie } from 'src/app/data/interfaces';
 import { AnimeService } from 'src/app/services/anime/anime.service';
 import { BookService } from 'src/app/services/book/book.service';
@@ -22,7 +23,8 @@ export class MenuLeftComponent implements OnInit {
     private listService: ListService,
     private animeService: AnimeService,
     private bookService: BookService,
-    private serieService: SerieService
+    private serieService: SerieService,
+    private router : Router
   ) { }
 
   ngOnInit() {
@@ -51,6 +53,10 @@ export class MenuLeftComponent implements OnInit {
       }
     })
 
+  }
+
+  navigateToDetail(id:string,type : string){
+    this.router.navigate(['home','detail',type,id])
   }
 
 }

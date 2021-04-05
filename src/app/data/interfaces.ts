@@ -70,6 +70,31 @@ export type CompleteAnime = {
         "name": string,
         "url": string
       }
+    ],
+    "SideStory": [
+      {
+        "mal_id": number,
+        "type": string,
+        "name": string,
+        "url": string
+      },
+      
+    ],
+    "Sequel": [
+      {
+        "mal_id": number,
+        "type": string,
+        "name": string,
+        "url": string
+      }
+    ],
+    "Other": [
+      {
+        "mal_id": number,
+        "type": string,
+        "name": string,
+        "url": string
+      }
     ]
   },
   "producers": [
