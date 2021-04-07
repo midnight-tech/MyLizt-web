@@ -6,6 +6,7 @@ import { CompleteAnime, CompleteBook, CompleteSerie, search, SerieCatalogoInterf
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { AnimeService } from '../anime/anime.service';
 import { BookService } from '../book/book.service';
+import { ListService } from '../list/list.service';
 import { SerieService } from '../serie/serie.service';
 
 @Injectable({
@@ -28,6 +29,7 @@ export class HomeContextService {
     public animeService: AnimeService,
     public bookService: BookService,
     public serieService: SerieService,
+    public listService : ListService
   ) {
     this.detailContent = null
   }
@@ -51,6 +53,7 @@ export class HomeContextService {
 
   changePage(page: number) {
     if (page != this.page && page > 0 && page <= this.totalPage) {
+      console.log(this)
       this.pageSearch(this.query, page, this.searchType!!, true)
     }
   }
@@ -98,7 +101,6 @@ export class HomeContextService {
     }
   }
 
-
   async seriePageManager(query: string, page: number) {
     if (this.lastPageSerie == null || Math.ceil(page / 5) != this.lastPageSerie) {
       let result = await this.serieService.search(query, Math.ceil(page / 5))
@@ -108,4 +110,7 @@ export class HomeContextService {
     }
     this.serieResult = this.seriePages[(page - 1) % 5]
   }
+
+
+  // myList Pagination
 }

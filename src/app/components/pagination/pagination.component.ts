@@ -63,4 +63,9 @@ export class PaginationComponent implements OnInit, OnChanges {
     this.initPages()
   }
 
+
+  // my-list page
+
+  
+
 }

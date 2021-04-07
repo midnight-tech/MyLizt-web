@@ -5,7 +5,7 @@ export interface CatalogoAnimeInterface {
   image_url: string,
   title: string,
   airing: boolean,
-  synopsis: boolean,
+  synopsis: string,
   type: string,
   episodes: number,
   score: number,

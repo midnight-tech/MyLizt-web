@@ -59,4 +59,8 @@ export class MenuLeftComponent implements OnInit {
     this.router.navigate(['home','detail',type,id])
   }
 
+  navigateToMyList(type : string){
+    this.router.navigate(['home','my-list',type])
+  }
+
 }

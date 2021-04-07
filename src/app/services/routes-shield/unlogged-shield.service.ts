@@ -10,10 +10,13 @@ export class UnloggedShieldService implements CanActivate{
   constructor(public auth: AuthenticationService, public router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    console.log(this.auth.user)
     if (this.auth.isLogged == false) {
       return true
     }
-    this.router.navigate(['home'], { replaceUrl: true })
+    if(this.auth.authLoaded){
+      this.router.navigate(['home'], { replaceUrl: true })
+    }
     return false
   }
 

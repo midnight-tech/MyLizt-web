@@ -1,7 +1,7 @@
 <div class="content">
   <p class="content__logo">Logo</p>
   <div class="categories">
-    <a class="categories categories__title">Anime</a>
+    <a class="categories categories__title" (click)="navigateToMyList('anime')">Anime</a>
     <div class="categories__container" *ngFor="let iten of anime">
       <span (click)="navigateToDetail(iten.mal_id.toString(),'anime')" class="categories__item">{{ iten.title }}</span>
       <img
@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="categories">
-    <a class="categories categories__title">Serie</a>
+    <a class="categories categories__title" (click)="navigateToMyList('serie')">Serie</a>
     <div class="categories__container" *ngFor="let iten of serie">
       <span (click)="navigateToDetail(iten.id.toString(),'serie')" class="categories__item">{{ iten.name }}</span>
       <img
@@ -23,7 +23,7 @@
     </div>
   </div>
   <div class="categories">
-    <a class="categories categories__title">Book</a>
+    <a class="categories categories__title" (click)="navigateToMyList('book')">Book</a>
     <div class="categories__container" *ngFor="let iten of book">
       <span (click)="navigateToDetail(iten.id,'book')" class="categories__item">{{ iten.volumeInfo.title }}</span>
       <img

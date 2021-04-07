@@ -25,14 +25,9 @@ export class SignInComponent implements OnInit {
   ngOnInit() {
   }
 
-  navigateLogged(){
-    this.routes.navigate(['/home'],{replaceUrl : true , relativeTo: this.thisRoute})
-  }
-
   loginWithEmail() {
     this.authService.signIn(this.email.value,this.password.value).then(()=>{
       // Success
-      this.navigateLogged()
 
     }).catch((error)=>{
       if(error == "User email is not verified."){
@@ -45,7 +40,6 @@ export class SignInComponent implements OnInit {
 
   loginWithGoogle() {
     this.authService.signInWithGoogle().then(()=>{
-      this.navigateLogged()
     }).catch((error)=>{
       this.email
     })
@@ -53,7 +47,6 @@ export class SignInComponent implements OnInit {
 
   loginWithFacebook() {
     this.authService.signInWithFacebook().then(()=>{
-      this.navigateLogged()
     }).catch((error)=>{
 
     })
@@ -61,7 +54,6 @@ export class SignInComponent implements OnInit {
 
   loginWithTwitter() {
     this.authService.signInWithTwitter().then(()=>{
-      this.navigateLogged()
     }).catch((error)=>{
 
     })
@@ -69,7 +61,6 @@ export class SignInComponent implements OnInit {
 
   loginWithApple() {
     this.authService.signInWithApple().then(()=>{
-      this.navigateLogged()
     }).catch((error)=>{
       
     })

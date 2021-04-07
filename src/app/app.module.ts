@@ -31,6 +31,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { HeaderDetailComponent } from './components/header-detail/header-detail.component';
 import { DetailComponent } from './pages/detail/detail.component';
 import { AboutDetailComponent } from './components/about-detail/about-detail.component';
+import { MyListComponent } from './pages/my-list/my-list.component';
 
 const routes: Routes = [
   { path: 'sandbox', component: SandboxPageComponent, pathMatch: 'full' },
@@ -77,6 +78,10 @@ const routes: Routes = [
         path: 'detail/:type/:id',
         component: DetailComponent,
       },
+      {
+        path: 'my-list/:type',
+        component : MyListComponent,
+      },
     ],
   },
   { path: '**', redirectTo: '' },
@@ -102,6 +107,7 @@ const routes: Routes = [
     HeaderDetailComponent,
     DetailComponent,
     AboutDetailComponent,
+    MyListComponent,
   ],
   imports: [
     BrowserModule,
