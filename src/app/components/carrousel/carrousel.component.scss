@@ -2,6 +2,18 @@
 
 // @TODO Descobrir o bug do hover apenas no image 4
 
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
 input[type="radio"] {
   display: none;
 }

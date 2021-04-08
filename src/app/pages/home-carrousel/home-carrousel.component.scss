@@ -1,7 +1,22 @@
+@import "../../sass/abstract/variables";
+
 .flex-container {
   display: flex;
   flex-direction: column;
 
   height: 100%;
   width: 100%;
+  padding-bottom: 5rem;
+}
+
+.title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: $primary1;
+  font-size: 4rem;
+  text-transform: uppercase;
+  font-weight: 100;
+  padding: 5rem 0;
+  letter-spacing: 0.5rem;
 }
