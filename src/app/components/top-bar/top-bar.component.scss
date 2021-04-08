@@ -264,10 +264,10 @@ a.dropdown-item {
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
-  cursor: pointer;
 
   &__user {
     font-size: 2rem;
+    cursor: pointer;
   }
 
   &__content {
@@ -289,6 +289,7 @@ a.dropdown-item {
     height: 2.5rem;
     width: 2.5rem;
     margin-right: 1rem;
+    cursor: pointer;
 
     &--notification {
       margin: 0 3rem;

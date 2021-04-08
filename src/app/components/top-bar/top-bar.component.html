@@ -62,7 +62,10 @@
         >
           <div (click)="closeSearchModal()" class="membrana"></div>
           <div class="dropdown-content dropdown-content--search">
-            <div *ngFor="let anime of animes; index as i" (click)="navigateToDetail(anime.mal_id.toString(),'anime')">
+            <div
+              *ngFor="let anime of animes; index as i"
+              (click)="navigateToDetail(anime.mal_id.toString(), 'anime')"
+            >
               <!-- Templates for Aired Anime -->
               <ng-template #dateEndNull>
                 <ng-container *ngIf="anime.start_date; else dateStartNull">
@@ -139,9 +142,12 @@
               </div>
             </div>
             <div *ngFor="let serie of series; index as i">
-              <div class="dropdown-container-item" (mouseenter)="serie.getComplete()" (click)="navigateToDetail(serie.id.toString() ,'serie')">
-                <div
-                  class="dropdown-container-item__container-image">
+              <div
+                class="dropdown-container-item"
+                (mouseenter)="serie.getComplete()"
+                (click)="navigateToDetail(serie.id.toString(), 'serie')"
+              >
+                <div class="dropdown-container-item__container-image">
                   <img
                     [src]="serie.poster_path"
                     alt="Cover"
@@ -154,7 +160,8 @@
                   </p>
                   <div *ngIf="serie.complete">
                     <p class="dropdown-item dropdown-item--search-extra-info">
-                      aired: {{ serie.complete.first_air_date}} to {{serie.complete.last_air_date}}
+                      aired: {{ serie.complete.first_air_date }} to
+                      {{ serie.complete.last_air_date }}
                     </p>
                     <p class="dropdown-item dropdown-item--search-extra-info">
                       Score: {{ serie.vote_average }}
@@ -167,9 +174,12 @@
               </div>
             </div>
             <div *ngFor="let book of books; index as i">
-              <div class="dropdown-container-item" (mouseenter)="book.getComplete()" (click)="navigateToDetail(book.id ,'book')">
-                <div
-                  class="dropdown-container-item__container-image">
+              <div
+                class="dropdown-container-item"
+                (mouseenter)="book.getComplete()"
+                (click)="navigateToDetail(book.id, 'book')"
+              >
+                <div class="dropdown-container-item__container-image">
                   <img
                     [src]="book.volumeInfo.image"
                     [alt]="book.volumeInfo.image"

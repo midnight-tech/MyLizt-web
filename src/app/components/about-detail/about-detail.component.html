@@ -58,20 +58,21 @@
     <span class="info__type"
       >Producers:
       <span class="info__value" *ngFor="let producer of anime.producers">
-        {{producer.name}}
+        {{ producer.name }}
       </span>
     </span>
   </div>
   <div class="info">
-    <span class="info__type" >
-      Licensors: <span class="info__value"*ngFor="let licensor of anime.licensors"> 
-        {{licensor.name}} 
+    <span class="info__type">
+      Licensors:
+      <span class="info__value" *ngFor="let licensor of anime.licensors">
+        {{ licensor.name }}
       </span>
     </span>
   </div>
   <div class="info">
     <span class="info__type" *ngFor="let studio of anime.studios"
-      >Studios: <span class="info__value"> {{studio.name}} </span></span
+      >Studios: <span class="info__value"> {{ studio.name }} </span></span
     >
   </div>
   <div class="info">
@@ -81,7 +82,10 @@
   </div>
   <div class="info">
     <span class="info__type">
-      Genres:<span class="info__value" *ngFor="let genre of anime.genres">{{genre.name}}</span>
+      Genres:
+      <span class="info__value" *ngFor="let genre of anime.genres"
+        >{{ genre.name }}
+      </span>
     </span>
   </div>
   <div class="info">
@@ -100,7 +104,12 @@
     </div>
     <div class="info">
       <span class="info__type"
-        >Adaption: <span class="info__value" *ngFor="let adaptor of anime.related.Adaptation">{{ adaptor.name }}</span></span
+        >Adaption:
+        <span
+          class="info__value"
+          *ngFor="let adaptor of anime.related.Adaptation"
+          >{{ adaptor.name }}</span
+        ></span
       >
     </div>
   </div>
@@ -108,16 +117,22 @@
     <div class="info">
       <span class="info__type">
         side story:
-        <span class="info__value" *ngFor="let sideStory of anime.related.SideStory">
-          {{sideStory.name}}
+        <span
+          class="info__value"
+          *ngFor="let sideStory of anime.related.SideStory"
+        >
+          {{ sideStory.name }}
         </span>
-    </span>
+      </span>
     </div>
   </div>
   <div *ngIf="anime.related.Sequel">
     <div class="info">
       <span class="info__type">
-        Sequel: <span class="info__value"  *ngFor="let sequel of anime.related.Sequel"> {{sequel.name}} </span>
+        Sequel:
+        <span class="info__value" *ngFor="let sequel of anime.related.Sequel">
+          {{ sequel.name }}
+        </span>
       </span>
     </div>
   </div>
@@ -125,7 +140,11 @@
   <div *ngIf="anime.related.Other">
     <div class="info">
       <span class="info__type">
-        Other: <span class="info__value" *ngFor="let other of anime.related.Other"> {{other.name}} </span></span>
+        Other:
+        <span class="info__value" *ngFor="let other of anime.related.Other">
+          {{ other.name }}
+        </span></span
+      >
     </div>
   </div>
 
@@ -141,7 +160,7 @@
   </div>
   <div class="info">
     <span class="info__value">
-      {{anime.ending_themes}}
+      {{ anime.ending_themes }}
     </span>
   </div>
 </div>
@@ -152,7 +171,7 @@
     <h1 class="title__text">Tagline</h1>
   </div>
   <div class="info">
-    <span class="info__value"> {{serie.tagline}} </span>
+    <span class="info__value"> {{ serie.tagline }} </span>
   </div>
 
   <div class="title">
@@ -160,38 +179,52 @@
   </div>
   <div class="info">
     <span class="info__type"
-      >Type: <span class="info__value"> {{serie.type}} </span></span
+      >Type: <span class="info__value"> {{ serie.type }} </span></span
     >
   </div>
   <div class="info">
     <span class="info__type"
-      >Episodes: <span class="info__value"> {{serie.seasons[season].episode_count}} </span></span
+      >Episodes:
+      <span class="info__value">
+        {{ serie.seasons[season].episode_count }}
+      </span></span
     >
   </div>
   <div class="info">
     <span class="info__type"
-      >Status: <span class="info__value">{{serie.status}}</span></span
+      >Status: <span class="info__value">{{ serie.status }}</span></span
     >
   </div>
   <div class="info">
     <span class="info__type"
-      >Aired: <span class="info__value">{{serie.seasons[season].air_date}}</span></span
+      >Aired:
+      <span class="info__value">{{
+        serie.seasons[season].air_date
+      }}</span></span
     >
   </div>
   <div class="info">
     <span class="info__type">
-      Producers:<span class="info__value" *ngFor="let created of serie.created_by"> {{created.name}} </span>
+      Producers:<span
+        class="info__value"
+        *ngFor="let created of serie.created_by"
+      >
+        {{ created.name }}
+      </span>
     </span>
   </div>
   <div class="info">
     <span class="info__type"
       >Genres:
-      <span class="info__value" *ngFor="let genre of serie.genres">{{genre.name}}</span></span
+      <span class="info__value" *ngFor="let genre of serie.genres">{{
+        genre.name
+      }}</span></span
     >
   </div>
   <div class="info">
     <span class="info__type"
-      >Original Country: <span class="info__value" >{{serie.origin_country}}</span></span
+      >Original Country:
+      <span class="info__value">{{ serie.origin_country }}</span></span
     >
   </div>
 </div>
@@ -202,7 +235,7 @@
     <h1 class="title__text">Authors</h1>
   </div>
   <div class="info">
-    <span class="info__value"> {{book.volumeInfo.authors}} </span>
+    <span class="info__value"> {{ book.volumeInfo.authors }} </span>
   </div>
 
   <div class="title">
@@ -212,27 +245,38 @@
     <span class="info__type">Type: <span class="info__value">Book</span></span>
   </div>
   <div class="info">
-    <span class="info__type">Pages: <span class="info__value">{{book.volumeInfo.pageCount}}</span></span>
+    <span class="info__type"
+      >Pages:
+      <span class="info__value">{{ book.volumeInfo.pageCount }}</span></span
+    >
   </div>
   <div class="info">
     <span class="info__type"
       >Categories:
-      <span class="info__value"> {{book.volumeInfo.categories}} </span>
+      <span class="info__value"> {{ book.volumeInfo.categories }} </span>
     </span>
   </div>
   <div class="info">
     <span class="info__type"
-      >Publisher: <span class="info__value"> {{book.volumeInfo.publisher}} </span>
+      >Publisher:
+      <span class="info__value"> {{ book.volumeInfo.publisher }} </span>
     </span>
   </div>
   <div class="info">
     <span class="info__type"
-      >Published Date:: <span class="info__value"> {{book.volumeInfo.publishedDate}} </span>
+      >Published Date:
+      <span class="info__value"> {{ book.volumeInfo.publishedDate }} </span>
     </span>
   </div>
   <div class="info">
     <span class="info__type"
-      >ISBN: <span class="info__value" *ngFor="let indentifier of book.volumeInfo.industryIdentifiers"> {{indentifier.identifier}} </span>
+      >ISBN:
+      <span
+        class="info__value"
+        *ngFor="let indentifier of book.volumeInfo.industryIdentifiers"
+      >
+        {{ indentifier.identifier }}
+      </span>
     </span>
   </div>
 </div>

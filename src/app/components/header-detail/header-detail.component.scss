@@ -93,6 +93,7 @@
       flex-direction: row;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
     }
   }
 
@@ -306,4 +307,8 @@
     width: 3rem;
     margin-right: 0.5rem;
   }
+}
+
+.hidden {
+  visibility: hidden;
 }

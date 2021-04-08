@@ -12,6 +12,8 @@
     color: $white;
     font-size: 4rem;
     margin-bottom: 6rem;
+    cursor: pointer;
+    align-self: baseline;
   }
 }
 
@@ -44,14 +46,19 @@
   &__item {
     background-color: transparent;
     font-size: 1.6rem;
-    padding-right: 1rem;
+    margin-right: 1rem;
+    cursor: pointer;
 
     // truncate string
     // width-container-grid - 2xpaddinng-content - width-icon
-    width: calc(18vw - 4rem - 3rem);
+    max-width: calc(18vw - 4rem - 3rem);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    &:hover {
+      color: $primary1;
+    }
   }
 
   &__icon {

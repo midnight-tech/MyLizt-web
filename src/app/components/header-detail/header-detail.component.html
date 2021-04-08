@@ -1,12 +1,23 @@
 <div class="grid-container-header">
   <div class="backcover">
-    <img *ngIf="type == 'ANIME' " class="backcover__image" [src]="anime.image_url" alt="BackCover" />
-    <img *ngIf="type == 'SERIE' " class="backcover__image"
+    <img
+      *ngIf="type == 'ANIME'"
+      class="backcover__image"
+      [src]="anime.image_url"
+      alt="BackCover"
+    />
+    <img
+      *ngIf="type == 'SERIE'"
+      class="backcover__image"
       [src]="serie.backdrop_path"
-      alt="BackCover" />
-    <img *ngIf="type == 'BOOK' " class="backcover__image"
+      alt="BackCover"
+    />
+    <img
+      *ngIf="type == 'BOOK'"
+      class="backcover__image"
       [src]="book.volumeInfo.image"
-      alt="BackCover" />
+      alt="BackCover"
+    />
   </div>
 
   <div class="title" *ngIf="type == 'ANIME'">
@@ -19,13 +30,24 @@
   </div>
 
   <div class="frontcover">
-    <img *ngIf="type == 'ANIME' " class="frontcover__image" [src]="anime.image_url" alt="FrontCover" />
-    <img *ngIf="type == 'SERIE' " class="frontcover__image"
+    <img
+      *ngIf="type == 'ANIME'"
+      class="frontcover__image"
+      [src]="anime.image_url"
+      alt="FrontCover"
+    />
+    <img
+      *ngIf="type == 'SERIE'"
+      class="frontcover__image"
       [src]="serie.poster_path"
-      alt="FrontCover" />
-    <img *ngIf="type == 'BOOK'" class="frontcover__image"
+      alt="FrontCover"
+    />
+    <img
+      *ngIf="type == 'BOOK'"
+      class="frontcover__image"
       [src]="book.volumeInfo.image"
-      alt="FrontCover" />
+      alt="FrontCover"
+    />
   </div>
 
   <div class="cover-info" *ngIf="type == 'ANIME'">
@@ -44,27 +66,60 @@
   </div>
 
   <div class="cover-info" *ngIf="type == 'SERIE'">
-    <div *ngIf="seasonAtual != 0" (click)="changeSeason(seasonAtual - 1)" class="cover-info__flex--serie">
-      <img class="cover-info__icon" src="../../../assets/icon-search.svg" alt="Back" />
-      <p class="cover-info__title--serie">{{serie.seasons[seasonAtual - 1].name}} </p>
+    <div
+      [ngClass]="{ hidden: seasonAtual == 0 }"
+      (click)="changeSeason(seasonAtual - 1)"
+      class="cover-info__flex--serie"
+    >
+      <img
+        class="cover-info__icon"
+        src="../../../assets/icon-search.svg"
+        alt="Back"
+      />
+      <p class="cover-info__title--serie" *ngIf="seasonAtual != 0">
+        {{ serie.seasons[seasonAtual - 1].name }}
+      </p>
     </div>
     <div class="cover-info__flex">
-      <p class="cover-info__info">{{serie.name}} ({{serie.seasons[seasonAtual].name}} )</p>
+      <p class="cover-info__info">
+        {{ serie.name }} ({{ serie.seasons[seasonAtual].name }} )
+      </p>
     </div>
-    <div *ngIf="seasonAtual != serie.seasons.length - 1" (click)="changeSeason(seasonAtual + 1)" class="cover-info__flex--serie">
-      <p class="cover-info__title--serie">{{serie.seasons[seasonAtual + 1 ].name}} </p>
-      <img class="cover-info__icon" src="../../../assets/icon-search.svg" alt="Back" />
+    <div
+      [ngClass]="{ hidden: seasonAtual == serie.seasons.length - 1 }"
+      (click)="changeSeason(seasonAtual + 1)"
+      class="cover-info__flex--serie"
+    >
+      <p
+        class="cover-info__title--serie"
+        *ngIf="seasonAtual != serie.seasons.length - 1"
+      >
+        {{ serie.seasons[seasonAtual + 1].name }}
+      </p>
+      <img
+        class="cover-info__icon"
+        src="../../../assets/icon-search.svg"
+        alt="Back"
+      />
     </div>
   </div>
 
   <div class="score">
     <div class="score__flex">
       <p class="score__title">Score</p>
-      <p *ngIf="type == 'ANIME'" class="score__info"> {{anime.score}} </p>
-      <p *ngIf="type == 'SERIE'" class="score__info"> {{serie.vote_average}} </p>
-      <p *ngIf="type == 'BOOK'" class="score__info"> {{book.volumeInfo.averageRating}} </p>
-      <p *ngIf="type == 'ANIME'"  class="score__caption">{{anime.scored_by}} users</p>
-      <p *ngIf="type == 'SERIE'"  class="score__caption">{{serie.vote_count}} users</p>
+      <p *ngIf="type == 'ANIME'" class="score__info">{{ anime.score }}</p>
+      <p *ngIf="type == 'SERIE'" class="score__info">
+        {{ serie.vote_average }}
+      </p>
+      <p *ngIf="type == 'BOOK'" class="score__info">
+        {{ book.volumeInfo.averageRating }}
+      </p>
+      <p *ngIf="type == 'ANIME'" class="score__caption">
+        {{ anime.scored_by }} users
+      </p>
+      <p *ngIf="type == 'SERIE'" class="score__caption">
+        {{ serie.vote_count }} users
+      </p>
     </div>
   </div>
 
@@ -85,26 +140,56 @@
   <div class="episodes" *ngIf="onMyList">
     <p class="episodes__title">Watched</p>
     <div class="episodes__flex">
-      <img class="episodes__icon" src="../../../assets/icon-search.svg" alt="Less" />
-      <p *ngIf="type=='ANIME'" class="episodes__info">1 / {{anime.episodes}}</p>
-      <p *ngIf="type=='SERIE'" class="episodes__info">1 / {{serie.seasons[seasonAtual].episode_count}}</p>
-      <p *ngIf="type=='BOOK'" class="episodes__info">1 / {{book.volumeInfo.pageCount}}</p>
-      <img class="episodes__icon" src="../../../assets/icon-notification.svg" alt="More" />
+      <img
+        class="episodes__icon"
+        src="../../../assets/icon-search.svg"
+        alt="Less"
+      />
+      <p *ngIf="type == 'ANIME'" class="episodes__info">
+        1 / {{ anime.episodes }}
+      </p>
+      <p *ngIf="type == 'SERIE'" class="episodes__info">
+        1 / {{ serie.seasons[seasonAtual].episode_count }}
+      </p>
+      <p *ngIf="type == 'BOOK'" class="episodes__info">
+        1 / {{ book.volumeInfo.pageCount }}
+      </p>
+      <img
+        class="episodes__icon"
+        src="../../../assets/icon-notification.svg"
+        alt="More"
+      />
     </div>
   </div>
 
   <div class="button">
     <div class="button__flex button__flex--recommend">
-      <img class="button__icon" src="../../../assets/icon-search.svg" alt="Share" />
+      <img
+        class="button__icon"
+        src="../../../assets/icon-search.svg"
+        alt="Share"
+      />
       <a class="button__text">Recomend to...</a>
     </div>
 
-    <div *ngIf="onMyList == false" (click)="addToMyList()" class="button__flex button__flex--remove">
-      <img class="button__icon" src="../../../assets/icon-notification.svg" alt="Remove" />
+    <div
+      *ngIf="onMyList == false"
+      (click)="addToMyList()"
+      class="button__flex button__flex--remove"
+    >
+      <img
+        class="button__icon"
+        src="../../../assets/icon-notification.svg"
+        alt="Remove"
+      />
       <a class="button__text">Add to list</a>
     </div>
     <div *ngIf="onMyList == true" class="button__flex button__flex--remove">
-      <img class="button__icon" src="../../../assets/icon-notification.svg" alt="Remove" />
+      <img
+        class="button__icon"
+        src="../../../assets/icon-notification.svg"
+        alt="Remove"
+      />
       <a class="button__text">Remove</a>
     </div>
   </div>
