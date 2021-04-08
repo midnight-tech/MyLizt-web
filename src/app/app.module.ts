@@ -32,6 +32,8 @@ import { HeaderDetailComponent } from './components/header-detail/header-detail.
 import { DetailComponent } from './pages/detail/detail.component';
 import { AboutDetailComponent } from './components/about-detail/about-detail.component';
 import { MyListComponent } from './pages/my-list/my-list.component';
+import { CarrouselComponent } from './components/carrousel/carrousel.component';
+import { HomeCarrouselComponent } from './pages/home-carrousel/home-carrousel.component';
 
 const routes: Routes = [
   { path: 'sandbox', component: SandboxPageComponent, pathMatch: 'full' },
@@ -68,7 +70,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: ChildAExampleComponent,
+        component: HomeCarrouselComponent,
       },
       {
         path: 'search',
@@ -80,7 +82,7 @@ const routes: Routes = [
       },
       {
         path: 'my-list/:type',
-        component : MyListComponent,
+        component: MyListComponent,
       },
     ],
   },
@@ -108,6 +110,8 @@ const routes: Routes = [
     DetailComponent,
     AboutDetailComponent,
     MyListComponent,
+    CarrouselComponent,
+    HomeCarrouselComponent,
   ],
   imports: [
     BrowserModule,
@@ -115,7 +119,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule.enablePersistence()
+    AngularFirestoreModule.enablePersistence(),
   ],
   exports: [RouterModule],
   providers: [
