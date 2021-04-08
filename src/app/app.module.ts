@@ -1,4 +1,4 @@
-import { NgModule , APP_INITIALIZER, NgZone } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';

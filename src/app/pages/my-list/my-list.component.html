@@ -11,17 +11,17 @@
   </div>
 
   <div class="list">
-    <div class="list__card" *ngFor="let content of anime">
+    <div class="list__card" *ngFor="let content of homeContext.myListAnimePage">
       <!-- {{ content.title }} -->
-      <app-card [anime]="content" ></app-card>
+      <app-card [anime]="content.anime" ></app-card>
     </div>
-    <div class="list__card" *ngFor="let content of serie">
+    <div class="list__card" *ngFor="let content of homeContext.myListSeriePage">
       <!-- {{ content.volumeInfo.title }} -->
-      <app-card [serie]="content"></app-card>
+      <app-card [serie]="content.serie"></app-card>
     </div>
-    <div class="list__card" *ngFor="let content of book">
+    <div class="list__card" *ngFor="let content of homeContext.myListBookPage">
       <!-- {{ content.name }} -->
-      <app-card [book]="content" ></app-card>
+      <app-card [book]="content.book" ></app-card>
     </div>
   </div>
 

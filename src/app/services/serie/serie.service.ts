@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
-import { CompleteSerie, SerieCatalogoInterface } from 'src/app/data/interfaces';
+import { CompleteSerie } from 'src/app/data/interfaces';
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { environment } from 'src/environments/environment';
 

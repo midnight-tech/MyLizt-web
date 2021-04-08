@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CompleteAnime, CompleteBook, CompleteSerie, content, contentAnime, contentBook, contentSerie } from 'src/app/data/interfaces';
+import { CompleteAnime, CompleteBook, CompleteSerie } from 'src/app/data/interfaces';
 import { AnimeService } from 'src/app/services/anime/anime.service';
 import { BookService } from 'src/app/services/book/book.service';
 import { ListService } from 'src/app/services/list/list.service';
@@ -12,9 +12,7 @@ import { SerieService } from 'src/app/services/serie/serie.service';
   styleUrls: ['./menu-left.component.scss']
 })
 export class MenuLeftComponent implements OnInit {
-
-  listOfitem = ['Violet Evergarden', 'Violet Evergarden The Movie', 'Violet Evergarden Ova 1', 'Violet Evergarden Ova 2', 'Violet Evergarden Eien to Jidou Shuki']
-
+  
   anime: CompleteAnime[] = []
   serie: CompleteSerie[] = []
   book: CompleteBook[] = []
@@ -24,7 +22,7 @@ export class MenuLeftComponent implements OnInit {
     private animeService: AnimeService,
     private bookService: BookService,
     private serieService: SerieService,
-    private router : Router
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -34,7 +32,7 @@ export class MenuLeftComponent implements OnInit {
   getContents() {
     this.listService.getHomeContent().then(({ anime, book, serie }) => {
       let result = 0
-      
+
       for (let i of anime!!) {
         this.animeService.getAnimeComplete(i.contentId as number).then((value) => {
           this.anime.push(value)
@@ -55,12 +53,12 @@ export class MenuLeftComponent implements OnInit {
 
   }
 
-  navigateToDetail(id:string,type : string){
-    this.router.navigate(['home','detail',type,id])
+  navigateToDetail(id: string, type: string) {
+    this.router.navigate(['home', 'detail', type, id])
   }
 
-  navigateToMyList(type : string){
-    this.router.navigate(['home','my-list',type])
+  navigateToMyList(type: string) {
+    this.router.navigate(['home', 'my-list', type])
   }
 
 }

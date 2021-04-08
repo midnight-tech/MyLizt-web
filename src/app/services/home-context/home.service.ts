@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import axios from 'axios';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';
 import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
-import { CompleteAnime, CompleteBook, CompleteSerie, search, SerieCatalogoInterface } from 'src/app/data/interfaces';
+import { CompleteAnime, CompleteBook, CompleteSerie, content, contentAnime, contentBook, contentSerie, search } from 'src/app/data/interfaces';
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { AnimeService } from '../anime/anime.service';
 import { BookService } from '../book/book.service';
@@ -51,11 +50,20 @@ export class HomeContextService {
     this.lastPageSerie = null
   }
 
-  changePage(page: number) {
-    if (page != this.page && page > 0 && page <= this.totalPage) {
-      console.log(this)
-      this.pageSearch(this.query, page, this.searchType!!, true)
+  changePage(page: number, pageCalled: 'search' | 'myContent' | 'friend' = 'search', type?:string) {
+    if(pageCalled == 'search'){
+      if (page != this.page && page > 0 && page <= this.totalPage) {
+        console.log(this)
+        this.pageSearch(this.query, page, this.searchType!!, true)
+      }
+      return
+    } else if (pageCalled == 'myContent'){
+      if(!type){
+        throw "Query sem type"
+      }
+      this.myListPage(page,type)
     }
+
   }
 
   clearContents() {
@@ -113,4 +121,107 @@ export class HomeContextService {
 
 
   // myList Pagination
+  animeAuxPage?:{ anime: AnimeCatalogo; content: content<contentAnime>;}[][]
+  myListAnimePage : { anime: AnimeCatalogo; content: content<contentAnime>;}[] = []
+  serieAuxPage?:{ serie: SerieCatalogo; content: content<contentSerie>;}[][]
+  myListSeriePage : { serie: SerieCatalogo; content: content<contentSerie>;}[] = []
+  bookAuxPage?:{ book: BookCatalogo; content: content<contentBook>;}[][]
+  myListBookPage : { book: BookCatalogo; content: content<contentBook>;}[] = []
+
+  cleanContentMyList(){
+    this.myListAnimePage = []
+    this.myListSeriePage = []
+    this.myListBookPage = []
+  }
+
+  async myListPage(page : number, type : string){
+    if(type == 'anime'){
+      if(!this.animeAuxPage){
+        this.animeAuxPage = []
+        const firstWave = await this.listService.getAnimeContent()
+        for (let i = 0, j = firstWave.length; i < j; i += 12) {
+          this.animeAuxPage.push(firstWave.slice(i, i + 12));
+        }
+        this.myListAnimePage = this.animeAuxPage[page - 1]
+        return
+      }
+      if(page <= this.animeAuxPage.length){
+        this.myListAnimePage = this.animeAuxPage[page - 1]
+        return
+      } else {
+        const newWave = await this.listService.getAnimeContent(this.animeAuxPage[this.animeAuxPage.length -1][11])
+        for (let i = 0, j = newWave.length; i < j; i += 12) {
+          this.animeAuxPage.push(newWave.slice(i, i + 12));
+        }
+        this.myListAnimePage = this.animeAuxPage[page - 1]
+        return
+      }
+    } else if(type == 'serie'){
+      if(!this.serieAuxPage){
+        this.serieAuxPage = []
+        const firstWave = await this.listService.getAllSerieContent()
+        for (let i = 0, j = firstWave.length; i < j; i += 12) {
+          this.serieAuxPage.push(firstWave.slice(i, i + 12));
+        }
+        this.myListSeriePage = this.serieAuxPage[page - 1]
+        return
+      }
+      if(page <= this.serieAuxPage.length){
+        this.myListSeriePage = this.serieAuxPage[page - 1]
+        return
+      } else {
+        const newWave = await this.listService.getAllSerieContent(this.serieAuxPage[this.serieAuxPage.length -1][11])
+        for (let i = 0, j = newWave.length; i < j; i += 12) {
+          this.serieAuxPage.push(newWave.slice(i, i + 12));
+        }
+        this.myListSeriePage = this.serieAuxPage[page - 1]
+        return
+      }
+    } else {
+      if(!this.bookAuxPage){
+        this.bookAuxPage = []
+        const firstWave = await this.listService.getAllBookContent()
+        for (let i = 0, j = firstWave.length; i < j; i += 12) {
+          this.bookAuxPage.push(firstWave.slice(i, i + 12));
+        }
+        this.myListBookPage = this.bookAuxPage[page - 1]
+        return
+      }
+      if(page <= this.bookAuxPage.length){
+        this.myListBookPage = this.bookAuxPage[page - 1]
+        return
+      } else {
+        const newWave = await this.listService.getAllBookContent(this.bookAuxPage[this.bookAuxPage.length -1][11])
+        for (let i = 0, j = newWave.length; i < j; i += 12) {
+          this.bookAuxPage.push(newWave.slice(i, i + 12));
+        }
+        this.myListBookPage = this.bookAuxPage[page - 1]
+        return
+      }
+    }
+  }
+
+  getAnimes() {
+    this.listService.getAnimeContent().then((value) => {
+      value.map((value) => {
+        this.animeResult.push(value.anime)
+      })
+    })
+  }
+
+  getSeries() {
+    this.listService.getAllSerieContent().then((value) => {
+      value.map((value) => {
+        this.serieResult.push(value.serie)
+      })
+    })
+  }
+
+  getBooks(){
+    this.listService.getAllBookContent().then((value) => {
+      value.map((value) => {
+        this.bookResult.push(value.book)
+      })
+    })
+  }
 }

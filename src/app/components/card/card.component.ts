@@ -1,4 +1,4 @@
-import { Component, Input, NgZone, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';
 import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';

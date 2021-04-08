@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BookCatalogo } from 'src/app/data/BookCatalogo';
-import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
-import { CatalogoAnimeInterface, content, contentAnime, contentBook, contentSerie } from 'src/app/data/interfaces';
-import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
-import { AnimeService } from 'src/app/services/anime/anime.service';
 import { HomeContextService } from 'src/app/services/home-context/home.service';
 import { ListService } from 'src/app/services/list/list.service';
 
@@ -16,9 +11,6 @@ import { ListService } from 'src/app/services/list/list.service';
 export class MyListComponent implements OnInit {
 
   type: string = ""
-  anime: AnimeCatalogo[] = []
-  serie: SerieCatalogo[] = []
-  book: BookCatalogo[] = []
 
   constructor(
     actRoute: ActivatedRoute,
@@ -27,47 +19,17 @@ export class MyListComponent implements OnInit {
   ) {
     actRoute.params.subscribe((value) => {
       this.type = value.type
-      this.cleanContent()
+      homeContext.cleanContentMyList()
       if (value.type == 'anime') {
-        this.getAnimes()
+        this.homeContext.changePage(1,'myContent',value.type)
       } else if (value.type == 'serie') {
-        this.getSeries()
+        this.homeContext.changePage(1,'myContent',value.type)
       } else {
-        this.getBooks()
+        this.homeContext.changePage(1,'myContent',value.type)
       }
     })
   }
 
   ngOnInit() {
-  }
-
-  cleanContent() {
-    this.anime = []
-    this.serie = []
-    this.book = []
-  }
-
-  getAnimes() {
-    this.listService.getAnimeContent(1).then((value) => {
-      value.map((value) => {
-        this.anime.push(value.anime)
-      })
-    })
-  }
-
-  getSeries() {
-    this.listService.getAllSerieContent().then((value) => {
-      value.map((value) => {
-        this.serie.push(value.serie)
-      })
-    })
-  }
-
-  getBooks(){
-    this.listService.getAllBookContent().then((value) => {
-      value.map((value) => {
-        this.book.push(value.book)
-      })
-    })
   }
 }

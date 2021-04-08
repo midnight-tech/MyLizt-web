@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentData } from '@angular/fire/firestore';
+import { DocumentData, QuerySnapshot } from '@angular/fire/firestore';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';
 import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
-import { CatalogoAnimeInterface, content, contentAnime, contentBook, contentSerie, listInterface, search, UserInterface } from 'src/app/data/interfaces';
+import { content, contentAnime, contentBook, contentSerie, listInterface, search } from 'src/app/data/interfaces';
 import { List } from 'src/app/data/List';
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { AnimeService } from '../anime/anime.service';
@@ -19,11 +19,10 @@ export class ListService {
 
     constructor(
         private auth: AuthenticationService,
-        private fire: AngularFirestore,
-        private animeService : AnimeService,
-        private serieService : SerieService,
-        private BookService : BookService,
-    ) {}
+        private animeService: AnimeService,
+        private serieService: SerieService,
+        private BookService: BookService,
+    ) { }
 
     async getMyList() {
         const myUser = this.auth.userFirestore!!
@@ -78,36 +77,51 @@ export class ListService {
         }
     }
 
-    async getAnimeContent(page: number) {
-        let animeQuery = await this.auth.userFirestore!!.myList.collection('anime').orderBy('watched').limit(60).get()
+    async getAnimeContent(lastDoc?: DocumentData) {
+        let animeQuery: QuerySnapshot<DocumentData>
+        if (lastDoc) {
+            animeQuery = await this.auth.userFirestore!!.myList.collection('anime').orderBy('watched').startAfter(lastDoc).limit(60).get()
+        } else {
+            animeQuery = await this.auth.userFirestore!!.myList.collection('anime').orderBy('watched').limit(60).get()
+        }
         let finalResult = animeQuery.docs.map(async (animeData) => {
             let animeFireResult = animeData.data() as content<contentAnime>
             let animeResult = await this.animeService.getAnimeComplete(animeFireResult.contentId as number)
-            
-            let animeCatalogo = new AnimeCatalogo(undefined,undefined,animeResult)
-            return {anime: animeCatalogo, content : animeFireResult }
+
+            let animeCatalogo = new AnimeCatalogo(undefined, undefined, animeResult)
+            return { anime: animeCatalogo, content: animeFireResult }
         })
         return await Promise.all(finalResult)
     }
-    async getAllSerieContent() {
-        let serieQuery = await this.auth.userFirestore!!.myList.collection('serie').orderBy('watched').limit(60).get()
+    async getAllSerieContent(lastDoc?: DocumentData) {
+        let serieQuery: QuerySnapshot<DocumentData>
+        if (lastDoc) {
+            serieQuery = await this.auth.userFirestore!!.myList.collection('serie').orderBy('watched').startAfter(lastDoc).limit(60).get()
+        } else {
+            serieQuery = await this.auth.userFirestore!!.myList.collection('serie').orderBy('watched').limit(60).get()
+        }
         let finalResult = serieQuery.docs.map(async (serieData) => {
             let serieFireResult = serieData.data() as content<contentSerie>
             let serieResult = await this.serieService.getSerieComplete(serieFireResult.contentId as number)
-            
-            let serieCatalogo = new SerieCatalogo(undefined,undefined,serieResult)
-            return {serie: serieCatalogo, content : serieFireResult }
+
+            let serieCatalogo = new SerieCatalogo(undefined, undefined, serieResult)
+            return { serie: serieCatalogo, content: serieFireResult }
         })
         return await Promise.all(finalResult)
     }
-    async getAllBookContent() {
-        let bookQuery = await this.auth.userFirestore!!.myList.collection('book').orderBy('watched').limit(60).get()
+    async getAllBookContent(lastDoc?: DocumentData) {
+        let bookQuery
+        if (lastDoc) {
+            bookQuery = await this.auth.userFirestore!!.myList.collection('book').orderBy('watched').startAfter(lastDoc).limit(60).get()
+        } else {
+            bookQuery = await this.auth.userFirestore!!.myList.collection('book').orderBy('watched').limit(60).get()
+        }
         let finalResult = bookQuery.docs.map(async (bookData) => {
             let bookFireResult = bookData.data() as content<contentBook>
             let bookResult = await this.BookService.getBookComplete(bookFireResult.contentId as string)
-            
-            let bookCatalogo = new BookCatalogo(undefined,undefined,bookResult)
-            return {book: bookCatalogo, content : bookFireResult }
+
+            let bookCatalogo = new BookCatalogo(undefined, undefined, bookResult)
+            return { book: bookCatalogo, content: bookFireResult }
         })
         return await Promise.all(finalResult)
     }

@@ -1,11 +1,9 @@
-/// <reference path="../../../../node_modules/@types/gapi/index.d.ts">
 import { Injectable, NgZone } from '@angular/core';
 import firebase from 'firebase/app'
 import { AngularFirestore } from '@angular/fire/firestore'
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { content, listInterface, UserInterface } from 'src/app/data/interfaces';
-import { Observable } from 'rxjs';
+import { listInterface, UserInterface } from 'src/app/data/interfaces';
 
 @Injectable({
   providedIn: 'root'

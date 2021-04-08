@@ -1,5 +1,5 @@
 <div class="content">
-  <p class="content__logo">Logo</p>
+  <p class="content__logo" [routerLink]="['home']">Logo</p>
   <div class="categories">
     <a class="categories categories__title" (click)="navigateToMyList('anime')">Anime</a>
     <div class="categories__container" *ngFor="let iten of anime">
