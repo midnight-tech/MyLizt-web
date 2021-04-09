@@ -10,12 +10,16 @@ export class PaginationComponent implements OnInit, OnChanges {
 
   @Input() atualPage: number = 1
   @Input() totalPage: number = 8
+  @Input() pageCalled? :"search" | "myContent" | "friend"
+  @Input() type : string = ""
   pages: number[] = []
   init = true
   activated = false
 
   constructor(public homeContext: HomeContextService) {
-
+    if(this.pageCalled){
+      this.pageCalled = 'search'
+    }
   }
 
   initPages() {

@@ -61,7 +61,11 @@ export class HomeContextService {
       if(!type){
         throw "Query sem type"
       }
-      this.myListPage(page,type)
+      if (page > 0 && (page <= this.totalPage || this.totalPage == 0)) {
+        this.myListPage(page,type).then(()=>{
+          this.page = page
+        })
+      }
     }
 
   }
@@ -143,6 +147,7 @@ export class HomeContextService {
           this.animeAuxPage.push(firstWave.slice(i, i + 12));
         }
         this.myListAnimePage = this.animeAuxPage[page - 1]
+        this.totalPage = this.animeAuxPage.length
         return
       }
       if(page <= this.animeAuxPage.length){
@@ -154,6 +159,7 @@ export class HomeContextService {
           this.animeAuxPage.push(newWave.slice(i, i + 12));
         }
         this.myListAnimePage = this.animeAuxPage[page - 1]
+        this.totalPage = this.animeAuxPage.length
         return
       }
     } else if(type == 'serie'){
@@ -164,6 +170,8 @@ export class HomeContextService {
           this.serieAuxPage.push(firstWave.slice(i, i + 12));
         }
         this.myListSeriePage = this.serieAuxPage[page - 1]
+        this.totalPage = this.serieAuxPage.length
+
         return
       }
       if(page <= this.serieAuxPage.length){
@@ -175,6 +183,7 @@ export class HomeContextService {
           this.serieAuxPage.push(newWave.slice(i, i + 12));
         }
         this.myListSeriePage = this.serieAuxPage[page - 1]
+        this.totalPage = this.serieAuxPage.length
         return
       }
     } else {
@@ -185,6 +194,7 @@ export class HomeContextService {
           this.bookAuxPage.push(firstWave.slice(i, i + 12));
         }
         this.myListBookPage = this.bookAuxPage[page - 1]
+        this.totalPage = this.bookAuxPage.length
         return
       }
       if(page <= this.bookAuxPage.length){
@@ -196,6 +206,7 @@ export class HomeContextService {
           this.bookAuxPage.push(newWave.slice(i, i + 12));
         }
         this.myListBookPage = this.bookAuxPage[page - 1]
+        this.totalPage = this.bookAuxPage.length
         return
       }
     }

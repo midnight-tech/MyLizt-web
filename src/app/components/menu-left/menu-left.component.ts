@@ -32,11 +32,12 @@ export class MenuLeftComponent implements OnInit {
   getContents() {
     this.listService.getHomeContent().then(({ anime, book, serie }) => {
       let result = 0
-
+      let index = 0
       for (let i of anime!!) {
-        this.animeService.getAnimeComplete(i.contentId as number).then((value) => {
+        this.animeService.getAnimeComplete(i.contentId as number,index).then((value) => {
           this.anime.push(value)
         })
+        index += 1
       }
 
       for (let i of book!!) {

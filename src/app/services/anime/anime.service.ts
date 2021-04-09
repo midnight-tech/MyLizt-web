@@ -17,7 +17,7 @@ export class AnimeService {
       results: AnimeCatalogo[]
     }
     let catalogo = await axios.get<request>("https://api.jikan.moe/v3/search/anime?q=&page=1&order_by=start_date&sort=desc&limit=5")
-    return catalogo.data.results.map((value)=> new AnimeCatalogo(value,this))
+    return catalogo.data.results.map((value) => new AnimeCatalogo(value, this))
   }
 
   async partialSearch(query: string, isAll = false) {
@@ -27,7 +27,7 @@ export class AnimeService {
     }
     try {
       let result = await axios.get<request>(`https://api.jikan.moe/v3/search/anime?q=${query}&limit=${limit}`)
-      return result.data.results.map((value)=> new AnimeCatalogo(value,this))
+      return result.data.results.map((value) => new AnimeCatalogo(value, this))
     } catch (e) {
       console.error(e)
       throw "Error"
@@ -37,25 +37,36 @@ export class AnimeService {
   async search(query: string, page: number = 1) {
     type request = {
       results: AnimeCatalogo[],
-      last_page : number
+      last_page: number
     }
     const results = await axios.get<request>(`https://api.jikan.moe/v3/search/anime?q=${query}&limit=12&page=${page}`)
-    return { content: results.data.results.map((value)=> new AnimeCatalogo(value,this)),
-       lastPage: results.data.last_page 
-      }
+    return {
+      content: results.data.results.map((value) => new AnimeCatalogo(value, this)),
+      lastPage: results.data.last_page
+    }
   }
 
-  async getAnimeComplete(id:number = 1){
-    try{
+  async getAnimeComplete(id: number = 1, index?: number) {
+    try {
+      if(index){
+        await this.wait(index * 800)
+      }
       const result = await axios.get<CompleteAnime>(`https://api.jikan.moe/v3/anime/${id}`)
       return result.data
     }
-    catch (e){
-      if(environment.production == false){
-        console.error(e.message)
+    catch (e) {
+      if (environment.production == false) {
+        console.error(e.message, e.code)
       }
       throw "Erro ao coletar as informaçoes deste anime"
     }
   }
+
+  wait(ms : number) {
+    return new Promise(
+      (resolve, reject) => setTimeout(resolve, ms)
+    );
+  }
+
 
 }
