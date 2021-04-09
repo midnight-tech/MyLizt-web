@@ -15,8 +15,9 @@ export class CardComponent implements OnInit {
   @Input() anime?: AnimeCatalogo;
   @Input() serie?: SerieCatalogo;
   @Input() book?: BookCatalogo;
-
+  @Input() lookMyList : boolean = true
   inMyList: boolean = false
+  
   notRended = true
 
   constructor(
@@ -27,7 +28,11 @@ export class CardComponent implements OnInit {
 
   ngOnInit() {
     if (this.notRended) {
-      this.isInMyList()
+      if(this.lookMyList){
+        this.isInMyList()
+      } else {
+        this.inMyList = true
+      }
       this.notRended = false
     }
   }

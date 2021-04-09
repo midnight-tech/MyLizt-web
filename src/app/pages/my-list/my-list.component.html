@@ -7,25 +7,25 @@
   </div>
 
   <div class="pagination pagination--top">
-    <app-pagination [atualPage]="1" [totalPage]="0"></app-pagination>
+    <app-pagination [atualPage]="homeContext.page" [totalPage]="homeContext.totalPage" [pageCalled]="'myContent'" [type]="type"></app-pagination>
   </div>
 
   <div class="list">
     <div class="list__card" *ngFor="let content of homeContext.myListAnimePage">
       <!-- {{ content.title }} -->
-      <app-card [anime]="content.anime" ></app-card>
+      <app-card [anime]="content.anime" [lookMyList]="false"></app-card>
     </div>
     <div class="list__card" *ngFor="let content of homeContext.myListSeriePage">
       <!-- {{ content.volumeInfo.title }} -->
-      <app-card [serie]="content.serie"></app-card>
+      <app-card [serie]="content.serie" [lookMyList]="false"></app-card>
     </div>
     <div class="list__card" *ngFor="let content of homeContext.myListBookPage">
       <!-- {{ content.name }} -->
-      <app-card [book]="content.book" ></app-card>
+      <app-card [book]="content.book" [lookMyList]="false"></app-card>
     </div>
   </div>
 
   <div class="pagination pagination--bottom">
-    <app-pagination [atualPage]="1" [totalPage]="0"></app-pagination>
+    <app-pagination [atualPage]="homeContext.page" [totalPage]="homeContext.totalPage" [pageCalled]="'myContent'" [type]="type"></app-pagination>
   </div>
 </div>
