@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
+import { CarrousselEntry } from 'src/app/data/interfaces';
 
 @Component({
   selector: 'app-carrousel',
@@ -7,9 +9,18 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class CarrouselComponent implements OnInit {
-  title = 'Wotaku';
+  
+  @Input() contents! : CarrousselEntry[]
+  
+  @Input() type! : string
 
-  constructor() {}
+  constructor(
+    private router : Router
+  ) {}
 
   ngOnInit() {}
+
+  navigateToDetail(type: string, id : string){
+    this.router.navigate(['home','detail',type,id])
+  }
 }
