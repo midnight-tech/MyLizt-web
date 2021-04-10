@@ -84,14 +84,15 @@ export class ListService {
         } else {
             animeQuery = await this.auth.userFirestore!!.myList.collection('anime').orderBy('watched').limit(60).get()
         }
-        let finalResult = animeQuery.docs.map(async (animeData,index) => {
-            let animeFireResult = animeData.data() as content<contentAnime>
-            let animeResult = await this.animeService.getAnimeComplete(animeFireResult.contentId as number,index)
+        // let finalResult = animeQuery.docs.map(async (animeData,index) => {
+        //     let animeFireResult = animeData.data() as content<contentAnime>
+        //     let animeResult = await this.animeService.getAnimeComplete(animeFireResult.contentId as number,index)
 
-            let animeCatalogo = new AnimeCatalogo(undefined, undefined, animeResult)
-            return { anime: animeCatalogo, content: animeFireResult }
-        })
-        return await Promise.all(finalResult)
+        //     let animeCatalogo = new AnimeCatalogo(undefined, undefined, animeResult)
+        //     return { anime: animeCatalogo, content: animeFireResult }
+        // })
+        // return await Promise.all(finalResult)
+        return animeQuery
     }
     async getAllSerieContent(lastDoc?: DocumentData) {
         let serieQuery: QuerySnapshot<DocumentData>

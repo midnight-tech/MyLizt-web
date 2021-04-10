@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DocumentData, DocumentSnapshot, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';
 import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
 import { CompleteAnime, CompleteBook, CompleteSerie, content, contentAnime, contentBook, contentSerie, search } from 'src/app/data/interfaces';
@@ -66,7 +67,7 @@ export class HomeContextService {
           this.page = page
         })
       }
-    } else if (pageCalled == 'catalogo'){
+    } else if (pageCalled == 'catalogo') {
       if (!type) {
         throw "Query sem type"
       }
@@ -132,7 +133,9 @@ export class HomeContextService {
 
 
   // myList Pagination
-  animeAuxPage?: { anime: AnimeCatalogo; content: content<contentAnime>; }[][]
+  // animeAuxPage?: { anime: AnimeCatalogo; content: content<contentAnime>; }[][]
+  animeAuxPage?: QueryDocumentSnapshot<DocumentData>[][] = []
+
   myListAnimePage: { anime: AnimeCatalogo; content: content<contentAnime>; }[] = []
   serieAuxPage?: { serie: SerieCatalogo; content: content<contentSerie>; }[][]
   myListSeriePage: { serie: SerieCatalogo; content: content<contentSerie>; }[] = []
@@ -149,23 +152,53 @@ export class HomeContextService {
     if (type == 'anime') {
       if (!this.animeAuxPage) {
         this.animeAuxPage = []
-        const firstWave = await this.listService.getAnimeContent()
-        for (let i = 0, j = firstWave.length; i < j; i += 12) {
-          this.animeAuxPage.push(firstWave.slice(i, i + 12));
+        // const firstWave = await this.listService.getAnimeContent()
+        const animeQuery = await this.listService.getAnimeContent()
+
+        for (let i = 0, j = animeQuery.docs.length; i < j; i += 12) {
+          this.animeAuxPage.push(animeQuery.docs.slice(i, i + 12));
         }
-        this.myListAnimePage = this.animeAuxPage[page - 1]
+        this.myListAnimePage = []
+        this.animeAuxPage[page -1].map(async (value,index)=>{
+          const content = value.data() as content<contentAnime>
+          const animeRaw = await this.animeService.getAnimeComplete(content.contentId as number,index)
+          const anime = new AnimeCatalogo(undefined,undefined,animeRaw)
+          this.myListAnimePage.push({anime, content})
+        })
+        // this.myListAnimePage = this.animeAuxPage[page - 1]
         this.totalPage = this.animeAuxPage.length
         return
       }
       if (page <= this.animeAuxPage.length) {
-        this.myListAnimePage = this.animeAuxPage[page - 1]
+        this.myListAnimePage = []
+        this.animeAuxPage[page -1].map(async (value,index)=>{
+          const content = value.data() as content<contentAnime>
+          const animeRaw = await this.animeService.getAnimeComplete(content.contentId as number,index)
+          const anime = new AnimeCatalogo(undefined,undefined,animeRaw)
+          this.myListAnimePage.push({anime, content})
+        })
         return
       } else {
-        const newWave = await this.listService.getAnimeContent(this.animeAuxPage[this.animeAuxPage.length - 1][11])
-        for (let i = 0, j = newWave.length; i < j; i += 12) {
-          this.animeAuxPage.push(newWave.slice(i, i + 12));
+        // const newWave = await this.listService.getAnimeContent(this.animeAuxPage[this.animeAuxPage.length - 1][11])
+        
+        const animeQuery = await this.listService.getAnimeContent()
+        for (let i = 0, j = animeQuery.docs.length; i < j; i += 12) {
+          this.animeAuxPage.push(animeQuery.docs.slice(i, i + 12));
         }
-        this.myListAnimePage = this.animeAuxPage[page - 1]
+        // for(let i = 0; i <= this.animeAuxPage[page -1].length; i += 1){
+        //   const content = this.animeAuxPage[page - 1][i].data() as content<contentAnime>
+        //   const animeRaw = await this.animeService.getAnimeComplete(content.contentId as number,i)
+        //   const anime = new AnimeCatalogo(undefined,undefined,animeRaw)
+        //   this.myListAnimePage.push({anime, content})
+        // }
+        this.myListAnimePage = []
+        this.animeAuxPage[page -1].map(async (value,index)=>{
+          const content = value.data() as content<contentAnime>
+          const animeRaw = await this.animeService.getAnimeComplete(content.contentId as number,index)
+          const anime = new AnimeCatalogo(undefined,undefined,animeRaw)
+          this.myListAnimePage.push({anime, content})
+        })
+        // this.myListAnimePage = this.animeAuxPage[page - 1]
         this.totalPage = this.animeAuxPage.length
         return
       }
@@ -219,13 +252,13 @@ export class HomeContextService {
     }
   }
 
-  getAnimes() {
-    this.listService.getAnimeContent().then((value) => {
-      value.map((value) => {
-        this.animeResult.push(value.anime)
-      })
-    })
-  }
+  // getAnimes() {
+  //   this.listService.getAnimeContent().then((value) => {
+  //     value.map((value) => {
+  //       this.animeResult.push(value.anime)
+  //     })
+  //   })
+  // }
 
   getSeries() {
     this.listService.getAllSerieContent().then((value) => {
