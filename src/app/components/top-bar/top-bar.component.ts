@@ -149,6 +149,7 @@ export class TopBarComponent implements OnInit, OnChanges {
   }
 
   navigateToFriends() {
+    this.isActiveAccount = false;
     this.router.navigate(['home', 'friends']);
   }
 

@@ -1,13 +1,13 @@
 <div class="container-grid">
   <div class="title">
     <h1 class="title__text">Friends</h1>
-    <div class="add-friends">
+    <div class="title__button" (click)="showAddFriends()">
       <img
         src="../../../assets/icon-friends.svg"
         alt="icon-friends"
-        class="add-friends__icon"
+        class="title__button__icon"
       />
-      <a class="add-friends__item">Friends</a>
+      <a class="title__button__item">Friends</a>
     </div>
   </div>
 
@@ -109,5 +109,21 @@
 
   <div class="pagination pagination--bottom">
     <app-pagination></app-pagination>
+  </div>
+
+  <div [ngClass]="{ hidden: !isActive }" class="add-friends">
+    <div class="add-friends membrana" (click)="showAddFriends()"></div>
+    <form class="add-friends__form">
+      <input
+        type="text"
+        id="id"
+        placeholder="Insert Friend ID"
+        class="add-friends__input"
+      />
+
+      <div class="add-friends__button">
+        <a>Send</a>
+      </div>
+    </form>
   </div>
 </div>

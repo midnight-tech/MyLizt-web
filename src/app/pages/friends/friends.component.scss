@@ -24,33 +24,33 @@
     padding: 5rem 0;
     letter-spacing: 0.5rem;
   }
-}
 
-.add-friends {
-  display: flex;
-  align-items: center;
-  background-color: $black4;
-  color: $white;
-  padding: 1rem;
-  border-radius: $the-border-radius;
-  cursor: pointer;
-
-  &__icon {
-    height: 2.5rem;
-    width: 2.5rem;
-    margin-right: 1rem;
+  &__button {
+    display: flex;
+    align-items: center;
+    background-color: $black4;
+    color: $white;
+    padding: 1rem;
+    border-radius: $the-border-radius;
     cursor: pointer;
-  }
 
-  &__item {
-    text-transform: uppercase;
-    font-size: 1.6rem;
-    letter-spacing: 0.3rem;
-  }
+    &__icon {
+      height: 2.5rem;
+      width: 2.5rem;
+      margin-right: 1rem;
+      cursor: pointer;
+    }
 
-  &:hover {
-    color: $primary1;
-    // background-color: $primary1;
+    &__item {
+      text-transform: uppercase;
+      font-size: 1.6rem;
+      letter-spacing: 0.3rem;
+    }
+
+    &:hover {
+      color: $primary1;
+      // background-color: $primary1;
+    }
   }
 }
 
@@ -139,4 +139,68 @@
       color: $black3;
     }
   }
+}
+
+.add-friends {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: rgba($black3, 0.9);
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__form {
+    width: 40%;
+    position: absolute;
+    top: 25%;
+    display: flex;
+    align-items: center;
+  }
+
+  &__input {
+    width: 100%;
+    min-height: 5rem;
+    padding: 1.5rem 9rem 1.5rem 1.5rem;
+    font-size: 1.6rem;
+    background-color: $black4;
+    border: none;
+    border-radius: $the-border-radius;
+    color: $white;
+
+    &:focus,
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 7rem;
+    margin: 0 0 0 -8rem;
+    padding: 0.5rem;
+    border-radius: $the-border-radius;
+    text-transform: uppercase;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: $primary1;
+
+    &:hover {
+      color: $black3;
+      background-color: $primary1;
+    }
+  }
+}
+
+.membrana {
+  background-color: transparent;
+}
+
+.hidden {
+  visibility: hidden;
 }
