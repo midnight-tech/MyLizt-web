@@ -234,7 +234,10 @@
       <div class="dropdown-menu" id="dropdown-menu6" role="menu">
         <div (click)="dropdownAccount()" class="membrana"></div>
         <div class="dropdown-content">
-          <div class="account__content dropdown-item dropdown-item--account">
+          <div
+            class="account__content dropdown-item dropdown-item--account"
+            (click)="navigateToFriends()"
+          >
             <img
               src="../../../assets/icon-friends.svg"
               alt="icon-friends"

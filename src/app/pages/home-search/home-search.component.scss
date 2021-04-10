@@ -36,15 +36,14 @@
   justify-content: center;
   align-items: center;
   padding: 3rem;
+  grid-column: content-start / content-end;
 
   &--top {
-    grid-column: content-start / content-end;
     grid-row: pagination-top-start / pagination-top-end;
     padding-top: 0rem;
   }
 
   &--bottom {
-    grid-column: content-start / content-end;
     grid-row: pagination-bottom-start / pagination-bottom-end;
   }
 }
