@@ -1,5 +1,10 @@
 import { CollectionReference, DocumentData, } from '@angular/fire/firestore'
 
+export interface CarrousselEntry {
+  title: string
+  img: string
+  id: string
+}
 export interface CatalogoAnimeInterface {
   mal_id: number,
   image_url: string,
