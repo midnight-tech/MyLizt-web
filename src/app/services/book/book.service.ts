@@ -3,6 +3,7 @@ import axios from 'axios';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';
 import { CompleteBook } from 'src/app/data/interfaces';
 import { environment } from 'src/environments/environment';
+import randomWords from 'random-words'
 
 
 
@@ -14,16 +15,32 @@ export class BookService {
 
   constructor() { }
 
-  async getHomeCatalogo() {
+  async getHomeCarroussel() {
     type request = {
       items: BookCatalogo[]
     }
-
-    let books = await axios.get<request>("https://www.googleapis.com/books/v1/volumes?q=a&orderBy=newest&maxResults=5&startIndex=1")
+    let query = randomWords()
+    let books = await axios.get<request>(`https://www.googleapis.com/books/v1/volumes?q=${query}&orderBy=newest&maxResults=5&startIndex=1`)
     return books.data.items.map((value) => {
       value = this.selectImage(value) as BookCatalogo
       return new BookCatalogo(value, this)
     })
+  }
+
+  async getCatalogo(page: number = 1) {
+    type request = {
+      totalItems: number,
+      items: BookCatalogo[]
+    }
+    let query = randomWords()
+    const results = await axios.get<request>(`https://www.googleapis.com/books/v1/volumes?q=${query}&orderBy=newest&maxResults=12&startIndex=${(page - 1) * 12}`)
+    return {
+      content: results.data.items.map((value) => {
+        value = this.selectImage(value) as BookCatalogo
+        return new BookCatalogo(value, this)
+      }),
+      lastPage: Math.floor((results.data.totalItems - 1) / 12)
+    }
   }
 
   async partialSearch(query: string, isAll = false) {

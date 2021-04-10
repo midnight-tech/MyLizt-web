@@ -28,7 +28,7 @@ export class HomeContextService {
     public animeService: AnimeService,
     public bookService: BookService,
     public serieService: SerieService,
-    public listService : ListService
+    public listService: ListService
   ) {
     this.detailContent = null
   }
@@ -50,21 +50,28 @@ export class HomeContextService {
     this.lastPageSerie = null
   }
 
-  changePage(page: number, pageCalled: 'search' | 'myContent' | 'friend' = 'search', type?:string) {
-    if(pageCalled == 'search'){
+  changePage(page: number, pageCalled: 'search' | 'myContent' | 'friend' | 'catalogo' = 'search', type?: string) {
+    if (pageCalled == 'search') {
       if (page != this.page && page > 0 && page <= this.totalPage) {
         console.log(this)
         this.pageSearch(this.query, page, this.searchType!!, true)
       }
       return
-    } else if (pageCalled == 'myContent'){
-      if(!type){
+    } else if (pageCalled == 'myContent') {
+      if (!type) {
         throw "Query sem type"
       }
       if (page > 0 && (page <= this.totalPage || this.totalPage == 0)) {
-        this.myListPage(page,type).then(()=>{
+        this.myListPage(page, type).then(() => {
           this.page = page
         })
+      }
+    } else if (pageCalled == 'catalogo'){
+      if (!type) {
+        throw "Query sem type"
+      }
+      if (page != this.page && page > 0 && (page <= this.totalPage || this.totalPage == 0)) {
+        this.pageCatalogo(page, type, true)
       }
     }
 
@@ -125,22 +132,22 @@ export class HomeContextService {
 
 
   // myList Pagination
-  animeAuxPage?:{ anime: AnimeCatalogo; content: content<contentAnime>;}[][]
-  myListAnimePage : { anime: AnimeCatalogo; content: content<contentAnime>;}[] = []
-  serieAuxPage?:{ serie: SerieCatalogo; content: content<contentSerie>;}[][]
-  myListSeriePage : { serie: SerieCatalogo; content: content<contentSerie>;}[] = []
-  bookAuxPage?:{ book: BookCatalogo; content: content<contentBook>;}[][]
-  myListBookPage : { book: BookCatalogo; content: content<contentBook>;}[] = []
+  animeAuxPage?: { anime: AnimeCatalogo; content: content<contentAnime>; }[][]
+  myListAnimePage: { anime: AnimeCatalogo; content: content<contentAnime>; }[] = []
+  serieAuxPage?: { serie: SerieCatalogo; content: content<contentSerie>; }[][]
+  myListSeriePage: { serie: SerieCatalogo; content: content<contentSerie>; }[] = []
+  bookAuxPage?: { book: BookCatalogo; content: content<contentBook>; }[][]
+  myListBookPage: { book: BookCatalogo; content: content<contentBook>; }[] = []
 
-  cleanContentMyList(){
+  cleanContentMyList() {
     this.myListAnimePage = []
     this.myListSeriePage = []
     this.myListBookPage = []
   }
 
-  async myListPage(page : number, type : string){
-    if(type == 'anime'){
-      if(!this.animeAuxPage){
+  async myListPage(page: number, type: string) {
+    if (type == 'anime') {
+      if (!this.animeAuxPage) {
         this.animeAuxPage = []
         const firstWave = await this.listService.getAnimeContent()
         for (let i = 0, j = firstWave.length; i < j; i += 12) {
@@ -150,11 +157,11 @@ export class HomeContextService {
         this.totalPage = this.animeAuxPage.length
         return
       }
-      if(page <= this.animeAuxPage.length){
+      if (page <= this.animeAuxPage.length) {
         this.myListAnimePage = this.animeAuxPage[page - 1]
         return
       } else {
-        const newWave = await this.listService.getAnimeContent(this.animeAuxPage[this.animeAuxPage.length -1][11])
+        const newWave = await this.listService.getAnimeContent(this.animeAuxPage[this.animeAuxPage.length - 1][11])
         for (let i = 0, j = newWave.length; i < j; i += 12) {
           this.animeAuxPage.push(newWave.slice(i, i + 12));
         }
@@ -162,8 +169,8 @@ export class HomeContextService {
         this.totalPage = this.animeAuxPage.length
         return
       }
-    } else if(type == 'serie'){
-      if(!this.serieAuxPage){
+    } else if (type == 'serie') {
+      if (!this.serieAuxPage) {
         this.serieAuxPage = []
         const firstWave = await this.listService.getAllSerieContent()
         for (let i = 0, j = firstWave.length; i < j; i += 12) {
@@ -174,11 +181,11 @@ export class HomeContextService {
 
         return
       }
-      if(page <= this.serieAuxPage.length){
+      if (page <= this.serieAuxPage.length) {
         this.myListSeriePage = this.serieAuxPage[page - 1]
         return
       } else {
-        const newWave = await this.listService.getAllSerieContent(this.serieAuxPage[this.serieAuxPage.length -1][11])
+        const newWave = await this.listService.getAllSerieContent(this.serieAuxPage[this.serieAuxPage.length - 1][11])
         for (let i = 0, j = newWave.length; i < j; i += 12) {
           this.serieAuxPage.push(newWave.slice(i, i + 12));
         }
@@ -187,7 +194,7 @@ export class HomeContextService {
         return
       }
     } else {
-      if(!this.bookAuxPage){
+      if (!this.bookAuxPage) {
         this.bookAuxPage = []
         const firstWave = await this.listService.getAllBookContent()
         for (let i = 0, j = firstWave.length; i < j; i += 12) {
@@ -197,11 +204,11 @@ export class HomeContextService {
         this.totalPage = this.bookAuxPage.length
         return
       }
-      if(page <= this.bookAuxPage.length){
+      if (page <= this.bookAuxPage.length) {
         this.myListBookPage = this.bookAuxPage[page - 1]
         return
       } else {
-        const newWave = await this.listService.getAllBookContent(this.bookAuxPage[this.bookAuxPage.length -1][11])
+        const newWave = await this.listService.getAllBookContent(this.bookAuxPage[this.bookAuxPage.length - 1][11])
         for (let i = 0, j = newWave.length; i < j; i += 12) {
           this.bookAuxPage.push(newWave.slice(i, i + 12));
         }
@@ -228,11 +235,56 @@ export class HomeContextService {
     })
   }
 
-  getBooks(){
+  getBooks() {
     this.listService.getAllBookContent().then((value) => {
       value.map((value) => {
         this.bookResult.push(value.book)
       })
     })
   }
+  pageCatalogo(page: number = 1, searchType: string, pagination = false) {
+    if (pagination) {
+      this.clearContents()
+    } else {
+      this.initContent()
+    }
+    this.page = page
+    switch (searchType) {
+      case 'ANIME':
+        this.animeService.getCatalogo(page).then((value) => {
+          this.animeResult = value.anime
+          this.totalPage = value.lastPage
+          this.searchType = searchType
+        })
+        break;
+      case 'BOOK':
+        this.bookService.getCatalogo(page).then((value) => {
+          this.bookResult = value.content
+          this.totalPage = value.lastPage
+          this.searchType = searchType
+          this.page = page
+
+        })
+        break;
+      case 'SERIE':
+        this.seriePageManagerCatalogo(page).then(() => {
+          this.searchType = searchType
+          this.page = page
+
+        })
+        break;
+    }
+  }
+
+  async seriePageManagerCatalogo(page: number) {
+    if (this.lastPageSerie == null || Math.ceil(page / 5) != this.lastPageSerie) {
+      let result = await this.serieService.getCatalogo(Math.ceil(page / 5))
+      this.seriePages = result.pages
+      this.totalPage = result.lastPage
+      this.lastPageSerie = Math.ceil(page / 5)
+    }
+    this.serieResult = this.seriePages[(page - 1) % 5]
+  }
 }
+
+// catalogo Pagination

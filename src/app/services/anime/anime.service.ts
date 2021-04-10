@@ -12,12 +12,21 @@ export class AnimeService {
 
   constructor() { }
 
-  async getHomeCatalogo() {
+  async getHomeCarroussel() {
     type request = {
       results: AnimeCatalogo[]
     }
     let catalogo = await axios.get<request>("https://api.jikan.moe/v3/search/anime?q=&page=1&order_by=start_date&sort=desc&limit=5")
     return catalogo.data.results.map((value) => new AnimeCatalogo(value, this))
+  }
+
+  async getCatalogo(page : number){
+    type request = {
+      results: AnimeCatalogo[]
+      last_page: number
+    }
+    let catalogo = await axios.get<request>(`https://api.jikan.moe/v3/search/anime?q=&page=${page}&order_by=start_date&sort=desc&limit=12`)
+    return {anime: catalogo.data.results.map((value) => new AnimeCatalogo(value, this)) , lastPage: catalogo.data.last_page}
   }
 
   async partialSearch(query: string, isAll = false) {

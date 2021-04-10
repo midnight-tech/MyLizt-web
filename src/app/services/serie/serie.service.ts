@@ -10,14 +10,34 @@ import { environment } from 'src/environments/environment';
 export class SerieService {
   constructor() { }
 
-  async getHomeCatalogo() {
+  async getCarroussel() {
     const series = await axios.get<SerieCatalogo[]>(
-      `${environment.url_serie_proxy_base}/api/TMDB/catalogo`
+      `${environment.url_serie_proxy_base}/api/TMDB/carroussel`
     );
     return series.data.map((serie) => {
       serie =  this.setImage(serie) as SerieCatalogo
       return new SerieCatalogo(serie,this);
     });
+  }
+
+  async getCatalogo(page : number){
+    type request = {
+      content: SerieCatalogo[],
+      lastPage: number
+    }
+    const result = await axios.get<request>(
+      `${environment.url_serie_proxy_base}/api/TMDB/catalogo?page=${page}`
+    );
+    console.log(result.data)
+    let withImage = result.data.content.map((serie) => {
+      serie =  this.setImage(serie) as SerieCatalogo
+      return new SerieCatalogo(serie,this);
+    });
+    let pages = [];
+    for (let i = 0, j = withImage.length; i < j; i += 12) {
+      pages.push(withImage.slice(i, i + 12));
+    }
+    return { pages, lastPage: result.data.lastPage };
   }
 
   async partialSearch(query: string, isAll = false) {

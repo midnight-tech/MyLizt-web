@@ -34,6 +34,7 @@ import { AboutDetailComponent } from './components/about-detail/about-detail.com
 import { MyListComponent } from './pages/my-list/my-list.component';
 import { CarrouselComponent } from './components/carrousel/carrousel.component';
 import { HomeCarrouselComponent } from './pages/home-carrousel/home-carrousel.component';
+import { CatalogoComponent } from './pages/catalogo/catalogo.component';
 
 const routes: Routes = [
   { path: 'sandbox', component: SandboxPageComponent, pathMatch: 'full' },
@@ -84,6 +85,10 @@ const routes: Routes = [
         path: 'my-list/:type',
         component: MyListComponent,
       },
+      {
+        path: 'catalogo/:type',
+        component: CatalogoComponent
+      }
     ],
   },
   { path: '**', redirectTo: '' },
@@ -112,6 +117,7 @@ const routes: Routes = [
     MyListComponent,
     CarrouselComponent,
     HomeCarrouselComponent,
+    CatalogoComponent
   ],
   imports: [
     BrowserModule,

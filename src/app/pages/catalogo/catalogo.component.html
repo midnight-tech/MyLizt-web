@@ -1,0 +1,28 @@
+<div class="container-grid">
+  <div class="title">
+    <h1 class="title__text">Resultados</h1>
+  </div>
+
+  <div class="pagination pagination--top">
+    <app-pagination [atualPage]="homeContext.page" [totalPage]="homeContext.totalPage" [type]="type" [pageCalled]="'catalogo'"></app-pagination>
+  </div>
+
+  <div class="list">
+    <div class="list__card" *ngFor="let content of homeContext.animeResult">
+      <!-- {{ content.title }} -->
+      <app-card [anime]="content"></app-card>
+    </div>
+    <div class="list__card" *ngFor="let content of homeContext.bookResult">
+      <!-- {{ content.volumeInfo.title }} -->
+      <app-card [book]="content"></app-card>
+    </div>
+    <div class="list__card" *ngFor="let content of homeContext.serieResult">
+      <!-- {{ content.name }} -->
+      <app-card [serie]="content"></app-card>
+    </div>
+  </div>
+
+  <div class="pagination pagination--bottom">
+    <app-pagination [atualPage]="homeContext.page" [totalPage]="homeContext.totalPage" [type]="type" [pageCalled]="'catalogo'"></app-pagination>
+  </div>
+</div>
