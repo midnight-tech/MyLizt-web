@@ -20,7 +20,7 @@ export class BookService {
       items: BookCatalogo[]
     }
     let query = randomWords()
-    let books = await axios.get<request>(`https://www.googleapis.com/books/v1/volumes?q=${query}&orderBy=newest&maxResults=5&startIndex=1`)
+    let books = await axios.get<request>(`https://www.googleapis.com/books/v1/volumes?q=${query}&orderBy=relevance&maxResults=5&startIndex=1`)
     return books.data.items.map((value) => {
       value = this.selectImage(value) as BookCatalogo
       return new BookCatalogo(value, this)
@@ -33,7 +33,7 @@ export class BookService {
       items: BookCatalogo[]
     }
     let query = randomWords()
-    const results = await axios.get<request>(`https://www.googleapis.com/books/v1/volumes?q=${query}&orderBy=newest&maxResults=12&startIndex=${(page - 1) * 12}`)
+    const results = await axios.get<request>(`https://www.googleapis.com/books/v1/volumes?q=${query}&orderBy=relevance&maxResults=12&startIndex=${(page - 1) * 12}`)
     return {
       content: results.data.items.map((value) => {
         value = this.selectImage(value) as BookCatalogo

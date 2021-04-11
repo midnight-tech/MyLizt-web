@@ -184,7 +184,7 @@
       />
       <a class="button__text">Add to list</a>
     </div>
-    <div *ngIf="onMyList == true" class="button__flex button__flex--remove">
+    <div *ngIf="onMyList == true" (click)="deleteToMyList()" class="button__flex button__flex--remove">
       <img
         class="button__icon"
         src="../../../assets/icon-notification.svg"

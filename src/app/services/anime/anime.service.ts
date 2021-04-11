@@ -20,13 +20,13 @@ export class AnimeService {
     return catalogo.data.results.map((value) => new AnimeCatalogo(value, this))
   }
 
-  async getCatalogo(page : number){
+  async getCatalogo(page: number) {
     type request = {
       results: AnimeCatalogo[]
       last_page: number
     }
     let catalogo = await axios.get<request>(`https://api.jikan.moe/v3/search/anime?q=&page=${page}&order_by=start_date&sort=desc&limit=12`)
-    return {anime: catalogo.data.results.map((value) => new AnimeCatalogo(value, this)) , lastPage: catalogo.data.last_page}
+    return { anime: catalogo.data.results.map((value) => new AnimeCatalogo(value, this)), lastPage: catalogo.data.last_page }
   }
 
   async partialSearch(query: string, isAll = false) {
@@ -57,7 +57,7 @@ export class AnimeService {
 
   async getAnimeComplete(id: number = 1, index?: number) {
     try {
-      if(index){
+      if (index) {
         await this.wait(index * 800)
       }
       const result = await axios.get<CompleteAnime>(`https://api.jikan.moe/v3/anime/${id}`)
@@ -71,7 +71,7 @@ export class AnimeService {
     }
   }
 
-  wait(ms : number) {
+  wait(ms: number) {
     return new Promise(
       (resolve, reject) => setTimeout(resolve, ms)
     );
