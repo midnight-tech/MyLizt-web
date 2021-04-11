@@ -56,6 +56,26 @@ export class CardComponent implements OnInit {
     }
   }
 
+  deleteToMyList() {
+    if (this.anime) {
+      this.listService.removeFromList(this.anime.mal_id.toString(), 'anime').then(() => {
+        this.notRended = true
+        this.ngOnInit()
+      })
+    } else if (this.book) {
+      this.listService.removeFromList(this.book.id, 'book').then(() => {
+        this.notRended = true
+        this.ngOnInit()
+      })
+    } else if (this.serie) {
+      this.listService.removeFromList(this.serie.id.toString(), 'serie').then(() => {
+        this.notRended = true
+        this.ngOnInit()
+      })
+    }
+  }
+
+
   isInMyList() {
     if (this.anime) {
       this.listService.contentInMyList(this.anime.mal_id, 'ANIME').then((value) => {

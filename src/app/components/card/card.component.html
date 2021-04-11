@@ -65,13 +65,23 @@
 
       <div class="card__side--buttons">
         <div class="container-flex">
-          <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
-            <img
-              src="../../../assets/icon-notification.svg"
-              alt="Icon"
-              class="card__icon"
-            />
-            <a class="card__button">Add to list</a>
+          <div *ngIf="lookMyList">
+            <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
+              <img
+                src="../../../assets/icon-notification.svg"
+                alt="Icon"
+                class="card__icon"
+              />
+              <a class="card__button">Add to list</a>
+            </div>
+            <div class="card__button-container card__button-container--add" *ngIf="inMyList" (click)="deleteToMyList()">
+              <img
+                src="../../../assets/icon-notification.svg"
+                alt="Icon"
+                class="card__icon"
+              />
+              <a class="card__button">Remove to list</a>
+            </div>
           </div>
           <div class="card__button-container card__button-container--recommend">
             <img

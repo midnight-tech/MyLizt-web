@@ -127,8 +127,8 @@ export class ListService {
         return await Promise.all(finalResult)
     }
 
-    async removeFromList() {
-
+    async removeFromList(id: string, type: 'anime' | 'serie' | 'book') {
+        await this.auth.userFirestore?.myList.collection(type).doc(id).delete()
     }
 
     async updateOneContent() {
