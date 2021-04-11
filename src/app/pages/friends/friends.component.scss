@@ -141,11 +141,11 @@
   }
 }
 
-.add-friends {
+.add-remove-friends {
   position: fixed;
   height: 100%;
   width: 100%;
-  background-color: rgba($black3, 0.9);
+  background-color: transparent;
   top: 0;
   left: 0;
   display: flex;
@@ -198,7 +198,7 @@
 }
 
 .membrana {
-  background-color: transparent;
+  background-color: rgba($black3, 0.9);
 }
 
 .hidden {

@@ -6,13 +6,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./friends.component.scss'],
 })
 export class FriendsComponent implements OnInit {
-  isActive = false;
+  isActiveAdd = false;
+  isActiveRemove = false;
 
   constructor() {}
 
   ngOnInit() {}
 
   showAddFriends() {
-    this.isActive = !this.isActive;
+    this.isActiveAdd = !this.isActiveAdd;
+  }
+
+  showRemoveFriends() {
+    this.isActiveRemove = !this.isActiveRemove;
   }
 }
