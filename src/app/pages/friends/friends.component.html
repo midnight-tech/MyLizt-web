@@ -23,7 +23,11 @@
     <span class="friends__category friends__category--anime">Anime (514)</span>
     <span class="friends__category friends__category--serie">Serie (2)</span>
     <span class="friends__category friends__category--book">Book (2)</span>
-    <span class="friends__category friends__remove">Remover</span>
+    <span
+      class="friends__category friends__remove"
+      (click)="showRemoveFriends()"
+      >Remove</span
+    >
 
     <div class="friends__user">
       <span class="friends__user__name">Adenilson</span>
@@ -32,7 +36,11 @@
     <span class="friends__category friends__category--anime">Anime (514)</span>
     <span class="friends__category friends__category--serie">Serie (2)</span>
     <span class="friends__category friends__category--book">Book (2)</span>
-    <span class="friends__category friends__remove">Remover</span>
+    <span
+      class="friends__category friends__remove"
+      (click)="showRemoveFriends()"
+      >Remove</span
+    >
 
     <div class="friends__user">
       <span class="friends__user__name">Adenilson</span>
@@ -41,7 +49,11 @@
     <span class="friends__category friends__category--anime">Anime (514)</span>
     <span class="friends__category friends__category--serie">Serie (2)</span>
     <span class="friends__category friends__category--book">Book (2)</span>
-    <span class="friends__category friends__remove">Remover</span>
+    <span
+      class="friends__category friends__remove"
+      (click)="showRemoveFriends()"
+      >Remove</span
+    >
 
     <div class="friends__user">
       <span class="friends__user__name">Adenilson</span>
@@ -50,7 +62,11 @@
     <span class="friends__category friends__category--anime">Anime (514)</span>
     <span class="friends__category friends__category--serie">Serie (2)</span>
     <span class="friends__category friends__category--book">Book (2)</span>
-    <span class="friends__category friends__remove">Remover</span>
+    <span
+      class="friends__category friends__remove"
+      (click)="showRemoveFriends()"
+      >Remove</span
+    >
 
     <div class="friends__user">
       <span class="friends__user__name">Adenilson</span>
@@ -59,7 +75,11 @@
     <span class="friends__category friends__category--anime">Anime (514)</span>
     <span class="friends__category friends__category--serie">Serie (2)</span>
     <span class="friends__category friends__category--book">Book (2)</span>
-    <span class="friends__category friends__remove">Remover</span>
+    <span
+      class="friends__category friends__remove"
+      (click)="showRemoveFriends()"
+      >Remove</span
+    >
 
     <div class="friends__user">
       <span class="friends__user__name">Adenilson</span>
@@ -68,7 +88,11 @@
     <span class="friends__category friends__category--anime">Anime (514)</span>
     <span class="friends__category friends__category--serie">Serie (2)</span>
     <span class="friends__category friends__category--book">Book (2)</span>
-    <span class="friends__category friends__remove">Remover</span>
+    <span
+      class="friends__category friends__remove"
+      (click)="showRemoveFriends()"
+      >Remove</span
+    >
 
     <div class="friends__user">
       <span class="friends__user__name">Adenilson</span>
@@ -77,7 +101,11 @@
     <span class="friends__category friends__category--anime">Anime (514)</span>
     <span class="friends__category friends__category--serie">Serie (2)</span>
     <span class="friends__category friends__category--book">Book (2)</span>
-    <span class="friends__category friends__remove">Remover</span>
+    <span
+      class="friends__category friends__remove"
+      (click)="showRemoveFriends()"
+      >Remove</span
+    >
 
     <div class="friends__user">
       <span class="friends__user__name">Adenilson</span>
@@ -86,7 +114,11 @@
     <span class="friends__category friends__category--anime">Anime (514)</span>
     <span class="friends__category friends__category--serie">Serie (2)</span>
     <span class="friends__category friends__category--book">Book (2)</span>
-    <span class="friends__category friends__remove">Remover</span>
+    <span
+      class="friends__category friends__remove"
+      (click)="showRemoveFriends()"
+      >Remove</span
+    >
 
     <div class="friends__user">
       <span class="friends__user__name">Adenilson</span>
@@ -95,7 +127,11 @@
     <span class="friends__category friends__category--anime">Anime (514)</span>
     <span class="friends__category friends__category--serie">Serie (2)</span>
     <span class="friends__category friends__category--book">Book (2)</span>
-    <span class="friends__category friends__remove">Remover</span>
+    <span
+      class="friends__category friends__remove"
+      (click)="showRemoveFriends()"
+      >Remove</span
+    >
 
     <div class="friends__user">
       <span class="friends__user__name">Adenilson</span>
@@ -104,25 +140,48 @@
     <span class="friends__category friends__category--anime">Anime (514)</span>
     <span class="friends__category friends__category--serie">Serie (2)</span>
     <span class="friends__category friends__category--book">Book (2)</span>
-    <span class="friends__category friends__remove">Remover</span>
+    <span
+      class="friends__category friends__remove"
+      (click)="showRemoveFriends()"
+      >Remove</span
+    >
   </div>
 
   <div class="pagination pagination--bottom">
     <app-pagination></app-pagination>
   </div>
 
-  <div [ngClass]="{ hidden: !isActive }" class="add-friends">
-    <div class="add-friends membrana" (click)="showAddFriends()"></div>
-    <form class="add-friends__form">
+  <div [ngClass]="{ hidden: !isActiveAdd }" class="add-remove-friends">
+    <div class="add-remove-friends membrana" (click)="showAddFriends()"></div>
+    <form class="add-remove-friends__form">
       <input
         type="text"
         id="id"
         placeholder="Insert Friend ID"
-        class="add-friends__input"
+        class="add-remove-friends__input"
       />
 
-      <div class="add-friends__button">
+      <div class="add-remove-friends__button">
         <a>Send</a>
+      </div>
+    </form>
+  </div>
+
+  <div [ngClass]="{ hidden: !isActiveRemove }" class="add-remove-friends">
+    <div
+      class="add-remove-friends membrana"
+      (click)="showRemoveFriends()"
+    ></div>
+    <form class="add-remove-friends__form">
+      <input
+        type="text"
+        id="id"
+        placeholder="Insert Friend ID"
+        class="add-remove-friends__input"
+      />
+
+      <div class="add-remove-friends__button">
+        <a>Remove</a>
       </div>
     </form>
   </div>
