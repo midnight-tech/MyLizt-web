@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore'
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { listInterface, UserInterface } from 'src/app/data/interfaces';
+import { time } from 'uniqid'
 
 @Injectable({
   providedIn: 'root'
@@ -74,8 +75,8 @@ export class AuthenticationService {
 
   async signUpWithEmail(userName: string, email: string, password: string) {
     let user = await this.fireAuth.createUserWithEmailAndPassword(email, password)
-    user.user?.sendEmailVerification()
-    user.user?.updateProfile({ displayName: userName })
+    await user.user?.sendEmailVerification()
+    await user.user?.updateProfile({ displayName: userName })
     if (user.additionalUserInfo?.isNewUser) {
       await this.initUser(user.user?.uid!!, user.user?.displayName!!)
     }
@@ -87,10 +88,11 @@ export class AuthenticationService {
 
   async initUser(uid: string, username: string) {
     let list = this.fireStore.firestore.collection('List').doc()
-    list.set({
+    await list.set({
       createdAt: new Date(Date.now())
     } as listInterface)
     await this.fireStore.firestore.collection('User').doc(uid).set({
+      applicationUserId : time(),
       myList: list,
       friends: [],
       notifications: [],

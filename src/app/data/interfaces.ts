@@ -319,6 +319,7 @@ export type CompleteSerie = {
 export type search = 'ANIME' | 'SERIE' | 'BOOK'
 
 export interface UserInterface {
+  applicationUserId: string
   uid?: string,
   username: string,
   createdAt?: Date,
