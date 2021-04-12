@@ -228,6 +228,7 @@
       <div class="dropdown-trigger account__user" (click)="dropdownAccount()">
         <a class="button" aria-haspopup="true" aria-controls="dropdown-menu6">
           <span>{{ username }}</span>
+          <span>{{ authService.userFirestore?.applicationUserId }}</span>
         </a>
       </div>
       <!-- Conteudo dropdown account -->
