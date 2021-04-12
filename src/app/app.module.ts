@@ -36,6 +36,7 @@ import { CarrouselComponent } from './components/carrousel/carrousel.component';
 import { HomeCarrouselComponent } from './pages/home-carrousel/home-carrousel.component';
 import { CatalogoComponent } from './pages/catalogo/catalogo.component';
 import { FriendsComponent } from './pages/friends/friends.component';
+import { RecommendationComponent } from './components/recommendation/recommendation.component';
 
 const routes: Routes = [
   { path: 'sandbox', component: SandboxPageComponent, pathMatch: 'full' },
@@ -88,7 +89,7 @@ const routes: Routes = [
       },
       {
         path: 'catalogo/:type',
-        component: CatalogoComponent
+        component: CatalogoComponent,
       },
       {
         path: 'friends',
@@ -124,6 +125,7 @@ const routes: Routes = [
     HomeCarrouselComponent,
     CatalogoComponent,
     FriendsComponent,
+    RecommendationComponent,
   ],
   imports: [
     BrowserModule,

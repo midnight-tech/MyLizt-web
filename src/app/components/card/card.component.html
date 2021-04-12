@@ -60,13 +60,19 @@
       </div>
 
       <div class="card__side--title">
-        <h1 class="card__title" (click)="navigateToDetail()">{{ anime.title }}</h1>
+        <h1 class="card__title" (click)="navigateToDetail()">
+          {{ anime.title }}
+        </h1>
       </div>
 
       <div class="card__side--buttons">
         <div class="container-flex">
           <div *ngIf="lookMyList">
-            <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
+            <div
+              class="card__button-container card__button-container--add"
+              *ngIf="!inMyList"
+              (click)="addToMyList()"
+            >
               <img
                 src="../../../assets/icon-notification.svg"
                 alt="Icon"
@@ -74,7 +80,11 @@
               />
               <a class="card__button">Add to list</a>
             </div>
-            <div class="card__button-container card__button-container--add" *ngIf="inMyList" (click)="deleteToMyList()">
+            <div
+              class="card__button-container card__button-container--add"
+              *ngIf="inMyList"
+              (click)="deleteToMyList()"
+            >
               <img
                 src="../../../assets/icon-notification.svg"
                 alt="Icon"
@@ -89,13 +99,21 @@
               alt="Icon"
               class="card__icon"
             />
-            <a class="card__button">Recommend to...</a>
+            <a class="card__button" (click)="disableReceiveRecommendation(true)"
+              >Recommend to...</a
+            >
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <app-recommendation
+    [isActiveRecommend]="isActiveRecommend"
+    (isActiveEvent)="disableReceiveRecommendation($event)"
+  ></app-recommendation>
 </div>
+
 <div *ngIf="book" (mouseenter)="book.getComplete()">
   <div class="card">
     <div class="card__side">
@@ -159,13 +177,19 @@
         </div>
       </div>
 
-      <div class="card__side--title" >
-        <h1 class="card__title" (click)="navigateToDetail()">{{ book.volumeInfo.title }}</h1>
+      <div class="card__side--title">
+        <h1 class="card__title" (click)="navigateToDetail()">
+          {{ book.volumeInfo.title }}
+        </h1>
       </div>
 
       <div class="card__side--buttons">
-        <div class="container-flex" >
-          <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
+        <div class="container-flex">
+          <div
+            class="card__button-container card__button-container--add"
+            *ngIf="!inMyList"
+            (click)="addToMyList()"
+          >
             <img
               src="../../../assets/icon-notification.svg"
               alt="Icon"
@@ -248,19 +272,25 @@
         </div>
       </div>
 
-      <div class="card__side--title" >
-        <h1 class="card__title" (click)="navigateToDetail()">{{ serie.name }}</h1>
+      <div class="card__side--title">
+        <h1 class="card__title" (click)="navigateToDetail()">
+          {{ serie.name }}
+        </h1>
       </div>
 
       <div class="card__side--buttons">
         <div class="container-flex">
-          <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
+          <div
+            class="card__button-container card__button-container--add"
+            *ngIf="!inMyList"
+            (click)="addToMyList()"
+          >
             <img
               src="../../../assets/icon-notification.svg"
               alt="Icon"
               class="card__icon"
             />
-            <a  class="card__button">Add to list</a>
+            <a class="card__button">Add to list</a>
           </div>
           <div class="card__button-container card__button-container--recommend">
             <img
