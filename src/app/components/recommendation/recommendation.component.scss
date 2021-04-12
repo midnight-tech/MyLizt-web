@@ -1,0 +1,85 @@
+@import "../../sass/abstract/variables";
+
+.fixed-container {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-container {
+  height: 60%;
+  width: 40%;
+  background-color: $black4;
+  padding: 2rem;
+  border-radius: $the-border-radius;
+  z-index: 20;
+
+  &__title {
+    font-size: 2rem;
+    color: $primary1;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+}
+
+.recommend {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.6rem;
+
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+
+  &__user {
+    display: flex;
+    flex-direction: column;
+    color: $white;
+
+    &__name {
+      font-size: 1.8rem;
+      letter-spacing: 0.5rem;
+    }
+
+    &__id {
+      text-transform: uppercase;
+    }
+  }
+
+  &__button {
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &--1 {
+      color: $white;
+
+      &:hover {
+        color: $primary1;
+      }
+    }
+
+    &--2 {
+      color: $primary1;
+
+      &:hover {
+        color: $black3;
+      }
+    }
+  }
+}
+
+.membrana {
+  background-color: rgba($black3, 0.9);
+}
+
+.hidden {
+  visibility: hidden;
+}
