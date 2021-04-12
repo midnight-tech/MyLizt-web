@@ -36,6 +36,7 @@ import { CarrouselComponent } from './components/carrousel/carrousel.component';
 import { HomeCarrouselComponent } from './pages/home-carrousel/home-carrousel.component';
 import { CatalogoComponent } from './pages/catalogo/catalogo.component';
 import { FriendsComponent } from './pages/friends/friends.component';
+import { UserService } from './services/user/user.service';
 
 const routes: Routes = [
   { path: 'sandbox', component: SandboxPageComponent, pathMatch: 'full' },
@@ -140,6 +141,7 @@ const routes: Routes = [
     BookService,
     SerieService,
     HomeContextService,
+    UserService
   ],
   bootstrap: [AppComponent],
 })

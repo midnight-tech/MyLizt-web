@@ -325,17 +325,13 @@ export interface UserInterface {
   createdAt?: Date,
   updatedAt?: Date,
   myList: firebase.default.firestore.DocumentReference,
-  friends: friends[],
+  friends: firebase.default.firestore.DocumentReference[],
   notifications: notification[]
 }
 
 export interface notification {
   type: string,
   message: string
-}
-export interface friends {
-  user: firebase.default.firestore.DocumentReference
-  listRecomendation: firebase.default.firestore.DocumentReference
 }
 
 export interface listInterface {
