@@ -2,7 +2,11 @@
   <div class="title">
     <h1 class="title__text">Friends</h1>
     <div class="title__button" (click)="showAddFriends()">
-      <img src="../../../assets/icon-friends.svg" alt="icon-friends" class="title__button__icon" />
+      <img
+        src="../../../assets/icon-friends.svg"
+        alt="icon-friends"
+        class="title__button__icon"
+      />
       <a class="title__button__item">Friends</a>
     </div>
   </div>
@@ -11,15 +15,23 @@
     <app-pagination></app-pagination>
   </div>
 
-  <div class="friends" *ngFor="let friend of friends">
-    <div class="friends__user">
-      <span class="friends__user__name">{{friend.username}}</span>
-      <span class="friends__user__id">#{{friend.applicationUserId}}</span>
+  <div class="friends">
+    <div class="friends__container" *ngFor="let friend of friends">
+      <div class="friends__user">
+        <span class="friends__user__name">{{ friend.username }}</span>
+        <span class="friends__user__id">#{{ friend.applicationUserId }}</span>
+      </div>
+      <span class="friends__category friends__category--anime"
+        >Anime (514)</span
+      >
+      <span class="friends__category friends__category--serie">Serie (2)</span>
+      <span class="friends__category friends__category--book">Book (2)</span>
+      <span
+        class="friends__category friends__remove"
+        (click)="showRemoveFriends()"
+        >Remove</span
+      >
     </div>
-    <span class="friends__category friends__category--anime">Anime (514)</span>
-    <span class="friends__category friends__category--serie">Serie (2)</span>
-    <span class="friends__category friends__category--book">Book (2)</span>
-    <span class="friends__category friends__remove" (click)="showRemoveFriends()">Remove</span>
   </div>
 
   <div class="pagination pagination--bottom">
@@ -29,7 +41,12 @@
   <div [ngClass]="{ hidden: !isActiveAdd }" class="add-remove-friends">
     <div class="add-remove-friends membrana" (click)="showAddFriends()"></div>
     <form class="add-remove-friends__form">
-      <input type="text" id="id" placeholder="Insert Friend ID" class="add-remove-friends__input" />
+      <input
+        type="text"
+        id="id"
+        placeholder="Insert Friend ID"
+        class="add-remove-friends__input"
+      />
 
       <div class="add-remove-friends__button">
         <a>Send</a>
@@ -38,9 +55,17 @@
   </div>
 
   <div [ngClass]="{ hidden: !isActiveRemove }" class="add-remove-friends">
-    <div class="add-remove-friends membrana" (click)="showRemoveFriends()"></div>
+    <div
+      class="add-remove-friends membrana"
+      (click)="showRemoveFriends()"
+    ></div>
     <form class="add-remove-friends__form">
-      <input type="text" id="id" placeholder="Insert Friend ID" class="add-remove-friends__input" />
+      <input
+        type="text"
+        id="id"
+        placeholder="Insert Friend ID"
+        class="add-remove-friends__input"
+      />
 
       <div class="add-remove-friends__button">
         <a>Remove</a>

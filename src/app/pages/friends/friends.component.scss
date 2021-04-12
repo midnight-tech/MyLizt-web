@@ -72,18 +72,25 @@
 
 .friends {
   grid-row: content-start / content-end;
-  align-self: baseline;
-  font-size: 1.6rem;
-  color: $white;
 
-  display: grid;
-  grid-template-columns:
-    [user-start] minmax(min-content, 1fr) [user-end content-start] repeat(
-      4,
-      [col-start] max-content [col-end]
-    )
-    [content-end];
-  row-gap: 2rem;
+  &__container {
+    align-self: baseline;
+    font-size: 1.6rem;
+    color: $white;
+
+    display: grid;
+    grid-template-columns:
+      [user-start] minmax(min-content, 1fr) [user-end content-start] repeat(
+        4,
+        [col-start] max-content [col-end]
+      )
+      [content-end];
+    row-gap: 2rem;
+
+    &:not(:last-child) {
+      margin-bottom: 2rem;
+    }
+  }
 
   &__user {
     grid-column: user-start / user-end;
