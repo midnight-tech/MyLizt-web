@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { UserInterface } from 'src/app/data/interfaces';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -15,7 +16,8 @@ export class FriendsComponent implements OnInit {
   id = new FormControl("")
 
   constructor(
-    private userService: UserService
+    public userService: UserService,
+    public notificationService : NotificationService
   ) {
   }
 
