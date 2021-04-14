@@ -42,13 +42,14 @@
     <div class="add-remove-friends membrana" (click)="showAddFriends()"></div>
     <form class="add-remove-friends__form">
       <input
+        [formControl]="id"
         type="text"
         id="id"
         placeholder="Insert Friend ID"
         class="add-remove-friends__input"
       />
 
-      <div class="add-remove-friends__button">
+      <div class="add-remove-friends__button" (click)="sendFriendRquest()">
         <a>Send</a>
       </div>
     </form>
@@ -67,7 +68,7 @@
         class="add-remove-friends__input"
       />
 
-      <div class="add-remove-friends__button">
+      <div class="add-remove-friends__button" (click)="removeFriend()">
         <a>Remove</a>
       </div>
     </form>
