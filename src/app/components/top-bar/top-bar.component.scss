@@ -23,18 +23,166 @@
     align-items: center;
   }
 
+  &__category {
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    height: 4rem;
+    width: 10rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: $the-border-radius;
+    border-bottom-left-radius: $the-border-radius;
+    border-right: 1px solid rgba($white, 0.3);
+    background-color: $black4;
+    cursor: pointer;
+    color: $primary1;
+
+    &__dropdown {
+      padding: 0rem;
+      margin-top: 0.5rem;
+      background-color: rgba($black4, 0.9);
+      position: relative;
+      z-index: 100;
+
+      &__content {
+        font-size: 1.6rem;
+        color: rgba($white, 0.6);
+        text-transform: uppercase;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem 1rem;
+        border-radius: $the-border-radius;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__dropdown {
+    display: flex;
+    width: 100%;
+
+    &__container {
+      width: 100%;
+      background-color: transparent;
+      border-top-right-radius: $the-border-radius;
+      border-bottom-right-radius: $the-border-radius;
+      height: 4rem;
+    }
+
+    &__content {
+      padding: 0.5rem 0;
+      margin-top: 0.5rem;
+      background-color: rgba($black4, 0.9);
+      position: relative;
+      z-index: 100;
+    }
+
+    &__item {
+      display: grid;
+      grid-template-columns: [image-start] 12.5rem [image-end description-start] 1fr [description-end];
+      grid-template-rows: 7rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+
+      &:hover {
+        grid-template-rows: 22.3rem;
+        background-color: rgba($black3, 0.8);
+      }
+
+      &__container-image {
+        display: grid;
+        grid-column: image-start / image-end;
+        grid-row: 1 / -1;
+      }
+
+      &__image {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        border-radius: $the-border-radius;
+      }
+
+      &__container-content {
+        display: grid;
+        grid-column: description-start / description-end;
+        grid-row: 1 / -1;
+        text-align: center;
+        font-size: 1.4rem;
+      }
+
+      &__content {
+        font-size: 1.6rem;
+        color: rgba($white, 0.6);
+        text-transform: uppercase;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem 1rem;
+        border-radius: $the-border-radius;
+        cursor: pointer;
+
+        &--title {
+          align-items: center;
+        }
+
+        &--extra-info {
+          display: none;
+        }
+      }
+
+      &:hover {
+        .search__dropdown__item__container-content,
+        .search__dropdown__item__content {
+          align-content: center;
+          text-align: start;
+        }
+
+        .search__dropdown__item__content--title {
+          display: flex;
+          align-items: flex-start;
+          font-size: 1.4rem;
+          color: $primary1;
+        }
+
+        .search__dropdown__item__content--extra-info {
+          display: flex;
+          align-items: flex-start;
+          font-size: 1.4rem;
+          text-transform: initial;
+        }
+      }
+    }
+  }
+
   &__input {
     font-size: 1.6rem;
     color: inherit;
     background-color: transparent;
     border: none;
     width: 100%;
-    // border-radius: 4px;
-    // height: 4rem;
-    // margin-right: -4rem;
-    // margin-left: -10rem;
     padding: 0.7rem 1.5rem 0.7rem 2.5rem;
     transition: all 0.2s;
+
+    &__container {
+      display: flex;
+      width: 100%;
+      justify-content: flex-end;
+      align-items: stretch;
+      background-color: $black4;
+      border-top-right-radius: $the-border-radius;
+      border-bottom-right-radius: $the-border-radius;
+
+      .is-active & {
+        input,
+        .search__button {
+          z-index: 100;
+        }
+      }
+    }
 
     &:focus {
       outline: none;
@@ -52,11 +200,7 @@
     }
   }
 
-  &__input:focus + &__button-search {
-    background-color: transparent;
-  }
-
-  &__button-search {
+  &__button {
     border: none;
     background-color: transparent;
     padding: 0 0;
@@ -67,6 +211,10 @@
     &:focus {
       outline: none;
     }
+  }
+
+  &__input:focus + &__button {
+    background-color: transparent;
   }
 
   &__icon {
@@ -86,105 +234,15 @@
   }
 }
 
-.input-container {
-  display: flex;
-  width: 100%;
-  justify-content: flex-end;
-  align-items: stretch;
-  background-color: $black4;
-  border-top-right-radius: $the-border-radius;
-  border-bottom-right-radius: $the-border-radius;
-}
-
-.is-active .input-container {
-  input,
-  .search__button-search {
-    z-index: 100;
+.dropdown-menu {
+  &.search__dropdown {
+    display: none;
+    // z-index: 2;
   }
-}
-
-.button-container {
-  font-size: 1.6rem;
-  text-transform: uppercase;
-  height: 4rem;
-  width: 10rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-top-left-radius: $the-border-radius;
-  border-bottom-left-radius: $the-border-radius;
-  border-right: 1px solid rgba($white, 0.3);
-  background-color: $black4;
-  cursor: pointer;
-  color: $primary1;
-}
-
-.dropdown__container {
-  width: 100%;
-  background-color: transparent;
-  border-top-right-radius: $the-border-radius;
-  border-bottom-right-radius: $the-border-radius;
-  height: 4rem;
-}
-
-.dropdown-content {
-  padding: 0rem;
-  margin-top: 0.5rem;
-  background-color: rgba($black4, 0.9);
-  position: relative;
-  z-index: 100;
-
-  &--search {
-    padding: 0.5rem 0;
-  }
-
-  &__search {
-    display: flex;
-    width: 100%;
-  }
-}
-
-.dropdown-menu.dropdown-content__search {
-  display: none;
-  // z-index: 2;
 }
 
 .is-active {
   z-index: 2;
-}
-
-.dropdown-container-item {
-  display: grid;
-  grid-template-columns: [image-start] 12.5rem [image-end description-start] 1fr [description-end];
-  grid-template-rows: 7rem;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-
-  &:hover {
-    grid-template-rows: 22.3rem;
-    background-color: rgba($black3, 0.8);
-  }
-
-  &__container-image {
-    display: grid;
-    grid-column: image-start / image-end;
-    grid-row: 1 / -1;
-  }
-
-  &__cover {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    border-radius: $the-border-radius;
-  }
-
-  &__container-title {
-    display: grid;
-    grid-column: description-start / description-end;
-    grid-row: 1 / -1;
-    text-align: center;
-    font-size: 1.4rem;
-  }
 }
 
 // Reset padding do framework
@@ -195,58 +253,6 @@ a.dropdown-item {
     background-color: rgba($black4, 0.4);
     color: $white;
   }
-}
-
-.dropdown-item {
-  font-size: 1.6rem;
-  color: rgba($white, 0.6);
-  text-transform: uppercase;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem 1rem;
-  border-radius: $the-border-radius;
-  cursor: pointer;
-
-  &--account {
-    padding: 1.5rem 2rem;
-  }
-
-  &--search-title {
-    align-items: center;
-  }
-
-  &--search-extra-info {
-    display: none;
-  }
-}
-
-// Hover dos itens do Search
-.dropdown-container-item:hover {
-  .dropdown-container-item__container-title,
-  .dropdown-item {
-    align-content: center;
-    text-align: start;
-  }
-
-  .dropdown-item--search-title {
-    display: flex;
-    align-items: flex-start;
-    font-size: 1.4rem;
-    color: $primary1;
-  }
-
-  .dropdown-item--search-extra-info {
-    display: flex;
-    align-items: flex-start;
-    font-size: 1.4rem;
-    text-transform: initial;
-  }
-}
-
-.dropdown-divider {
-  background-color: rgba($white, 0.2);
 }
 
 .membrana {
@@ -266,14 +272,36 @@ a.dropdown-item {
   text-transform: uppercase;
 
   &__user {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
     font-size: 2rem;
-    cursor: pointer;
+    text-align: end;
+
+    &__name {
+      cursor: pointer;
+    }
+  }
+
+  &__dropdown {
+    padding: 0rem;
+    margin-top: 0.5rem;
+    background-color: rgba($black4, 0.9);
+    position: relative;
+    z-index: 100;
   }
 
   &__content {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    font-size: 1.6rem;
+    color: rgba($white, 0.6);
+    text-transform: uppercase;
+    align-items: center;
+    border-radius: $the-border-radius;
+    cursor: pointer;
+    padding: 1.5rem 2rem;
 
     &:hover {
       background-color: rgba($black4, 0.4);

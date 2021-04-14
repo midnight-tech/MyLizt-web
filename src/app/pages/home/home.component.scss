@@ -13,7 +13,7 @@
     )
     [content-end void-right-start] minmax(12rem, 1fr) [void-right-end];
   grid-template-rows:
-    [top-bar-start] minmax(auto, 6rem) [top-bar-end content-start] repeat(
+    [top-bar-start] minmax(6rem, auto) [top-bar-end content-start] repeat(
       6,
       [col-start] minmax(auto, 1fr) [col-end]
     )
