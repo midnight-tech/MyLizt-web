@@ -15,6 +15,7 @@ export class AuthenticationService {
   user: firebase.User | null = null
   userFirestore: UserInterface | null = null
   authLoaded = false
+  unsub! : Function
 
   constructor(public fireAuth: AngularFireAuth, public fireStore: AngularFirestore, router: Router, ngZone: NgZone) {
     fireAuth.onAuthStateChanged((user) => {
@@ -84,6 +85,7 @@ export class AuthenticationService {
 
   async logout() {
     await this.fireAuth.signOut()
+    this.unsub()
   }
 
   async initUser(uid: string, username: string) {
@@ -92,7 +94,7 @@ export class AuthenticationService {
       createdAt: new Date(Date.now())
     } as listInterface)
     await this.fireStore.firestore.collection('User').doc(uid).set({
-      applicationUserId : time(),
+      applicationUserId: time(),
       myList: list,
       friends: [],
       notifications: [],

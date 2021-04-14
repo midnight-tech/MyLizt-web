@@ -325,7 +325,7 @@ export interface UserInterface {
   createdAt?: Date,
   updatedAt?: Date,
   myList: firebase.default.firestore.DocumentReference,
-  friends: firebase.default.firestore.DocumentReference[],
+  friends: CollectionReference,
   notifications: notification[]
 }
 

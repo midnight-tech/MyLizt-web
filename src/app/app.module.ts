@@ -38,6 +38,7 @@ import { CatalogoComponent } from './pages/catalogo/catalogo.component';
 import { FriendsComponent } from './pages/friends/friends.component';
 import { UserService } from './services/user/user.service';
 import { RecommendationComponent } from './components/recommendation/recommendation.component';
+import { NotificationService } from './services/notification/notification.service';
 
 const routes: Routes = [
   { path: 'sandbox', component: SandboxPageComponent, pathMatch: 'full' },
@@ -143,7 +144,8 @@ const routes: Routes = [
     BookService,
     SerieService,
     HomeContextService,
-    UserService
+    UserService,
+    NotificationService,
   ],
   bootstrap: [AppComponent],
 })
