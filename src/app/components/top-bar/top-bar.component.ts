@@ -13,7 +13,9 @@ import { AnimeService } from 'src/app/services/anime/anime.service';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { BookService } from 'src/app/services/book/book.service';
 import { HomeContextService } from 'src/app/services/home-context/home.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 import { SerieService } from 'src/app/services/serie/serie.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-top-bar',
@@ -45,6 +47,7 @@ export class TopBarComponent implements OnInit, OnChanges {
   isActive = false;
   isActiveAccount = false;
   isActiveSearch = false;
+  isActiveNotification = false;
   timeout?: NodeJS.Timeout;
   username = 'USERNAME';
 
@@ -54,7 +57,9 @@ export class TopBarComponent implements OnInit, OnChanges {
     public bookService: BookService,
     public authService: AuthenticationService,
     public router: Router,
-    public homeContext: HomeContextService
+    public homeContext: HomeContextService,
+    public notificationService: NotificationService,
+    public userService: UserService
   ) {
     this.username = authService.user?.displayName!;
     this.searchField.valueChanges.subscribe(() => {
@@ -110,6 +115,10 @@ export class TopBarComponent implements OnInit, OnChanges {
 
   dropdownAccount() {
     this.isActiveAccount = !this.isActiveAccount;
+  }
+
+  dropdownNotification() {
+    this.isActiveNotification = !this.isActiveNotification;
   }
 
   closeSearchModal() {

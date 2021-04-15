@@ -244,11 +244,81 @@
   </form>
 
   <div class="account">
-    <img
-      src="../../../assets/icon-notification.svg"
-      alt="icon-notification"
-      class="account__icon account__icon--notification"
-    />
+    <div
+      [ngClass]="{ 'is-active': isActiveNotification }"
+      class="dropdown is-right"
+    >
+      <div class="dropdown-trigger" (click)="dropdownNotification()">
+        <img
+          src="../../../assets/icon-notification.svg"
+          alt="icon-notification"
+          class="account__icon account__icon--notification"
+        />
+      </div>
+
+      <!-- Conteudo Dropdwon Notification -->
+      <div
+        class="dropdown-menu account__notification__menu"
+        id="dropdown-menu6"
+        role="menu"
+      >
+        <div (click)="dropdownNotification()" class="membrana"></div>
+        <div class="dropdown-content account__dropdown account__notification">
+          <div *ngFor="let notification of notificationService.notifications">
+            <!-- Conteudo aceitar/recusar amizade -->
+            <div
+              class="account__content dropdown-item account__notification__content"
+              *ngIf="notification.type == 'FRIENDREQUEST'"
+            >
+              <span class="account__notification__text">
+                <span class="account__notification__highlight">{{
+                  notification.message.name
+                }}</span>
+                send a request friend</span
+              >
+
+              <div class="account__notification__buttons">
+                <img
+                  (click)="
+                    userService.acceptFriendRequest(
+                      notification.data.idEmmiter!
+                    )
+                  "
+                  src="../../../assets/icon-logout.svg"
+                  alt="icon-logout"
+                  class="account__notification__buttons--accept"
+                />
+                <img
+                  (click)="notificationService.deleteNotification(notification)"
+                  src="../../../assets/icon-logout.svg"
+                  alt="icon-logout"
+                  class="account__notification__buttons--delete"
+                />
+              </div>
+            </div>
+
+            <!-- Conteudo de recomendacao -->
+            <div
+              class="account__content dropdown-item account__notification__content"
+              *ngIf="notification.type == 'RECOMENDATION'"
+            >
+              <span class="account__notification__text"
+                ><span class="account__notification__highlight"
+                  >Lukazukimo </span
+                >recommended
+                <span class="account__notification__highlight">Shingeki</span>
+              </span>
+              <img
+                (click)="notificationService.deleteNotification(notification)"
+                src="../../../assets/icon-logout.svg"
+                alt="icon-logout"
+                class="account__notification__buttons--delete"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div [ngClass]="{ 'is-active': isActiveAccount }" class="dropdown is-right">
       <div class="dropdown-trigger account__user">
