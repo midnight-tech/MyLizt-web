@@ -27,6 +27,15 @@ export class NotificationService {
     await receiver.ref.collection('notification').add(notification)
   }
 
+  async deleteNotification(notification: Notification){
+    console.log(notification)
+    if(notification.ref){
+      await notification.ref.delete()
+      return true
+    }
+    return false
+  }
+
   createListener() {
     this.auth.unsub = this.firestore.firestore.collection('User').doc(this.auth.user?.uid).collection('notification').withConverter(notificationConverter).onSnapshot((Snapshot) => {
       this.ngZone.run(() => {
@@ -34,11 +43,14 @@ export class NotificationService {
         docs.map((value) => {
           switch (value.type) {
             case 'added':
-              this.notifications.push(value.doc.data())
+              const notification = value.doc.data()
+              notification.ref = value.doc.ref
+              this.notifications.push(notification)
               break
             case 'removed':
               this.notifications = this.notifications.filter((notification) => {
-                return value.doc.data() != notification
+                console.log(notification.ref?.id,value.doc.id)
+                return value.doc.ref.id != notification.ref?.id
               })
               break
           }

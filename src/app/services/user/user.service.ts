@@ -52,13 +52,17 @@ export class UserService {
     if(userRequersterQuery.empty){
       return false
     }
-    await myUser.ref.collection('friends').add({
-      friendId : id,
-      reference : userRequersterQuery.docs[0].ref
-    })
-    await userRequersterQuery.docs[0].ref.collection('friends').add({
-      friendId : myUser.data()?.applicationUserId,
-      reference : myUser.ref
+    await this.firestore.firestore.runTransaction(async (transaction)=>{
+      const newFriendMyUser = myUser.ref.collection('friends').doc()
+      const newFriendMyForeign = userRequersterQuery.docs[0].ref.collection('friends').doc()
+      transaction.set(newFriendMyUser,{
+        friendId : id,
+        reference : userRequersterQuery.docs[0].ref
+      })
+      transaction.set(newFriendMyForeign,{
+        friendId : myUser.data()?.applicationUserId,
+        reference : myUser.ref
+      })
     })
     return true
   }
@@ -72,8 +76,10 @@ export class UserService {
     const myUserData = myUser.data()
     const myfriend = friendQuery.docs[0].data()
     const myFriendrefer = await myfriend.reference.collection('friends').where('friendId', '==', myUserData?.applicationUserId).get()
-    await myFriendrefer.docs[0].ref.delete() // deleta usuario na tabela de amigos do amigo
-    await friendQuery.docs[0].ref.delete() // deleta amigo da tabela do usuario
+    await this.firestore.firestore.runTransaction(async (transaction)=>{
+      transaction.delete(myFriendrefer.docs[0].ref)
+      transaction.delete(friendQuery.docs[0].ref)
+    })
     return true
   }
 }

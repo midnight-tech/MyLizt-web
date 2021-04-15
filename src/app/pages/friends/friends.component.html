@@ -52,6 +52,6 @@
   <div *ngFor="let i of notificationService.notifications">
     <p>{{i.message}}</p>
     <a (click)="userService.acceptFriendRequest(i.data.idEmmiter!)">Aceitar</a>
-    <a>Negar</a>
+    <a (click)="notificationService.deleteNotification(i)" >Negar</a>
   </div>
 </div>
