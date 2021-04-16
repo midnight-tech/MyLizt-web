@@ -1,0 +1,28 @@
+<div class="container-grid">
+  <div class="title">
+    <h1 class="title__text">Resultados</h1>
+  </div>
+
+  <div class="pagination pagination--top">
+    <app-pagination [atualPage]="homeContext.page" [totalPage]="homeContext.totalPage" [type]="type" pageCalled="friendList" friendId="friendId"></app-pagination>
+  </div>
+
+  <div class="list">
+    <div class="list__card" *ngFor="let content of homeContext.friendListAnimePage">
+      <!-- {{ content.title }} -->
+      <app-card [anime]="content.anime" [lookMyList]=false ></app-card>
+    </div>
+    <div class="list__card" *ngFor="let content of homeContext.friendListBookPage">
+      <!-- {{ content.volumeInfo.title }} -->
+      <app-card [book]="content.book" [lookMyList]=false></app-card>
+    </div>
+    <div class="list__card" *ngFor="let content of homeContext.friendListSeriePage">
+      <!-- {{ content.name }} -->
+      <app-card [serie]="content.serie" [lookMyList]=false></app-card>
+    </div>
+  </div>
+
+  <div class="pagination pagination--bottom">
+    <app-pagination [atualPage]="homeContext.page" [totalPage]="homeContext.totalPage" [type]="type" pageCalled="friendList"></app-pagination>
+  </div>
+</div>

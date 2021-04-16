@@ -161,4 +161,28 @@ export class ListService {
         return true
     }
 
+    async getFriendList(friendId: string, type:search,lastContent?: DocumentData){
+        const friendQuery = await this.firestore.firestore.collection('User')
+        .where('applicationUserId', '==',friendId)
+        .withConverter(UserConverter)
+        .get()
+        if(friendQuery.empty){
+            return false
+        }
+        let content : QuerySnapshot<content>
+        if(lastContent){
+            content = await friendQuery.docs[0].data().myList.collection(type.toLowerCase()).orderBy('watched').startAfter(lastContent).limit(60).withConverter(contentConverter).get()
+        } else {
+            content = await  friendQuery.docs[0].data().myList.collection(type.toLowerCase()).orderBy('watched').limit(60).withConverter(contentConverter).get()
+        }
+        if(content.empty){
+            return false
+        }
+        return content.docs.map(value => {
+            let content = value.data()
+            content.ref = value.ref
+            return content
+        })
+    }
+
 }

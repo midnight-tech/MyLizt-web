@@ -39,6 +39,7 @@ import { FriendsComponent } from './pages/friends/friends.component';
 import { UserService } from './services/user/user.service';
 import { RecommendationComponent } from './components/recommendation/recommendation.component';
 import { NotificationService } from './services/notification/notification.service';
+import { FriendListComponent } from './pages/friend-list/friend-list.component';
 
 const routes: Routes = [
   { path: 'sandbox', component: SandboxPageComponent, pathMatch: 'full' },
@@ -97,6 +98,10 @@ const routes: Routes = [
         path: 'friends',
         component: FriendsComponent,
       },
+      {
+        path : 'friend-list/:friendId/:type',
+        component: FriendListComponent
+      }
     ],
   },
   { path: '**', redirectTo: '' },
@@ -128,6 +133,7 @@ const routes: Routes = [
     CatalogoComponent,
     FriendsComponent,
     RecommendationComponent,
+    FriendListComponent
   ],
   imports: [
     BrowserModule,

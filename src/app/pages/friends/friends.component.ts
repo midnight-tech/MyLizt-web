@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { UserInterface } from 'src/app/data/interfaces';
+import { Router } from '@angular/router';
+import { search, UserInterface } from 'src/app/data/interfaces';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -14,7 +15,10 @@ export class FriendsComponent implements OnInit {
   friends: UserInterface[] = [];
   id = new FormControl('');
 
-  constructor(public userService: UserService) {}
+  constructor(
+    public userService: UserService,
+    private router : Router
+  ) { }
 
   ngOnInit() {
     this.userService.getFriend().then((value) => {
@@ -49,5 +53,9 @@ export class FriendsComponent implements OnInit {
       this.id.setValue('');
     }
     this.isActiveRemove = !this.isActiveRemove;
+  }
+
+  redirectToFriendList(friendId: string, type: search) {
+    this.router.navigate(['home','friend-list',friendId,type.toLowerCase()])
   }
 }

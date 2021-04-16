@@ -51,31 +51,43 @@ export class HomeContextService {
     this.lastPageSerie = null
   }
 
-  changePage(page: number, pageCalled: 'search' | 'myContent' | 'friend' | 'catalogo' = 'search', type?: string) {
-    if (pageCalled == 'search') {
-      if (page != this.page && page > 0 && page <= this.totalPage) {
-        console.log(this)
-        this.pageSearch(this.query, page, this.searchType!!, true)
-      }
-      return
-    } else if (pageCalled == 'myContent') {
-      if (!type) {
-        throw "Query sem type"
-      }
-      if (page > 0 && (page <= this.totalPage || this.totalPage == 0)) {
-        this.myListPage(page, type).then(() => {
-          this.page = page
-        })
-      }
-    } else if (pageCalled == 'catalogo') {
-      if (!type) {
-        throw "Query sem type"
-      }
-      if (page != this.page && page > 0 && (page <= this.totalPage || this.totalPage == 0)) {
-        this.pageCatalogo(page, type, true)
-      }
-    }
+  changePage(page: number, pageCalled: 'search' | 'myContent' | 'friend' | 'catalogo' | 'friendList' = 'search', type?: string, friendId?: string) {
 
+    switch (pageCalled) {
+      case 'search':
+        if (page != this.page && page > 0 && page <= this.totalPage) {
+          console.log(this)
+          this.pageSearch(this.query, page, this.searchType!!, true)
+        }
+        return
+      case 'myContent':
+        if (!type) {
+          throw "Query sem type"
+        }
+        if (page > 0 && (page <= this.totalPage || this.totalPage == 0)) {
+          this.myListPage(page, type).then(() => {
+            this.page = page
+          })
+        }
+        return
+      case 'catalogo':
+        if (!type) {
+          throw "Query sem type"
+        }
+        if (page != this.page && page > 0 && (page <= this.totalPage || this.totalPage == 0)) {
+          this.pageCatalogo(page, type, true)
+        }
+        return
+      case 'friendList':
+        if (!type || !friendId) {
+          throw "Query sem type"
+        }
+        if (page > 0 && (page <= this.totalPage || this.totalPage == 0)) {
+          this.friendListPage(page, type.toLowerCase(), friendId).then(()=>{
+            this.page = page
+          })
+        }
+    }
   }
 
   clearContents() {
@@ -134,6 +146,7 @@ export class HomeContextService {
 
   // myList Pagination
   // animeAuxPage?: { anime: AnimeCatalogo; content: content<contentAnime>; }[][]
+
   animeAuxPage?: QueryDocumentSnapshot<DocumentData>[][] = []
 
   myListAnimePage: { anime: AnimeCatalogo; content: content; }[] = []
@@ -159,11 +172,11 @@ export class HomeContextService {
           this.animeAuxPage.push(animeQuery.docs.slice(i, i + 12));
         }
         this.myListAnimePage = []
-        this.animeAuxPage[page -1].map(async (value,index)=>{
+        this.animeAuxPage[page - 1].map(async (value, index) => {
           const content = value.data() as content
-          const animeRaw = await this.animeService.getAnimeComplete(content.contentId as number,index)
-          const anime = new AnimeCatalogo(undefined,undefined,animeRaw)
-          this.myListAnimePage.push({anime, content})
+          const animeRaw = await this.animeService.getAnimeComplete(content.contentId as number, index)
+          const anime = new AnimeCatalogo(undefined, undefined, animeRaw)
+          this.myListAnimePage.push({ anime, content })
         })
         // this.myListAnimePage = this.animeAuxPage[page - 1]
         this.totalPage = this.animeAuxPage.length
@@ -171,16 +184,16 @@ export class HomeContextService {
       }
       if (page <= this.animeAuxPage.length) {
         this.myListAnimePage = []
-        this.animeAuxPage[page -1].map(async (value,index)=>{
+        this.animeAuxPage[page - 1].map(async (value, index) => {
           const content = value.data() as content
-          const animeRaw = await this.animeService.getAnimeComplete(content.contentId as number,index)
-          const anime = new AnimeCatalogo(undefined,undefined,animeRaw)
-          this.myListAnimePage.push({anime, content})
+          const animeRaw = await this.animeService.getAnimeComplete(content.contentId as number, index)
+          const anime = new AnimeCatalogo(undefined, undefined, animeRaw)
+          this.myListAnimePage.push({ anime, content })
         })
         return
       } else {
         // const newWave = await this.listService.getAnimeContent(this.animeAuxPage[this.animeAuxPage.length - 1][11])
-        
+
         const animeQuery = await this.listService.getAnimeContent()
         for (let i = 0, j = animeQuery.docs.length; i < j; i += 12) {
           this.animeAuxPage.push(animeQuery.docs.slice(i, i + 12));
@@ -192,11 +205,11 @@ export class HomeContextService {
         //   this.myListAnimePage.push({anime, content})
         // }
         this.myListAnimePage = []
-        this.animeAuxPage[page -1].map(async (value,index)=>{
+        this.animeAuxPage[page - 1].map(async (value, index) => {
           const content = value.data() as content
-          const animeRaw = await this.animeService.getAnimeComplete(content.contentId as number,index)
-          const anime = new AnimeCatalogo(undefined,undefined,animeRaw)
-          this.myListAnimePage.push({anime, content})
+          const animeRaw = await this.animeService.getAnimeComplete(content.contentId as number, index)
+          const anime = new AnimeCatalogo(undefined, undefined, animeRaw)
+          this.myListAnimePage.push({ anime, content })
         })
         // this.myListAnimePage = this.animeAuxPage[page - 1]
         this.totalPage = this.animeAuxPage.length
@@ -318,6 +331,169 @@ export class HomeContextService {
     }
     this.serieResult = this.seriePages[(page - 1) % 5]
   }
+  // friendListPagination
+
+  friendAnimeAuxPage?: content[][]
+
+  friendListAnimePage: { anime: AnimeCatalogo; content: content; }[] = []
+  friendSerieAuxPage?: content[][]
+  friendListSeriePage: { serie: SerieCatalogo; content: content; }[] = []
+  friendBookAuxPage?: content[][]
+  friendListBookPage: { book: BookCatalogo; content: content; }[] = []
+
+  cleanContentFriendList() {
+    this.friendListAnimePage = []
+    this.friendListSeriePage = []
+    this.friendListBookPage = []
+  }
+
+  async friendListPage(page: number, type: string, friendId: string) {
+    this.cleanContentFriendList()
+    console.log(page, this.friendAnimeAuxPage, '# 352')
+    if (type == 'anime') {
+      console.log(this.friendAnimeAuxPage)
+      if (!this.friendAnimeAuxPage) {
+        this.friendAnimeAuxPage = []
+        const animeContent = await this.listService.getFriendList(friendId, type as search)
+        if (animeContent == false) {
+          return false
+        }
+        for (let i = 0, j = animeContent.length; i < j; i += 12) {
+          this.friendAnimeAuxPage.push(animeContent.slice(i, i + 12));
+        }
+        this.friendListAnimePage = []
+        console.log(page)
+        this.friendAnimeAuxPage[page - 1].map(async (value, index) => {
+          const animeRaw = await this.animeService.getAnimeComplete(value.contentId as number, index)
+          const anime = new AnimeCatalogo(undefined, undefined, animeRaw)
+          this.friendListAnimePage.push({ anime, content: value })
+        })
+        this.totalPage = this.friendAnimeAuxPage.length
+        return
+      }
+      if (page <= this.friendAnimeAuxPage.length) {
+        this.friendListAnimePage = []
+        this.friendAnimeAuxPage[page - 1].map(async (value, index) => {
+          const animeRaw = await this.animeService.getAnimeComplete(value.contentId as number, index)
+          const anime = new AnimeCatalogo(undefined, undefined, animeRaw)
+          this.friendListAnimePage.push({ anime, content: value })
+        })
+        return
+      } else {
+        const animeQuery = await this.listService.getFriendList(
+          friendId,
+          type as search,
+          this.friendAnimeAuxPage[this.friendAnimeAuxPage.length - 1][11]
+        )
+        if (animeQuery == false) {
+          return false
+        }
+        for (let i = 0, j = animeQuery.length; i < j; i += 12) {
+          this.friendAnimeAuxPage.push(animeQuery.slice(i, i + 12));
+        }
+        this.friendListAnimePage = []
+        this.friendAnimeAuxPage[page - 1].map(async (value, index) => {
+          const animeRaw = await this.animeService.getAnimeComplete(value.contentId as number, index)
+          const anime = new AnimeCatalogo(undefined, undefined, animeRaw)
+          this.friendListAnimePage.push({ anime, content: value })
+        })
+        this.totalPage = this.friendAnimeAuxPage.length
+        return
+      }
+    } else if (type == 'serie') {
+      if (!this.friendSerieAuxPage) {
+        this.friendSerieAuxPage = []
+        const firstWave = await this.listService.getFriendList(friendId, type as search)
+        if (firstWave == false) {
+          return false
+        }
+        for (let i = 0, j = firstWave.length; i < j; i += 12) {
+          this.friendSerieAuxPage.push(firstWave.slice(i, i + 12));
+        }
+        this.friendSerieAuxPage[page - 1].map(async (value, index) => {
+          const serieComplete = await this.serieService.getSerieComplete(value.contentId as number)
+          const serie = new SerieCatalogo(undefined, undefined, serieComplete)
+          this.friendListSeriePage.push({ serie, content: value })
+        })
+        this.totalPage = this.friendSerieAuxPage.length
+        return
+      }
+      if (page <= this.friendSerieAuxPage.length) {
+        this.friendListSeriePage = []
+        this.friendSerieAuxPage[page - 1].map(async (value, index) => {
+          const serieRaw = await this.serieService.getSerieComplete(value.contentId as number)
+          const serie = new SerieCatalogo(undefined, undefined, serieRaw)
+          this.friendListSeriePage.push({ serie, content: value })
+        })
+        return
+      } else {
+        const newWave = await this.listService.getFriendList(
+          friendId,
+          type as search,
+          this.friendSerieAuxPage[this.friendSerieAuxPage.length - 1][this.friendSerieAuxPage[this.friendSerieAuxPage.length - 1].length -1]
+        )
+        if (newWave == false) {
+          return false
+        }
+        for (let i = 0, j = newWave.length; i < j; i += 12) {
+          this.friendSerieAuxPage.push(newWave.slice(i, i + 12));
+        }
+        this.friendSerieAuxPage[page - 1].map(async (value, index) => {
+          const serieComplete = await this.serieService.getSerieComplete(value.contentId as number)
+          const serie = new SerieCatalogo(undefined, undefined, serieComplete)
+          this.friendListSeriePage.push({ serie, content: value })
+        })
+        this.totalPage = this.friendSerieAuxPage.length
+        return
+      }
+    } else {
+      if (!this.friendBookAuxPage) {
+        this.friendBookAuxPage = []
+        const firstWave = await this.listService.getFriendList(friendId, type as search)
+        if (firstWave == false) {
+          return false
+        }
+        let aux: content[][] = []
+        for (let i = 0, j = firstWave.length; i < j; i += 12) {
+          this.friendBookAuxPage.push(firstWave.slice(i, i + 12));
+        }
+        this.friendBookAuxPage[page - 1].map(async (value, index) => {
+          const bookComplete = await this.bookService.getBookComplete(value.contentId.toString())
+          const book = new BookCatalogo(undefined, undefined, bookComplete)
+          this.friendListBookPage.push({ book, content: value })
+        })
+        this.totalPage = this.friendBookAuxPage.length
+        return
+      }
+      if (page <= this.friendBookAuxPage.length) {
+        this.friendListBookPage = []
+        this.friendBookAuxPage[page - 1].map(async (value, index) => {
+          const bookRaw = await this.bookService.getBookComplete(value.contentId.toString())
+          const book = new BookCatalogo(undefined, undefined, bookRaw)
+          this.friendListBookPage.push({ book, content: value })
+        })
+        return
+      } else {
+        const newWave = await this.listService.getFriendList(friendId, type as search, this.friendBookAuxPage[this.friendBookAuxPage.length - 1][11])
+        if (newWave == false) {
+          return false
+        }
+        let aux: content[][] = []
+        for (let i = 0, j = newWave.length; i < j; i += 12) {
+          aux.push(newWave.slice(i, i + 12));
+        }
+        aux[page - 1].map(async (value, index) => {
+          const bookComplete = await this.bookService.getBookComplete(value.contentId.toString())
+          const book = new BookCatalogo(undefined, undefined, bookComplete)
+          this.friendListBookPage.push({ book, content: value })
+        })
+        this.totalPage = this.friendBookAuxPage.length
+        return
+      }
+    }
+  }
 }
 
 // catalogo Pagination
+
+
