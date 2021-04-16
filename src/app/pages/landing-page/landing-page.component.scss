@@ -27,8 +27,13 @@
   background-color: $black1;
   padding: 0 3rem;
 
+  &__brand {
+    height: 6rem;
+  }
+
   &__nav {
-    // background-color: $black2;
+    padding: 3rem 0;
+    align-items: flex-start;
 
     p {
       color: white;
