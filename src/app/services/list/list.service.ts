@@ -119,9 +119,9 @@ export class ListService {
     }
 
     async getHomeContent() {
-        let animeQuery = await this.auth.userFirestore?.myList.collection('anime').limit(5).get()
-        let bookQuery = await this.auth.userFirestore?.myList.collection('book').limit(5).get()
-        let serieQuery = await this.auth.userFirestore?.myList.collection('serie').limit(5).get()
+        let animeQuery = await this.auth.userFirestore?.myList.collection('anime').where('recommended', '==', null).limit(5).get()
+        let bookQuery = await this.auth.userFirestore?.myList.collection('book').where('recommended', '==', null).limit(5).get()
+        let serieQuery = await this.auth.userFirestore?.myList.collection('serie').where('recommended', '==', null).limit(5).get()
         let anime = animeQuery?.docs.map((value) => {
             return value.data() as content
         })
@@ -145,11 +145,11 @@ export class ListService {
         if (friend.empty) {
             return false
         }
-        const content = await friend.docs[0].ref.collection(type.toLowerCase()).doc(contentId).get()
+        const content = await friend.docs[0].data().myList.collection(type.toLowerCase()).doc(contentId).get()
         if (content.exists) {
             return false
         }
-        await friend.docs[0].ref.collection(type.toLowerCase())
+        await friend.docs[0].data().myList.collection(type.toLowerCase())
             .withConverter(contentConverter)
             .doc(contentId).set({
                 contentId: contentId,
