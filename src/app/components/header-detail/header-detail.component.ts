@@ -22,6 +22,8 @@ export class HeaderDetailComponent implements OnInit {
 
   seasonAtual = 0;
 
+  isActiveRecommend = false;
+
   @Output() seasonAtualEmitter = new EventEmitter<number>();
   onMyList: boolean = false;
   updateState = false;
@@ -95,6 +97,10 @@ export class HeaderDetailComponent implements OnInit {
         this.isItInMyList();
       })
     }
+  }
+
+  disableReceiveRecommendation(value: boolean) {
+    this.isActiveRecommend = value;
   }
 
 }

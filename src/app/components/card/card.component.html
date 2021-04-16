@@ -61,9 +61,9 @@
               <a class="card__button">Remove to list</a>
             </div>
           </div>
-          <div class="card__button-container card__button-container--recommend">
+          <div class="card__button-container card__button-container--recommend" (click)="disableReceiveRecommendation(true)">
             <img src="../../../assets/icon-search.svg" alt="Icon" class="card__icon" />
-            <a class="card__button" (click)="disableReceiveRecommendation(true)">Recommend to...</a>
+            <a class="card__button" >Recommend to...</a>
           </div>
         </div>
       </div>
@@ -72,142 +72,142 @@
       (isActiveEvent)="disableReceiveRecommendation($event)">
     </app-recommendation>
   </div>
+</div>
 
-  <div *ngIf="book" (mouseenter)="book.getComplete()">
-    <div class="card">
-      <div class="card__side">
-        <div class="card__side--image" (click)="navigateToDetail()">
-          <div class="card__side--image--flip">
-            <img class="card__picture" [src]="book.volumeInfo.image" alt="teste" />
+<div *ngIf="book" (mouseenter)="book.getComplete()">
+  <div class="card">
+    <div class="card__side">
+      <div class="card__side--image" (click)="navigateToDetail()">
+        <div class="card__side--image--flip">
+          <img class="card__picture" [src]="book.volumeInfo.image" alt="teste" />
+        </div>
+        <div class="card__side--image--flip card__side--image--flip--back">
+          <div class="card__side--image--flip--back--synopsis">
+            <p class="card__side--image--flip--back--synopsis--text">
+              {{ book.complete?.volumeInfo?.description }}
+            </p>
           </div>
-          <div class="card__side--image--flip card__side--image--flip--back">
-            <div class="card__side--image--flip--back--synopsis">
-              <p class="card__side--image--flip--back--synopsis--text">
-                {{ book.complete?.volumeInfo?.description }}
+          <div class="card__side--image--flip--back--description">
+            <div class="card__side--image--flip--back--description--category">
+              <p class="card__side--image--flip--back--description--category--text">
+                {{ book.complete?.volumeInfo?.categories }}
               </p>
             </div>
-            <div class="card__side--image--flip--back--description">
-              <div class="card__side--image--flip--back--description--category">
-                <p class="card__side--image--flip--back--description--category--text">
-                  {{ book.complete?.volumeInfo?.categories }}
-                </p>
-              </div>
-              <div class="card__side--image--flip--back--description--info">
-                <div class="card__side--image--flip--back--description--info--flex">
-                  <div class="card__side--image--flip--back--description--info--content">
-                    <p class="card__side--image--flip--back--description--info--flex-text">
-                      pages
-                    </p>
-                    <p class="card__side--image--flip--back--description--info--flex-text">
-                      {{ book.complete?.volumeInfo?.pageCount }}
-                    </p>
-                  </div>
-                  <div class="card__side--image--flip--back--description--info--content">
-                    <p class="card__side--image--flip--back--description--info--flex-text">
-                      Score
-                    </p>
-                    <p class="card__side--image--flip--back--description--info--flex-text">
-                      {{ book.complete?.volumeInfo?.averageRating }}
-                    </p>
-                  </div>
+            <div class="card__side--image--flip--back--description--info">
+              <div class="card__side--image--flip--back--description--info--flex">
+                <div class="card__side--image--flip--back--description--info--content">
+                  <p class="card__side--image--flip--back--description--info--flex-text">
+                    pages
+                  </p>
+                  <p class="card__side--image--flip--back--description--info--flex-text">
+                    {{ book.complete?.volumeInfo?.pageCount }}
+                  </p>
+                </div>
+                <div class="card__side--image--flip--back--description--info--content">
+                  <p class="card__side--image--flip--back--description--info--flex-text">
+                    Score
+                  </p>
+                  <p class="card__side--image--flip--back--description--info--flex-text">
+                    {{ book.complete?.volumeInfo?.averageRating }}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="card__side--title">
-          <h1 class="card__title" (click)="navigateToDetail()">
-            {{ book.volumeInfo.title }}
-          </h1>
-        </div>
+      <div class="card__side--title">
+        <h1 class="card__title" (click)="navigateToDetail()">
+          {{ book.volumeInfo.title }}
+        </h1>
+      </div>
 
-        <div class="card__side--buttons">
-          <div class="container-flex">
-            <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
-              <img src="../../../assets/icon-notification.svg" alt="Icon" class="card__icon" />
-              <a class="card__button">Add to list</a>
-            </div>
-            <div class="card__button-container card__button-container--recommend">
-              <img src="../../../assets/icon-search.svg" alt="Icon" class="card__icon" />
-              <a class="card__button">Recommend to...</a>
-            </div>
+      <div class="card__side--buttons">
+        <div class="container-flex">
+          <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
+            <img src="../../../assets/icon-notification.svg" alt="Icon" class="card__icon" />
+            <a class="card__button">Add to list</a>
+          </div>
+          <div class="card__button-container card__button-container--recommend" (click)="disableReceiveRecommendation(true)">
+            <img src="../../../assets/icon-search.svg" alt="Icon" class="card__icon" />
+            <a class="card__button">Recommend to...</a>
           </div>
         </div>
       </div>
     </div>
-    <app-recommendation type="BOOK" [contentId]="book.id" [isActiveRecommend]="isActiveRecommend"
+  </div>
+  <app-recommendation type="BOOK" [contentId]="book.id" [isActiveRecommend]="isActiveRecommend"
+    (isActiveEvent)="disableReceiveRecommendation($event)">
+  </app-recommendation>
+</div>
+
+<div *ngIf="serie" (mouseenter)="serie.getComplete()">
+  <div class="card">
+    <div class="card__side">
+      <div class="card__side--image" (click)="navigateToDetail()">
+        <div class="card__side--image--flip">
+          <img class="card__picture" [src]="serie.poster_path" alt="teste" />
+        </div>
+        <div class="card__side--image--flip card__side--image--flip--back">
+          <div class="card__side--image--flip--back--synopsis">
+            <p class="card__side--image--flip--back--synopsis--text">
+              {{ serie.complete?.overview }}
+            </p>
+          </div>
+          <div class="card__side--image--flip--back--description">
+            <div class="card__side--image--flip--back--description--category">
+              <p class="card__side--image--flip--back--description--category--text">
+                <span *ngFor="let genre of serie.complete?.genres">{{
+                  genre.name
+                  }}</span>
+              </p>
+            </div>
+            <div class="card__side--image--flip--back--description--info">
+              <div class="card__side--image--flip--back--description--info--flex">
+                <div class="card__side--image--flip--back--description--info--content">
+                  <p class="card__side--image--flip--back--description--info--flex-text">
+                    Seasons
+                  </p>
+                  <p class="card__side--image--flip--back--description--info--flex-text">
+                    {{ serie.complete?.number_of_seasons }}
+                  </p>
+                </div>
+                <div class="card__side--image--flip--back--description--info--content">
+                  <p class="card__side--image--flip--back--description--info--flex-text">
+                    Score
+                  </p>
+                  <p class="card__side--image--flip--back--description--info--flex-text">
+                    {{ serie.complete?.vote_average }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card__side--title">
+        <h1 class="card__title" (click)="navigateToDetail()">
+          {{ serie.name }}
+        </h1>
+      </div>
+
+      <div class="card__side--buttons">
+        <div class="container-flex">
+          <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
+            <img src="../../../assets/icon-notification.svg" alt="Icon" class="card__icon" />
+            <a class="card__button">Add to list</a>
+          </div>
+          <div class="card__button-container card__button-container--recommend" (click)="disableReceiveRecommendation(true)">
+            <img src="../../../assets/icon-search.svg" alt="Icon" class="card__icon" />
+            <a class="card__button">Recommend to...</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-recommendation type="SERIE" [contentId]="serie.id.toString()" [isActiveRecommend]="isActiveRecommend"
       (isActiveEvent)="disableReceiveRecommendation($event)">
     </app-recommendation>
-  </div>
-
-  <div *ngIf="serie" (mouseenter)="serie.getComplete()">
-    <div class="card">
-      <div class="card__side">
-        <div class="card__side--image" (click)="navigateToDetail()">
-          <div class="card__side--image--flip">
-            <img class="card__picture" [src]="serie.poster_path" alt="teste" />
-          </div>
-          <div class="card__side--image--flip card__side--image--flip--back">
-            <div class="card__side--image--flip--back--synopsis">
-              <p class="card__side--image--flip--back--synopsis--text">
-                {{ serie.complete?.overview }}
-              </p>
-            </div>
-            <div class="card__side--image--flip--back--description">
-              <div class="card__side--image--flip--back--description--category">
-                <p class="card__side--image--flip--back--description--category--text">
-                  <span *ngFor="let genre of serie.complete?.genres">{{
-                    genre.name
-                    }}</span>
-                </p>
-              </div>
-              <div class="card__side--image--flip--back--description--info">
-                <div class="card__side--image--flip--back--description--info--flex">
-                  <div class="card__side--image--flip--back--description--info--content">
-                    <p class="card__side--image--flip--back--description--info--flex-text">
-                      Seasons
-                    </p>
-                    <p class="card__side--image--flip--back--description--info--flex-text">
-                      {{ serie.complete?.number_of_seasons }}
-                    </p>
-                  </div>
-                  <div class="card__side--image--flip--back--description--info--content">
-                    <p class="card__side--image--flip--back--description--info--flex-text">
-                      Score
-                    </p>
-                    <p class="card__side--image--flip--back--description--info--flex-text">
-                      {{ serie.complete?.vote_average }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card__side--title">
-          <h1 class="card__title" (click)="navigateToDetail()">
-            {{ serie.name }}
-          </h1>
-        </div>
-
-        <div class="card__side--buttons">
-          <div class="container-flex">
-            <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
-              <img src="../../../assets/icon-notification.svg" alt="Icon" class="card__icon" />
-              <a class="card__button">Add to list</a>
-            </div>
-            <div class="card__button-container card__button-container--recommend">
-              <img src="../../../assets/icon-search.svg" alt="Icon" class="card__icon" />
-              <a class="card__button">Recommend to...</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <app-recommendation type="SERIE" [contentId]="serie.id.toString()" [isActiveRecommend]="isActiveRecommend"
-        (isActiveEvent)="disableReceiveRecommendation($event)">
-      </app-recommendation>
-    </div>
   </div>
 </div>

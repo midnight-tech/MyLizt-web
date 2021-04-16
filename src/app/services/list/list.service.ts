@@ -76,9 +76,9 @@ export class ListService {
     async getAllSerieContent(lastDoc?: DocumentData) {
         let serieQuery: QuerySnapshot<DocumentData>
         if (lastDoc) {
-            serieQuery = await this.auth.userFirestore!!.myList.collection('serie').where('recommended', '==', null).orderBy('watched').startAfter(lastDoc).limit(60).get()
+            serieQuery = await this.auth.userFirestore!!.myList.collection('serie').orderBy('watched').where('recommended', '==', null).startAfter(lastDoc).limit(60).get()
         } else {
-            serieQuery = await this.auth.userFirestore!!.myList.collection('serie').where('recommended', '==', null).orderBy('watched').limit(60).get()
+            serieQuery = await this.auth.userFirestore!!.myList.collection('serie').orderBy('watched').where('recommended', '==', null).limit(60).get()
         }
         let finalResult = serieQuery.docs.map(async (serieData) => {
             let serieFireResult = serieData.data() as content
@@ -92,9 +92,9 @@ export class ListService {
     async getAllBookContent(lastDoc?: DocumentData) {
         let bookQuery
         if (lastDoc) {
-            bookQuery = await this.auth.userFirestore!!.myList.collection('book').where('recommended', '==', null).orderBy('watched').startAfter(lastDoc).limit(60).get()
+            bookQuery = await this.auth.userFirestore!!.myList.collection('book').orderBy('watched').where('recommended', '==', null).startAfter(lastDoc).limit(60).get()
         } else {
-            bookQuery = await this.auth.userFirestore!!.myList.collection('book').where('recommended', '==', null).orderBy('watched').limit(60).get()
+            bookQuery = await this.auth.userFirestore!!.myList.collection('book').orderBy('watched').where('recommended', '==', null).limit(60).get()
         }
         let finalResult = bookQuery.docs.map(async (bookData) => {
             let bookFireResult = bookData.data() as content
