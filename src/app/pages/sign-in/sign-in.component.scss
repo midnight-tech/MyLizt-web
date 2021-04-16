@@ -49,13 +49,15 @@
   color: $white;
 
   &__title {
-    font-size: 5rem;
-    margin-bottom: 2rem;
+    display: flex;
+    align-self: baseline;
+    height: 15rem;
+    margin-bottom: 3rem;
   }
 
   &__caption {
     max-width: 50rem;
-    font-size: 4rem;
+    font-size: 5rem;
     font-weight: 700;
   }
 }

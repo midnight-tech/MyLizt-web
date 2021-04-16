@@ -9,11 +9,10 @@
   padding: 2rem;
 
   &__logo {
-    color: $white;
-    font-size: 4rem;
     margin-bottom: 6rem;
     cursor: pointer;
     align-self: baseline;
+    height: 12rem;
   }
 }
 
@@ -29,11 +28,18 @@
     align-items: flex-end;
   }
 
+  &__text {
+    display: flex;
+    flex-direction: row;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    align-self: baseline;
+  }
+
   &__title {
-    font-size: 2.5rem;
     text-decoration: none;
     text-transform: uppercase;
-    margin-bottom: 2rem;
+    margin-bottom: 0;
     display: flex;
     align-self: baseline;
     cursor: pointer;

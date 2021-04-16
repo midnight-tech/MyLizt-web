@@ -300,6 +300,20 @@ a.dropdown-item {
   &__notification {
     padding: 1rem 0;
 
+    &__count {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 1.5rem;
+      width: 1.5rem;
+      color: $black3;
+      background-color: $primary1;
+      text-align: center;
+      border-radius: 100%;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
     &__content {
       display: flex;
       justify-content: space-between;

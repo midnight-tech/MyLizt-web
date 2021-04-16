@@ -254,6 +254,9 @@
           alt="icon-notification"
           class="account__icon account__icon--notification"
         />
+        <p class="account__notification__count">
+          {{ notificationService.notifications.length }}
+        </p>
       </div>
 
       <!-- Conteudo Dropdwon Notification -->
@@ -264,6 +267,14 @@
       >
         <div (click)="dropdownNotification()" class="membrana"></div>
         <div class="dropdown-content account__dropdown account__notification">
+          <!-- Conteudo Vazio -->
+          <div
+            class="account__content dropdown-item account__notification__content"
+            *ngIf="!notificationService.notifications.length"
+          >
+            <span class="account__notification__text"> Empty </span>
+          </div>
+
           <div *ngFor="let notification of notificationService.notifications">
             <!-- Conteudo aceitar/recusar amizade -->
             <div
@@ -320,6 +331,7 @@
       </div>
     </div>
 
+    <!-- Dropdown user -->
     <div [ngClass]="{ 'is-active': isActiveAccount }" class="dropdown is-right">
       <div class="dropdown-trigger account__user">
         <a

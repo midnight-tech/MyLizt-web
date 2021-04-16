@@ -1,9 +1,29 @@
 <div class="content">
-  <p class="content__logo" [routerLink]="['home']">Logo</p>
+  <img
+    class="content__logo"
+    [routerLink]="['home']"
+    src="../../../assets/logo.svg"
+  />
   <div class="categories">
-    <a class="categories categories__title" (click)="navigateToMyList('anime')">Anime</a>
+    <span class="categories categories__text">
+      <span
+        class="categories categories__title"
+        (click)="navigateToMyList('anime')"
+        >Anime</span
+      >
+      &nbsp;/&nbsp;
+      <span
+        class="categories categories__title"
+        (click)="navigateToMyList('anime')"
+        >Recomendation</span
+      >
+    </span>
     <div class="categories__container" *ngFor="let iten of anime">
-      <span (click)="navigateToDetail(iten.mal_id.toString(),'anime')" class="categories__item">{{ iten.title }}</span>
+      <span
+        (click)="navigateToDetail(iten.mal_id.toString(), 'anime')"
+        class="categories__item"
+        >{{ iten.title }}</span
+      >
       <img
         src="../../../assets/icon-done.svg"
         alt="done"
@@ -12,9 +32,25 @@
     </div>
   </div>
   <div class="categories">
-    <a class="categories categories__title" (click)="navigateToMyList('serie')">Serie</a>
+    <span class="categories categories__text">
+      <span
+        class="categories categories__title"
+        (click)="navigateToMyList('serie')"
+        >Serie</span
+      >
+      &nbsp;/&nbsp;
+      <span
+        class="categories categories__title"
+        (click)="navigateToMyList('serie')"
+        >Recomendation</span
+      >
+    </span>
     <div class="categories__container" *ngFor="let iten of serie">
-      <span (click)="navigateToDetail(iten.id.toString(),'serie')" class="categories__item">{{ iten.name }}</span>
+      <span
+        (click)="navigateToDetail(iten.id.toString(), 'serie')"
+        class="categories__item"
+        >{{ iten.name }}</span
+      >
       <img
         src="../../../assets/icon-done.svg"
         alt="done"
@@ -23,9 +59,25 @@
     </div>
   </div>
   <div class="categories">
-    <a class="categories categories__title" (click)="navigateToMyList('book')">Book</a>
+    <span class="categories categories__text">
+      <span
+        class="categories categories__title"
+        (click)="navigateToMyList('book')"
+        >Book</span
+      >
+      &nbsp;/&nbsp;
+      <span
+        class="categories categories__title"
+        (click)="navigateToMyList('book')"
+        >Recomendation</span
+      >
+    </span>
     <div class="categories__container" *ngFor="let iten of book">
-      <span (click)="navigateToDetail(iten.id,'book')" class="categories__item">{{ iten.volumeInfo.title }}</span>
+      <span
+        (click)="navigateToDetail(iten.id, 'book')"
+        class="categories__item"
+        >{{ iten.volumeInfo.title }}</span
+      >
       <img
         src="../../../assets/icon-done.svg"
         alt="done"
