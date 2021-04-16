@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { UserInterface } from 'src/app/data/interfaces';
-import { NotificationService } from 'src/app/services/notification/notification.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -12,46 +11,42 @@ import { UserService } from 'src/app/services/user/user.service';
 export class FriendsComponent implements OnInit {
   isActiveAdd = false;
   isActiveRemove = false;
-  friends : UserInterface[] = []
-  id = new FormControl("")
+  friends: UserInterface[] = [];
+  id = new FormControl('');
 
-  constructor(
-    public userService: UserService,
-    public notificationService : NotificationService
-  ) {
-  }
+  constructor(public userService: UserService) {}
 
   ngOnInit() {
-    this.userService.getFriend().then((value)=>{
-      this.friends = value
-    })
+    this.userService.getFriend().then((value) => {
+      this.friends = value;
+    });
   }
 
   showAddFriends() {
-    if(this.isActiveAdd){
-      this.id.setValue("")
+    if (this.isActiveAdd) {
+      this.id.setValue('');
     }
     this.isActiveAdd = !this.isActiveAdd;
   }
 
-  sendFriendRquest(){
-    this.userService.sendFriendRequest(this.id.value).then((value)=>{
-      console.log(value)
-      if(value){
+  sendFriendRquest() {
+    this.userService.sendFriendRequest(this.id.value).then((value) => {
+      console.log(value);
+      if (value) {
         // ok
       }
-    })
+    });
   }
 
-  removeFriend(){
-    this.userService.removeFriend(this.id.value).then((value)=>{
-      console.log(value)
-    })
+  removeFriend() {
+    this.userService.removeFriend(this.id.value).then((value) => {
+      console.log(value);
+    });
   }
 
   showRemoveFriends() {
-    if(this.isActiveRemove){
-      this.id.setValue("")
+    if (this.isActiveRemove) {
+      this.id.setValue('');
     }
     this.isActiveRemove = !this.isActiveRemove;
   }
