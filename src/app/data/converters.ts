@@ -1,5 +1,5 @@
 import { DocumentReference, QueryDocumentSnapshot, SnapshotOptions } from "@angular/fire/firestore";
-import { UserInterface } from "./interfaces";
+import { content, UserInterface } from "./interfaces";
 
 export interface Notification {
     message: string,
@@ -48,5 +48,16 @@ export const notificationConverter = {
     },
     fromFirestore: function (snapshot: QueryDocumentSnapshot<any>, options: SnapshotOptions) {
         return snapshot.data(options) as Notification
+    }
+}
+
+export const contentConverter = {
+    toFirestore: function (content: content) {
+        return {
+            ...content
+        }
+    },
+    fromFirestore: function (snapshot: QueryDocumentSnapshot<any>, options: SnapshotOptions) {
+        return snapshot.data(options) as content
     }
 }

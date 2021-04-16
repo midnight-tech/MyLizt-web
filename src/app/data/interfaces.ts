@@ -1,4 +1,4 @@
-import { CollectionReference, DocumentData, } from '@angular/fire/firestore'
+import { CollectionReference, DocumentData, DocumentReference, } from '@angular/fire/firestore'
 
 export interface CarrousselEntry {
   title: string
@@ -207,7 +207,7 @@ export type CompleteBook = {
     "language": string,
     "infoLink": string,
     "canonicalVolumeLink": string,
-    "image" : string
+    "image": string
   }
 }
 
@@ -326,12 +326,7 @@ export interface UserInterface {
   updatedAt?: Date,
   myList: firebase.default.firestore.DocumentReference,
   friends: CollectionReference,
-  notifications: notification[]
-}
-
-export interface notification {
-  type: string,
-  message: string
+  notifications: CollectionReference
 }
 
 export interface listInterface {
@@ -343,23 +338,16 @@ export interface listInterface {
 
 }
 
-export interface contentAnime {
-  epStoped: number
-}
-
-export interface contentBook {
-  season: number, epStoped: number
-}
-
-export interface contentSerie {
-  pageStoped: number
-}
-
-export interface content<T> {
-  "contentId": string | number, // id da api
-  "contentType": search,
-  "myrating"?: number,
-  "createdAt"?: Date, // timestamp
-  "updatedAt"?: Date,
-  "watched": boolean
+export interface content {
+  contentId: string | number, // id da api
+  contentType: search,
+  myrating?: number,
+  createdAt?: Date, // timestamp
+  updatedAt?: Date,
+  watched: boolean,
+  pageStoped?: number,
+  season?: number, 
+  epStoped?: number
+  recommended: DocumentReference<UserInterface> | null,
+  ref? : DocumentReference
 }

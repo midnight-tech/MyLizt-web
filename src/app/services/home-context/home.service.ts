@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { DocumentData, DocumentSnapshot, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';
 import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
-import { CompleteAnime, CompleteBook, CompleteSerie, content, contentAnime, contentBook, contentSerie, search } from 'src/app/data/interfaces';
+import { CompleteAnime, CompleteBook, CompleteSerie, content, search } from 'src/app/data/interfaces';
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { AnimeService } from '../anime/anime.service';
 import { BookService } from '../book/book.service';
@@ -136,11 +136,11 @@ export class HomeContextService {
   // animeAuxPage?: { anime: AnimeCatalogo; content: content<contentAnime>; }[][]
   animeAuxPage?: QueryDocumentSnapshot<DocumentData>[][] = []
 
-  myListAnimePage: { anime: AnimeCatalogo; content: content<contentAnime>; }[] = []
-  serieAuxPage?: { serie: SerieCatalogo; content: content<contentSerie>; }[][]
-  myListSeriePage: { serie: SerieCatalogo; content: content<contentSerie>; }[] = []
-  bookAuxPage?: { book: BookCatalogo; content: content<contentBook>; }[][]
-  myListBookPage: { book: BookCatalogo; content: content<contentBook>; }[] = []
+  myListAnimePage: { anime: AnimeCatalogo; content: content; }[] = []
+  serieAuxPage?: { serie: SerieCatalogo; content: content; }[][]
+  myListSeriePage: { serie: SerieCatalogo; content: content; }[] = []
+  bookAuxPage?: { book: BookCatalogo; content: content; }[][]
+  myListBookPage: { book: BookCatalogo; content: content; }[] = []
 
   cleanContentMyList() {
     this.myListAnimePage = []
@@ -160,7 +160,7 @@ export class HomeContextService {
         }
         this.myListAnimePage = []
         this.animeAuxPage[page -1].map(async (value,index)=>{
-          const content = value.data() as content<contentAnime>
+          const content = value.data() as content
           const animeRaw = await this.animeService.getAnimeComplete(content.contentId as number,index)
           const anime = new AnimeCatalogo(undefined,undefined,animeRaw)
           this.myListAnimePage.push({anime, content})
@@ -172,7 +172,7 @@ export class HomeContextService {
       if (page <= this.animeAuxPage.length) {
         this.myListAnimePage = []
         this.animeAuxPage[page -1].map(async (value,index)=>{
-          const content = value.data() as content<contentAnime>
+          const content = value.data() as content
           const animeRaw = await this.animeService.getAnimeComplete(content.contentId as number,index)
           const anime = new AnimeCatalogo(undefined,undefined,animeRaw)
           this.myListAnimePage.push({anime, content})
@@ -193,7 +193,7 @@ export class HomeContextService {
         // }
         this.myListAnimePage = []
         this.animeAuxPage[page -1].map(async (value,index)=>{
-          const content = value.data() as content<contentAnime>
+          const content = value.data() as content
           const animeRaw = await this.animeService.getAnimeComplete(content.contentId as number,index)
           const anime = new AnimeCatalogo(undefined,undefined,animeRaw)
           this.myListAnimePage.push({anime, content})

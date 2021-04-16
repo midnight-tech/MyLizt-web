@@ -110,6 +110,7 @@ export class CardComponent implements OnInit {
   }
 
   disableReceiveRecommendation(value: boolean) {
+    console.log(value)
     this.isActiveRecommend = value;
   }
 }

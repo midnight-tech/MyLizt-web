@@ -4,62 +4,15 @@
   <div class="flex-container">
     <h1 class="flex-container__title">Recommend to...</h1>
 
-    <div class="recommend">
-      <div class="recommend__user">
-        <span class="recommend__user__name">Adenilson</span>
-        <span class="recommend__user__id">#asdf564a</span>
+    <div *ngFor="let friend of friends">
+      <div class="recommend">
+        <div class="recommend__user">
+          <span class="recommend__user__name">{{friend.username}}</span>
+          <span class="recommend__user__id">#{{friend.applicationUserId}}</span>
+        </div>
+
+        <a class="recommend__button recommend__button--1" (click)="recommend(friend.applicationUserId)">Recommend</a>
       </div>
-
-      <a class="recommend__button recommend__button--1">Recommend</a>
-    </div>
-
-    <div class="recommend">
-      <div class="recommend__user">
-        <span class="recommend__user__name">Adenilson</span>
-        <span class="recommend__user__id">#asdf564a</span>
-      </div>
-
-      <a class="recommend__button recommend__button--1">Recommend</a>
-    </div>
-    <div class="recommend">
-      <div class="recommend__user">
-        <span class="recommend__user__name">Adenilson</span>
-        <span class="recommend__user__id">#asdf564a</span>
-      </div>
-
-      <a class="recommend__button recommend__button--2">Undo</a>
-    </div>
-    <div class="recommend">
-      <div class="recommend__user">
-        <span class="recommend__user__name">Adenilson</span>
-        <span class="recommend__user__id">#asdf564a</span>
-      </div>
-
-      <a class="recommend__button recommend__button--1">Recommend</a>
-    </div>
-    <div class="recommend">
-      <div class="recommend__user">
-        <span class="recommend__user__name">Adenilson</span>
-        <span class="recommend__user__id">#asdf564a</span>
-      </div>
-
-      <a class="recommend__button recommend__button--2">Undo</a>
-    </div>
-    <div class="recommend">
-      <div class="recommend__user">
-        <span class="recommend__user__name">Adenilson</span>
-        <span class="recommend__user__id">#asdf564a</span>
-      </div>
-
-      <a class="recommend__button recommend__button--1">Recommend</a>
-    </div>
-    <div class="recommend">
-      <div class="recommend__user">
-        <span class="recommend__user__name">Adenilson</span>
-        <span class="recommend__user__id">#asdf564a</span>
-      </div>
-
-      <a class="recommend__button recommend__button--2">Undo</a>
     </div>
   </div>
 </div>
