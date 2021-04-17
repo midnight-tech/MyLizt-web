@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { search } from 'src/app/data/interfaces';
 import { HomeContextService } from 'src/app/services/home-context/home.service';
 
 @Component({
@@ -21,7 +22,7 @@ export class FriendListComponent implements OnInit {
       this.type = value.type
       this.friendId = value.friendId
       homeContext.cleanContentMyList()
-      this.homeContext.changePage(1, 'friendList', this.type.toUpperCase(),this.friendId)
+      this.homeContext.changePage(1, 'friendList', this.type.toUpperCase() as search,this.friendId)
     })
   }
 

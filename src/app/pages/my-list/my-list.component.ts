@@ -20,13 +20,7 @@ export class MyListComponent implements OnInit {
     actRoute.params.subscribe((value) => {
       this.type = value.type
       homeContext.cleanContentMyList()
-      if (value.type == 'anime') {
-        this.homeContext.changePage(1,'myContent',value.type)
-      } else if (value.type == 'serie') {
-        this.homeContext.changePage(1,'myContent',value.type)
-      } else {
-        this.homeContext.changePage(1,'myContent',value.type)
-      }
+      this.homeContext.changePage(1, 'myContent', value.type)
     })
   }
 

@@ -40,6 +40,7 @@ import { UserService } from './services/user/user.service';
 import { RecommendationComponent } from './components/recommendation/recommendation.component';
 import { NotificationService } from './services/notification/notification.service';
 import { FriendListComponent } from './pages/friend-list/friend-list.component';
+import { MyRecommendationsComponent } from './pages/my-recommendations/my-recommendations.component';
 
 const routes: Routes = [
   { path: 'sandbox', component: SandboxPageComponent, pathMatch: 'full' },
@@ -101,6 +102,10 @@ const routes: Routes = [
       {
         path : 'friend-list/:friendId/:type',
         component: FriendListComponent
+      },
+      {
+        path : 'recommendations/:type',
+        component: MyRecommendationsComponent
       }
     ],
   },
@@ -133,7 +138,8 @@ const routes: Routes = [
     CatalogoComponent,
     FriendsComponent,
     RecommendationComponent,
-    FriendListComponent
+    FriendListComponent,
+    MyRecommendationsComponent,
   ],
   imports: [
     BrowserModule,

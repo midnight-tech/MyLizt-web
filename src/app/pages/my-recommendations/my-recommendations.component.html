@@ -1,0 +1,31 @@
+
+<div class="container-grid">
+  <div class="title">
+    <h1 *ngIf="type == 'anime'" class="title__text">My Anime</h1>
+    <h1 *ngIf="type == 'serie'" class="title__text">My Serie</h1>
+    <h1 *ngIf="type == 'book'" class="title__text">My Book</h1>
+  </div>
+
+  <div class="pagination pagination--top">
+    <app-pagination [atualPage]="homeContext.page" [totalPage]="homeContext.totalPage" pageCalled="myRec" [type]="type"></app-pagination>
+  </div>
+
+  <div class="list">
+    <div class="list__card" *ngFor="let content of homeContext.myRecListAnimePage">
+      <!-- {{ content.title }} -->
+      <app-card [anime]="content.anime" [lookMyList]="false"></app-card>
+    </div>
+    <div class="list__card" *ngFor="let content of homeContext.myRecListSeriePage">
+      <!-- {{ content.volumeInfo.title }} -->
+      <app-card [serie]="content.serie" [lookMyList]="false"></app-card>
+    </div>
+    <div class="list__card" *ngFor="let content of homeContext.myRecListBookPage">
+      <!-- {{ content.name }} -->
+      <app-card [book]="content.book" [lookMyList]="false"></app-card>
+    </div>
+  </div>
+
+  <div class="pagination pagination--bottom">
+    <app-pagination [atualPage]="homeContext.page" [totalPage]="homeContext.totalPage" pageCalled="myRec" [type]="type"></app-pagination>
+  </div>
+</div>

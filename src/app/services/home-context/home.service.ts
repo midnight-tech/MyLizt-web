@@ -51,12 +51,11 @@ export class HomeContextService {
     this.lastPageSerie = null
   }
 
-  changePage(page: number, pageCalled: 'search' | 'myContent' | 'friend' | 'catalogo' | 'friendList' = 'search', type?: string, friendId?: string) {
+  changePage(page: number, pageCalled: 'search' | 'myContent' | 'friend' | 'catalogo' | 'friendList' | 'myRec' = 'search', type?: search, friendId?: string) {
 
     switch (pageCalled) {
       case 'search':
         if (page != this.page && page > 0 && page <= this.totalPage) {
-          console.log(this)
           this.pageSearch(this.query, page, this.searchType!!, true)
         }
         return
@@ -83,7 +82,17 @@ export class HomeContextService {
           throw "Query sem type"
         }
         if (page > 0 && (page <= this.totalPage || this.totalPage == 0)) {
-          this.friendListPage(page, type.toLowerCase(), friendId).then(()=>{
+          this.friendListPage(page, type.toLowerCase(), friendId).then(() => {
+            this.page = page
+          })
+        }
+        return
+      case 'myRec':
+        if (!type) {
+          throw "Query sem type"
+        }
+        if (page > 0 && (page <= this.totalPage || this.totalPage == 0)) {
+          this.MyRecListPage(page, type).then(() => {
             this.page = page
           })
         }
@@ -349,9 +358,7 @@ export class HomeContextService {
 
   async friendListPage(page: number, type: string, friendId: string) {
     this.cleanContentFriendList()
-    console.log(page, this.friendAnimeAuxPage, '# 352')
     if (type == 'anime') {
-      console.log(this.friendAnimeAuxPage)
       if (!this.friendAnimeAuxPage) {
         this.friendAnimeAuxPage = []
         const animeContent = await this.listService.getFriendList(friendId, type as search)
@@ -362,7 +369,6 @@ export class HomeContextService {
           this.friendAnimeAuxPage.push(animeContent.slice(i, i + 12));
         }
         this.friendListAnimePage = []
-        console.log(page)
         this.friendAnimeAuxPage[page - 1].map(async (value, index) => {
           const animeRaw = await this.animeService.getAnimeComplete(value.contentId as number, index)
           const anime = new AnimeCatalogo(undefined, undefined, animeRaw)
@@ -430,7 +436,7 @@ export class HomeContextService {
         const newWave = await this.listService.getFriendList(
           friendId,
           type as search,
-          this.friendSerieAuxPage[this.friendSerieAuxPage.length - 1][this.friendSerieAuxPage[this.friendSerieAuxPage.length - 1].length -1]
+          this.friendSerieAuxPage[this.friendSerieAuxPage.length - 1][this.friendSerieAuxPage[this.friendSerieAuxPage.length - 1].length - 1]
         )
         if (newWave == false) {
           return false
@@ -453,7 +459,6 @@ export class HomeContextService {
         if (firstWave == false) {
           return false
         }
-        let aux: content[][] = []
         for (let i = 0, j = firstWave.length; i < j; i += 12) {
           this.friendBookAuxPage.push(firstWave.slice(i, i + 12));
         }
@@ -478,16 +483,192 @@ export class HomeContextService {
         if (newWave == false) {
           return false
         }
-        let aux: content[][] = []
         for (let i = 0, j = newWave.length; i < j; i += 12) {
-          aux.push(newWave.slice(i, i + 12));
+          this.friendBookAuxPage.push(newWave.slice(i, i + 12));
         }
-        aux[page - 1].map(async (value, index) => {
+        this.friendBookAuxPage[page - 1].map(async (value, index) => {
           const bookComplete = await this.bookService.getBookComplete(value.contentId.toString())
           const book = new BookCatalogo(undefined, undefined, bookComplete)
           this.friendListBookPage.push({ book, content: value })
         })
         this.totalPage = this.friendBookAuxPage.length
+        return
+      }
+    }
+  }
+
+  // my recommendation pagination
+
+  myRecAnimeAuxPage?: content[][]
+
+  myRecListAnimePage: { anime: AnimeCatalogo; content: content; }[] = []
+  myRecSerieAuxPage?: content[][]
+  myRecListSeriePage: { serie: SerieCatalogo; content: content; }[] = []
+  myRecBookAuxPage?: content[][]
+  myRecListBookPage: { book: BookCatalogo; content: content; }[] = []
+
+  cleanContentMyRecList() {
+    this.myRecListAnimePage = []
+    this.myRecListSeriePage = []
+    this.myRecListBookPage = []
+  }
+
+  async MyRecListPage(page: number, type: search) {
+    this.cleanContentMyRecList()
+    if (type == 'ANIME') {
+      if (!this.myRecAnimeAuxPage) {
+        this.myRecAnimeAuxPage = []
+        const animeContent = await this.listService.getMyRecommendatation(type as search)
+        if (animeContent == false) {
+          return false
+        }
+        for (let i = 0, j = animeContent.length; i < j; i += 12) {
+          this.myRecAnimeAuxPage.push(animeContent.slice(i, i + 12));
+        }
+        this.myRecAnimeAuxPage[page - 1].map(async (value, index) => {
+          const animeRaw = await this.animeService.getAnimeComplete(value.contentId as number, index)
+          const anime = new AnimeCatalogo(undefined, undefined, animeRaw)
+          this.myRecListAnimePage.push({ anime, content: value })
+        })
+        this.totalPage = this.myRecAnimeAuxPage.length
+        return
+      }
+      if (page <= this.myRecAnimeAuxPage.length) {
+        this.myRecListAnimePage = []
+        if(this.myRecAnimeAuxPage.length == 0){
+          return false
+        }
+        this.myRecAnimeAuxPage[page - 1].map(async (value, index) => {
+          const animeRaw = await this.animeService.getAnimeComplete(value.contentId as number, index)
+          const anime = new AnimeCatalogo(undefined, undefined, animeRaw)
+          this.myRecListAnimePage.push({ anime, content: value })
+        })
+        return
+      } else {
+        if(this.myRecAnimeAuxPage.length == 0){
+          this.totalPage = 0
+          return false
+        }
+        const animeQuery = await this.listService.getMyRecommendatation(
+          type as search,
+          this.myRecAnimeAuxPage[this.myRecAnimeAuxPage.length - 1][this.myRecAnimeAuxPage[this.myRecAnimeAuxPage.length - 1].length -1]
+        )
+        if (animeQuery == false) {
+          return false
+        }
+        for (let i = 0, j = animeQuery.length; i < j; i += 12) {
+          this.myRecAnimeAuxPage.push(animeQuery.slice(i, i + 12));
+        }
+        this.myRecListAnimePage = []
+        this.myRecAnimeAuxPage[page - 1].map(async (value, index) => {
+          const animeRaw = await this.animeService.getAnimeComplete(value.contentId as number, index)
+          const anime = new AnimeCatalogo(undefined, undefined, animeRaw)
+          this.myRecListAnimePage.push({ anime, content: value })
+        })
+        this.totalPage = this.myRecAnimeAuxPage.length
+        return
+      }
+    } else if (type == 'SERIE') {
+      if (!this.myRecSerieAuxPage) {
+        this.myRecSerieAuxPage = []
+        const firstWave = await this.listService.getMyRecommendatation(type as search)
+        if (firstWave == false) {
+          return false
+        }
+        for (let i = 0, j = firstWave.length; i < j; i += 12) {
+          this.myRecSerieAuxPage.push(firstWave.slice(i, i + 12));
+        }
+        this.myRecSerieAuxPage[page - 1].map(async (value, index) => {
+          const serieComplete = await this.serieService.getSerieComplete(value.contentId as number)
+          const serie = new SerieCatalogo(undefined, undefined, serieComplete)
+          this.myRecListSeriePage.push({ serie, content: value })
+        })
+        this.totalPage = this.myRecSerieAuxPage.length
+        return
+      }
+      if (page <= this.myRecSerieAuxPage.length) {
+        this.myRecListSeriePage = []
+        if(this.myRecSerieAuxPage.length == 0){
+          return false
+        }
+        this.myRecSerieAuxPage[page - 1].map(async (value, index) => {
+          const serieRaw = await this.serieService.getSerieComplete(value.contentId as number)
+          const serie = new SerieCatalogo(undefined, undefined, serieRaw)
+          this.myRecListSeriePage.push({ serie, content: value })
+        })
+        return
+      } else {
+        if(this.myRecSerieAuxPage.length == 0){
+          this.totalPage = 0
+          return false
+        }
+        const newWave = await this.listService.getMyRecommendatation(
+          type as search,
+          this.myRecSerieAuxPage[this.myRecSerieAuxPage.length - 1][this.myRecSerieAuxPage[this.myRecSerieAuxPage.length - 1].length - 1]
+        )
+        if (newWave == false) {
+          return false
+        }
+        for (let i = 0, j = newWave.length; i < j; i += 12) {
+          this.myRecSerieAuxPage.push(newWave.slice(i, i + 12));
+        }
+        this.myRecSerieAuxPage[page - 1].map(async (value, index) => {
+          const serieComplete = await this.serieService.getSerieComplete(value.contentId as number)
+          const serie = new SerieCatalogo(undefined, undefined, serieComplete)
+          this.myRecListSeriePage.push({ serie, content: value })
+        })
+        this.totalPage = this.myRecSerieAuxPage.length
+        return
+      }
+    } else {
+      if (!this.myRecBookAuxPage) {
+        this.myRecBookAuxPage = []
+        const firstWave = await this.listService.getMyRecommendatation(type as search)
+        if (firstWave == false) {
+          return false
+        }
+        for (let i = 0, j = firstWave.length; i < j; i += 12) {
+          this.myRecBookAuxPage.push(firstWave.slice(i, i + 12));
+        }
+        this.myRecBookAuxPage[page - 1].map(async (value, index) => {
+          const bookComplete = await this.bookService.getBookComplete(value.contentId.toString())
+          const book = new BookCatalogo(undefined, undefined, bookComplete)
+          this.myRecListBookPage.push({ book, content: value })
+        })
+        this.totalPage = this.myRecBookAuxPage.length
+        return
+      }
+      if (page <= this.myRecBookAuxPage.length) {
+        this.myRecListBookPage = []
+        if(this.myRecBookAuxPage.length == 0){
+          return false
+        }
+        this.myRecBookAuxPage[page - 1].map(async (value, index) => {
+          const bookRaw = await this.bookService.getBookComplete(value.contentId.toString())
+          const book = new BookCatalogo(undefined, undefined, bookRaw)
+          this.myRecListBookPage.push({ book, content: value })
+        })
+        return
+      } else {
+        if(this.myRecBookAuxPage.length == 0){
+          return false
+          this.totalPage = 0
+        }
+        const newWave = await this.listService.getMyRecommendatation(
+          type as search,
+          this.myRecBookAuxPage[this.myRecBookAuxPage.length - 1][11])
+        if (newWave == false) {
+          return false
+        }
+        for (let i = 0, j = newWave.length; i < j; i += 12) {
+          this.myRecBookAuxPage.push(newWave.slice(i, i + 12));
+        }
+        this.myRecBookAuxPage[page - 1].map(async (value, index) => {
+          const bookComplete = await this.bookService.getBookComplete(value.contentId.toString())
+          const book = new BookCatalogo(undefined, undefined, bookComplete)
+          this.myRecListBookPage.push({ book, content: value })
+        })
+        this.totalPage = this.myRecBookAuxPage.length
         return
       }
     }

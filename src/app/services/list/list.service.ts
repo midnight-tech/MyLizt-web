@@ -136,8 +136,6 @@ export class ListService {
 
     async recomendContent(contentId: string, friendId: string, type: search) {
         const myUser = this.firestore.firestore.collection('User').doc(this.auth.user?.uid).withConverter(UserConverter)
-
-
         const friend = await this.firestore.firestore.collection('User')
             .where('applicationUserId', '==', friendId)
             .withConverter(UserConverter)
@@ -183,6 +181,37 @@ export class ListService {
             content.ref = value.ref
             return content
         })
+    }
+
+    async getMyRecommendatation(type : search, lastContent? : DocumentData){
+        let content : QuerySnapshot<content>
+        if(!this.auth.userFirestore){
+            return false
+        }
+        if(lastContent){
+            content = await this.auth.userFirestore.myList.collection(type.toLowerCase()).where('recommended', '!=', null).startAfter(lastContent).limit(60).withConverter(contentConverter).get()
+        } else {
+            content = await this.auth.userFirestore.myList.collection(type.toLowerCase()).where('recommended', '!=', null).limit(60).withConverter(contentConverter).get()
+        }
+
+        if(content.empty){
+            return false
+        }
+
+        return content.docs.map((value)=>{
+            const cont = value.data()
+            cont.ref = value.ref
+            return cont
+        }).sort((a,b)=>{
+            if(a == b){
+                return 0
+            }
+            if (a.watched){
+                return 1
+            }
+            return -1
+        })
+
     }
 
 }

@@ -10,7 +10,7 @@ export class PaginationComponent implements OnInit, OnChanges {
 
   @Input() atualPage: number = 1
   @Input() totalPage: number = 8
-  @Input() pageCalled? :'search' | 'myContent' | 'friend' | 'catalogo' | 'friendList'
+  @Input() pageCalled? :'search' | 'myContent' | 'friend' | 'catalogo' | 'friendList' | 'myRec'
   @Input() type : string = ""
   @Input() friendId : string = ""
   pages: number[] = []
