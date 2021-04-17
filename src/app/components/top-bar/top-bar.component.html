@@ -43,11 +43,9 @@
           />
 
           <button type="button" class="search__button" (click)="totalSearch()">
-            <img
-              src="../../../assets/icon-search.svg"
-              alt="icon-search"
-              class="search__icon"
-            />
+            <svg class="search__icon">
+              <use href="assets/symbol-defs.svg#icon-search"></use>
+            </svg>
           </button>
         </div>
         <!-- Coteudo Dropdown Search-->
@@ -234,13 +232,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <button class="search__button-search">
-      <svg class="search__icon">
-
-        <use xlink:href="../../../assets/icon-search.svg"></use>
-      </svg>
-    </button> -->
   </form>
 
   <div class="account">
@@ -249,11 +240,10 @@
       class="dropdown is-right"
     >
       <div class="dropdown-trigger" (click)="dropdownNotification()">
-        <img
-          src="../../../assets/icon-notification.svg"
-          alt="icon-notification"
-          class="account__icon account__icon--notification"
-        />
+        <svg class="account__icon account__icon--notification">
+          <use href="assets/symbol-defs.svg#icon-notifications_on"></use>
+        </svg>
+
         <p class="account__notification__count">
           {{ notificationService.notifications.length }}
         </p>
@@ -289,22 +279,23 @@
               >
 
               <div class="account__notification__buttons">
-                <img
+                <svg
+                  class="account__notification__buttons--accept"
                   (click)="
                     userService.acceptFriendRequest(
                       notification.data.idEmmiter!
                     )
                   "
-                  src="../../../assets/icon-logout.svg"
-                  alt="icon-logout"
-                  class="account__notification__buttons--accept"
-                />
-                <img
-                  (click)="notificationService.deleteNotification(notification)"
-                  src="../../../assets/icon-logout.svg"
-                  alt="icon-logout"
+                >
+                  <use href="assets/symbol-defs.svg#icon-check"></use>
+                </svg>
+
+                <svg
                   class="account__notification__buttons--delete"
-                />
+                  (click)="notificationService.deleteNotification(notification)"
+                >
+                  <use href="assets/symbol-defs.svg#icon-clear"></use>
+                </svg>
               </div>
             </div>
 
@@ -354,19 +345,16 @@
             class="account__content dropdown-item"
             (click)="navigateToFriends()"
           >
-            <img
-              src="../../../assets/icon-friends.svg"
-              alt="icon-friends"
-              class="account__icon"
-            />
+            <svg class="account__icon">
+              <use href="assets/symbol-defs.svg#icon-group"></use>
+            </svg>
             <a class="account__item">Friends</a>
           </div>
+
           <div class="account__content dropdown-item" (click)="logout()">
-            <img
-              src="../../../assets/icon-logout.svg"
-              alt="icon-logout"
-              class="account__icon"
-            />
+            <svg class="account__icon">
+              <use href="assets/symbol-defs.svg#icon-logout"></use>
+            </svg>
             <a class="account__item">Logout</a>
           </div>
         </div>

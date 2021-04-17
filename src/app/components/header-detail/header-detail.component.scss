@@ -81,6 +81,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem;
+  color: $white;
 
   &__flex {
     display: flex;
@@ -93,25 +94,29 @@
       flex-direction: row;
       align-items: center;
       justify-content: center;
+      color: $white;
+      fill: $white;
       cursor: pointer;
+
+      &:hover {
+        color: $primary1;
+        fill: $primary1;
+      }
     }
   }
 
   &__title {
     font-size: 2rem;
-    color: $white;
     text-transform: uppercase;
 
     &--serie {
       font-size: 1.6rem;
-      color: $white;
       text-transform: uppercase;
     }
   }
 
   &__info {
     font-size: 2rem;
-    color: $white;
     text-transform: uppercase;
     font-weight: 700;
   }
@@ -119,6 +124,14 @@
   &__icon {
     height: 2.5rem;
     width: 2.5rem;
+
+    &--right {
+      margin-left: 1rem;
+    }
+
+    &--left {
+      margin-right: 1rem;
+    }
   }
 }
 
@@ -256,7 +269,12 @@
     height: 3rem;
     width: 3rem;
     margin: 0 0.5rem;
+    fill: $white;
     cursor: pointer;
+
+    &:hover {
+      fill: $primary1;
+    }
   }
 }
 

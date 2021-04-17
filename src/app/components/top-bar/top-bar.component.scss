@@ -160,6 +160,7 @@
 
   &__input {
     font-size: 1.6rem;
+    font-family: inherit;
     color: inherit;
     background-color: transparent;
     border: none;
@@ -223,13 +224,14 @@
     width: 3rem;
     border-radius: 100rem;
     cursor: pointer;
+    fill: $primary1;
 
     &:hover {
-      filter: brightness(1.2);
+      transform: translateY(-2px);
     }
 
     &:active {
-      transform: translateY(2px);
+      transform: translateY(0px);
     }
   }
 }
@@ -290,11 +292,12 @@ a.dropdown-item {
     border-radius: $the-border-radius;
     cursor: pointer;
     padding: 1.5rem 2rem;
+  }
 
-    &:hover {
-      background-color: rgba($black4, 0.4);
-      color: $white;
-    }
+  &__content:hover,
+  &__content:hover &__icon {
+    color: $primary1;
+    fill: $primary1;
   }
 
   &__notification {
@@ -302,15 +305,17 @@ a.dropdown-item {
 
     &__count {
       position: absolute;
-      top: 0;
-      right: 0;
-      height: 1.5rem;
-      width: 1.5rem;
+      top: -3px;
+      right: -3px;
+      height: 2rem;
+      width: 2rem;
       color: $black3;
       background-color: $primary1;
       text-align: center;
       border-radius: 100%;
       font-weight: bold;
+      font-size: 1.6rem;
+      line-height: 1.3rem;
       cursor: pointer;
     }
 
@@ -322,6 +327,7 @@ a.dropdown-item {
 
       &:hover {
         color: rgba($white, 0.6);
+        fill: rgba($white, 0.6);
       }
     }
 
@@ -348,12 +354,17 @@ a.dropdown-item {
       display: flex;
       flex-direction: row;
       font-size: 1.4rem;
+      fill: rgba($white, 0.6);
 
       &--accept {
         cursor: pointer;
         height: 2rem;
         width: 2rem;
         margin-left: 1rem;
+
+        &:hover {
+          fill: $primary1;
+        }
       }
 
       &--delete {
@@ -361,6 +372,10 @@ a.dropdown-item {
         height: 2rem;
         width: 2rem;
         margin-left: 1rem;
+
+        &:hover {
+          fill: $primary1;
+        }
       }
     }
   }
@@ -379,7 +394,7 @@ a.dropdown-item {
   }
 
   &__item {
-    letter-spacing: 0.5rem;
+    letter-spacing: 0.2rem;
   }
 
   &__icon {
@@ -387,9 +402,13 @@ a.dropdown-item {
     width: 2.5rem;
     margin-right: 1rem;
     cursor: pointer;
+    fill: $white;
 
     &--notification {
+      height: 3rem;
+      width: 3rem;
       margin: 0 0 0 3rem;
+      fill: $white;
     }
   }
 }

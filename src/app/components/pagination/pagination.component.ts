@@ -1,76 +1,84 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
+import { search } from 'src/app/data/interfaces';
 import { HomeContextService } from 'src/app/services/home-context/home.service';
 
 @Component({
   selector: 'app-pagination',
   templateUrl: './pagination.component.html',
-  styleUrls: ['./pagination.component.scss']
+  styleUrls: ['./pagination.component.scss'],
 })
 export class PaginationComponent implements OnInit, OnChanges {
-
-  @Input() atualPage: number = 1
-  @Input() totalPage: number = 8
-  @Input() pageCalled? :'search' | 'myContent' | 'friend' | 'catalogo' | 'friendList' | 'myRec'
-  @Input() type : string = ""
-  @Input() friendId : string = ""
-  pages: number[] = []
-  init = true
-  activated = false
+  @Input() atualPage: number = 1;
+  @Input() totalPage: number = 8;
+  @Input() pageCalled?:
+    | 'search'
+    | 'myContent'
+    | 'friend'
+    | 'catalogo'
+    | 'friendList'
+    | 'myRec';
+  @Input() type!: search;
+  @Input() friendId: string = '';
+  pages: number[] = [];
+  init = true;
+  activated = false;
 
   constructor(public homeContext: HomeContextService) {
-    if(this.pageCalled){
-      this.pageCalled = 'search'
+    if (this.pageCalled) {
+      this.pageCalled = 'search';
     }
   }
 
   initPages() {
-    let maxPage = this.homeContext.totalPage <= 8 ? this.homeContext.totalPage : 8
+    let maxPage =
+      this.homeContext.totalPage <= 8 ? this.homeContext.totalPage : 8;
     if (this.homeContext.totalPage == 0) {
-      maxPage = 8
-      this.activated = false
+      maxPage = 8;
+      this.activated = false;
     } else {
-      this.activated = true
+      this.activated = true;
     }
     for (let i = 1; i <= maxPage; i += 1) {
-      this.pages.push(i)
+      this.pages.push(i);
     }
   }
 
   changePage(page: number) {
-    let startPage = 1
-    let endPage : number
+    let startPage = 1;
+    let endPage: number;
     if (page > 2) {
-      startPage = page - 2
+      startPage = page - 2;
     }
 
     if (page + 7 > this.totalPage) {
-      endPage = this.totalPage
-      if(this.totalPage - 10 >= 1){
-        startPage = this.totalPage - 9
+      endPage = this.totalPage;
+      if (this.totalPage - 10 >= 1) {
+        startPage = this.totalPage - 9;
       } else {
-        startPage = 1
+        startPage = 1;
       }
     } else {
-      endPage = page + 7
+      endPage = page + 7;
     }
-    this.pages = []
+    this.pages = [];
     for (let i = startPage; i <= endPage; i += 1) {
-      this.pages.push(i)
+      this.pages.push(i);
     }
     // seleciona a page
-
   }
   ngOnChanges(changes: SimpleChanges) {
-    this.changePage(this.atualPage)
+    this.changePage(this.atualPage);
   }
 
   ngOnInit() {
-    this.initPages()
+    this.initPages();
   }
 
-
   // my-list page
-
-  
-
 }

@@ -82,13 +82,35 @@
     margin-bottom: 8rem;
   }
 
-  &__btn-back {
-    align-self: baseline;
-    font-size: 1.6rem;
-    text-decoration: none;
+  &__btn {
+    display: flex;
+    flex-direction: row;
+    align-self: flex-start;
     color: $white;
-    text-transform: uppercase;
     cursor: pointer;
+
+    &__text {
+      align-self: baseline;
+      font-size: 1.6rem;
+      text-decoration: none;
+      color: currentColor;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    &__icon {
+      height: 2rem;
+      width: 2rem;
+      fill: $white;
+      margin-right: 1rem;
+    }
+
+    &:hover,
+    &:hover &__icon,
+    &__icon:hover ~ & {
+      color: $primary1;
+      fill: $primary1;
+    }
   }
 }
 

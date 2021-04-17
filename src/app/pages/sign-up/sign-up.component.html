@@ -34,12 +34,20 @@
       >
       <a class="btn-register" (click)="register()">Register</a>
     </form>
+
     <section class="header">
       <img class="header__title" src="../../../assets/logo.svg" />
       <span class="header__caption">Don't forget where you left off.</span>
-      <a class="header__btn-back" [routerLink]="['/signin']">
-        &larr; Back to Login</a
-      >
+
+      <div class="header__btn">
+        <svg class="header__btn header__btn__icon">
+          <use href="assets/symbol-defs.svg#icon-keyboard_backspace"></use>
+        </svg>
+
+        <a class="header__btn header__btn__text" [routerLink]="['/signin']">
+          Back to Login</a
+        >
+      </div>
     </section>
   </div>
   <app-footer-company></app-footer-company>

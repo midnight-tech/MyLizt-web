@@ -1,8 +1,23 @@
 <div class="grid-container-header">
   <div class="backcover">
-    <img *ngIf="type == 'ANIME'" class="backcover__image" [src]="anime.image_url" alt="BackCover" />
-    <img *ngIf="type == 'SERIE'" class="backcover__image" [src]="serie.backdrop_path" alt="BackCover" />
-    <img *ngIf="type == 'BOOK'" class="backcover__image" [src]="book.volumeInfo.image" alt="BackCover" />
+    <img
+      *ngIf="type == 'ANIME'"
+      class="backcover__image"
+      [src]="anime.image_url"
+      alt="BackCover"
+    />
+    <img
+      *ngIf="type == 'SERIE'"
+      class="backcover__image"
+      [src]="serie.backdrop_path"
+      alt="BackCover"
+    />
+    <img
+      *ngIf="type == 'BOOK'"
+      class="backcover__image"
+      [src]="book.volumeInfo.image"
+      alt="BackCover"
+    />
   </div>
 
   <div class="title" *ngIf="type == 'ANIME'">
@@ -15,9 +30,24 @@
   </div>
 
   <div class="frontcover">
-    <img *ngIf="type == 'ANIME'" class="frontcover__image" [src]="anime.image_url" alt="FrontCover" />
-    <img *ngIf="type == 'SERIE'" class="frontcover__image" [src]="serie.poster_path" alt="FrontCover" />
-    <img *ngIf="type == 'BOOK'" class="frontcover__image" [src]="book.volumeInfo.image" alt="FrontCover" />
+    <img
+      *ngIf="type == 'ANIME'"
+      class="frontcover__image"
+      [src]="anime.image_url"
+      alt="FrontCover"
+    />
+    <img
+      *ngIf="type == 'SERIE'"
+      class="frontcover__image"
+      [src]="serie.poster_path"
+      alt="FrontCover"
+    />
+    <img
+      *ngIf="type == 'BOOK'"
+      class="frontcover__image"
+      [src]="book.volumeInfo.image"
+      alt="FrontCover"
+    />
   </div>
 
   <div class="cover-info" *ngIf="type == 'ANIME'">
@@ -36,9 +66,15 @@
   </div>
 
   <div class="cover-info" *ngIf="type == 'SERIE'">
-    <div [ngClass]="{ hidden: seasonAtual == 0 }" (click)="changeSeason(seasonAtual - 1)"
-      class="cover-info__flex--serie">
-      <img class="cover-info__icon" src="../../../assets/icon-search.svg" alt="Back" />
+    <div
+      [ngClass]="{ hidden: seasonAtual == 0 }"
+      (click)="changeSeason(seasonAtual - 1)"
+      class="cover-info__flex--serie"
+    >
+      <svg class="cover-info__icon cover-info__icon--left">
+        <use href="assets/symbol-defs.svg#icon-arrow_back"></use>
+      </svg>
+
       <p class="cover-info__title--serie" *ngIf="seasonAtual != 0">
         {{ serie.seasons[seasonAtual - 1].name }}
       </p>
@@ -48,12 +84,21 @@
         {{ serie.name }} ({{ serie.seasons[seasonAtual].name }} )
       </p>
     </div>
-    <div [ngClass]="{ hidden: seasonAtual == serie.seasons.length - 1 }" (click)="changeSeason(seasonAtual + 1)"
-      class="cover-info__flex--serie">
-      <p class="cover-info__title--serie" *ngIf="seasonAtual != serie.seasons.length - 1">
+    <div
+      [ngClass]="{ hidden: seasonAtual == serie.seasons.length - 1 }"
+      (click)="changeSeason(seasonAtual + 1)"
+      class="cover-info__flex--serie"
+    >
+      <p
+        class="cover-info__title--serie"
+        *ngIf="seasonAtual != serie.seasons.length - 1"
+      >
         {{ serie.seasons[seasonAtual + 1].name }}
       </p>
-      <img class="cover-info__icon" src="../../../assets/icon-search.svg" alt="Back" />
+
+      <svg class="cover-info__icon cover-info__icon--right">
+        <use href="assets/symbol-defs.svg#icon-arrow_forward"></use>
+      </svg>
     </div>
   </div>
 
@@ -93,7 +138,10 @@
   <div class="episodes" *ngIf="onMyList">
     <p class="episodes__title">Watched</p>
     <div class="episodes__flex">
-      <img class="episodes__icon" src="../../../assets/icon-search.svg" alt="Less" />
+      <svg class="episodes__icon">
+        <use href="assets/symbol-defs.svg#icon-remove"></use>
+      </svg>
+
       <p *ngIf="type == 'ANIME'" class="episodes__info">
         1 / {{ anime.episodes }}
       </p>
@@ -103,33 +151,73 @@
       <p *ngIf="type == 'BOOK'" class="episodes__info">
         1 / {{ book.volumeInfo.pageCount }}
       </p>
-      <img class="episodes__icon" src="../../../assets/icon-notification.svg" alt="More" />
+
+      <svg class="episodes__icon">
+        <use href="assets/symbol-defs.svg#icon-add"></use>
+      </svg>
     </div>
   </div>
 
   <div class="button">
-    <div class="button__flex button__flex--recommend" (click)="disableReceiveRecommendation(true)">
-      <img class="button__icon" src="../../../assets/icon-search.svg" alt="Share" />
+    <div
+      class="button__flex button__flex--recommend"
+      (click)="disableReceiveRecommendation(true)"
+    >
+      <img
+        class="button__icon"
+        src="../../../assets/icon-search.svg"
+        alt="Share"
+      />
       <a class="button__text">Recomend to...</a>
     </div>
 
-    <div *ngIf="onMyList == false" (click)="addToMyList()" class="button__flex button__flex--remove">
-      <img class="button__icon" src="../../../assets/icon-notification.svg" alt="Remove" />
+    <div
+      *ngIf="onMyList == false"
+      (click)="addToMyList()"
+      class="button__flex button__flex--remove"
+    >
+      <img
+        class="button__icon"
+        src="../../../assets/icon-notification.svg"
+        alt="Remove"
+      />
       <a class="button__text">Add to list</a>
     </div>
-    <div *ngIf="onMyList == true" (click)="deleteToMyList()" class="button__flex button__flex--remove">
-      <img class="button__icon" src="../../../assets/icon-notification.svg" alt="Remove" />
+    <div
+      *ngIf="onMyList == true"
+      (click)="deleteToMyList()"
+      class="button__flex button__flex--remove"
+    >
+      <img
+        class="button__icon"
+        src="../../../assets/icon-notification.svg"
+        alt="Remove"
+      />
       <a class="button__text">Remove</a>
     </div>
   </div>
-  <app-recommendation *ngIf="anime" type="ANIME" [contentId]="anime.mal_id.toString()" [isActiveRecommend]="isActiveRecommend"
-    (isActiveEvent)="disableReceiveRecommendation($event)">
+  <app-recommendation
+    *ngIf="anime"
+    type="ANIME"
+    [contentId]="anime.mal_id.toString()"
+    [isActiveRecommend]="isActiveRecommend"
+    (isActiveEvent)="disableReceiveRecommendation($event)"
+  >
   </app-recommendation>
-  <app-recommendation *ngIf="serie" type="SERIE" [contentId]="serie.id.toString()" [isActiveRecommend]="isActiveRecommend"
-    (isActiveEvent)="disableReceiveRecommendation($event)">
+  <app-recommendation
+    *ngIf="serie"
+    type="SERIE"
+    [contentId]="serie.id.toString()"
+    [isActiveRecommend]="isActiveRecommend"
+    (isActiveEvent)="disableReceiveRecommendation($event)"
+  >
   </app-recommendation>
-  <app-recommendation *ngIf="book" type="BOOK" [contentId]="book.id" [isActiveRecommend]="isActiveRecommend"
-    (isActiveEvent)="disableReceiveRecommendation($event)">
+  <app-recommendation
+    *ngIf="book"
+    type="BOOK"
+    [contentId]="book.id"
+    [isActiveRecommend]="isActiveRecommend"
+    (isActiveEvent)="disableReceiveRecommendation($event)"
+  >
   </app-recommendation>
-  
 </div>
