@@ -10,7 +10,7 @@ import { HomeContextService } from 'src/app/services/home-context/home.service';
 })
 export class MyRecommendationsComponent implements OnInit {
 
-  type : string = ""
+  type! : search 
 
   constructor(
     public homeContext: HomeContextService,
@@ -18,8 +18,8 @@ export class MyRecommendationsComponent implements OnInit {
 
   ) {
     actRoute.params.subscribe((value) => {
-      this.type = value.type
-      this.homeContext.changePage(1,'myRec',this.type.toUpperCase() as search)
+      this.type = value.type.toUpperCase()
+      this.homeContext.changePage(1,'myRec',this.type as search)
     })
   }
 

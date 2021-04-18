@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { search } from 'src/app/data/interfaces';
 import { HomeContextService } from 'src/app/services/home-context/home.service';
 import { ListService } from 'src/app/services/list/list.service';
 
@@ -10,7 +11,7 @@ import { ListService } from 'src/app/services/list/list.service';
 })
 export class MyListComponent implements OnInit {
 
-  type: string = ""
+  type!: search
 
   constructor(
     actRoute: ActivatedRoute,
@@ -18,9 +19,9 @@ export class MyListComponent implements OnInit {
     public homeContext: HomeContextService,
   ) {
     actRoute.params.subscribe((value) => {
-      this.type = value.type
+      this.type = value.type.toUpperCase()
       homeContext.cleanContentMyList()
-      this.homeContext.changePage(1, 'myContent', value.type)
+      this.homeContext.changePage(1, 'myContent', this.type)
     })
   }
 

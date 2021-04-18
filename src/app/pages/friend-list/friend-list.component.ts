@@ -10,7 +10,7 @@ import { HomeContextService } from 'src/app/services/home-context/home.service';
 })
 export class FriendListComponent implements OnInit {
 
-  type: string = ""
+  type!: search
   friendId: string = ""
 
   constructor(
@@ -19,10 +19,10 @@ export class FriendListComponent implements OnInit {
 
   ) {
     actRoute.params.subscribe((value) => {
-      this.type = value.type
+      this.type = value.type.toUpperCase() as search
       this.friendId = value.friendId
       homeContext.cleanContentMyList()
-      this.homeContext.changePage(1, 'friendList', this.type.toUpperCase() as search,this.friendId)
+      this.homeContext.changePage(1, 'friendList', this.type as search,this.friendId)
     })
   }
 
