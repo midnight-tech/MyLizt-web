@@ -170,8 +170,8 @@ export class HomeContextService {
     this.myListBookPage = []
   }
 
-  async myListPage(page: number, type: string) {
-    if (type == 'anime') {
+  async myListPage(page: number, type: search) {
+    if (type == 'ANIME') {
       if (!this.animeAuxPage) {
         this.animeAuxPage = []
         // const firstWave = await this.listService.getAnimeContent()
@@ -224,7 +224,7 @@ export class HomeContextService {
         this.totalPage = this.animeAuxPage.length
         return
       }
-    } else if (type == 'serie') {
+    } else if (type == 'SERIE') {
       if (!this.serieAuxPage) {
         this.serieAuxPage = []
         const firstWave = await this.listService.getAllSerieContent()
