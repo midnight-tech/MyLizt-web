@@ -42,14 +42,14 @@ export class DetailComponent implements OnInit {
         serieService.getSerieComplete(id).then((value) => {
           this.serie = value;
           listService.contentInMyList(value.id, 'SERIE').then((value) => {
-            this.inMyList = value;
+            this.inMyList = value.exists;
           });
         });
       } else {
         bookService.getBookComplete(id).then((value) => {
           this.book = value;
           listService.contentInMyList(value.id, 'BOOK').then((value) => {
-            this.inMyList = value;
+            this.inMyList = value.exists;
           });
         });
       }

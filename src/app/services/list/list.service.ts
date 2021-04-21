@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentData, QuerySnapshot } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentData, DocumentReference, QuerySnapshot } from '@angular/fire/firestore';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';
 import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
 import { contentConverter, UserConverter } from 'src/app/data/converters';
@@ -36,22 +36,13 @@ export class ListService {
         return this.myList
     }
 
-
-    async getUserList(userId: string) {
-        throw "Not Implemented"
-    }
-
     async contentInMyList(id: string | number, type: search) {
-        if (type == "ANIME") {
-            let animeQuery = await this.auth.userFirestore?.myList.collection('anime').doc(id.toString()).get()
-            return animeQuery?.exists!!
-        } else if (type == 'BOOK') {
-            let bookQuery = await this.auth.userFirestore?.myList.collection('book').doc(id.toString()).get()
-            return bookQuery?.exists!!
-        } else {
-            let serieQuery = await this.auth.userFirestore?.myList.collection('serie').doc(id.toString()).get()
-            return serieQuery?.exists!!
-        }
+        let contentQuery = await this.auth.userFirestore!.myList
+            .collection(type.toLowerCase())
+            .doc(id.toString())
+            .withConverter(contentConverter)
+            .get()
+        return contentQuery
     }
 
     async addContent(id: string | number, type: search) {
@@ -110,12 +101,11 @@ export class ListService {
         await this.auth.userFirestore?.myList.collection(type).doc(id).delete()
     }
 
-    async updateOneContent() {
-
-    }
-
-    async getMyListHomeScreen() {
-
+    async alterMyRating(documentReference: DocumentReference, value?: number) {
+        await documentReference.withConverter(contentConverter).update({
+            'myrating': value || 'N/A'
+        })
+        return await documentReference.withConverter(contentConverter).get() 
     }
 
     async getHomeContent() {
@@ -159,21 +149,21 @@ export class ListService {
         return true
     }
 
-    async getFriendList(friendId: string, type:search,lastContent?: DocumentData){
+    async getFriendList(friendId: string, type: search, lastContent?: DocumentData) {
         const friendQuery = await this.firestore.firestore.collection('User')
-        .where('applicationUserId', '==',friendId)
-        .withConverter(UserConverter)
-        .get()
-        if(friendQuery.empty){
+            .where('applicationUserId', '==', friendId)
+            .withConverter(UserConverter)
+            .get()
+        if (friendQuery.empty) {
             return false
         }
-        let content : QuerySnapshot<content>
-        if(lastContent){
+        let content: QuerySnapshot<content>
+        if (lastContent) {
             content = await friendQuery.docs[0].data().myList.collection(type.toLowerCase()).orderBy('watched').startAfter(lastContent).limit(60).withConverter(contentConverter).get()
         } else {
-            content = await  friendQuery.docs[0].data().myList.collection(type.toLowerCase()).orderBy('watched').limit(60).withConverter(contentConverter).get()
+            content = await friendQuery.docs[0].data().myList.collection(type.toLowerCase()).orderBy('watched').limit(60).withConverter(contentConverter).get()
         }
-        if(content.empty){
+        if (content.empty) {
             return false
         }
         return content.docs.map(value => {
@@ -183,30 +173,30 @@ export class ListService {
         })
     }
 
-    async getMyRecommendatation(type : search, lastContent? : DocumentData){
-        let content : QuerySnapshot<content>
-        if(!this.auth.userFirestore){
+    async getMyRecommendatation(type: search, lastContent?: DocumentData) {
+        let content: QuerySnapshot<content>
+        if (!this.auth.userFirestore) {
             return false
         }
-        if(lastContent){
+        if (lastContent) {
             content = await this.auth.userFirestore.myList.collection(type.toLowerCase()).where('recommended', '!=', null).startAfter(lastContent).limit(60).withConverter(contentConverter).get()
         } else {
             content = await this.auth.userFirestore.myList.collection(type.toLowerCase()).where('recommended', '!=', null).limit(60).withConverter(contentConverter).get()
         }
 
-        if(content.empty){
+        if (content.empty) {
             return false
         }
 
-        return content.docs.map((value)=>{
+        return content.docs.map((value) => {
             const cont = value.data()
             cont.ref = value.ref
             return cont
-        }).sort((a,b)=>{
-            if(a == b){
+        }).sort((a, b) => {
+            if (a == b) {
                 return 0
             }
-            if (a.watched){
+            if (a.watched) {
                 return 1
             }
             return -1

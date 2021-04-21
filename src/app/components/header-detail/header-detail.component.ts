@@ -1,9 +1,11 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 import {
   CompleteAnime,
   CompleteBook,
   CompleteSerie,
+  content,
   search,
 } from 'src/app/data/interfaces';
 import { ListService } from 'src/app/services/list/list.service';
@@ -19,6 +21,9 @@ export class HeaderDetailComponent implements OnInit {
   @Input() book!: CompleteBook;
   @Input() type!: search;
   @Input() watched!: boolean;
+  rateInputControl = new FormControl("")
+  mycontent?: content
+  rateInput = false
 
   seasonAtual = 0;
 
@@ -34,6 +39,28 @@ export class HeaderDetailComponent implements OnInit {
     });
   }
 
+  changeRateInput() {
+    this.rateInput = !this.rateInput
+  }
+
+  setRate(){
+    this.changeRateInput()
+    if(this.rateInputControl.value.length == 0){
+      // deletar a nota eu acho
+      return
+    }
+    let value = Number.parseFloat(this.rateInputControl.value)
+
+    if(value == this.mycontent?.myrating){
+      return
+    }
+
+    this.listService.alterMyRating(this.mycontent!.ref!,value).then((valueRet)=>{
+      this.mycontent = valueRet.data()
+      this.mycontent!.ref = valueRet.ref
+    })
+  }
+
   ngOnInit() {
     this.isItInMyList();
     if (this.type == 'SERIE') {
@@ -43,7 +70,6 @@ export class HeaderDetailComponent implements OnInit {
   }
 
   changeSeason(season: number) {
-    console.log('Me clickou');
     if (season >= 0 && season <= this.serie.number_of_seasons) {
       this.seasonAtualEmitter.emit(season);
     }
@@ -54,15 +80,27 @@ export class HeaderDetailComponent implements OnInit {
       this.listService
         .contentInMyList(this.anime.mal_id, 'ANIME')
         .then((value) => {
-          this.onMyList = value;
+          this.onMyList = value.exists;
+          if (value.exists) {
+            this.mycontent = value.data()!
+            this.mycontent.ref = value.ref
+          }
         });
     } else if (this.type == 'SERIE') {
       this.listService.contentInMyList(this.serie.id, 'SERIE').then((value) => {
-        this.onMyList = value;
+        this.onMyList = value.exists;
+        if (value.exists) {
+          this.mycontent = value.data()!
+          this.mycontent.ref = value.ref
+        }
       });
     } else {
       this.listService.contentInMyList(this.book.id, 'BOOK').then((value) => {
-        this.onMyList = value;
+        this.onMyList = value.exists
+        if (value.exists) {
+          this.mycontent = value.data()!
+          this.mycontent.ref = value.ref
+        }
       });
     }
   }

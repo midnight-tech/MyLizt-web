@@ -22,12 +22,22 @@
             <div class="card__side--image--flip--back--description--info">
               <div class="card__side--image--flip--back--description--info--flex">
                 <div class="card__side--image--flip--back--description--info--content">
-                  <p class="card__side--image--flip--back--description--info--flex-text">
-                    Episodes
-                  </p>
-                  <p class="card__side--image--flip--back--description--info--flex-text">
-                    {{ anime.complete?.episodes }}
-                  </p>
+                  <div *ngIf="inMyList == false">
+                    <p class="card__side--image--flip--back--description--info--flex-text">
+                      Episodes
+                    </p>
+                    <p class="card__side--image--flip--back--description--info--flex-text">
+                      {{ anime.complete?.episodes }}
+                    </p>
+                  </div>
+                  <div *ngIf="inMyList">
+                    <p class="card__side--image--flip--back--description--info--flex-text">
+                      My Score
+                    </p>
+                    <p class="card__side--image--flip--back--description--info--flex-text">
+                      {{ mycontent?.myrating || 'NA' }}
+                    </p>
+                  </div>
                 </div>
                 <div class="card__side--image--flip--back--description--info--content">
                   <p class="card__side--image--flip--back--description--info--flex-text">
@@ -61,9 +71,10 @@
               <a class="card__button">Remove to list</a>
             </div>
           </div>
-          <div class="card__button-container card__button-container--recommend" (click)="disableReceiveRecommendation(true)">
+          <div class="card__button-container card__button-container--recommend"
+            (click)="disableReceiveRecommendation(true)">
             <img src="../../../assets/icon-search.svg" alt="Icon" class="card__icon" />
-            <a class="card__button" >Recommend to...</a>
+            <a class="card__button">Recommend to...</a>
           </div>
         </div>
       </div>
@@ -96,12 +107,22 @@
             <div class="card__side--image--flip--back--description--info">
               <div class="card__side--image--flip--back--description--info--flex">
                 <div class="card__side--image--flip--back--description--info--content">
-                  <p class="card__side--image--flip--back--description--info--flex-text">
-                    pages
-                  </p>
-                  <p class="card__side--image--flip--back--description--info--flex-text">
-                    {{ book.complete?.volumeInfo?.pageCount }}
-                  </p>
+                  <div *ngIf="inMyList == false">
+                    <p class="card__side--image--flip--back--description--info--flex-text">
+                      pages
+                    </p>
+                    <p class="card__side--image--flip--back--description--info--flex-text">
+                      {{ book.complete?.volumeInfo?.pageCount }}
+                    </p>
+                  </div>
+                  <div *ngIf="inMyList">
+                    <p class="card__side--image--flip--back--description--info--flex-text">
+                      My Score
+                    </p>
+                    <p class="card__side--image--flip--back--description--info--flex-text">
+                      {{ mycontent?.myrating || 'NA' }}
+                    </p>
+                  </div>
                 </div>
                 <div class="card__side--image--flip--back--description--info--content">
                   <p class="card__side--image--flip--back--description--info--flex-text">
@@ -129,7 +150,8 @@
             <img src="../../../assets/icon-notification.svg" alt="Icon" class="card__icon" />
             <a class="card__button">Add to list</a>
           </div>
-          <div class="card__button-container card__button-container--recommend" (click)="disableReceiveRecommendation(true)">
+          <div class="card__button-container card__button-container--recommend"
+            (click)="disableReceiveRecommendation(true)">
             <img src="../../../assets/icon-search.svg" alt="Icon" class="card__icon" />
             <a class="card__button">Recommend to...</a>
           </div>
@@ -166,12 +188,22 @@
             <div class="card__side--image--flip--back--description--info">
               <div class="card__side--image--flip--back--description--info--flex">
                 <div class="card__side--image--flip--back--description--info--content">
-                  <p class="card__side--image--flip--back--description--info--flex-text">
-                    Seasons
-                  </p>
-                  <p class="card__side--image--flip--back--description--info--flex-text">
-                    {{ serie.complete?.number_of_seasons }}
-                  </p>
+                  <div *ngIf="inMyList == false">
+                    <p class="card__side--image--flip--back--description--info--flex-text">
+                      Seasons
+                    </p>
+                    <p class="card__side--image--flip--back--description--info--flex-text">
+                      {{ serie.complete?.number_of_seasons }}
+                    </p>
+                  </div>
+                  <div *ngIf="inMyList">
+                    <p class="card__side--image--flip--back--description--info--flex-text">
+                      My Score
+                    </p>
+                    <p class="card__side--image--flip--back--description--info--flex-text">
+                      {{  mycontent?.myrating || 'NA' }}
+                    </p>
+                  </div>
                 </div>
                 <div class="card__side--image--flip--back--description--info--content">
                   <p class="card__side--image--flip--back--description--info--flex-text">
@@ -199,7 +231,8 @@
             <img src="../../../assets/icon-notification.svg" alt="Icon" class="card__icon" />
             <a class="card__button">Add to list</a>
           </div>
-          <div class="card__button-container card__button-container--recommend" (click)="disableReceiveRecommendation(true)">
+          <div class="card__button-container card__button-container--recommend"
+            (click)="disableReceiveRecommendation(true)">
             <img src="../../../assets/icon-search.svg" alt="Icon" class="card__icon" />
             <a class="card__button">Recommend to...</a>
           </div>

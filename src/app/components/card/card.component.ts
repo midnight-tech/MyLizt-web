@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';
 import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
+import { content } from 'src/app/data/interfaces';
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { HomeContextService } from 'src/app/services/home-context/home.service';
 import { ListService } from 'src/app/services/list/list.service';
@@ -17,6 +18,7 @@ export class CardComponent implements OnInit {
   @Input() book?: BookCatalogo;
   @Input() lookMyList: boolean = true;
   inMyList: boolean = false;
+  mycontent?: content
 
   notRended = true;
 
@@ -26,7 +28,7 @@ export class CardComponent implements OnInit {
     public listService: ListService,
     public router: Router,
     public homeContext: HomeContextService
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (this.notRended) {
@@ -86,15 +88,27 @@ export class CardComponent implements OnInit {
       this.listService
         .contentInMyList(this.anime.mal_id, 'ANIME')
         .then((value) => {
-          this.inMyList = value;
+          this.inMyList = value.exists
+          if (value.exists) {
+            this.mycontent = value.data()!
+            this.mycontent.ref = value.ref
+          }
         });
     } else if (this.book) {
       this.listService.contentInMyList(this.book.id, 'BOOK').then((value) => {
-        this.inMyList = value;
+        this.inMyList = value.exists;
+        if (value.exists) {
+          this.mycontent = value.data()!
+          this.mycontent.ref = value.ref
+        }
       });
     } else if (this.serie) {
       this.listService.contentInMyList(this.serie.id, 'SERIE').then((value) => {
-        this.inMyList = value;
+        this.inMyList = value.exists;
+        if (value.exists) {
+          this.mycontent = value.data()!
+          this.mycontent.ref = value.ref
+        }
       });
     }
   }

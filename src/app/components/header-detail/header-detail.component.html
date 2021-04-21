@@ -124,7 +124,10 @@
   <div class="my-score" *ngIf="onMyList">
     <div class="my-score__flex">
       <p class="my-score__title">My Score</p>
-      <p class="my-score__info">9.7</p>
+      <p class="my-score__info" (click)="changeRateInput()">{{ mycontent?.myrating || 'N/A'}}</p>
+    </div>
+    <div *ngIf="rateInput">
+      <input type="text" [formControl]="rateInputControl" appAutoFocusDirective (blur)="setRate()">
     </div>
   </div>
 

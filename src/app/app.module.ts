@@ -41,6 +41,7 @@ import { RecommendationComponent } from './components/recommendation/recommendat
 import { NotificationService } from './services/notification/notification.service';
 import { FriendListComponent } from './pages/friend-list/friend-list.component';
 import { MyRecommendationsComponent } from './pages/my-recommendations/my-recommendations.component';
+import { AutoFocusDirectiveDirective } from './directives/autoFocusDirective.directive';
 
 const routes: Routes = [
   { path: 'sandbox', component: SandboxPageComponent, pathMatch: 'full' },
@@ -140,6 +141,7 @@ const routes: Routes = [
     RecommendationComponent,
     FriendListComponent,
     MyRecommendationsComponent,
+    AutoFocusDirectiveDirective
   ],
   imports: [
     BrowserModule,
