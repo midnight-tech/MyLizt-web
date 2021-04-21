@@ -5,16 +5,23 @@
   <input type="radio" name="slider" id="item-4" />
   <input type="radio" name="slider" id="item-5" />
   <div class="cards">
-    <label *ngFor="let content of contents; index as i" [class]="'card card--' + (i + 1)" [for]="'item-' + (i + 1)" [id]="'song-' + (i+1)">
+    <label
+      *ngFor="let content of contents; index as i"
+      [class]="'card card--' + (i + 1)"
+      [for]="'item-' + (i + 1)"
+      [id]="'song-' + (i + 1)"
+    >
       <div class="darkness" [id]="'shadow-' + (i + 1)"></div>
       <div class="card__hover">
         <span class="card__text">{{ content.title }}</span>
-        <a class="card__button" (click)="navigateToDetail(type,content.id)">View More</a>
+        <div class="card__button" (click)="navigateToDetail(type, content.id)">
+          <p class="card__button__text">View More</p>
+          <svg class="card__button__icon">
+            <use xlink:href="assets/symbol-defs.svg#icon-arrow_right_alt"></use>
+          </svg>
+        </div>
       </div>
-      <img
-        [src]="content.img"
-        alt="song"
-      />
+      <img [src]="content.img" alt="song" />
     </label>
   </div>
 </div>

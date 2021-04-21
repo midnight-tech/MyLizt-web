@@ -2,8 +2,10 @@
   <div class="title">
     <h1 class="title__text">Friends</h1>
     <div class="title__button" (click)="showAddFriends()">
-      <img src="../../../assets/icon-friends.svg" alt="icon-friends" class="title__button__icon" />
-      <a class="title__button__item">Friends</a>
+      <p class="title__button__text">Friends</p>
+      <svg class="title__button__icon">
+        <use xlink:href="assets/symbol-defs.svg#icon-person_add_alt_1"></use>
+      </svg>
     </div>
   </div>
 
@@ -17,10 +19,28 @@
         <span class="friends__user__name">{{ friend.username }}</span>
         <span class="friends__user__id">#{{ friend.applicationUserId }}</span>
       </div>
-      <span class="friends__category friends__category--anime" (click)="redirectToFriendList(friend.applicationUserId,'ANIME')">Anime (514)</span>
-      <span class="friends__category friends__category--serie" (click)="redirectToFriendList(friend.applicationUserId,'SERIE')">Serie (2)</span>
-      <span class="friends__category friends__category--book" (click)="redirectToFriendList(friend.applicationUserId,'BOOK')">Book (2)</span>
-      <span class="friends__category friends__remove" (click)="showRemoveFriends()">Remove</span>
+      <span
+        class="friends__category friends__category--anime"
+        (click)="redirectToFriendList(friend.applicationUserId, 'ANIME')"
+        >Anime (514)</span
+      >
+      <span
+        class="friends__category friends__category--serie"
+        (click)="redirectToFriendList(friend.applicationUserId, 'SERIE')"
+        >Serie (2)</span
+      >
+      <span
+        class="friends__category friends__category--book"
+        (click)="redirectToFriendList(friend.applicationUserId, 'BOOK')"
+        >Book (2)</span
+      >
+
+      <div class="title__button friends__remove" (click)="showRemoveFriends()">
+        <p class="title__button__text">Remove</p>
+        <svg class="title__button__icon">
+          <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
+        </svg>
+      </div>
     </div>
   </div>
 
@@ -31,7 +51,13 @@
   <div [ngClass]="{ hidden: !isActiveAdd }" class="add-remove-friends">
     <div class="add-remove-friends membrana" (click)="showAddFriends()"></div>
     <form class="add-remove-friends__form">
-      <input [formControl]="id" type="text" id="id" placeholder="Insert Friend ID" class="add-remove-friends__input" />
+      <input
+        [formControl]="id"
+        type="text"
+        id="id"
+        placeholder="Insert Friend ID"
+        class="add-remove-friends__input"
+      />
 
       <div class="add-remove-friends__button" (click)="sendFriendRquest()">
         <a>Send</a>
@@ -40,9 +66,18 @@
   </div>
 
   <div [ngClass]="{ hidden: !isActiveRemove }" class="add-remove-friends">
-    <div class="add-remove-friends membrana" (click)="showRemoveFriends()"></div>
+    <div
+      class="add-remove-friends membrana"
+      (click)="showRemoveFriends()"
+    ></div>
     <form class="add-remove-friends__form">
-      <input type="text" id="id" placeholder="Insert Friend ID" class="add-remove-friends__input" [formControl]="id" />
+      <input
+        type="text"
+        id="id"
+        placeholder="Insert Friend ID"
+        class="add-remove-friends__input"
+        [formControl]="id"
+      />
 
       <div class="add-remove-friends__button" (click)="removeFriend()">
         <a>Remove</a>

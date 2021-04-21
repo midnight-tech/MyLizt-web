@@ -163,37 +163,28 @@
       class="button__flex button__flex--recommend"
       (click)="disableReceiveRecommendation(true)"
     >
-      <img
-        class="button__icon"
-        src="../../../assets/icon-search.svg"
-        alt="Share"
-      />
-      <a class="button__text">Recomend to...</a>
+      <p class="button__text">Recommend to...</p>
+      <svg class="button__icon">
+        <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
+      </svg>
+    </div>
+
+    <div *ngIf="onMyList == false" class="button__flex" (click)="addToMyList()">
+      <p class="button__text">Add to list</p>
+      <svg class="button__icon">
+        <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
+      </svg>
     </div>
 
     <div
-      *ngIf="onMyList == false"
-      (click)="addToMyList()"
-      class="button__flex button__flex--remove"
-    >
-      <img
-        class="button__icon"
-        src="../../../assets/icon-notification.svg"
-        alt="Remove"
-      />
-      <a class="button__text">Add to list</a>
-    </div>
-    <div
       *ngIf="onMyList == true"
+      class="button__flex"
       (click)="deleteToMyList()"
-      class="button__flex button__flex--remove"
     >
-      <img
-        class="button__icon"
-        src="../../../assets/icon-notification.svg"
-        alt="Remove"
-      />
-      <a class="button__text">Remove</a>
+      <p class="button__text">Remove</p>
+      <svg class="button__icon">
+        <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
+      </svg>
     </div>
   </div>
   <app-recommendation

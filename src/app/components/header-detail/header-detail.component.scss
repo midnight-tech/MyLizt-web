@@ -291,39 +291,37 @@
   &__flex {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     padding: 0.5rem;
-    font-size: 1.4rem;
+    background-image: linear-gradient(105deg, $primary1 74%, $primary2 26%);
+    background-color: transparent;
     border-radius: $the-border-radius;
+    border-bottom: 0.2rem solid rgba($primary3, 1);
+    border-right: 0.2rem solid rgba($primary3, 1);
+    box-shadow: 0 0.5rem 1rem -0.5rem rgba($black, 1);
+    transition: all 0.4s ease;
     cursor: pointer;
 
     &--recommend {
-      color: $primary1;
-      background-color: transparent;
-      border: 1px solid $primary1;
       margin-bottom: 1.5rem;
-
-      &:hover {
-        color: $white;
-        background-color: $primary1;
-      }
     }
 
-    &--remove {
-      background-color: $primary1;
-      color: $white;
-
-      &:hover {
-        color: $black3;
-        filter: brightness(1.2);
-      }
+    &:hover {
+      transform: scale(1.05);
     }
   }
 
+  &__text {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-right: 1rem;
+    color: $black3;
+  }
+
   &__icon {
-    height: 3rem;
-    width: 3rem;
-    margin-right: 0.5rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    fill: $black3;
   }
 }
 

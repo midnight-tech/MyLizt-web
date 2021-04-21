@@ -15,10 +15,7 @@ export class FriendsComponent implements OnInit {
   friends: UserInterface[] = [];
   id = new FormControl('');
 
-  constructor(
-    public userService: UserService,
-    private router : Router
-  ) { }
+  constructor(public userService: UserService, private router: Router) {}
 
   ngOnInit() {
     this.userService.getFriend().then((value) => {
@@ -56,6 +53,6 @@ export class FriendsComponent implements OnInit {
   }
 
   redirectToFriendList(friendId: string, type: search) {
-    this.router.navigate(['home','friend-list',friendId,type.toLowerCase()])
+    this.router.navigate(['home', 'friend-list', friendId, type.toLowerCase()]);
   }
 }

@@ -100,13 +100,13 @@ const routes: Routes = [
         component: FriendsComponent,
       },
       {
-        path : 'friend-list/:friendId/:type',
-        component: FriendListComponent
+        path: 'friend-list/:friendId/:type',
+        component: FriendListComponent,
       },
       {
-        path : 'recommendations/:type',
-        component: MyRecommendationsComponent
-      }
+        path: 'recommendations/:type',
+        component: MyRecommendationsComponent,
+      },
     ],
   },
   { path: '**', redirectTo: '' },
