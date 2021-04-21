@@ -36,8 +36,36 @@ export class CardComponent implements OnInit {
         this.isInMyList();
       } else {
         this.inMyList = true;
+        this.getContent()
       }
       this.notRended = false;
+    }
+  }
+
+  getContent() {
+    if (this.anime) {
+      this.listService
+        .contentInMyList(this.anime.mal_id, 'ANIME')
+        .then((value) => {
+          if (value.exists) {
+            this.mycontent = value.data()!
+            this.mycontent.ref = value.ref
+          }
+        });
+    } else if (this.book) {
+      this.listService.contentInMyList(this.book.id, 'BOOK').then((value) => {
+        if (value.exists) {
+          this.mycontent = value.data()!
+          this.mycontent.ref = value.ref
+        }
+      });
+    } else if (this.serie) {
+      this.listService.contentInMyList(this.serie.id, 'SERIE').then((value) => {
+        if (value.exists) {
+          this.mycontent = value.data()!
+          this.mycontent.ref = value.ref
+        }
+      });
     }
   }
 

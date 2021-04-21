@@ -13,7 +13,9 @@
           </div>
           <div class="card__side--image--flip--back--description">
             <div class="card__side--image--flip--back--description--category">
-              <p class="card__side--image--flip--back--description--category--text">
+              <p
+                class="card__side--image--flip--back--description--category--text"
+              >
                 <span *ngFor="let category of anime.complete?.genres">
                   {{ category.name }}
                 </span>
@@ -39,11 +41,17 @@
                     </p>
                   </div>
                 </div>
-                <div class="card__side--image--flip--back--description--info--content">
-                  <p class="card__side--image--flip--back--description--info--flex-text">
+                <div
+                  class="card__side--image--flip--back--description--info--content"
+                >
+                  <p
+                    class="card__side--image--flip--back--description--info--flex-text"
+                  >
                     Score
                   </p>
-                  <p class="card__side--image--flip--back--description--info--flex-text">
+                  <p
+                    class="card__side--image--flip--back--description--info--flex-text"
+                  >
                     {{ anime.complete?.score }}
                   </p>
                 </div>
@@ -62,25 +70,45 @@
       <div class="card__side--buttons">
         <div class="container-flex">
           <div *ngIf="lookMyList">
-            <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
-              <img src="../../../assets/icon-notification.svg" alt="Icon" class="card__icon" />
-              <a class="card__button">Add to list</a>
+            <div
+              class="card__button-container card__button-container--add"
+              *ngIf="!inMyList"
+              (click)="addToMyList()"
+            >
+              <p class="card__button-container__text">Add to list</p>
+              <svg class="card__button-container__icon">
+                <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
+              </svg>
             </div>
-            <div class="card__button-container card__button-container--add" *ngIf="inMyList" (click)="deleteToMyList()">
-              <img src="../../../assets/icon-notification.svg" alt="Icon" class="card__icon" />
-              <a class="card__button">Remove to list</a>
+            <div
+              class="card__button-container card__button-container--add"
+              *ngIf="inMyList"
+              (click)="deleteToMyList()"
+            >
+              <p class="card__button-container__text">Remove</p>
+              <svg class="card__button-container__icon">
+                <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
+              </svg>
             </div>
           </div>
-          <div class="card__button-container card__button-container--recommend"
-            (click)="disableReceiveRecommendation(true)">
-            <img src="../../../assets/icon-search.svg" alt="Icon" class="card__icon" />
-            <a class="card__button">Recommend to...</a>
+          <div
+            class="card__button-container card__button-container--recommend"
+            (click)="disableReceiveRecommendation(true)"
+          >
+            <p class="card__button-container__text">Recommend to...</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
+            </svg>
           </div>
         </div>
       </div>
     </div>
-    <app-recommendation type="ANIME" [contentId]="anime.mal_id.toString()" [isActiveRecommend]="isActiveRecommend"
-      (isActiveEvent)="disableReceiveRecommendation($event)">
+    <app-recommendation
+      type="ANIME"
+      [contentId]="anime.mal_id.toString()"
+      [isActiveRecommend]="isActiveRecommend"
+      (isActiveEvent)="disableReceiveRecommendation($event)"
+    >
     </app-recommendation>
   </div>
 </div>
@@ -90,7 +118,11 @@
     <div class="card__side">
       <div class="card__side--image" (click)="navigateToDetail()">
         <div class="card__side--image--flip">
-          <img class="card__picture" [src]="book.volumeInfo.image" alt="teste" />
+          <img
+            class="card__picture"
+            [src]="book.volumeInfo.image"
+            alt="teste"
+          />
         </div>
         <div class="card__side--image--flip card__side--image--flip--back">
           <div class="card__side--image--flip--back--synopsis">
@@ -100,7 +132,9 @@
           </div>
           <div class="card__side--image--flip--back--description">
             <div class="card__side--image--flip--back--description--category">
-              <p class="card__side--image--flip--back--description--category--text">
+              <p
+                class="card__side--image--flip--back--description--category--text"
+              >
                 {{ book.complete?.volumeInfo?.categories }}
               </p>
             </div>
@@ -124,11 +158,17 @@
                     </p>
                   </div>
                 </div>
-                <div class="card__side--image--flip--back--description--info--content">
-                  <p class="card__side--image--flip--back--description--info--flex-text">
+                <div
+                  class="card__side--image--flip--back--description--info--content"
+                >
+                  <p
+                    class="card__side--image--flip--back--description--info--flex-text"
+                  >
                     Score
                   </p>
-                  <p class="card__side--image--flip--back--description--info--flex-text">
+                  <p
+                    class="card__side--image--flip--back--description--info--flex-text"
+                  >
                     {{ book.complete?.volumeInfo?.averageRating }}
                   </p>
                 </div>
@@ -146,21 +186,35 @@
 
       <div class="card__side--buttons">
         <div class="container-flex">
-          <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
-            <img src="../../../assets/icon-notification.svg" alt="Icon" class="card__icon" />
-            <a class="card__button">Add to list</a>
+          <div
+            class="card__button-container card__button-container--add"
+            *ngIf="!inMyList"
+            (click)="addToMyList()"
+          >
+            <p class="card__button-container__text">Add to list</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
+            </svg>
           </div>
-          <div class="card__button-container card__button-container--recommend"
-            (click)="disableReceiveRecommendation(true)">
-            <img src="../../../assets/icon-search.svg" alt="Icon" class="card__icon" />
-            <a class="card__button">Recommend to...</a>
+          <div
+            class="card__button-container card__button-container--recommend"
+            (click)="disableReceiveRecommendation(true)"
+          >
+            <p class="card__button-container__text">Recommend to...</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
+            </svg>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <app-recommendation type="BOOK" [contentId]="book.id" [isActiveRecommend]="isActiveRecommend"
-    (isActiveEvent)="disableReceiveRecommendation($event)">
+  <app-recommendation
+    type="BOOK"
+    [contentId]="book.id"
+    [isActiveRecommend]="isActiveRecommend"
+    (isActiveEvent)="disableReceiveRecommendation($event)"
+  >
   </app-recommendation>
 </div>
 
@@ -179,10 +233,12 @@
           </div>
           <div class="card__side--image--flip--back--description">
             <div class="card__side--image--flip--back--description--category">
-              <p class="card__side--image--flip--back--description--category--text">
+              <p
+                class="card__side--image--flip--back--description--category--text"
+              >
                 <span *ngFor="let genre of serie.complete?.genres">{{
                   genre.name
-                  }}</span>
+                }}</span>
               </p>
             </div>
             <div class="card__side--image--flip--back--description--info">
@@ -205,11 +261,17 @@
                     </p>
                   </div>
                 </div>
-                <div class="card__side--image--flip--back--description--info--content">
-                  <p class="card__side--image--flip--back--description--info--flex-text">
+                <div
+                  class="card__side--image--flip--back--description--info--content"
+                >
+                  <p
+                    class="card__side--image--flip--back--description--info--flex-text"
+                  >
                     Score
                   </p>
-                  <p class="card__side--image--flip--back--description--info--flex-text">
+                  <p
+                    class="card__side--image--flip--back--description--info--flex-text"
+                  >
                     {{ serie.complete?.vote_average }}
                   </p>
                 </div>
@@ -227,20 +289,34 @@
 
       <div class="card__side--buttons">
         <div class="container-flex">
-          <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
-            <img src="../../../assets/icon-notification.svg" alt="Icon" class="card__icon" />
-            <a class="card__button">Add to list</a>
+          <div
+            class="card__button-container card__button-container--add"
+            *ngIf="!inMyList"
+            (click)="addToMyList()"
+          >
+            <p class="card__button-container__text">Add to list</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
+            </svg>
           </div>
-          <div class="card__button-container card__button-container--recommend"
-            (click)="disableReceiveRecommendation(true)">
-            <img src="../../../assets/icon-search.svg" alt="Icon" class="card__icon" />
-            <a class="card__button">Recommend to...</a>
+          <div
+            class="card__button-container card__button-container--recommend"
+            (click)="disableReceiveRecommendation(true)"
+          >
+            <p class="card__button-container__text">Recommend to...</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
+            </svg>
           </div>
         </div>
       </div>
     </div>
-    <app-recommendation type="SERIE" [contentId]="serie.id.toString()" [isActiveRecommend]="isActiveRecommend"
-      (isActiveEvent)="disableReceiveRecommendation($event)">
+    <app-recommendation
+      type="SERIE"
+      [contentId]="serie.id.toString()"
+      [isActiveRecommend]="isActiveRecommend"
+      (isActiveEvent)="disableReceiveRecommendation($event)"
+    >
     </app-recommendation>
   </div>
 </div>

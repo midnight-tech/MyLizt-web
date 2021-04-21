@@ -28,28 +28,33 @@
   &__button {
     display: flex;
     align-items: center;
-    background-color: $black4;
-    color: $white;
-    padding: 1rem;
+    justify-content: space-between;
+    padding: 0.5rem;
+    background-image: linear-gradient(105deg, $primary1 62%, $primary2 38%);
+    background-color: transparent;
     border-radius: $the-border-radius;
+    border-bottom: 0.2rem solid rgba($primary3, 1);
+    border-right: 0.2rem solid rgba($primary3, 1);
+    box-shadow: 0 0.5rem 1rem -0.5rem rgba($black, 1);
+    transition: all 0.4s ease;
+    height: min-content;
     cursor: pointer;
+
+    &__text {
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-right: 1rem;
+      color: $black3;
+    }
 
     &__icon {
       height: 2.5rem;
       width: 2.5rem;
-      margin-right: 1rem;
-      cursor: pointer;
-    }
-
-    &__item {
-      text-transform: uppercase;
-      font-size: 1.6rem;
-      letter-spacing: 0.3rem;
+      fill: $black3;
     }
 
     &:hover {
-      color: $primary1;
-      // background-color: $primary1;
+      transform: scale(1.05);
     }
   }
 }
@@ -77,6 +82,7 @@
     align-self: baseline;
     font-size: 1.6rem;
     color: $white;
+    align-items: center;
 
     display: grid;
     grid-template-columns:
@@ -139,12 +145,7 @@
 
   &__remove {
     grid-column: col-start 4 / col-end 4;
-    color: $primary1;
-
-    &:hover {
-      background-color: $primary1;
-      color: $black3;
-    }
+    margin-left: 2rem;
   }
 }
 

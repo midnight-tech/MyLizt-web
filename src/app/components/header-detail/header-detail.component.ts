@@ -123,22 +123,25 @@ export class HeaderDetailComponent implements OnInit {
 
   deleteToMyList() {
     if (this.anime) {
-      this.listService.removeFromList(this.anime.mal_id.toString(), 'anime').then(() => {
-        this.isItInMyList();
-      })
+      this.listService
+        .removeFromList(this.anime.mal_id.toString(), 'anime')
+        .then(() => {
+          this.isItInMyList();
+        });
     } else if (this.book) {
       this.listService.removeFromList(this.book.id, 'book').then(() => {
         this.isItInMyList();
-      })
+      });
     } else if (this.serie) {
-      this.listService.removeFromList(this.serie.id.toString(), 'serie').then(() => {
-        this.isItInMyList();
-      })
+      this.listService
+        .removeFromList(this.serie.id.toString(), 'serie')
+        .then(() => {
+          this.isItInMyList();
+        });
     }
   }
 
   disableReceiveRecommendation(value: boolean) {
     this.isActiveRecommend = value;
   }
-
 }

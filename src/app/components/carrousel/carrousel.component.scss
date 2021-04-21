@@ -97,15 +97,33 @@ img {
   }
 
   &__button {
-    font-size: 1.8rem;
-    color: $primary1;
-    text-align: center;
-    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    background-image: linear-gradient(105deg, $primary1 69%, $primary2 31%);
+    background-color: transparent;
     border-radius: $the-border-radius;
+    border-bottom: 0.2rem solid rgba($primary3, 1);
+    border-right: 0.2rem solid rgba($primary3, 1);
+    box-shadow: 0 0.5rem 1rem -0.5rem rgba($black, 1);
+    transition: all 0.4s ease;
+
+    &__text {
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-right: 1rem;
+      color: $black3;
+    }
+
+    &__icon {
+      height: 2.5rem;
+      width: 2.5rem;
+      fill: $black3;
+    }
 
     &:hover {
-      background-color: $primary1;
-      color: $white;
+      transform: scale(1.05);
     }
   }
 }
