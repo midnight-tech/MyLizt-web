@@ -157,6 +157,7 @@
     font-size: 2rem;
     color: $white;
     text-transform: uppercase;
+    margin-bottom: 0.5rem;
   }
 
   &__info {
@@ -194,6 +195,7 @@
     font-size: 2rem;
     color: $white;
     text-transform: uppercase;
+    margin-bottom: 0.5rem;
   }
 
   &__info {
@@ -201,6 +203,26 @@
     color: $primary1;
     text-transform: uppercase;
     font-weight: bold;
+  }
+
+  &__input {
+    font-size: 2.6rem;
+    border: none;
+    width: 7.5rem;
+    background-color: transparent;
+    caret-color: $primary1;
+    font-family: inherit;
+
+    &:focus {
+      outline: none;
+      border: none;
+    }
+
+    &::placeholder {
+      font-size: 1.6rem;
+      font-family: inherit;
+      opacity: 1;
+    }
   }
 }
 

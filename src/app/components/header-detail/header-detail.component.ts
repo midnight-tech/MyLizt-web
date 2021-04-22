@@ -1,4 +1,12 @@
-import { Component, Input, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import {
@@ -42,25 +50,30 @@ export class HeaderDetailComponent implements OnInit {
   }
 
   changeRateInput() {
-    this.rateInput = !this.rateInput
+    if (this.rateInput == false) {
+      this.rateInputControl.setValue(this.mycontent?.myrating || 'N/A');
+    }
+    this.rateInput = !this.rateInput;
   }
 
   setRate() {
     this.changeRateInput()
     if (this.rateInputControl.value.length == 0) {
       // deletar a nota eu acho
-      return
+      return;
     }
-    let value = Number.parseFloat(this.rateInputControl.value)
+    let value = Number.parseFloat(this.rateInputControl.value);
 
     if (value == this.mycontent?.myrating) {
-      return
+      return;
     }
 
-    this.listService.alterMyRating(this.mycontent!.ref!, value).then((valueRet) => {
-      this.mycontent = valueRet.data()
-      this.mycontent!.ref = valueRet.ref
-    })
+    this.listService
+      .alterMyRating(this.mycontent!.ref!, value)
+      .then((valueRet) => {
+        this.mycontent = valueRet.data();
+        this.mycontent!.ref = valueRet.ref;
+      });
   }
 
   ngOnInit() {
@@ -84,24 +97,24 @@ export class HeaderDetailComponent implements OnInit {
         .then((value) => {
           this.onMyList = value.exists;
           if (value.exists) {
-            this.mycontent = value.data()!
-            this.mycontent.ref = value.ref
+            this.mycontent = value.data()!;
+            this.mycontent.ref = value.ref;
           }
         });
     } else if (this.type == 'SERIE') {
       this.listService.contentInMyList(this.serie.id, 'SERIE').then((value) => {
         this.onMyList = value.exists;
         if (value.exists) {
-          this.mycontent = value.data()!
-          this.mycontent.ref = value.ref
+          this.mycontent = value.data()!;
+          this.mycontent.ref = value.ref;
         }
       });
     } else {
       this.listService.contentInMyList(this.book.id, 'BOOK').then((value) => {
-        this.onMyList = value.exists
+        this.onMyList = value.exists;
         if (value.exists) {
-          this.mycontent = value.data()!
-          this.mycontent.ref = value.ref
+          this.mycontent = value.data()!;
+          this.mycontent.ref = value.ref;
         }
       });
     }

@@ -42,6 +42,13 @@ import { NotificationService } from './services/notification/notification.servic
 import { FriendListComponent } from './pages/friend-list/friend-list.component';
 import { MyRecommendationsComponent } from './pages/my-recommendations/my-recommendations.component';
 import { AutoFocusDirectiveDirective } from './directives/autoFocusDirective.directive';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+
+const maskConfigFunction: () => Partial<IConfig> = () => {
+  return {
+    validation: false,
+  };
+};
 
 const routes: Routes = [
   { path: 'sandbox', component: SandboxPageComponent, pathMatch: 'full' },
@@ -141,7 +148,7 @@ const routes: Routes = [
     RecommendationComponent,
     FriendListComponent,
     MyRecommendationsComponent,
-    AutoFocusDirectiveDirective
+    AutoFocusDirectiveDirective,
   ],
   imports: [
     BrowserModule,
@@ -150,6 +157,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule.enablePersistence(),
+    NgxMaskModule.forRoot(maskConfigFunction),
   ],
   exports: [RouterModule],
   providers: [
