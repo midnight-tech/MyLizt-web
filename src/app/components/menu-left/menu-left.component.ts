@@ -51,6 +51,10 @@ export class MenuLeftComponent implements OnInit {
 
   }
 
+  reloadPage(){
+    location.reload()
+  }
+
   navigateToDetail(id: string, type: string) {
     this.router.navigate(['home', 'detail', type, id])
   }

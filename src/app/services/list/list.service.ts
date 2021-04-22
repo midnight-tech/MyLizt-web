@@ -51,7 +51,9 @@ export class ListService {
             contentType: type,
             watched: false,
             createdAt: new Date(Date.now()),
-            recommended: null
+            recommended: null,
+            season : type == 'SERIE' ? 1 : undefined,
+            mark : 0
         })
     }
 
@@ -202,6 +204,17 @@ export class ListService {
             return -1
         })
 
+    }
+
+
+   
+    async setContentStopped(content: content ){
+        content.updatedAt = new Date(Date.now())
+        await content.ref!.update(content)
+        const newContentRaw = await content.ref!.withConverter(contentConverter).get()
+        const newContent = newContentRaw.data()!
+        newContent.ref = newContentRaw.ref
+        return newContent
     }
 
 }

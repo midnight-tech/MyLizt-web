@@ -145,15 +145,16 @@
         <use href="assets/symbol-defs.svg#icon-remove"></use>
       </svg>
 
-      <p *ngIf="type == 'ANIME'" class="episodes__info">
-        1 / {{ anime.episodes }}
+      <p (click)="changeMarkInput()" *ngIf="type == 'ANIME'" class="episodes__info">
+        {{mycontent!.mark || 0}} / {{ anime.episodes }}
       </p>
-      <p *ngIf="type == 'SERIE'" class="episodes__info">
-        1 / {{ serie.seasons[seasonAtual].episode_count }}
+      <p (click)="changeMarkInput()" *ngIf="type == 'SERIE'" class="episodes__info">
+        {{serieEpisodeWatched()}} / {{ serie.seasons[seasonAtual].episode_count }}
       </p>
-      <p *ngIf="type == 'BOOK'" class="episodes__info">
-        1 / {{ book.volumeInfo.pageCount }}
+      <p (click)="changeMarkInput()" *ngIf="type == 'BOOK'" class="episodes__info">
+        {{mycontent!.mark || 0}} / {{ book.volumeInfo.pageCount }}
       </p>
+      <input *ngIf="markInput" type="text" [formControl]="episodeInputControl" appAutoFocusDirective (blur)="changeEpisode()">
 
       <svg class="episodes__icon">
         <use href="assets/symbol-defs.svg#icon-add"></use>
