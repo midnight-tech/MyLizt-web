@@ -180,7 +180,7 @@ export class HeaderDetailComponent implements OnInit {
 
   changeEpisode(episode? : number) {
     let value : number
-    if(episode){
+    if(episode != undefined){
       value = episode
     } else {
       this.changeMarkInput()
