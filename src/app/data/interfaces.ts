@@ -345,7 +345,7 @@ export interface content {
   createdAt?: Date, // timestamp
   updatedAt?: Date,
   watched: boolean,
-  season?: number,
+  season?: number | null,
   mark?: number
   recommended: DocumentReference<UserInterface> | null,
   ref? : DocumentReference

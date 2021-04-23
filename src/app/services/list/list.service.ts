@@ -63,7 +63,7 @@ export class ListService {
         watched: false,
         createdAt: new Date(Date.now()),
         recommended: null,
-        season: type == 'SERIE' ? 0 : undefined,
+        season: type == 'SERIE' ? 0 : null,
         mark: 0,
       });
   }
