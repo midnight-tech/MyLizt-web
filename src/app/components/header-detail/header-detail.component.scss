@@ -298,6 +298,33 @@
       fill: $primary1;
     }
   }
+
+  &__input {
+    font-size: 2rem;
+    border: none;
+    width: 2.75rem;
+    background-color: transparent;
+    caret-color: $primary1;
+    font-family: inherit;
+    color: $primary1;
+    overflow: visible;
+    text-align: right;
+
+    &:focus {
+      outline: none;
+      border: none;
+    }
+
+    &::placeholder {
+      font-size: 2rem;
+      font-family: inherit;
+      opacity: 1;
+    }
+
+    &:focus ~ .episodes {
+      align-items: flex-end;
+    }
+  }
 }
 
 .button {

@@ -110,18 +110,52 @@
         <use href="assets/symbol-defs.svg#icon-remove"></use>
       </svg>
 
-      <p (click)="changeMarkInput()" *ngIf="type == 'ANIME'" class="episodes__info">
-        {{ mycontent!.mark || 0 }} / {{ anime.episodes }}
-      </p>
-      <p (click)="changeMarkInput()" *ngIf="type == 'SERIE'" class="episodes__info">
-        {{ serieEpisodeWatched() }} /
-        {{ serie.seasons[seasonAtual].episode_count }}
-      </p>
-      <p (click)="changeMarkInput()" *ngIf="type == 'BOOK'" class="episodes__info">
-        {{ mycontent!.mark || 0 }} / {{ book.volumeInfo.pageCount }}
-      </p>
-      <input *ngIf="markInput" type="text" [formControl]="episodeInputControl" appAutoFocusDirective
-        (blur)="changeEpisode()" />
+      <!-- <input
+        *ngIf="true"
+        type="text"
+        [formControl]="episodeInputControl"
+        appAutoFocusDirective
+        (blur)="changeEpisode()"
+        class="episodes__input"
+        autoSizeInput
+        [maxWidth]="60"
+      /> -->
+
+      <span (click)="changeMarkInput()" *ngIf="type == 'ANIME'" class="episodes__info">
+        <input *ngIf="markInput" type="text" [formControl]="episodeInputControl" appAutoFocusDirective
+          (blur)="changeEpisode()" class="episodes__input" />
+        <span *ngIf="!markInput">
+          {{ mycontent!.mark || 0 }}
+        </span>
+        /
+        <span>
+          {{ anime.episodes }}
+        </span>
+      </span>
+
+      <span (click)="changeMarkInput()" *ngIf="type == 'SERIE'" class="episodes__info">
+        <input *ngIf="markInput" type="text" [formControl]="episodeInputControl" appAutoFocusDirective
+          (blur)="changeEpisode()" class="episodes__input" />
+        <span *ngIf="!markInput">
+          {{ serieEpisodeWatched() }}
+        </span>
+        /
+        <span>
+          {{ serie.seasons[seasonAtual].episode_count }}
+        </span>
+      </span>
+
+      <span (click)="changeMarkInput()" *ngIf="type == 'BOOK'" class="episodes__info">
+        <input *ngIf="markInput" type="text" [formControl]="episodeInputControl" appAutoFocusDirective
+          (blur)="changeEpisode()" class="episodes__input" />
+        <span *ngIf="!markInput">
+          {{ mycontent!.mark || 0 }}
+        </span>
+        /
+        <span>
+          {{ book.volumeInfo.pageCount }}
+        </span>
+      </span>
 
       <svg class="episodes__icon" (click)="changeEpisode(mycontent!.mark! + 1)">
         <use href="assets/symbol-defs.svg#icon-add"></use>

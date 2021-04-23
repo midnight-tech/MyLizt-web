@@ -29,11 +29,11 @@ export class HeaderDetailComponent implements OnInit {
   @Input() book!: CompleteBook;
   @Input() type!: search;
   @Input() watched!: boolean;
-  rateInputControl = new FormControl("")
-  episodeInputControl = new FormControl("")
-  mycontent?: content
-  rateInput = false
-  markInput = false
+  rateInputControl = new FormControl('');
+  episodeInputControl = new FormControl('');
+  mycontent?: content;
+  rateInput = false;
+  markInput = false;
 
   seasonAtual = 0;
 
@@ -57,7 +57,7 @@ export class HeaderDetailComponent implements OnInit {
   }
 
   setRate() {
-    this.changeRateInput()
+    this.changeRateInput();
     if (this.rateInputControl.value.length == 0) {
       // deletar a nota eu acho
       return;
@@ -65,11 +65,11 @@ export class HeaderDetailComponent implements OnInit {
     let value = Number.parseFloat(this.rateInputControl.value);
     if (Number.isNaN(value)) {
       // caso usuario consigar por algo que não seja numero
-      return
+      return;
     }
     if (value > 10.0 || value < 0) {
-      // limitadores de valor 
-      return
+      // limitadores de valor
+      return;
     }
     if (value == this.mycontent?.myrating) {
       // não alterou a nota
@@ -170,76 +170,81 @@ export class HeaderDetailComponent implements OnInit {
 
   serieEpisodeWatched() {
     if (this.mycontent!.season == this.seasonAtual) {
-      return this.mycontent!.mark!
+      return this.mycontent!.mark!;
     }
     if (this.mycontent!.season! > this.seasonAtual) {
-      return this.serie.seasons[this.seasonAtual].episode_count
+      return this.serie.seasons[this.seasonAtual].episode_count;
     }
-    return 0
+    return 0;
   }
 
-  changeEpisode(episode? : number) {
-    let value : number
-    if(episode != undefined){
-      value = episode
+  changeEpisode(episode?: number) {
+    let value: number;
+    if (episode != undefined) {
+      value = episode;
     } else {
-      this.changeMarkInput()
+      this.changeMarkInput();
       if (this.episodeInputControl.value.length == 0) {
-        return
+        return;
       }
-      value = Number.parseFloat(this.episodeInputControl.value)
+      value = Number.parseFloat(this.episodeInputControl.value);
     }
     if (Number.isNaN(value) || Number.isInteger(value) == false) {
       // Usuario inseriu algo que não é um numero ou um numero inteiro
-      return
+      return;
     }
     if (value < 0) {
       // valor negativo
-      return
+      return;
     }
     if (this.type == 'SERIE') {
       // serie por causa das temporadas precisa de uma tratativa diferente
-      if (value == this.mycontent?.mark && this.seasonAtual == this.mycontent.season) {
+      if (
+        value == this.mycontent?.mark &&
+        this.seasonAtual == this.mycontent.season
+      ) {
         // usuario não alterou os campos
-        return
+        return;
       }
       if (value > this.serie.seasons[this.seasonAtual].episode_count) {
         // não fazer nada, episodio acima do limite da temporada
-        return
+        return;
       }
 
-      let contentCopy = this.mycontent!
-      contentCopy.mark = value
-      contentCopy.season = this.seasonAtual
+      let contentCopy = this.mycontent!;
+      contentCopy.mark = value;
+      contentCopy.season = this.seasonAtual;
       this.listService.setContentStopped(contentCopy).then((value) => {
-        this.mycontent = value
-      })
-      return
+        this.mycontent = value;
+      });
+      return;
     }
     // tratativas livros e anime
     if (value == this.mycontent?.mark) {
       // Não fazer nada livro serie
-      return
+      return;
     }
 
-
     if (this.anime && value > this.anime.episodes) {
-      // Não fazer nada, é um anime e o episodio acima do limite 
-      return
+      // Não fazer nada, é um anime e o episodio acima do limite
+      return;
     }
     if (this.book && value > this.book.volumeInfo.pageCount) {
       // Não fazer nada, é um livro e a pagina acima do limite
-      return
+      return;
     }
 
-    let contentCopy = this.mycontent!
-    contentCopy.mark = value
+    let contentCopy = this.mycontent!;
+    contentCopy.mark = value;
     this.listService.setContentStopped(contentCopy).then((value) => {
-      this.mycontent = value
-    })
+      this.mycontent = value;
+    });
   }
 
   changeMarkInput() {
-    this.markInput = !this.markInput
+    if (this.markInput == false) {
+      this.episodeInputControl.setValue(this.mycontent!.mark || 0);
+    }
+    this.markInput = !this.markInput;
   }
 }
