@@ -63,8 +63,16 @@ export class HeaderDetailComponent implements OnInit {
       return;
     }
     let value = Number.parseFloat(this.rateInputControl.value);
-
+    if (Number.isNaN(value)) {
+      // caso usuario consigar por algo que não seja numero
+      return
+    }
+    if (value > 10.0 || value < 0) {
+      // limitadores de valor 
+      return
+    }
     if (value == this.mycontent?.myrating) {
+      // não alterou a nota
       return;
     }
 
@@ -170,21 +178,33 @@ export class HeaderDetailComponent implements OnInit {
     return 0
   }
 
-  changeEpisode() {
-    this.changeMarkInput()
-    if (this.episodeInputControl.value.length == 0) {
+  changeEpisode(episode? : number) {
+    let value : number
+    if(episode){
+      value = episode
+    } else {
+      this.changeMarkInput()
+      if (this.episodeInputControl.value.length == 0) {
+        return
+      }
+      value = Number.parseFloat(this.episodeInputControl.value)
+    }
+    if (Number.isNaN(value) || Number.isInteger(value) == false) {
+      // Usuario inseriu algo que não é um numero ou um numero inteiro
       return
     }
-    let value = Number.parseFloat(this.episodeInputControl.value)
-
+    if (value < 0) {
+      // valor negativo
+      return
+    }
     if (this.type == 'SERIE') {
       // serie por causa das temporadas precisa de uma tratativa diferente
       if (value == this.mycontent?.mark && this.seasonAtual == this.mycontent.season) {
-        // não fazer nada
+        // usuario não alterou os campos
         return
       }
-      if(value > this.serie.seasons[this.seasonAtual].episode_count){
-        // não fazer nada, episodio acima do limite
+      if (value > this.serie.seasons[this.seasonAtual].episode_count) {
+        // não fazer nada, episodio acima do limite da temporada
         return
       }
 
@@ -194,7 +214,7 @@ export class HeaderDetailComponent implements OnInit {
       this.listService.setContentStopped(contentCopy).then((value) => {
         this.mycontent = value
       })
-
+      return
     }
     // tratativas livros e anime
     if (value == this.mycontent?.mark) {
@@ -202,13 +222,14 @@ export class HeaderDetailComponent implements OnInit {
       return
     }
 
-    if(this.anime && value > this.anime.episodes){
+
+    if (this.anime && value > this.anime.episodes) {
       // Não fazer nada, é um anime e o episodio acima do limite 
       return
     }
-    if(this.book && value > this.book.volumeInfo.pageCount){
+    if (this.book && value > this.book.volumeInfo.pageCount) {
       // Não fazer nada, é um livro e a pagina acima do limite
-      return 
+      return
     }
 
     let contentCopy = this.mycontent!

@@ -125,7 +125,7 @@
     <div class="my-score__flex">
       <p class="my-score__title">My Score</p>
       <p class="my-score__info" (click)="changeRateInput()" *ngIf="!rateInput">
-        {{ mycontent?.myrating || "N/A" }}
+        {{ mycontent?.myrating?.toFixed(5)?.substring(0, 4) || "N/A" }}
       </p>
       <div *ngIf="rateInput">
         <input
