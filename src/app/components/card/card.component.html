@@ -57,73 +57,86 @@
         <h1 class="card__title" (click)="navigateToDetail()">
           {{ anime.title }}
         </h1>
+
+        <!-- Lista de pessoas que recomendaram -->
+        <div class="tooltip">
+          <div class="card__share">
+            <svg class="card__share__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
+            </svg>
+            <p class="card__share__text">3</p>
+          </div>
+
+          <div class="tooltip__container">
+            <span class="tooltip__name">Luaasdnlak</span>
+            <span class="tooltip__id">#asdjkhjka</span>
+          </div>
+        </div>
       </div>
 
       <div class="card__side--buttons">
-        <div class="container-flex">
-          <!-- MyList -->
-          <div *ngIf=" pageCall == 'myList'">
-            <div *ngIf="inMyList && mycontent">
-              <svg class="episodes__icon">
-                <use href="assets/symbol-defs.svg#icon-remove"></use>
-              </svg>
-              <div> {{mycontent.mark}} / {{anime.episodes}} </div>
-              <svg class="episodes__icon">
-                <use href="assets/symbol-defs.svg#icon-add"></use>
-              </svg>
-            </div>
-            <div class="card__button-container card__button-container--recommend"
-              (click)="disableReceiveRecommendation(true)">
-              <p class="card__button-container__text">Recommend to...</p>
-              <svg class="card__button-container__icon">
-                <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-              </svg>
-            </div>
+        <!-- MyList -->
+        <div class="container-flex" *ngIf=" pageCall == 'myList'">
+          <div *ngIf="inMyList && mycontent">
+            <svg class="episodes__icon">
+              <use href="assets/symbol-defs.svg#icon-remove"></use>
+            </svg>
+            <div> {{mycontent.mark}} / {{anime.episodes}} </div>
+            <svg class="episodes__icon">
+              <use href="assets/symbol-defs.svg#icon-add"></use>
+            </svg>
           </div>
-          <!-- MyList end -->
-          <!-- Recommendation -->
-          <div *ngIf=" pageCall == 'recommendation'">
-            <div class="card__button-container card__button-container--recommend"
-              (click)="disableReceiveRecommendation(true)">
-              <p class="card__button-container__text">Remove</p>
-              <svg class="card__button-container__icon">
-                <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-              </svg>
-            </div>
-
-            <div class="card__button-container card__button-container--recommend"
-              (click)="disableReceiveRecommendation(true)">
-              <p class="card__button-container__text">Recommend to...</p>
-              <svg class="card__button-container__icon">
-                <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-              </svg>
-            </div>
+          <div class="card__button-container card__button-container--recommend"
+            (click)="disableReceiveRecommendation(true)">
+            <p class="card__button-container__text">Recommend to...</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
+            </svg>
           </div>
-          <!-- Recommendation end -->
-          <!-- Other -->
-          <div *ngIf="pageCall == 'other'">
-            <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
-              <p class="card__button-container__text">Add to list</p>
-              <svg class="card__button-container__icon">
-                <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
-              </svg>
-            </div>
-            <div class="card__button-container card__button-container--add" *ngIf="inMyList" (click)="deleteToMyList()">
-              <p class="card__button-container__text">Remove</p>
-              <svg class="card__button-container__icon">
-                <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
-              </svg>
-            </div>
-            <div class="card__button-container card__button-container--recommend"
-              (click)="disableReceiveRecommendation(true)">
-              <p class="card__button-container__text">Recommend to...</p>
-              <svg class="card__button-container__icon">
-                <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-              </svg>
-            </div>
-          </div>
-          <!-- Other end -->
         </div>
+        <!-- MyList end -->
+        <!-- Recommendation -->
+        <div class="container-flex" *ngIf="pageCall == 'recommendation'">
+          <div class="card__button-container card__button-container--recommend"
+            (click)="disableReceiveRecommendation(true)">
+            <p class="card__button-container__text">Remove</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
+            </svg>
+          </div>
+
+          <div class="card__button-container card__button-container--recommend"
+            (click)="disableReceiveRecommendation(true)">
+            <p class="card__button-container__text">Recommend to...</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
+            </svg>
+          </div>
+        </div>
+        <!-- Recommendation end -->
+        <!-- Other -->
+        <div class="container-flex" *ngIf="pageCall == 'other'">
+          <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
+            <p class="card__button-container__text">Add to list</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
+            </svg>
+          </div>
+          <div class="card__button-container card__button-container--add" *ngIf="inMyList" (click)="deleteToMyList()">
+            <p class="card__button-container__text">Remove</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
+            </svg>
+          </div>
+          <div class="card__button-container card__button-container--recommend"
+            (click)="disableReceiveRecommendation(true)">
+            <p class="card__button-container__text">Recommend to...</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
+            </svg>
+          </div>
+        </div>
+        <!-- Other end -->
       </div>
     </div>
     <app-recommendation type="ANIME" [contentId]="anime.mal_id.toString()" [isActiveRecommend]="isActiveRecommend"
@@ -189,73 +202,86 @@
         <h1 class="card__title" (click)="navigateToDetail()">
           {{ book.volumeInfo.title }}
         </h1>
+
+        <!-- Lista de pessoas que recomendaram -->
+        <div class="tooltip">
+          <div class="card__share">
+            <svg class="card__share__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
+            </svg>
+            <p class="card__share__text">3</p>
+          </div>
+
+          <div class="tooltip__container">
+            <span class="tooltip__name">Luaasdnlak</span>
+            <span class="tooltip__id">#asdjkhjka</span>
+          </div>
+        </div>
       </div>
 
       <div class="card__side--buttons">
-        <div class="container-flex">
-          <!-- MyList -->
-          <div *ngIf=" pageCall == 'myList'">
-            <div *ngIf="mycontent && book.complete">
-              <svg class="episodes__icon">
-                <use href="assets/symbol-defs.svg#icon-remove"></use>
-              </svg>
-              <div> {{mycontent.mark}} / {{book.complete.volumeInfo.pageCount}} </div>
-              <svg class="episodes__icon">
-                <use href="assets/symbol-defs.svg#icon-add"></use>
-              </svg>
-            </div>
-            <div class="card__button-container card__button-container--recommend"
-              (click)="disableReceiveRecommendation(true)">
-              <p class="card__button-container__text">Recommend to...</p>
-              <svg class="card__button-container__icon">
-                <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-              </svg>
-            </div>
+        <!-- MyList -->
+        <div class="container-flex" *ngIf=" pageCall == 'myList'">
+          <div *ngIf="mycontent && book.complete">
+            <svg class="episodes__icon">
+              <use href="assets/symbol-defs.svg#icon-remove"></use>
+            </svg>
+            <div> {{mycontent.mark}} / {{book.complete.volumeInfo.pageCount}} </div>
+            <svg class="episodes__icon">
+              <use href="assets/symbol-defs.svg#icon-add"></use>
+            </svg>
           </div>
-          <!-- MyList end -->
-          <!-- Recommendation -->
-          <div *ngIf=" pageCall == 'recommendation'">
-            <div class="card__button-container card__button-container--recommend"
-              (click)="disableReceiveRecommendation(true)">
-              <p class="card__button-container__text">Remove</p>
-              <svg class="card__button-container__icon">
-                <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-              </svg>
-            </div>
-
-            <div class="card__button-container card__button-container--recommend"
-              (click)="disableReceiveRecommendation(true)">
-              <p class="card__button-container__text">Recommend to...</p>
-              <svg class="card__button-container__icon">
-                <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-              </svg>
-            </div>
+          <div class="card__button-container card__button-container--recommend"
+            (click)="disableReceiveRecommendation(true)">
+            <p class="card__button-container__text">Recommend to...</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
+            </svg>
           </div>
-          <!-- Recommendation end -->
-          <!-- Other -->
-          <div *ngIf="pageCall == 'other'">
-            <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
-              <p class="card__button-container__text">Add to list</p>
-              <svg class="card__button-container__icon">
-                <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
-              </svg>
-            </div>
-            <div class="card__button-container card__button-container--add" *ngIf="inMyList" (click)="deleteToMyList()">
-              <p class="card__button-container__text">Remove</p>
-              <svg class="card__button-container__icon">
-                <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
-              </svg>
-            </div>
-            <div class="card__button-container card__button-container--recommend"
-              (click)="disableReceiveRecommendation(true)">
-              <p class="card__button-container__text">Recommend to...</p>
-              <svg class="card__button-container__icon">
-                <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-              </svg>
-            </div>
-          </div>
-          <!-- Other end -->
         </div>
+        <!-- MyList end -->
+        <!-- Recommendation -->
+        <div class="container-flex" *ngIf=" pageCall == 'recommendation'">
+          <div class="card__button-container card__button-container--recommend"
+            (click)="disableReceiveRecommendation(true)">
+            <p class="card__button-container__text">Remove</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
+            </svg>
+          </div>
+
+          <div class="card__button-container card__button-container--recommend"
+            (click)="disableReceiveRecommendation(true)">
+            <p class="card__button-container__text">Recommend to...</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
+            </svg>
+          </div>
+        </div>
+        <!-- Recommendation end -->
+        <!-- Other -->
+        <div class="container-flex" *ngIf="pageCall == 'other'">
+          <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
+            <p class="card__button-container__text">Add to list</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
+            </svg>
+          </div>
+          <div class="card__button-container card__button-container--add" *ngIf="inMyList" (click)="deleteToMyList()">
+            <p class="card__button-container__text">Remove</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
+            </svg>
+          </div>
+          <div class="card__button-container card__button-container--recommend"
+            (click)="disableReceiveRecommendation(true)">
+            <p class="card__button-container__text">Recommend to...</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
+            </svg>
+          </div>
+        </div>
+        <!-- Other end -->
       </div>
     </div>
   </div>
@@ -323,78 +349,92 @@
         <h1 class="card__title" (click)="navigateToDetail()">
           {{ serie.name }}
         </h1>
+
+        <!-- Lista de pessoas que recomendaram -->
+        <div class="tooltip">
+          <div class="card__share">
+            <svg class="card__share__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
+            </svg>
+            <p class="card__share__text">3</p>
+          </div>
+
+          <div class="tooltip__container">
+            <span class="tooltip__name">Luaasdnlak</span>
+            <span class="tooltip__id">#asdjkhjka</span>
+          </div>
+        </div>
       </div>
 
       <div class="card__side--buttons">
-        <div class="container-flex">
-          <!-- MyList -->
-          <div *ngIf=" pageCall == 'myList'">
-            <div *ngIf="mycontent && mycontent.season != undefined && serie.complete">
-              <svg class="episodes__icon">
-                <use href="assets/symbol-defs.svg#icon-remove"></use>
-              </svg>
-              <div> {{mycontent.mark}} / {{serie.complete.seasons[mycontent.season].episode_count}}</div>
-              <svg class="episodes__icon">
-                <use href="assets/symbol-defs.svg#icon-add"></use>
-              </svg>
-            </div>
-            <div class="card__button-container card__button-container--recommend"
-              (click)="disableReceiveRecommendation(true)">
-              <p class="card__button-container__text">Recommend to...</p>
-              <svg class="card__button-container__icon">
-                <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-              </svg>
-            </div>
+        <!-- MyList -->
+        <div class="container-flex" *ngIf=" pageCall == 'myList'">
+          <div *ngIf="mycontent && mycontent.season != undefined && serie.complete">
+            <svg class="episodes__icon">
+              <use href="assets/symbol-defs.svg#icon-remove"></use>
+            </svg>
+            <div> {{mycontent.mark}} / {{serie.complete.seasons[mycontent.season].episode_count}}</div>
+            <svg class="episodes__icon">
+              <use href="assets/symbol-defs.svg#icon-add"></use>
+            </svg>
           </div>
-          <!-- MyList end -->
-          <!-- Recommendation -->
-          <div *ngIf=" pageCall == 'recommendation'">
-            <div class="card__button-container card__button-container--recommend"
-              (click)="disableReceiveRecommendation(true)">
-              <p class="card__button-container__text">Remove</p>
-              <svg class="card__button-container__icon">
-                <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-              </svg>
-            </div>
-
-            <div class="card__button-container card__button-container--recommend"
-              (click)="disableReceiveRecommendation(true)">
-              <p class="card__button-container__text">Recommend to...</p>
-              <svg class="card__button-container__icon">
-                <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-              </svg>
-            </div>
+          <div class="card__button-container card__button-container--recommend"
+            (click)="disableReceiveRecommendation(true)">
+            <p class="card__button-container__text">Recommend to...</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
+            </svg>
           </div>
-          <!-- Recommendation end -->
-          <!-- My Friend List -->
-          <div *ngIf="pageCall == 'friendList'">
-
-          </div>
-          <!-- My Friend List -->
-          <!-- Other -->
-          <div *ngIf="pageCall == 'other'">
-            <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
-              <p class="card__button-container__text">Add to list</p>
-              <svg class="card__button-container__icon">
-                <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
-              </svg>
-            </div>
-            <div class="card__button-container card__button-container--add" *ngIf="inMyList" (click)="deleteToMyList()">
-              <p class="card__button-container__text">Remove</p>
-              <svg class="card__button-container__icon">
-                <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
-              </svg>
-            </div>
-            <div class="card__button-container card__button-container--recommend"
-              (click)="disableReceiveRecommendation(true)">
-              <p class="card__button-container__text">Recommend to...</p>
-              <svg class="card__button-container__icon">
-                <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-              </svg>
-            </div>
-          </div>
-          <!-- Other end -->
         </div>
+        <!-- MyList end -->
+        <!-- Recommendation -->
+        <div class="container-flex" *ngIf=" pageCall == 'recommendation'">
+
+          <div class="card__button-container card__button-container--recommend"
+            (click)="disableReceiveRecommendation(true)">
+            <p class="card__button-container__text">Remove</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
+            </svg>
+          </div>
+
+          <div class="card__button-container card__button-container--recommend"
+            (click)="disableReceiveRecommendation(true)">
+            <p class="card__button-container__text">Recommend to...</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
+            </svg>
+          </div>
+        </div>
+        <!-- Recommendation end -->
+        <!-- My Friend List -->
+        <div *ngIf="pageCall == 'friendList'">
+
+        </div>
+        <!-- My Friend List -->
+        <!-- Other -->
+        <div class="container-flex" *ngIf=" pageCall == 'other'">
+          <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
+            <p class="card__button-container__text">Add to list</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
+            </svg>
+          </div>
+          <div class="card__button-container card__button-container--add" *ngIf="inMyList" (click)="deleteToMyList()">
+            <p class="card__button-container__text">Remove</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
+            </svg>
+          </div>
+          <div class="card__button-container card__button-container--recommend"
+            (click)="disableReceiveRecommendation(true)">
+            <p class="card__button-container__text">Recommend to...</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
+            </svg>
+          </div>
+        </div>
+        <!-- Other end -->
       </div>
     </div>
     <app-recommendation type="SERIE" [contentId]="serie.id.toString()" [isActiveRecommend]="isActiveRecommend"
