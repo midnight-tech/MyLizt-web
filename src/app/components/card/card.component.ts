@@ -17,8 +17,10 @@ export class CardComponent implements OnInit {
   @Input() serie?: SerieCatalogo;
   @Input() book?: BookCatalogo;
   @Input() lookMyList: boolean = true;
+  @Input() pageCall? : 'myList' | 'recommendation' | 'friendList' | 'other' = 'other'
   inMyList: boolean = false;
-  mycontent?: content
+  mycontent?: content;
+  
 
   notRended = true;
 
@@ -28,15 +30,18 @@ export class CardComponent implements OnInit {
     public listService: ListService,
     public router: Router,
     public homeContext: HomeContextService
-  ) { }
+  ) {}
 
   ngOnInit() {
+    if(this.pageCall == undefined){
+      throw "pageCall in card can not be undefined"
+    }
     if (this.notRended) {
       if (this.lookMyList) {
         this.isInMyList();
       } else {
         this.inMyList = true;
-        this.getContent()
+        this.getContent();
       }
       this.notRended = false;
     }
@@ -48,22 +53,22 @@ export class CardComponent implements OnInit {
         .contentInMyList(this.anime.mal_id, 'ANIME')
         .then((value) => {
           if (value.exists) {
-            this.mycontent = value.data()!
-            this.mycontent.ref = value.ref
+            this.mycontent = value.data()!;
+            this.mycontent.ref = value.ref;
           }
         });
     } else if (this.book) {
       this.listService.contentInMyList(this.book.id, 'BOOK').then((value) => {
         if (value.exists) {
-          this.mycontent = value.data()!
-          this.mycontent.ref = value.ref
+          this.mycontent = value.data()!;
+          this.mycontent.ref = value.ref;
         }
       });
     } else if (this.serie) {
       this.listService.contentInMyList(this.serie.id, 'SERIE').then((value) => {
         if (value.exists) {
-          this.mycontent = value.data()!
-          this.mycontent.ref = value.ref
+          this.mycontent = value.data()!;
+          this.mycontent.ref = value.ref;
         }
       });
     }
@@ -116,26 +121,26 @@ export class CardComponent implements OnInit {
       this.listService
         .contentInMyList(this.anime.mal_id, 'ANIME')
         .then((value) => {
-          this.inMyList = value.exists
+          this.inMyList = value.exists;
           if (value.exists) {
-            this.mycontent = value.data()!
-            this.mycontent.ref = value.ref
+            this.mycontent = value.data()!;
+            this.mycontent.ref = value.ref;
           }
         });
     } else if (this.book) {
       this.listService.contentInMyList(this.book.id, 'BOOK').then((value) => {
         this.inMyList = value.exists;
         if (value.exists) {
-          this.mycontent = value.data()!
-          this.mycontent.ref = value.ref
+          this.mycontent = value.data()!;
+          this.mycontent.ref = value.ref;
         }
       });
     } else if (this.serie) {
       this.listService.contentInMyList(this.serie.id, 'SERIE').then((value) => {
         this.inMyList = value.exists;
         if (value.exists) {
-          this.mycontent = value.data()!
-          this.mycontent.ref = value.ref
+          this.mycontent = value.data()!;
+          this.mycontent.ref = value.ref;
         }
       });
     }
@@ -154,4 +159,54 @@ export class CardComponent implements OnInit {
   disableReceiveRecommendation(value: boolean) {
     this.isActiveRecommend = value;
   }
+
+  // changeEpisode(episode: number) {
+  //   let value = episode;
+  //   if (Number.isNaN(value) || Number.isInteger(value) == false) {
+  //     // Usuario inseriu algo que não é um numero ou um numero inteiro
+  //     return;
+  //   }
+  //   if (value < 0) {
+  //     // valor negativo
+  //     return;
+  //   }
+  //   if (this.serie && this.serie.complete && this.mycontent && this.mycontent.season) {
+  //     // serie por causa das temporadas precisa de uma tratativa diferente
+  //     if (value == this.mycontent?.mark) {
+  //       // usuario não alterou os campos
+  //       return;
+  //     }
+  //     if (value > this.serie.complete.seasons[this.mycontent.season].episode_count) {
+  //       // não fazer nada, episodio acima do limite da temporada
+  //       return;
+  //     }
+
+  //     let contentCopy = this.mycontent!;
+  //     contentCopy.mark = value;
+  //     this.listService.setContentStopped(contentCopy).then((value) => {
+  //       this.mycontent = value;
+  //     });
+  //     return;
+  //   }
+  //   // tratativas livros e anime
+  //   if (value == this.mycontent?.mark) {
+  //     // Não fazer nada livro serie
+  //     return;
+  //   }
+
+  //   if (this.anime && value > this.anime.episodes) {
+  //     // Não fazer nada, é um anime e o episodio acima do limite
+  //     return;
+  //   }
+  //   if (this.book && value > this.book.complete.volumeInfo.pageCount) {
+  //     // Não fazer nada, é um livro e a pagina acima do limite
+  //     return;
+  //   }
+
+  //   let contentCopy = this.mycontent!;
+  //   contentCopy.mark = value;
+  //   this.listService.setContentStopped(contentCopy).then((value) => {
+  //     this.mycontent = value;
+  //   });
+  // }
 }

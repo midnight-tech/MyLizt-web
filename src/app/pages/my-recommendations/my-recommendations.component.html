@@ -13,15 +13,15 @@
   <div class="list">
     <div class="list__card" *ngFor="let content of homeContext.myRecListAnimePage">
       <!-- {{ content.title }} -->
-      <app-card [anime]="content.anime" [lookMyList]="false"></app-card>
+      <app-card [anime]="content.anime" [lookMyList]="false" pageCall="recommendation"></app-card>
     </div>
     <div class="list__card" *ngFor="let content of homeContext.myRecListSeriePage">
       <!-- {{ content.volumeInfo.title }} -->
-      <app-card [serie]="content.serie" [lookMyList]="false"></app-card>
+      <app-card [serie]="content.serie" [lookMyList]="false" pageCall="recommendation"></app-card>
     </div>
     <div class="list__card" *ngFor="let content of homeContext.myRecListBookPage">
       <!-- {{ content.name }} -->
-      <app-card [book]="content.book" [lookMyList]="false"></app-card>
+      <app-card [book]="content.book" [lookMyList]="false" pageCall="recommendation"></app-card>
     </div>
   </div>
 

@@ -10,15 +10,15 @@
   <div class="list">
     <div class="list__card" *ngFor="let content of homeContext.friendListAnimePage">
       <!-- {{ content.title }} -->
-      <app-card [anime]="content.anime" [lookMyList]=false ></app-card>
+      <app-card [anime]="content.anime" [lookMyList]=false pageCall='friendList' ></app-card>
     </div>
     <div class="list__card" *ngFor="let content of homeContext.friendListBookPage">
       <!-- {{ content.volumeInfo.title }} -->
-      <app-card [book]="content.book" [lookMyList]=false></app-card>
+      <app-card [book]="content.book" [lookMyList]=false pageCall='friendList'></app-card>
     </div>
     <div class="list__card" *ngFor="let content of homeContext.friendListSeriePage">
       <!-- {{ content.name }} -->
-      <app-card [serie]="content.serie" [lookMyList]=false></app-card>
+      <app-card [serie]="content.serie" [lookMyList]=false pageCall='friendList'></app-card>
     </div>
   </div>
 
