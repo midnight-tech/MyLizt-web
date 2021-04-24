@@ -186,9 +186,70 @@
       transform: scale(1.05);
     }
   }
+
+  &__share {
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    color: $white;
+    fill: $white;
+
+    &__text {
+      font-size: 1.2rem;
+      color: currentColor;
+    }
+
+    &__icon {
+      height: 1rem;
+      width: 1rem;
+      color: currentColor;
+    }
+
+    &:hover {
+      cursor: pointer;
+      color: $primary1;
+      fill: $primary1;
+    }
+  }
 }
 
 .container-flex {
   display: grid;
   grid-template-columns: max-content max-content;
+}
+
+.tooltip {
+  position: relative;
+  display: flex;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    visibility: hidden;
+    min-width: 12rem;
+    max-width: 100%;
+    bottom: 100%;
+    background-color: rgba($black4, 0.98);
+    color: $white;
+    text-align: left;
+    border-radius: $the-border-radius;
+    padding: 0.5rem;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+  }
+
+  &__name {
+    font-size: 1.4rem;
+  }
+
+  &__id {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+  }
+}
+
+.card__share:hover ~ .tooltip__container {
+  visibility: visible;
 }
