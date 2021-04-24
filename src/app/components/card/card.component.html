@@ -409,7 +409,7 @@
             <svg class="episodes__icon">
               <use href="assets/symbol-defs.svg#icon-remove"></use>
             </svg>
-            <div> {{mycontent.mark}} / {{serie.complete.seasons[mycontent.season].episode_count}}</div>
+            <div> S{{mycontent.season}}EP{{mycontent.mark}} / {{serie.complete.seasons[mycontent.season].episode_count}}</div>
             <svg class="episodes__icon">
               <use href="assets/symbol-defs.svg#icon-add"></use>
             </svg>
@@ -445,7 +445,7 @@
         <!-- My Friend List -->
         <div class="container-flex" *ngIf=" pageCall == 'friendList'">
           <div *ngIf="friendContent && friendContent.season != undefined && serie.complete">
-            <div> {{friendContent.mark}} / {{serie.complete.seasons[friendContent.season].episode_count}}</div>
+            <div> S{{friendContent.season}}EP{{friendContent.mark}} / {{serie.complete.seasons[friendContent.season].episode_count}}</div>
           </div>
           <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
             <p class="card__button-container__text">Add to list</p>

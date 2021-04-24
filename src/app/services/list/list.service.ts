@@ -240,6 +240,7 @@ export class ListService {
       content = await friendQuery.docs[0]
         .data()
         .myList.collection(type.toLowerCase())
+        .where('recommended', '==', null)
         .orderBy('watched')
         .startAfter(lastContent)
         .limit(60)
@@ -249,6 +250,7 @@ export class ListService {
       content = await friendQuery.docs[0]
         .data()
         .myList.collection(type.toLowerCase())
+        .where('recommended', '==', null)
         .orderBy('watched')
         .limit(60)
         .withConverter(contentConverter)
