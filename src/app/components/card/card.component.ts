@@ -18,6 +18,7 @@ export class CardComponent implements OnInit {
   @Input() book?: BookCatalogo;
   @Input() lookMyList: boolean = true;
   @Input() pageCall? : 'myList' | 'recommendation' | 'friendList' | 'other' = 'other'
+  @Input() friendContent? : content
   inMyList: boolean = false;
   mycontent?: content;
   
@@ -35,6 +36,11 @@ export class CardComponent implements OnInit {
   ngOnInit() {
     if(this.pageCall == undefined){
       throw "pageCall in card can not be undefined"
+    }
+    if(this.pageCall == 'friendList'){
+      if(this.friendContent == undefined){
+        throw "friendContent undefined"
+      }
     }
     if (this.notRended) {
       if (this.lookMyList) {
