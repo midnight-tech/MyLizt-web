@@ -1,0 +1,77 @@
+@import "/src/app/sass/abstract/variables";
+
+.fixed-container {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  position: absolute;
+  top: 35%;
+  padding: 2rem;
+  background-color: $black4;
+  border-radius: $the-border-radius;
+  z-index: 20;
+
+  &__text {
+    font-size: 1.6rem;
+    color: $white;
+    margin-bottom: 2rem;
+  }
+
+  &__buttons {
+    color: $black3;
+    fill: $black3;
+    display: flex;
+    justify-content: space-around;
+
+    &__button {
+      padding: 0.5rem;
+      background-color: transparent;
+      border-radius: $the-border-radius;
+      border-bottom: 0.2rem solid rgba($primary3, 1);
+      border-right: 0.2rem solid rgba($primary3, 1);
+      box-shadow: 0 0.5rem 1rem -0.5rem rgba($black, 1);
+      transition: transform 0.4s ease;
+      cursor: pointer;
+      align-items: center;
+
+      &--1 {
+        background-image: linear-gradient(105deg, $primary1 57%, $primary2 43%);
+      }
+
+      &--2 {
+        background-image: linear-gradient(105deg, $primary1 54%, $primary2 46%);
+      }
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+
+    &__text {
+      font-size: 1.6rem;
+      margin-right: 1rem;
+    }
+
+    &__icon {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+}
+
+.membrana {
+  background-color: rgba($black3, 0.9);
+}
+
+.hidden {
+  visibility: hidden;
+}

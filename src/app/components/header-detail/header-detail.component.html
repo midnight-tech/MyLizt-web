@@ -194,4 +194,6 @@
   <app-recommendation *ngIf="book" type="BOOK" [contentId]="book.id" [isActiveRecommend]="isActiveRecommend"
     (isActiveEvent)="disableReceiveRecommendation($event)">
   </app-recommendation>
+
+  <app-content-completed></app-content-completed>
 </div>

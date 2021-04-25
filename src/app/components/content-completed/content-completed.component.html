@@ -1,0 +1,22 @@
+<div [ngClass]="{ hidden: !isActiveCompleted }" class="fixed-container">
+  <div class="fixed-container membrana" (click)="changeActiveCompleted()"></div>
+  <div class="content">
+    <p class="content__text">Do you want to set this entry as completed?</p>
+
+    <div class="content__buttons">
+      <div class="content__buttons content__buttons__button content__buttons__button--1">
+        <p class="content__buttons__text">Yes</p>
+        <svg class="content__buttons__icon">
+          <use xlink:href="assets/symbol-defs.svg#icon-check"></use>
+        </svg>
+      </div>
+
+      <div class="content__buttons content__buttons__button content__buttons__button--2">
+        <p class="content__buttons__text">No</p>
+        <svg class="content__buttons__icon">
+          <use xlink:href="assets/symbol-defs.svg#icon-clear"></use>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>

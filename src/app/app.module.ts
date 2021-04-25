@@ -43,6 +43,7 @@ import { FriendListComponent } from './pages/friend-list/friend-list.component';
 import { MyRecommendationsComponent } from './pages/my-recommendations/my-recommendations.component';
 import { AutoFocusDirectiveDirective } from './directives/autoFocusDirective.directive';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { ContentCompletedComponent } from './components/content-completed/content-completed.component';
 
 const maskConfigFunction: () => Partial<IConfig> = () => {
   return {
@@ -149,6 +150,7 @@ const routes: Routes = [
     FriendListComponent,
     MyRecommendationsComponent,
     AutoFocusDirectiveDirective,
+    ContentCompletedComponent,
   ],
   imports: [
     BrowserModule,
