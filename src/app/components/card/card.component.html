@@ -77,14 +77,8 @@
       <div class="card__side--buttons">
         <!-- MyList -->
         <div class="container-flex" *ngIf=" pageCall == 'myList'">
-          <div *ngIf="inMyList && mycontent">
-            <svg class="episodes__icon">
-              <use href="assets/symbol-defs.svg#icon-remove"></use>
-            </svg>
-            <div> {{mycontent.mark}} / {{anime.episodes}} </div>
-            <svg class="episodes__icon">
-              <use href="assets/symbol-defs.svg#icon-add"></use>
-            </svg>
+          <div *ngIf="inMyList && mycontent" class="card__epi-pag">
+            <span class="card__epi-pag__text">Ep. &nbsp; {{mycontent.mark}} / {{anime.episodes}} </span>
           </div>
           <div class="card__button-container card__button-container--recommend"
             (click)="disableReceiveRecommendation(true)">
@@ -240,14 +234,9 @@
       <div class="card__side--buttons">
         <!-- MyList -->
         <div class="container-flex" *ngIf=" pageCall == 'myList'">
-          <div *ngIf="mycontent && book.complete">
-            <svg class="episodes__icon">
-              <use href="assets/symbol-defs.svg#icon-remove"></use>
-            </svg>
-            <div> {{mycontent.mark}} / {{book.complete.volumeInfo.pageCount}} </div>
-            <svg class="episodes__icon">
-              <use href="assets/symbol-defs.svg#icon-add"></use>
-            </svg>
+          <div *ngIf="mycontent && book.complete" class="card__epi-pag">
+            <span class="card__epi-pag__text">Pag. &nbsp; {{mycontent.mark}} / {{book.complete.volumeInfo.pageCount}}
+            </span>
           </div>
           <div class="card__button-container card__button-container--recommend"
             (click)="disableReceiveRecommendation(true)">
@@ -405,14 +394,11 @@
       <div class="card__side--buttons">
         <!-- MyList -->
         <div class="container-flex" *ngIf=" pageCall == 'myList'">
-          <div *ngIf="mycontent && mycontent.season != undefined && serie.complete">
-            <svg class="episodes__icon">
-              <use href="assets/symbol-defs.svg#icon-remove"></use>
-            </svg>
-            <div> S{{mycontent.season}}EP{{mycontent.mark}} / {{serie.complete.seasons[mycontent.season].episode_count}}</div>
-            <svg class="episodes__icon">
-              <use href="assets/symbol-defs.svg#icon-add"></use>
-            </svg>
+          <div *ngIf="mycontent && mycontent.season != undefined && serie.complete" class="card__epi-pag">
+            <span class="card__epi-pag__text">S &nbsp; {{mycontent.season}} &nbsp; | &nbsp; Ep. &nbsp;
+              {{mycontent.mark}}
+              /
+              {{serie.complete.seasons[mycontent.season].episode_count}} </span>
           </div>
           <div class="card__button-container card__button-container--recommend"
             (click)="disableReceiveRecommendation(true)">
@@ -445,7 +431,8 @@
         <!-- My Friend List -->
         <div class="container-flex" *ngIf=" pageCall == 'friendList'">
           <div *ngIf="friendContent && friendContent.season != undefined && serie.complete">
-            <div> S{{friendContent.season}}EP{{friendContent.mark}} / {{serie.complete.seasons[friendContent.season].episode_count}}</div>
+            <div> S{{friendContent.season}}EP{{friendContent.mark}} /
+              {{serie.complete.seasons[friendContent.season].episode_count}}</div>
           </div>
           <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
             <p class="card__button-container__text">Add to list</p>
