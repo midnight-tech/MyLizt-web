@@ -1,4 +1,3 @@
-
 <div class="container-grid">
   <div class="title">
     <h1 *ngIf="type == 'ANIME'" class="title__text">My Anime</h1>
@@ -7,25 +6,26 @@
   </div>
 
   <div class="pagination pagination--top">
-    <app-pagination [atualPage]="homeContext.page" [totalPage]="homeContext.totalPage" [pageCalled]="'myContent'" [type]="type"></app-pagination>
+    <app-pagination pageCalled="myContent" (visibleContentAnime)="anime = $event" (visibleContentBook)="book = $event"
+      (visibleContentSerie)="serie = $event" [type]="type"></app-pagination>
   </div>
 
   <div class="list">
-    <div class="list__card" *ngFor="let content of homeContext.myListAnimePage">
+    <div class="list__card" *ngFor="let content of anime">
       <!-- {{ content.title }} -->
       <app-card [anime]="content.anime" [lookMyList]="false" pageCall="myList"></app-card>
     </div>
-    <div class="list__card" *ngFor="let content of homeContext.myListSeriePage">
+    <div class="list__card" *ngFor="let content of serie">
       <!-- {{ content.volumeInfo.title }} -->
       <app-card [serie]="content.serie" [lookMyList]="false" pageCall="myList"></app-card>
     </div>
-    <div class="list__card" *ngFor="let content of homeContext.myListBookPage">
+    <div class="list__card" *ngFor="let content of book">
       <!-- {{ content.name }} -->
       <app-card [book]="content.book" [lookMyList]="false" pageCall="myList"></app-card>
     </div>
   </div>
 
   <div class="pagination pagination--bottom">
-    <app-pagination [atualPage]="homeContext.page" [totalPage]="homeContext.totalPage" [pageCalled]="'myContent'" [type]="type"></app-pagination>
+    <!-- <app-pagination  [pageCalled]="'myContent'" [type]="type"></app-pagination> -->
   </div>
 </div>

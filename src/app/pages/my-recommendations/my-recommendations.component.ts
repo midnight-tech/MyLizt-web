@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { search } from 'src/app/data/interfaces';
+import { BookCatalogo } from 'src/app/data/BookCatalogo';
+import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
+import { content, search } from 'src/app/data/interfaces';
+import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { HomeContextService } from 'src/app/services/home-context/home.service';
 
 @Component({
@@ -9,6 +12,10 @@ import { HomeContextService } from 'src/app/services/home-context/home.service';
   styleUrls: ['./my-recommendations.component.scss']
 })
 export class MyRecommendationsComponent implements OnInit {
+
+  anime: { anime: AnimeCatalogo; content: content }[] = [];
+  serie: { serie: SerieCatalogo; content: content }[] = [];
+  book: { book: BookCatalogo; content: content }[] = [];
 
   type! : search 
 
@@ -19,7 +26,6 @@ export class MyRecommendationsComponent implements OnInit {
   ) {
     actRoute.params.subscribe((value) => {
       this.type = value.type.toUpperCase()
-      this.homeContext.changePage(1,'myRec',this.type as search)
     })
   }
 

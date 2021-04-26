@@ -1,12 +1,15 @@
 <nav aria-label="Page navigation example">
   <ul class="pagination">
-    <li class="page-item" (click)="homeContext.changePage(atualPage - 1, pageCalled,type)">
+    <li class="page-item" (click)="changePage(atualPage - 1)">
       <a class="page-link" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
-      <li class="page-item" *ngFor="let page of pages" [ngClass]="{activatedPage : homeContext.page == page, activatedClass : activated }" (click)="homeContext.changePage(page,pageCalled,type)" ><a [ngClass]="{activatedPage : atualPage == page}" class="page-link">{{page}}</a></li>
-    <li class="page-item" (click)="homeContext.changePage(atualPage + 1, pageCalled,type)">
+    <li class="page-item" *ngFor="let page of pages"
+      [ngClass]="{activatedPage : atualPage == page, activatedClass : activated }"
+      (click)="changePage(page)"><a [ngClass]="{activatedPage : atualPage == page}"
+        class="page-link">{{page}}</a></li>
+    <li class="page-item" (click)="changePage(atualPage + 1)">
       <a class="page-link" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>

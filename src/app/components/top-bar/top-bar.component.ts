@@ -94,11 +94,8 @@ export class TopBarComponent implements OnInit, OnChanges {
   totalSearch() {
     if (this.searchField.value.length >= 3) {
       this.isActiveSearch = false;
-      this.homeContext.pageSearch(
-        this.searchField.value,
-        1,
-        this.searchOptions[this.searchIndex]
-      );
+      this.homeContext.query = this.searchField.value
+      this.homeContext.searchType = this.searchOptions[this.searchIndex]
       this.router.navigateByUrl('home/search');
     }
   }
