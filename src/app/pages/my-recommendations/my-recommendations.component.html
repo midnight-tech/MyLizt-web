@@ -7,25 +7,26 @@
   </div>
 
   <div class="pagination pagination--top">
-    <app-pagination [atualPage]="homeContext.page" [totalPage]="homeContext.totalPage" pageCalled="myRec" [type]="type"></app-pagination>
+    <app-pagination pageCalled="myRec" (visibleContentAnime)="anime = $event" (visibleContentBook)="book = $event"
+    (visibleContentSerie)="serie = $event" [type]="type"></app-pagination>
   </div>
 
   <div class="list">
-    <div class="list__card" *ngFor="let content of homeContext.myRecListAnimePage">
+    <div class="list__card" *ngFor="let content of anime">
       <!-- {{ content.title }} -->
       <app-card [anime]="content.anime" [lookMyList]="false" pageCall="recommendation"></app-card>
     </div>
-    <div class="list__card" *ngFor="let content of homeContext.myRecListSeriePage">
+    <div class="list__card" *ngFor="let content of serie">
       <!-- {{ content.volumeInfo.title }} -->
       <app-card [serie]="content.serie" [lookMyList]="false" pageCall="recommendation"></app-card>
     </div>
-    <div class="list__card" *ngFor="let content of homeContext.myRecListBookPage">
+    <div class="list__card" *ngFor="let content of book">
       <!-- {{ content.name }} -->
       <app-card [book]="content.book" [lookMyList]="false" pageCall="recommendation"></app-card>
     </div>
   </div>
 
   <div class="pagination pagination--bottom">
-    <app-pagination [atualPage]="homeContext.page" [totalPage]="homeContext.totalPage" pageCalled="myRec" [type]="type"></app-pagination>
+    <!-- <app-pagination  pageCalled="myRec" [type]="type"></app-pagination> -->
   </div>
 </div>

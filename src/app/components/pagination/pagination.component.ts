@@ -1,12 +1,22 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
-import { search } from 'src/app/data/interfaces';
+import { BookCatalogo } from 'src/app/data/BookCatalogo';
+import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
+import { content, search } from 'src/app/data/interfaces';
+import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { HomeContextService } from 'src/app/services/home-context/home.service';
+import { CatalogoPaginationService } from 'src/app/services/pagination/catalogo-pagination.service';
+import { FriendListPaginationService } from 'src/app/services/pagination/friend-list-pagination.service';
+import { MyListPaginationService } from 'src/app/services/pagination/my-list-pagination.service';
+import { MyRecsPaginationService } from 'src/app/services/pagination/myRecs-pagination.service';
+import { SearchPaginationService } from 'src/app/services/pagination/search-pagination.service';
 
 @Component({
   selector: 'app-pagination',
@@ -14,8 +24,23 @@ import { HomeContextService } from 'src/app/services/home-context/home.service';
   styleUrls: ['./pagination.component.scss'],
 })
 export class PaginationComponent implements OnInit, OnChanges {
-  @Input() atualPage: number = 1;
-  @Input() totalPage: number = 8;
+  @Output() visibleListAnime = new EventEmitter<AnimeCatalogo[]>();
+  @Output() visibleListSerie = new EventEmitter<SerieCatalogo[]>();
+  @Output() visibleListBook = new EventEmitter<BookCatalogo[]>();
+
+  @Output() visibleContentAnime = new EventEmitter<
+    { anime: AnimeCatalogo; content: content }[]
+  >();
+  @Output() visibleContentSerie = new EventEmitter<
+    { serie: SerieCatalogo; content: content }[]
+  >();
+  @Output() visibleContentBook = new EventEmitter<
+    { book: BookCatalogo; content: content }[]
+  >();
+
+  @Input() type?: search;
+  @Input() friendId: string = '';
+  @Input() query?: string;
   @Input() pageCalled?:
     | 'search'
     | 'myContent'
@@ -23,22 +48,59 @@ export class PaginationComponent implements OnInit, OnChanges {
     | 'catalogo'
     | 'friendList'
     | 'myRec';
-  @Input() type!: search;
-  @Input() friendId: string = '';
+  atualPage: number = 1;
+  totalPage: number = 8;
   pages: number[] = [];
-  init = true;
+  init = false;
   activated = false;
 
-  constructor(public homeContext: HomeContextService) {
+  constructor(
+    public homeContext: HomeContextService,
+    private searchPagination: SearchPaginationService,
+    private catalogoPagination: CatalogoPaginationService,
+    private friendListPagination: FriendListPaginationService,
+    private myListPagination: MyListPaginationService,
+    private myRecPagination: MyRecsPaginationService
+  ) {
     if (this.pageCalled) {
       this.pageCalled = 'search';
     }
   }
 
-  initPages() {
-    let maxPage =
-      this.homeContext.totalPage <= 8 ? this.homeContext.totalPage : 8;
-    if (this.homeContext.totalPage == 0) {
+  async initPages() {
+    // Quando o componente inicializa
+    switch (this.pageCalled) {
+      case 'search':
+      case 'catalogo':
+        this.changePageSearch(this.pageCalled);
+        break;
+      case 'friendList':
+      case 'myContent':
+      case 'myRec':
+        this.changePageFriendList(this.pageCalled);
+        break;
+    }
+  }
+
+  async changePage(page: number) {
+    // Execulta a cada troca de pagina
+    this.atualPage = page;
+    switch (this.pageCalled) {
+      case 'search':
+      case 'catalogo':
+        this.changePageSearch(this.pageCalled, page);
+        break;
+      case 'friendList':
+      case 'myContent':
+      case 'myRec':
+        this.changePageFriendList(this.pageCalled, page);
+    }
+  }
+
+  paginationInterfaceInit(totalPage: number) {
+    // prepara a interface
+    let maxPage = totalPage <= 8 ? totalPage : 8;
+    if (totalPage == 0) {
       maxPage = 8;
       this.activated = false;
     } else {
@@ -49,14 +111,15 @@ export class PaginationComponent implements OnInit, OnChanges {
     }
   }
 
-  changePage(page: number) {
+  paginationChageInterface() {
+    // prepara a interface
     let startPage = 1;
     let endPage: number;
-    if (page > 2) {
-      startPage = page - 2;
+    if (this.atualPage > 2) {
+      startPage = this.atualPage - 2;
     }
 
-    if (page + 7 > this.totalPage) {
+    if (this.atualPage + 7 > this.totalPage) {
       endPage = this.totalPage;
       if (this.totalPage - 10 >= 1) {
         startPage = this.totalPage - 9;
@@ -64,7 +127,7 @@ export class PaginationComponent implements OnInit, OnChanges {
         startPage = 1;
       }
     } else {
-      endPage = page + 7;
+      endPage = this.atualPage + 7;
     }
     this.pages = [];
     for (let i = startPage; i <= endPage; i += 1) {
@@ -72,12 +135,180 @@ export class PaginationComponent implements OnInit, OnChanges {
     }
     // seleciona a page
   }
+
+  async changePageSearch(pageCalled: 'search' | 'catalogo', page?: number) {
+    // Paginação na tela search
+    if (this.query == undefined) {
+      throw 'query canot be undefined in search page';
+    }
+    if (this.type == undefined) {
+      throw 'type cannot be undefined in search page';
+    }
+    let result:
+      | {
+          result: AnimeCatalogo[];
+          totalPage: number;
+        }
+      | {
+          result: BookCatalogo[];
+          totalPage: number;
+        }
+      | {
+          result: SerieCatalogo[];
+          totalPage: number;
+        };
+    switch (pageCalled) {
+      case 'catalogo':
+        result = await this.catalogoPagination.pageCatalogo(
+          page != undefined ? page : 1,
+          this.type
+        );
+        break;
+      case 'search':
+        result = await this.searchPagination.pageSearch(
+          this.query,
+          page != undefined ? page : 1,
+          this.type
+        );
+    }
+    switch (this.type) {
+      case 'ANIME':
+        this.visibleListAnime.emit(result.result as AnimeCatalogo[]);
+        this.totalPage = result.totalPage;
+        break;
+      case 'SERIE':
+        this.visibleListSerie.emit(result.result as SerieCatalogo[]);
+        this.totalPage = result.totalPage;
+        break;
+      case 'BOOK':
+        this.visibleListBook.emit(result.result as BookCatalogo[]);
+        this.totalPage = result.totalPage;
+    }
+    if (page != undefined) {
+      this.paginationChageInterface();
+    } else {
+      this.paginationInterfaceInit(result.totalPage);
+    }
+  }
+
+  async changePageFriendList(
+    pageCalled: 'myContent' | 'friendList' | 'myRec',
+    page?: number
+  ) {
+    // Paginação na tela friendList
+
+    if (this.type == undefined) {
+      throw 'type cannot be undefined';
+    }
+
+    let result:
+      | false
+      | {
+          result: {
+            anime: AnimeCatalogo;
+            content: content;
+          }[];
+          totalPage: number;
+        }
+      | {
+          result: {
+            serie: SerieCatalogo;
+            content: content;
+          }[];
+          totalPage: number;
+        }
+      | {
+          result: {
+            book: BookCatalogo;
+            content: content;
+          }[];
+          totalPage: number;
+        };
+
+    switch (pageCalled) {
+      case 'friendList':
+        result = await this.friendListPagination.friendListPage(
+          page != undefined ? page : 1,
+          this.type,
+          this.friendId
+        );
+        break;
+      case 'myContent':
+        result = await this.myListPagination.myListPage(
+          page != undefined ? page : 1,
+          this.type
+        );
+        break;
+      case 'myRec':
+        result = await this.myRecPagination.MyRecListPage(
+          page != undefined ? page : 1,
+          this.type
+        );
+        break;
+    }
+
+    if (result == false) {
+      return;
+    }
+    switch (this.type) {
+      case 'ANIME':
+        this.visibleContentAnime.emit(
+          result.result as {
+            anime: AnimeCatalogo;
+            content: content;
+          }[]
+        );
+        this.totalPage = result.totalPage;
+        break;
+      case 'SERIE':
+        this.visibleContentSerie.emit(
+          result.result as {
+            serie: SerieCatalogo;
+            content: content;
+          }[]
+        );
+        this.totalPage = result.totalPage;
+        break;
+      case 'BOOK':
+        this.visibleContentBook.emit(
+          result.result as {
+            book: BookCatalogo;
+            content: content;
+          }[]
+        );
+        this.totalPage = result.totalPage;
+    }
+    if (page != undefined) {
+      this.paginationChageInterface();
+    } else {
+      this.paginationInterfaceInit(result.totalPage);
+    }
+  }
+
   ngOnChanges(changes: SimpleChanges) {
-    this.changePage(this.atualPage);
+    if (this.init) {
+      if (changes.query || changes.type) {
+        this.pages = [];
+        this.clean();
+        this.atualPage = 1;
+        this.initPages();
+        return;
+      }
+    }
+  }
+
+  clean() {
+    this.visibleListAnime.emit([]);
+    this.visibleListBook.emit([]);
+    this.visibleListSerie.emit([]);
+    this.visibleContentAnime.emit([]);
+    this.visibleContentSerie.emit([]);
+    this.visibleContentBook.emit([]);
   }
 
   ngOnInit() {
     this.initPages();
+    this.init = true;
   }
 
   // my-list page

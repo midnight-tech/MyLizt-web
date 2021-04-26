@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { search } from 'src/app/data/interfaces';
+import { BookCatalogo } from 'src/app/data/BookCatalogo';
+import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
+import { content, search } from 'src/app/data/interfaces';
+import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { HomeContextService } from 'src/app/services/home-context/home.service';
 
 @Component({
@@ -13,6 +16,10 @@ export class FriendListComponent implements OnInit {
   type!: search
   friendId: string = ""
 
+  anime : {anime : AnimeCatalogo, content : content}[] = []
+  serie : {serie : SerieCatalogo, content : content}[] = []
+  book : {book : BookCatalogo, content : content}[] = []
+
   constructor(
     actRoute: ActivatedRoute,
     public homeContext: HomeContextService,
@@ -21,8 +28,6 @@ export class FriendListComponent implements OnInit {
     actRoute.params.subscribe((value) => {
       this.type = value.type.toUpperCase() as search
       this.friendId = value.friendId
-      homeContext.cleanContentMyList()
-      this.homeContext.changePage(1, 'friendList', this.type as search,this.friendId)
     })
   }
 
