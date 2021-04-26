@@ -166,53 +166,18 @@ export class CardComponent implements OnInit {
     this.isActiveRecommend = value;
   }
 
-  // changeEpisode(episode: number) {
-  //   let value = episode;
-  //   if (Number.isNaN(value) || Number.isInteger(value) == false) {
-  //     // Usuario inseriu algo que não é um numero ou um numero inteiro
-  //     return;
-  //   }
-  //   if (value < 0) {
-  //     // valor negativo
-  //     return;
-  //   }
-  //   if (this.serie && this.serie.complete && this.mycontent && this.mycontent.season) {
-  //     // serie por causa das temporadas precisa de uma tratativa diferente
-  //     if (value == this.mycontent?.mark) {
-  //       // usuario não alterou os campos
-  //       return;
-  //     }
-  //     if (value > this.serie.complete.seasons[this.mycontent.season].episode_count) {
-  //       // não fazer nada, episodio acima do limite da temporada
-  //       return;
-  //     }
-
-  //     let contentCopy = this.mycontent!;
-  //     contentCopy.mark = value;
-  //     this.listService.setContentStopped(contentCopy).then((value) => {
-  //       this.mycontent = value;
-  //     });
-  //     return;
-  //   }
-  //   // tratativas livros e anime
-  //   if (value == this.mycontent?.mark) {
-  //     // Não fazer nada livro serie
-  //     return;
-  //   }
-
-  //   if (this.anime && value > this.anime.episodes) {
-  //     // Não fazer nada, é um anime e o episodio acima do limite
-  //     return;
-  //   }
-  //   if (this.book && value > this.book.complete.volumeInfo.pageCount) {
-  //     // Não fazer nada, é um livro e a pagina acima do limite
-  //     return;
-  //   }
-
-  //   let contentCopy = this.mycontent!;
-  //   contentCopy.mark = value;
-  //   this.listService.setContentStopped(contentCopy).then((value) => {
-  //     this.mycontent = value;
-  //   });
-  // }
+  getComplete(){
+    if(this.anime){
+      this.anime.getComplete()
+      return
+    }
+    if(this.serie){
+      this.serie.getComplete()
+      return
+    }
+    if(this.book){
+      this.book.getComplete()
+      return
+    }
+  }
 }

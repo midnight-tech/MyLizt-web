@@ -1,33 +1,65 @@
-<div *ngIf="anime" (mouseenter)="anime.getComplete()">
+<div (mouseenter)="getComplete()">
   <div class="card">
     <div class="card__side">
       <div class="card__side--image" (click)="navigateToDetail()">
         <div class="card__side--image--flip">
-          <img class="card__picture" [src]="anime.image_url" alt="teste" />
+          <img *ngIf="anime" class="card__picture" [src]="anime.image_url" alt="teste" />
+          <img *ngIf="book" class="card__picture" [src]="book.volumeInfo.image" alt="teste" />
+          <img *ngIf="serie" class="card__picture" [src]="serie.poster_path" alt="teste" />
         </div>
         <div class="card__side--image--flip card__side--image--flip--back">
           <div class="card__side--image--flip--back--synopsis">
-            <p class="card__side--image--flip--back--synopsis--text">
+            <p *ngIf="anime" class="card__side--image--flip--back--synopsis--text">
               {{ anime.complete?.synopsis }}
+            </p>
+            <p *ngIf="book" class="card__side--image--flip--back--synopsis--text">
+              {{ book.complete?.volumeInfo?.description }}
+            </p>
+            <p *ngIf="serie" class="card__side--image--flip--back--synopsis--text">
+              {{ serie.complete?.overview }}
             </p>
           </div>
           <div class="card__side--image--flip--back--description">
             <div class="card__side--image--flip--back--description--category">
-              <p class="card__side--image--flip--back--description--category--text">
+              <p *ngIf="anime" class="card__side--image--flip--back--description--category--text">
                 <span *ngFor="let category of anime.complete?.genres">
                   {{ category.name }}
                 </span>
+              </p>
+              <p *ngIf="book" class="card__side--image--flip--back--description--category--text">
+                {{ book.complete?.volumeInfo?.categories }}
+              </p>
+              <p *ngIf="serie" class="card__side--image--flip--back--description--category--text">
+                <span *ngFor="let genre of serie.complete?.genres">{{
+                  genre.name
+                  }}</span>
               </p>
             </div>
             <div class="card__side--image--flip--back--description--info">
               <div class="card__side--image--flip--back--description--info--flex">
                 <div class="card__side--image--flip--back--description--info--content">
-                  <div *ngIf="inMyList == false">
+                  <div *ngIf="inMyList == false && anime">
                     <p class="card__side--image--flip--back--description--info--flex-text">
                       Episodes
                     </p>
                     <p class="card__side--image--flip--back--description--info--flex-text">
                       {{ anime.complete?.episodes }}
+                    </p>
+                  </div>
+                  <div *ngIf="inMyList == false && book">
+                    <p class="card__side--image--flip--back--description--info--flex-text">
+                      pages
+                    </p>
+                    <p class="card__side--image--flip--back--description--info--flex-text">
+                      {{ book.complete?.volumeInfo?.pageCount }}
+                    </p>
+                  </div>
+                  <div *ngIf="inMyList == false && serie">
+                    <p class="card__side--image--flip--back--description--info--flex-text">
+                      Seasons
+                    </p>
+                    <p class="card__side--image--flip--back--description--info--flex-text">
+                      {{ serie.complete?.number_of_seasons }}
                     </p>
                   </div>
                   <div *ngIf="inMyList">
@@ -43,8 +75,14 @@
                   <p class="card__side--image--flip--back--description--info--flex-text">
                     Score
                   </p>
-                  <p class="card__side--image--flip--back--description--info--flex-text">
+                  <p *ngIf="anime" class="card__side--image--flip--back--description--info--flex-text">
                     {{ anime.complete?.score }}
+                  </p>
+                  <p *ngIf="book" class="card__side--image--flip--back--description--info--flex-text">
+                    {{ book.complete?.volumeInfo?.averageRating }}
+                  </p>
+                  <p *ngIf="serie" class="card__side--image--flip--back--description--info--flex-text">
+                    {{ serie.complete?.vote_average }}
                   </p>
                 </div>
               </div>
@@ -54,8 +92,14 @@
       </div>
 
       <div class="card__side--title">
-        <h1 class="card__title" (click)="navigateToDetail()">
+        <h1 *ngIf="anime" class="card__title" (click)="navigateToDetail()">
           {{ anime.title }}
+        </h1>
+        <h1 *ngIf="book" class="card__title" (click)="navigateToDetail()">
+          {{ book.volumeInfo.title }}
+        </h1>
+        <h1 *ngIf="serie" class="card__title" (click)="navigateToDetail()">
+          {{ serie.name }}
         </h1>
 
         <!-- Lista de pessoas que recomendaram -->
@@ -77,8 +121,18 @@
       <div class="card__side--buttons">
         <!-- MyList -->
         <div class="container-flex" *ngIf=" pageCall == 'myList'">
-          <div *ngIf="inMyList && mycontent" class="card__epi-pag">
+          <div *ngIf="inMyList && mycontent && anime" class="card__epi-pag">
             <span class="card__epi-pag__text">Ep. &nbsp; {{mycontent.mark}} / {{anime.episodes}} </span>
+          </div>
+          <div *ngIf="mycontent && book && book.complete" class="card__epi-pag">
+            <span class="card__epi-pag__text">Pag. &nbsp; {{mycontent.mark}} / {{book.complete.volumeInfo.pageCount}}
+            </span>
+          </div>
+          <div *ngIf="mycontent && mycontent.season != undefined && serie && serie.complete" class="card__epi-pag">
+            <span class="card__epi-pag__text">S &nbsp; {{mycontent.season}} &nbsp; | &nbsp; Ep. &nbsp;
+              {{mycontent.mark}}
+              /
+              {{serie.complete.seasons[mycontent.season].episode_count}} </span>
           </div>
           <div class="card__button-container card__button-container--recommend"
             (click)="disableReceiveRecommendation(true)">
@@ -109,16 +163,23 @@
         <!-- Recommendation end -->
         <!-- My Friend List -->
         <div class="container-flex" *ngIf=" pageCall == 'friendList'">
-          <div *ngIf="friendContent && anime.complete">
-            <div> {{friendContent.mark}} / {{anime.episodes}}</div>
+          <div *ngIf="friendContent && anime && anime.complete" class="card__epi-pag">
+            <span class="card__epi-pag__text"> Ep. &nbsp; {{friendContent.mark}}  / {{anime.episodes}}</span>
           </div>
-          <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
+          <div *ngIf="friendContent && book && book.complete" class="card__epi-pag">
+            <span class="card__epi-pag__text"> Pag. &nbsp;  {{friendContent.mark}} / {{book.complete.volumeInfo.pageCount}}</span>
+          </div>
+          <div *ngIf="friendContent && friendContent.season != undefined && serie && serie.complete" class="card__epi-pag">
+            <span class="card__epi-pag__text"> S &nbsp; {{friendContent.season}} &nbsp; | &nbsp; Ep. &nbsp;{{friendContent.mark}} /
+              {{serie.complete.seasons[friendContent.season].episode_count}}</span>
+          </div>
+          <div class="card__button-container card__button-container--recommend" *ngIf="!inMyList" (click)="addToMyList()">
             <p class="card__button-container__text">Add to list</p>
             <svg class="card__button-container__icon">
               <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
             </svg>
           </div>
-          <div class="card__button-container card__button-container--add" *ngIf="inMyList" (click)="deleteToMyList()">
+          <div class="card__button-container card__button-container--recommend" *ngIf="inMyList" (click)="deleteToMyList()">
             <p class="card__button-container__text">Remove</p>
             <svg class="card__button-container__icon">
               <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
@@ -151,330 +212,17 @@
         <!-- Other end -->
       </div>
     </div>
-    <app-recommendation type="ANIME" [contentId]="anime.mal_id.toString()" [isActiveRecommend]="isActiveRecommend"
+    <app-recommendation *ngIf="anime" type="ANIME" [contentId]="anime.mal_id.toString()" [isActiveRecommend]="isActiveRecommend"
       (isActiveEvent)="disableReceiveRecommendation($event)">
     </app-recommendation>
-  </div>
-</div>
 
-<div *ngIf="book" (mouseenter)="book.getComplete()">
-  <div class="card">
-    <div class="card__side">
-      <div class="card__side--image" (click)="navigateToDetail()">
-        <div class="card__side--image--flip">
-          <img class="card__picture" [src]="book.volumeInfo.image" alt="teste" />
-        </div>
-        <div class="card__side--image--flip card__side--image--flip--back">
-          <div class="card__side--image--flip--back--synopsis">
-            <p class="card__side--image--flip--back--synopsis--text">
-              {{ book.complete?.volumeInfo?.description }}
-            </p>
-          </div>
-          <div class="card__side--image--flip--back--description">
-            <div class="card__side--image--flip--back--description--category">
-              <p class="card__side--image--flip--back--description--category--text">
-                {{ book.complete?.volumeInfo?.categories }}
-              </p>
-            </div>
-            <div class="card__side--image--flip--back--description--info">
-              <div class="card__side--image--flip--back--description--info--flex">
-                <div class="card__side--image--flip--back--description--info--content">
-                  <div *ngIf="inMyList == false">
-                    <p class="card__side--image--flip--back--description--info--flex-text">
-                      pages
-                    </p>
-                    <p class="card__side--image--flip--back--description--info--flex-text">
-                      {{ book.complete?.volumeInfo?.pageCount }}
-                    </p>
-                  </div>
-                  <div *ngIf="inMyList">
-                    <p class="card__side--image--flip--back--description--info--flex-text">
-                      My Score
-                    </p>
-                    <p class="card__side--image--flip--back--description--info--flex-text">
-                      {{ mycontent?.myrating || 'NA' }}
-                    </p>
-                  </div>
-                </div>
-                <div class="card__side--image--flip--back--description--info--content">
-                  <p class="card__side--image--flip--back--description--info--flex-text">
-                    Score
-                  </p>
-                  <p class="card__side--image--flip--back--description--info--flex-text">
-                    {{ book.complete?.volumeInfo?.averageRating }}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card__side--title">
-        <h1 class="card__title" (click)="navigateToDetail()">
-          {{ book.volumeInfo.title }}
-        </h1>
-
-        <!-- Lista de pessoas que recomendaram -->
-        <div class="tooltip">
-          <div class="card__share">
-            <svg class="card__share__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-            </svg>
-            <p class="card__share__text">3</p>
-          </div>
-
-          <div class="tooltip__container">
-            <span class="tooltip__name">Luaasdnlak</span>
-            <span class="tooltip__id">#asdjkhjka</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="card__side--buttons">
-        <!-- MyList -->
-        <div class="container-flex" *ngIf=" pageCall == 'myList'">
-          <div *ngIf="mycontent && book.complete" class="card__epi-pag">
-            <span class="card__epi-pag__text">Pag. &nbsp; {{mycontent.mark}} / {{book.complete.volumeInfo.pageCount}}
-            </span>
-          </div>
-          <div class="card__button-container card__button-container--recommend"
-            (click)="disableReceiveRecommendation(true)">
-            <p class="card__button-container__text">Recommend to...</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-            </svg>
-          </div>
-        </div>
-        <!-- MyList end -->
-        <!-- Recommendation -->
-        <div class="container-flex" *ngIf=" pageCall == 'recommendation'">
-          <div class="card__button-container card__button-container--add" (click)="deleteToMyList()">
-            <p class="card__button-container__text">Remove</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-            </svg>
-          </div>
-
-          <div class="card__button-container card__button-container--recommend"
-            (click)="disableReceiveRecommendation(true)">
-            <p class="card__button-container__text">Recommend to...</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-            </svg>
-          </div>
-        </div>
-        <!-- Recommendation end -->
-        <!-- My Friend List -->
-        <div class="container-flex" *ngIf=" pageCall == 'friendList'">
-          <div *ngIf="friendContent && book.complete">
-            <div> {{friendContent.mark}} / {{book.complete.volumeInfo.pageCount}}</div>
-          </div>
-          <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
-            <p class="card__button-container__text">Add to list</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
-            </svg>
-          </div>
-          <div class="card__button-container card__button-container--add" *ngIf="inMyList" (click)="deleteToMyList()">
-            <p class="card__button-container__text">Remove</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
-            </svg>
-          </div>
-        </div>
-        <!-- My Friend List end -->
-        <!-- Other -->
-        <div class="container-flex" *ngIf="pageCall == 'other'">
-          <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
-            <p class="card__button-container__text">Add to list</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
-            </svg>
-          </div>
-          <div class="card__button-container card__button-container--add" *ngIf="inMyList" (click)="deleteToMyList()">
-            <p class="card__button-container__text">Remove</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
-            </svg>
-          </div>
-          <div class="card__button-container card__button-container--recommend"
-            (click)="disableReceiveRecommendation(true)">
-            <p class="card__button-container__text">Recommend to...</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-            </svg>
-          </div>
-        </div>
-        <!-- Other end -->
-      </div>
-    </div>
-  </div>
-  <app-recommendation type="BOOK" [contentId]="book.id" [isActiveRecommend]="isActiveRecommend"
-    (isActiveEvent)="disableReceiveRecommendation($event)">
-  </app-recommendation>
-</div>
-
-<div *ngIf="serie" (mouseenter)="serie.getComplete()">
-  <div class="card">
-    <div class="card__side">
-      <div class="card__side--image" (click)="navigateToDetail()">
-        <div class="card__side--image--flip">
-          <img class="card__picture" [src]="serie.poster_path" alt="teste" />
-        </div>
-        <div class="card__side--image--flip card__side--image--flip--back">
-          <div class="card__side--image--flip--back--synopsis">
-            <p class="card__side--image--flip--back--synopsis--text">
-              {{ serie.complete?.overview }}
-            </p>
-          </div>
-          <div class="card__side--image--flip--back--description">
-            <div class="card__side--image--flip--back--description--category">
-              <p class="card__side--image--flip--back--description--category--text">
-                <span *ngFor="let genre of serie.complete?.genres">{{
-                  genre.name
-                  }}</span>
-              </p>
-            </div>
-            <div class="card__side--image--flip--back--description--info">
-              <div class="card__side--image--flip--back--description--info--flex">
-                <div class="card__side--image--flip--back--description--info--content">
-                  <div *ngIf="inMyList == false">
-                    <p class="card__side--image--flip--back--description--info--flex-text">
-                      Seasons
-                    </p>
-                    <p class="card__side--image--flip--back--description--info--flex-text">
-                      {{ serie.complete?.number_of_seasons }}
-                    </p>
-                  </div>
-                  <div *ngIf="inMyList">
-                    <p class="card__side--image--flip--back--description--info--flex-text">
-                      My Score
-                    </p>
-                    <p class="card__side--image--flip--back--description--info--flex-text">
-                      {{ mycontent?.myrating || 'NA' }}
-                    </p>
-                  </div>
-                </div>
-                <div class="card__side--image--flip--back--description--info--content">
-                  <p class="card__side--image--flip--back--description--info--flex-text">
-                    Score
-                  </p>
-                  <p class="card__side--image--flip--back--description--info--flex-text">
-                    {{ serie.complete?.vote_average }}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card__side--title">
-        <h1 class="card__title" (click)="navigateToDetail()">
-          {{ serie.name }}
-        </h1>
-
-        <!-- Lista de pessoas que recomendaram -->
-        <div class="tooltip">
-          <div class="card__share">
-            <svg class="card__share__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-            </svg>
-            <p class="card__share__text">3</p>
-          </div>
-
-          <div class="tooltip__container">
-            <span class="tooltip__name">Luaasdnlak</span>
-            <span class="tooltip__id">#asdjkhjka</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="card__side--buttons">
-        <!-- MyList -->
-        <div class="container-flex" *ngIf=" pageCall == 'myList'">
-          <div *ngIf="mycontent && mycontent.season != undefined && serie.complete" class="card__epi-pag">
-            <span class="card__epi-pag__text">S &nbsp; {{mycontent.season}} &nbsp; | &nbsp; Ep. &nbsp;
-              {{mycontent.mark}}
-              /
-              {{serie.complete.seasons[mycontent.season].episode_count}} </span>
-          </div>
-          <div class="card__button-container card__button-container--recommend"
-            (click)="disableReceiveRecommendation(true)">
-            <p class="card__button-container__text">Recommend to...</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-            </svg>
-          </div>
-        </div>
-        <!-- MyList end -->
-        <!-- Recommendation -->
-        <div class="container-flex" *ngIf=" pageCall == 'recommendation'">
-
-          <div class="card__button-container card__button-container--add" (click)="deleteToMyList()">
-            <p class="card__button-container__text">Remove</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-            </svg>
-          </div>
-
-          <div class="card__button-container card__button-container--recommend"
-            (click)="disableReceiveRecommendation(true)">
-            <p class="card__button-container__text">Recommend to...</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-            </svg>
-          </div>
-        </div>
-        <!-- Recommendation end -->
-        <!-- My Friend List -->
-        <div class="container-flex" *ngIf=" pageCall == 'friendList'">
-          <div *ngIf="friendContent && friendContent.season != undefined && serie.complete">
-            <div> S{{friendContent.season}}EP{{friendContent.mark}} /
-              {{serie.complete.seasons[friendContent.season].episode_count}}</div>
-          </div>
-          <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
-            <p class="card__button-container__text">Add to list</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
-            </svg>
-          </div>
-          <div class="card__button-container card__button-container--add" *ngIf="inMyList" (click)="deleteToMyList()">
-            <p class="card__button-container__text">Remove</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
-            </svg>
-          </div>
-        </div>
-        <!-- My Friend List end -->
-        <!-- Other -->
-        <div class="container-flex" *ngIf=" pageCall == 'other'">
-          <div class="card__button-container card__button-container--add" *ngIf="!inMyList" (click)="addToMyList()">
-            <p class="card__button-container__text">Add to list</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
-            </svg>
-          </div>
-          <div class="card__button-container card__button-container--add" *ngIf="inMyList" (click)="deleteToMyList()">
-            <p class="card__button-container__text">Remove</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
-            </svg>
-          </div>
-          <div class="card__button-container card__button-container--recommend"
-            (click)="disableReceiveRecommendation(true)">
-            <p class="card__button-container__text">Recommend to...</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-            </svg>
-          </div>
-        </div>
-        <!-- Other end -->
-      </div>
-    </div>
-    <app-recommendation type="SERIE" [contentId]="serie.id.toString()" [isActiveRecommend]="isActiveRecommend"
+    <app-recommendation *ngIf="serie" type="SERIE" [contentId]="serie.id.toString()" [isActiveRecommend]="isActiveRecommend"
       (isActiveEvent)="disableReceiveRecommendation($event)">
     </app-recommendation>
+
+    <app-recommendation *ngIf="book" type="BOOK" [contentId]="book.id" [isActiveRecommend]="isActiveRecommend"
+      (isActiveEvent)="disableReceiveRecommendation($event)">
+    </app-recommendation>
+    
   </div>
 </div>
