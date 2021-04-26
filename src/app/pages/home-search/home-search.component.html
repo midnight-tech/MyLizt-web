@@ -25,25 +25,26 @@
   </div>
 
   <div class="pagination pagination--top">
-    <app-pagination [atualPage]="homeContext.page" [totalPage]="homeContext.totalPage"></app-pagination>
+    <app-pagination pageCalled="search" (visibleListAnime)="anime = $event" (visibleListBook)="book = $event"
+      (visibleListSerie)="serie = $event" [query]="homeContext.query" [type]="homeContext.searchType"></app-pagination>
   </div>
 
   <div class="list">
-    <div class="list__card" *ngFor="let content of homeContext.animeResult">
+    <div class="list__card" *ngFor="let content of anime">
       <!-- {{ content.title }} -->
       <app-card [anime]="content"></app-card>
     </div>
-    <div class="list__card" *ngFor="let content of homeContext.bookResult">
+    <div class="list__card" *ngFor="let content of book">
       <!-- {{ content.volumeInfo.title }} -->
       <app-card [book]="content"></app-card>
     </div>
-    <div class="list__card" *ngFor="let content of homeContext.serieResult">
+    <div class="list__card" *ngFor="let content of serie">
       <!-- {{ content.name }} -->
       <app-card [serie]="content"></app-card>
     </div>
   </div>
 
   <div class="pagination pagination--bottom">
-    <app-pagination [atualPage]="homeContext.page" [totalPage]="homeContext.totalPage"></app-pagination>
+    <!-- <app-pagination pageCalled="search"></app-pagination> -->
   </div>
 </div>

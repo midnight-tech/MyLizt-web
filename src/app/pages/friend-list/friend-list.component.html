@@ -4,25 +4,29 @@
   </div>
 
   <div class="pagination pagination--top">
-    <app-pagination [atualPage]="homeContext.page" [totalPage]="homeContext.totalPage" [type]="type" pageCalled="friendList" friendId="friendId"></app-pagination>
+    <app-pagination pageCalled="friendList" (visibleContentAnime)="anime = $event" (visibleContentBook)="book = $event"
+      (visibleContentSerie)="serie = $event" [type]="type" [friendId]="friendId"></app-pagination>
   </div>
 
   <div class="list">
-    <div class="list__card" *ngFor="let content of homeContext.friendListAnimePage">
+    <div class="list__card" *ngFor="let content of anime">
       <!-- {{ content.title }} -->
-      <app-card [anime]="content.anime" [friendContent]="content.content" [lookMyList]=false pageCall='friendList' ></app-card>
+      <app-card [anime]="content.anime" [friendContent]="content.content" [lookMyList]=false pageCall='friendList'>
+      </app-card>
     </div>
-    <div class="list__card" *ngFor="let content of homeContext.friendListBookPage">
+    <div class="list__card" *ngFor="let content of book">
       <!-- {{ content.volumeInfo.title }} -->
-      <app-card [book]="content.book" [friendContent]="content.content" [lookMyList]=false pageCall='friendList'></app-card>
+      <app-card [book]="content.book" [friendContent]="content.content" [lookMyList]=false pageCall='friendList'>
+      </app-card>
     </div>
-    <div class="list__card" *ngFor="let content of homeContext.friendListSeriePage">
+    <div class="list__card" *ngFor="let content of serie">
       <!-- {{ content.name }} -->
-      <app-card [serie]="content.serie" [friendContent]="content.content" [lookMyList]=false pageCall='friendList'></app-card>
+      <app-card [serie]="content.serie" [friendContent]="content.content" [lookMyList]=false pageCall='friendList'>
+      </app-card>
     </div>
   </div>
 
   <div class="pagination pagination--bottom">
-    <app-pagination [atualPage]="homeContext.page" [totalPage]="homeContext.totalPage" [type]="type" pageCalled="friendList"></app-pagination>
+    <!-- <app-pagination [type]="type" pageCalled="friendList"></app-pagination> -->
   </div>
 </div>
