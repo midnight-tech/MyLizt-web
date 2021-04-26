@@ -1,95 +1,54 @@
 <div class="flex-container">
   <div class="content">
-    <section class="header">
+    <header class="header">
       <img class="header__title" src="../../../assets/logo.svg" />
       <span class="header__caption">Don't forget where you left off.</span>
-    </section>
+    </header>
     <form class="form">
-      <input
-        [formControl]="email"
-        [value]="email.value"
-        type="email"
-        id="email"
-        placeholder="E-mail"
-        class="form-control"
-      />
-      <input
-        [formControl]="password"
-        [value]="password.value"
-        type="password"
-        id="password"
-        placeholder="Password"
-        class="form-control"
-      />
-      <a (click)="loginWithEmail()" class="btn-login">Login</a>
-      <div class="row grid-social-media">
-        <div class="col border-bottom-line itens-flex-end">
-          <a href="" class="grid-social-media__btn-normal">Forgot Password</a>
-        </div>
-        <div class="col border-bottom-line itens-flex-start">
-          <a
-            href=""
-            class="grid-social-media__btn-normal"
-            [routerLink]="['/signup']"
-            >Sign Up</a
-          >
-        </div>
-        <div class="col itens-flex-end">
-          <a
-            class="grid-social-media__btn grid-social-media__btn--google"
-            (click)="loginWithGoogle()"
-          >
-            <img
-              src="../../../assets/icon-google.svg"
-              alt="Logo Google"
-              class="grid-social-media__icon"
-            />
-            <span class="grid-social-media__btn--google--text">Google</span>
+      <input [formControl]="email" [value]="email.value" type="email" id="email" placeholder="E-mail"
+        class="form-control" />
+      <input [formControl]="password" [value]="password.value" type="password" id="password" placeholder="Password"
+        class="form-control" />
+      <button type="button" (click)="loginWithEmail()" class="button__login">
+        <p class="button__login__text">Login</p>
+      </button>
+      <aside class="button__social-media">
+        <nav class="border-bottom-line itens-flex-end">
+          <a href="" class="button__normal">Forgot Password</a>
+        </nav>
+        <nav class="border-bottom-line itens-flex-start">
+          <a href="" class="button__normal" [routerLink]="['/signup']">Sign Up</a>
+        </nav>
+        <button type="button" class="itens-flex-end button__social-media__container" (click)="loginWithGoogle()">
+          <a class="button__social-media__content button__social-media__content--google">
+            <img src="../../../assets/icon-google.svg" alt="Logo Google" class="button__social-media__icon" />
+            <span class="button__social-media__content--google--text button__social-media__content__text">Google</span>
           </a>
-        </div>
-        <div class="col itens-flex-start">
-          <a
-            class="grid-social-media__btn grid-social-media__btn--apple"
-            (click)="loginWithApple()"
-          >
-            <img
-              src="../../../assets/icon-apple.svg"
-              alt="Logo Apple"
-              class="grid-social-media__icon"
-            />
-            <span class="grid-social-media__btn--apple--text">Apple</span>
+        </button>
+        <button type="button" class="itens-flex-start button__social-media__container" (click)="loginWithApple()">
+          <a class="button__social-media__content button__social-media__content--apple">
+            <img src="../../../assets/icon-apple.svg" alt="Logo Apple" class="button__social-media__icon" />
+            <span class="button__social-media__content--apple--text button__social-media__content__text">Apple</span>
           </a>
-        </div>
-        <div class="col itens-flex-end">
-          <a
-            class="grid-social-media__btn grid-social-media__btn--facebook"
-            (click)="loginWithFacebook()"
-          >
-            <img
-              src="../../../assets/icon-facebook.svg"
-              alt="Logo Facebook"
-              class="grid-social-media__icon"
-            />
-            <span class="grid-social-media__btn--facebook--text">Facebook</span>
+        </button>
+        <button type="button" class="itens-flex-end button__social-media__container" (click)="loginWithFacebook()">
+          <a class="button__social-media__content button__social-media__content--facebook">
+            <img src="../../../assets/icon-facebook.svg" alt="Logo Facebook" class="button__social-media__icon" />
+            <span
+              class="button__social-media__content--facebook--text button__social-media__content__text">Facebook</span>
           </a>
-        </div>
-        <div class="col itens-flex-start">
-          <a
-            class="grid-social-media__btn grid-social-media__btn--twitter"
-            (click)="loginWithTwitter()"
-          >
-            <img
-              src="../../../assets/icon-twitter.svg"
-              alt="Logo Twitter"
-              class="grid-social-media__icon"
-            />
-            <span class="grid-social-media__btn--twitter--text">Twitter</span>
+        </button>
+        <button type="button" class="itens-flex-start button__social-media__container" (click)="loginWithTwitter()">
+          <a class="button__social-media__content button__social-media__content--twitter">
+            <img src="../../../assets/icon-twitter.svg" alt="Logo Twitter" class="button__social-media__icon" />
+            <span
+              class="button__social-media__content--twitter--text button__social-media__content__text">Twitter</span>
           </a>
-        </div>
-      </div>
+        </button>
+      </aside>
     </form>
   </div>
-  <div class="footer footer-company">
+  <footer class="footer footer-company">
     Developed by Midnight Tech. &copy; 2021 All Rights Reserved
-  </div>
+  </footer>
 </div>

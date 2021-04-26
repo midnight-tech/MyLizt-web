@@ -14,7 +14,14 @@ $black2: #222831;
 $black3: #1a1c20;
 $black4: #2f3437;
 
-$font-size-default: 16px;
+// FONTS SIZE
+$font-size-default: 1.6rem;
+// normal
+$font-caption-sign-in-out-1: 5rem;
+// primeiro break point
+$font-caption-sign-in-out-2: 4rem;
+// segundo break point
+$font-caption-sign-in-out-3: 3rem;
 
 $the-border-radius: 0.4rem;
 
@@ -27,3 +34,21 @@ $opacity-tertiary: 0.9;
 $scale-carrousel-s: 0.9;
 $scale-carrousel-m: 0.95;
 $scale-carrousel-l: 1;
+
+// RESPOSIVE BREAKPOINTS
+// 1200px
+$bp-1200: 75em;
+// 1100px
+$bp-1100: 68.75em;
+
+// // 1000px
+// $bp-1000: 62.5em;
+
+// 800px
+$bp-800: 50em;
+
+// // 600px
+// $bp-600: 37.5em;
+
+// 600px
+$bp-500: 31.25em;
