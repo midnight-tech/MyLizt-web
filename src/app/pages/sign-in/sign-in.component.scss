@@ -38,10 +38,6 @@
     height: min-content;
   }
 
-  @media only screen and (max-width: $bp-500) {
-    height: min-content;
-  }
-
   &__title {
     display: flex;
     align-self: baseline;
@@ -59,15 +55,15 @@
 
   &__caption {
     max-width: 50rem;
-    font-size: $font-caption-sign-in-out-1;
+    font-size: $font-caption-sign-in-up-1;
     font-weight: 700;
 
     @media only screen and (max-width: $bp-800) {
-      font-size: $font-caption-sign-in-out-2;
+      font-size: $font-caption-sign-in-up-2;
     }
 
     @media only screen and (max-width: $bp-500) {
-      font-size: $font-caption-sign-in-out-3;
+      font-size: $font-caption-sign-in-up-3;
     }
   }
 }

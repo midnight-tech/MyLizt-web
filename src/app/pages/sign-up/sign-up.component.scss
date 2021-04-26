@@ -1,5 +1,5 @@
 @import "../../sass/abstract/variables";
-@import "~bootstrap/dist/css/bootstrap.min.css";
+// @import "~bootstrap/dist/css/bootstrap.min.css";
 
 .flex-container {
   background-color: $black3;
@@ -8,6 +8,7 @@
   flex-direction: column;
   justify-content: space-between;
   min-height: 100vh;
+  min-width: max-content;
 }
 
 .content {
@@ -16,6 +17,10 @@
   height: 100%;
   justify-content: center;
   align-items: center;
+
+  @media only screen and (max-width: $bp-1100) {
+    flex-direction: column-reverse;
+  }
 }
 
 .form {
@@ -27,37 +32,72 @@
   padding: 5rem;
   border-radius: $the-border-radius;
   width: 42.5rem;
+
+  @media only screen and (max-width: $bp-1100) {
+    margin-right: 0;
+  }
+
+  @media only screen and (max-width: $bp-500) {
+    width: 30rem;
+  }
 }
 
 .form-control {
+  font-family: inherit;
   font-size: $font-size-default;
   height: 5rem;
   margin-bottom: 2.5rem;
-  padding: 0.5rem 2rem;
+  padding: 0rem 2rem;
   border-radius: $the-border-radius;
+  border: none;
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+    border: none;
+    outline-offset: unset;
+  }
 }
 
-.btn-register {
-  &,
-  &:link,
-  &:visited {
-    text-transform: uppercase;
-    text-decoration: none;
-    font-size: $font-size-default;
-    display: flex;
-    background-color: $primary1;
-    width: 100%;
-    height: 5rem;
-    border-radius: $the-border-radius;
-    align-items: center;
-    justify-content: center;
-    color: $black;
-    border: none;
-    cursor: pointer;
-  }
+.button {
+  &__register {
+    &,
+    &:link,
+    &:visited {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 5rem;
+      background-color: $primary1;
+      border-radius: $the-border-radius;
+      color: $black3;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: transform 0.4s ease;
+    }
 
-  &:hover {
-    filter: brightness(1.2);
+    &__text {
+      font-size: $font-size-default;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-family: inherit;
+      font-weight: 600;
+      transition: transform 0.4s ease;
+    }
+
+    &:hover {
+      transform: translateY(-0.5rem);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    &:hover &__text {
+      transform: scale(1.15);
+    }
   }
 }
 
@@ -68,30 +108,62 @@
   min-height: 30rem;
   color: $white;
 
+  @media only screen and (max-width: $bp-1100) {
+    margin: 4rem 0;
+  }
+
+  @media only screen and (max-width: $bp-800) {
+    height: min-content;
+  }
+
+  @media only screen and (max-width: $bp-500) {
+    min-height: min-content;
+  }
+
   &__title {
     display: flex;
     align-self: baseline;
     height: 15rem;
     margin-bottom: 3rem;
+
+    @media only screen and (max-width: $bp-800) {
+      height: 12rem;
+    }
+
+    @media only screen and (max-width: $bp-500) {
+      height: 10rem;
+    }
   }
 
   &__caption {
     max-width: 50rem;
-    font-size: 5rem;
+    font-size: $font-caption-sign-in-up-1;
     font-weight: 700;
     margin-bottom: 8rem;
+
+    @media only screen and (max-width: $bp-1100) {
+      margin-bottom: 4rem;
+    }
+
+    @media only screen and (max-width: $bp-800) {
+      font-size: $font-caption-sign-in-up-2;
+    }
+
+    @media only screen and (max-width: $bp-500) {
+      font-size: $font-caption-sign-in-up-3;
+    }
   }
 
   &__btn {
     display: flex;
     flex-direction: row;
     align-self: flex-start;
-    color: $white;
+    color: currentColor;
     cursor: pointer;
 
     &__text {
       align-self: baseline;
-      font-size: 1.6rem;
+      font-size: $font-size-default;
       text-decoration: none;
       color: currentColor;
       text-transform: uppercase;

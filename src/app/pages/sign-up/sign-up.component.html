@@ -1,41 +1,19 @@
 <div class="flex-container">
   <div class="content">
     <form class="form">
-      <input
-        [formControl]="username"
-        type="text"
-        id="username"
-        placeholder="Username"
-        class="form-control"
-      />
-      <input
-        [formControl]="email"
-        type="email"
-        id="email"
-        placeholder="Email"
-        class="form-control"
-      />
-      <input
-        [formControl]="password"
-        type="password"
-        id="password"
-        placeholder="Password"
-        class="form-control"
-      />
-      <input
-        [formControl]="confirm_password"
-        type="password"
-        id="confirm-password"
-        placeholder="Confirm Passoword"
-        class="form-control"
-      />
+      <input [formControl]="username" type="text" id="username" placeholder="Username" class="form-control" />
+      <input [formControl]="email" type="email" id="email" placeholder="Email" class="form-control" />
+      <input [formControl]="password" type="password" id="password" placeholder="Password" class="form-control" />
+      <input [formControl]="confirm_password" type="password" id="confirm-password" placeholder="Confirm Passoword"
+        class="form-control" />
       <span class="terms-caption">
-        By registering, you accept our terms of use and our privacy policy</span
-      >
-      <a class="btn-register" (click)="register()">Register</a>
+        By registering, you accept our terms of use and our privacy policy</span>
+      <button type="button" class="button__register" (click)="register()">
+        <p class="button__register__text">Register</p>
+      </button>
     </form>
 
-    <section class="header">
+    <header class="header">
       <img class="header__title" src="../../../assets/logo.svg" />
       <span class="header__caption">Don't forget where you left off.</span>
 
@@ -45,10 +23,9 @@
         </svg>
 
         <a class="header__btn header__btn__text" [routerLink]="['/signin']">
-          Back to Login</a
-        >
+          Back to Login</a>
       </div>
-    </section>
+    </header>
   </div>
   <app-footer-company></app-footer-company>
 </div>
