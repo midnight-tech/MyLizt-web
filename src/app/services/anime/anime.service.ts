@@ -25,7 +25,7 @@ export class AnimeService {
 
     let catalogo = await axios.get(`https://api.jikan.moe/v3/schedule/${day}`);
 
-    return catalogo.data[day].map((value : any) => {
+    const loadedCatalogo = catalogo.data[day].map((value : any) => {
       value.airing = true;
       value.start_date = value.airing_start;
       return new AnimeCatalogo(value, this);
@@ -34,6 +34,14 @@ export class AnimeService {
       if(a.score > b.score) return -1
       return 1
     }).slice(0,5);
+
+    return [
+      loadedCatalogo[3],
+      loadedCatalogo[1],
+      loadedCatalogo[0],
+      loadedCatalogo[2],
+      loadedCatalogo[4],
+    ];
   }
 
   async getCatalogo(page: number) {
