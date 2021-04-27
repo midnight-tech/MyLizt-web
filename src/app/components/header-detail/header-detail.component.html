@@ -104,7 +104,8 @@
   </div>
 
   <div class="episodes" *ngIf="onMyList">
-    <p class="episodes__title">Watched</p>
+    <p *ngIf="mycontent && mycontent.watched == true" class="episodes__title">Watched</p>
+    <p *ngIf="mycontent && mycontent.watched == false" class="episodes__title">Watching</p>
     <div class="episodes__flex">
       <svg class="episodes__icon" (click)="changeEpisode(mycontent!.mark! - 1)">
         <use href="assets/symbol-defs.svg#icon-remove"></use>
@@ -195,5 +196,5 @@
     (isActiveEvent)="disableReceiveRecommendation($event)">
   </app-recommendation>
 
-  <app-content-completed></app-content-completed>
+  <app-content-completed [isActiveCompleted]="openCompleteWatched" (isActiveEvent)="openCompleteWatched = $event" (contentAlter)="mycontent = $event" [content]="mycontent"></app-content-completed>
 </div>

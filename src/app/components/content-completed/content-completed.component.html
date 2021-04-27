@@ -4,14 +4,14 @@
     <p class="content__text">Do you want to set this entry as completed?</p>
 
     <div class="content__buttons">
-      <div class="content__buttons content__buttons__button content__buttons__button--1">
+      <div class="content__buttons content__buttons__button content__buttons__button--1" (click)="changeWhatched(true)">
         <p class="content__buttons__text">Yes</p>
         <svg class="content__buttons__icon">
           <use xlink:href="assets/symbol-defs.svg#icon-check"></use>
         </svg>
       </div>
 
-      <div class="content__buttons content__buttons__button content__buttons__button--2">
+      <div class="content__buttons content__buttons__button content__buttons__button--2" (click)="changeWhatched(false)">
         <p class="content__buttons__text">No</p>
         <svg class="content__buttons__icon">
           <use xlink:href="assets/symbol-defs.svg#icon-clear"></use>

@@ -29,6 +29,7 @@ export class HeaderDetailComponent implements OnInit {
   @Input() book!: CompleteBook;
   @Input() type!: search;
   @Input() watched!: boolean;
+  openCompleteWatched = false;
   rateInputControl = new FormControl('');
   episodeInputControl = new FormControl('');
   mycontent?: content;
@@ -200,6 +201,14 @@ export class HeaderDetailComponent implements OnInit {
     if (this.type == 'SERIE') {
       // serie por causa das temporadas precisa de uma tratativa diferente
       if (
+        this.mycontent?.season == this.serie.seasons.length - 1 &&
+        this.mycontent.mark ==
+          this.serie.seasons[this.mycontent.season].episode_count
+      ) {
+        this.openCompleteWatched = true;
+        return;
+      }
+      if (
         value == this.mycontent?.mark &&
         this.seasonAtual == this.mycontent.season
       ) {
@@ -214,9 +223,27 @@ export class HeaderDetailComponent implements OnInit {
       let contentCopy = this.mycontent!;
       contentCopy.mark = value;
       contentCopy.season = this.seasonAtual;
+      contentCopy.watched = false;
       this.listService.setContentStopped(contentCopy).then((value) => {
         this.mycontent = value;
+        if (
+          this.mycontent.season == this.serie.seasons.length - 1 &&
+          this.mycontent.mark ==
+            this.serie.seasons[this.mycontent.season].episode_count
+        ) {
+          this.openCompleteWatched = true;
+        }
       });
+      return;
+    }
+
+    if (
+      (this.mycontent?.mark == this.anime?.episodes &&
+        value > this.anime?.episodes) ||
+      (this.mycontent?.mark == this.book?.volumeInfo.pageCount &&
+        value > this.anime?.episodes)
+    ) {
+      this.openCompleteWatched = true;
       return;
     }
     // tratativas livros e anime
@@ -236,8 +263,15 @@ export class HeaderDetailComponent implements OnInit {
 
     let contentCopy = this.mycontent!;
     contentCopy.mark = value;
+    contentCopy.watched = false;
     this.listService.setContentStopped(contentCopy).then((value) => {
       this.mycontent = value;
+      if (
+        this.mycontent.mark == this.anime?.episodes ||
+        this.mycontent.mark == this.book?.volumeInfo.pageCount
+      ) {
+        this.openCompleteWatched = true;
+      }
     });
   }
 
