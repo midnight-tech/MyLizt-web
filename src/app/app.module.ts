@@ -44,6 +44,7 @@ import { MyRecommendationsComponent } from './pages/my-recommendations/my-recomm
 import { AutoFocusDirectiveDirective } from './directives/autoFocusDirective.directive';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { ContentCompletedComponent } from './components/content-completed/content-completed.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 const maskConfigFunction: () => Partial<IConfig> = () => {
   return {
@@ -160,6 +161,7 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule.enablePersistence(),
     NgxMaskModule.forRoot(maskConfigFunction),
+    NgxSkeletonLoaderModule.forRoot(),
   ],
   exports: [RouterModule],
   providers: [

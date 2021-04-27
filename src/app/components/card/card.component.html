@@ -3,33 +3,40 @@
     <div class="card__side">
       <div class="card__side--image" (click)="navigateToDetail()">
         <div class="card__side--image--flip">
-          <img *ngIf="anime" class="card__picture" [src]="anime.image_url" alt="teste" />
-          <img *ngIf="book" class="card__picture" [src]="book.volumeInfo.image" alt="teste" />
-          <img *ngIf="serie" class="card__picture" [src]="serie.poster_path" alt="teste" />
+          <img *ngIf="anime && !loading" class="card__picture" [src]="anime.image_url" alt="teste" />
+          <img *ngIf="book && !loading" class="card__picture" [src]="book.volumeInfo.image" alt="teste" />
+          <img *ngIf="serie && !loading" class="card__picture" [src]="serie.poster_path" alt="teste" />
         </div>
         <div class="card__side--image--flip card__side--image--flip--back">
           <div class="card__side--image--flip--back--synopsis">
-            <p *ngIf="anime" class="card__side--image--flip--back--synopsis--text">
+            <div *ngIf="loading" class="card__side--image--flip--back--synopsis--text">
+              <ngx-skeleton-loader animation="progress-dark"
+               [count]="5"></ngx-skeleton-loader>
+            </div>
+            <p *ngIf="anime && !loading" class="card__side--image--flip--back--synopsis--text">
               {{ anime.complete?.synopsis }}
             </p>
-            <p *ngIf="book" class="card__side--image--flip--back--synopsis--text">
+            <p *ngIf="book && !loading" class="card__side--image--flip--back--synopsis--text">
               {{ book.complete?.volumeInfo?.description }}
             </p>
-            <p *ngIf="serie" class="card__side--image--flip--back--synopsis--text">
+            <p *ngIf="serie && !loading" class="card__side--image--flip--back--synopsis--text">
               {{ serie.complete?.overview }}
             </p>
           </div>
           <div class="card__side--image--flip--back--description">
             <div class="card__side--image--flip--back--description--category">
-              <p *ngIf="anime" class="card__side--image--flip--back--description--category--text">
+              <div *ngIf="loading" class="card__side--image--flip--back--description--category--text">
+                <ngx-skeleton-loader animation="progress-dark" [count]="2"></ngx-skeleton-loader>
+              </div>
+              <p *ngIf="anime && !loading" class="card__side--image--flip--back--description--category--text">
                 <span *ngFor="let category of anime.complete?.genres">
                   {{ category.name }}
                 </span>
               </p>
-              <p *ngIf="book" class="card__side--image--flip--back--description--category--text">
+              <p *ngIf="book && !loading" class="card__side--image--flip--back--description--category--text">
                 {{ book.complete?.volumeInfo?.categories }}
               </p>
-              <p *ngIf="serie" class="card__side--image--flip--back--description--category--text">
+              <p *ngIf="serie && !loading" class="card__side--image--flip--back--description--category--text">
                 <span *ngFor="let genre of serie.complete?.genres">{{
                   genre.name
                   }}</span>
@@ -37,8 +44,11 @@
             </div>
             <div class="card__side--image--flip--back--description--info">
               <div class="card__side--image--flip--back--description--info--flex">
+                <div *ngIf="loading" class="card__side--image--flip--back--description--info--content">
+                  <ngx-skeleton-loader animation="progress-dark" [count]="2"></ngx-skeleton-loader>
+                </div>
                 <div class="card__side--image--flip--back--description--info--content">
-                  <div *ngIf="inMyList == false && anime">
+                  <div *ngIf="inMyList == false && anime && !loading">
                     <p class="card__side--image--flip--back--description--info--flex-text">
                       Episodes
                     </p>
@@ -46,7 +56,7 @@
                       {{ anime.complete?.episodes }}
                     </p>
                   </div>
-                  <div *ngIf="inMyList == false && book">
+                  <div *ngIf="inMyList == false && book && !loading">
                     <p class="card__side--image--flip--back--description--info--flex-text">
                       pages
                     </p>
@@ -54,7 +64,7 @@
                       {{ book.complete?.volumeInfo?.pageCount }}
                     </p>
                   </div>
-                  <div *ngIf="inMyList == false && serie">
+                  <div *ngIf="inMyList == false && serie && !loading">
                     <p class="card__side--image--flip--back--description--info--flex-text">
                       Seasons
                     </p>
@@ -62,7 +72,7 @@
                       {{ serie.complete?.number_of_seasons }}
                     </p>
                   </div>
-                  <div *ngIf="inMyList">
+                  <div *ngIf="inMyList && !loading">
                     <p class="card__side--image--flip--back--description--info--flex-text">
                       My Score
                     </p>
@@ -72,16 +82,19 @@
                   </div>
                 </div>
                 <div class="card__side--image--flip--back--description--info--content">
-                  <p class="card__side--image--flip--back--description--info--flex-text">
+                  <div *ngIf="loading" class="card__side--image--flip--back--description--info--flex-text">
+                    <ngx-skeleton-loader animation="progress-dark" [count]="2"></ngx-skeleton-loader>
+                  </div>
+                  <p *ngIf="!loading" class="card__side--image--flip--back--description--info--flex-text">
                     Score
                   </p>
-                  <p *ngIf="anime" class="card__side--image--flip--back--description--info--flex-text">
+                  <p *ngIf="anime && !loading" class="card__side--image--flip--back--description--info--flex-text">
                     {{ anime.complete?.score }}
                   </p>
-                  <p *ngIf="book" class="card__side--image--flip--back--description--info--flex-text">
+                  <p *ngIf="book && !loading" class="card__side--image--flip--back--description--info--flex-text">
                     {{ book.complete?.volumeInfo?.averageRating }}
                   </p>
-                  <p *ngIf="serie" class="card__side--image--flip--back--description--info--flex-text">
+                  <p *ngIf="serie && !loading" class="card__side--image--flip--back--description--info--flex-text">
                     {{ serie.complete?.vote_average }}
                   </p>
                 </div>
@@ -92,13 +105,16 @@
       </div>
 
       <div class="card__side--title">
-        <h1 *ngIf="anime" class="card__title" (click)="navigateToDetail()">
+        <div *ngIf="loading" >
+          <ngx-skeleton-loader animation="progress-dark" [count]="1"></ngx-skeleton-loader>
+        </div>
+        <h1 *ngIf="anime && !loading" class="card__title" (click)="navigateToDetail()">
           {{ anime.title }}
         </h1>
-        <h1 *ngIf="book" class="card__title" (click)="navigateToDetail()">
+        <h1 *ngIf="book && !loading" class="card__title" (click)="navigateToDetail()">
           {{ book.volumeInfo.title }}
         </h1>
-        <h1 *ngIf="serie" class="card__title" (click)="navigateToDetail()">
+        <h1 *ngIf="serie && !loading" class="card__title" (click)="navigateToDetail()">
           {{ serie.name }}
         </h1>
 
@@ -121,14 +137,18 @@
       <div class="card__side--buttons">
         <!-- MyList -->
         <div class="container-flex" *ngIf=" pageCall == 'myList'">
-          <div *ngIf="inMyList && mycontent && anime" class="card__epi-pag">
+          <div class="card__epi-pag" *ngIf="loading">
+            <ngx-skeleton-loader animation="progress-dark" [count]="1"></ngx-skeleton-loader>
+          </div>
+          <div *ngIf="inMyList && mycontent && anime && !loading" class="card__epi-pag">
             <span class="card__epi-pag__text">Ep. &nbsp; {{mycontent.mark}} / {{anime.episodes}} </span>
           </div>
-          <div *ngIf="mycontent && book && book.complete" class="card__epi-pag">
+          <div *ngIf="mycontent && book && book.complete && !loading" class="card__epi-pag">
             <span class="card__epi-pag__text">Pag. &nbsp; {{mycontent.mark}} / {{book.complete.volumeInfo.pageCount}}
             </span>
           </div>
-          <div *ngIf="mycontent && mycontent.season != undefined && serie && serie.complete" class="card__epi-pag">
+          <div *ngIf="mycontent && mycontent.season != undefined && serie && serie.complete && !loading"
+            class="card__epi-pag">
             <span class="card__epi-pag__text">S &nbsp; {{mycontent.season}} &nbsp; | &nbsp; Ep. &nbsp;
               {{mycontent.mark}}
               /
@@ -163,23 +183,31 @@
         <!-- Recommendation end -->
         <!-- My Friend List -->
         <div class="container-flex" *ngIf=" pageCall == 'friendList'">
-          <div *ngIf="friendContent && anime && anime.complete" class="card__epi-pag">
-            <span class="card__epi-pag__text"> Ep. &nbsp; {{friendContent.mark}}  / {{anime.episodes}}</span>
+          <div *ngIf="loading" class="card__epi-pag">
+            <ngx-skeleton-loader animation="progress-dark" class="card__epi-pag__text" [count]="1" ></ngx-skeleton-loader>
           </div>
-          <div *ngIf="friendContent && book && book.complete" class="card__epi-pag">
-            <span class="card__epi-pag__text"> Pag. &nbsp;  {{friendContent.mark}} / {{book.complete.volumeInfo.pageCount}}</span>
+          <div *ngIf="friendContent && anime && anime.complete && !loading" class="card__epi-pag">
+            <span class="card__epi-pag__text"> Ep. &nbsp; {{friendContent.mark}} / {{anime.episodes}}</span>
           </div>
-          <div *ngIf="friendContent && friendContent.season != undefined && serie && serie.complete" class="card__epi-pag">
-            <span class="card__epi-pag__text"> S &nbsp; {{friendContent.season}} &nbsp; | &nbsp; Ep. &nbsp;{{friendContent.mark}} /
+          <div *ngIf="friendContent && book && book.complete && !loading" class="card__epi-pag">
+            <span class="card__epi-pag__text"> Pag. &nbsp; {{friendContent.mark}} /
+              {{book.complete.volumeInfo.pageCount}}</span>
+          </div>
+          <div *ngIf="friendContent && friendContent.season != undefined && serie && serie.complete && !loading"
+            class="card__epi-pag">
+            <span class="card__epi-pag__text"> S &nbsp; {{friendContent.season}} &nbsp; | &nbsp; Ep.
+              &nbsp;{{friendContent.mark}} /
               {{serie.complete.seasons[friendContent.season].episode_count}}</span>
           </div>
-          <div class="card__button-container card__button-container--recommend" *ngIf="!inMyList" (click)="addToMyList()">
+          <div class="card__button-container card__button-container--recommend" *ngIf="!inMyList"
+            (click)="addToMyList()">
             <p class="card__button-container__text">Add to list</p>
             <svg class="card__button-container__icon">
               <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
             </svg>
           </div>
-          <div class="card__button-container card__button-container--recommend" *ngIf="inMyList" (click)="deleteToMyList()">
+          <div class="card__button-container card__button-container--recommend" *ngIf="inMyList"
+            (click)="deleteToMyList()">
             <p class="card__button-container__text">Remove</p>
             <svg class="card__button-container__icon">
               <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
@@ -209,20 +237,23 @@
             </svg>
           </div>
         </div>
+        <div *ngIf="pageCall == 'loading'">
+
+        </div>
         <!-- Other end -->
       </div>
     </div>
-    <app-recommendation *ngIf="anime" type="ANIME" [contentId]="anime.mal_id.toString()" [isActiveRecommend]="isActiveRecommend"
-      (isActiveEvent)="disableReceiveRecommendation($event)">
+    <app-recommendation *ngIf="anime" type="ANIME" [contentId]="anime.mal_id.toString()"
+      [isActiveRecommend]="isActiveRecommend" (isActiveEvent)="disableReceiveRecommendation($event)">
     </app-recommendation>
 
-    <app-recommendation *ngIf="serie" type="SERIE" [contentId]="serie.id.toString()" [isActiveRecommend]="isActiveRecommend"
-      (isActiveEvent)="disableReceiveRecommendation($event)">
+    <app-recommendation *ngIf="serie" type="SERIE" [contentId]="serie.id.toString()"
+      [isActiveRecommend]="isActiveRecommend" (isActiveEvent)="disableReceiveRecommendation($event)">
     </app-recommendation>
 
     <app-recommendation *ngIf="book" type="BOOK" [contentId]="book.id" [isActiveRecommend]="isActiveRecommend"
       (isActiveEvent)="disableReceiveRecommendation($event)">
     </app-recommendation>
-    
+
   </div>
 </div>

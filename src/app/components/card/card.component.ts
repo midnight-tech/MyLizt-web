@@ -17,8 +17,9 @@ export class CardComponent implements OnInit {
   @Input() serie?: SerieCatalogo;
   @Input() book?: BookCatalogo;
   @Input() lookMyList: boolean = true;
-  @Input() pageCall? : 'myList' | 'recommendation' | 'friendList' | 'other' = 'other'
+  @Input() pageCall? : 'myList' | 'recommendation' | 'friendList' | 'loading' | 'other' = 'other'
   @Input() friendContent? : content
+  @Input() loading : boolean = false
   inMyList: boolean = false;
   mycontent?: content;
   

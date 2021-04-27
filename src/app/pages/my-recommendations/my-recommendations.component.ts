@@ -19,6 +19,9 @@ export class MyRecommendationsComponent implements OnInit {
 
   type! : search 
 
+  loading = false
+  loadingArray = new Array(12).fill(0)
+
   constructor(
     public homeContext: HomeContextService,
     actRoute: ActivatedRoute,

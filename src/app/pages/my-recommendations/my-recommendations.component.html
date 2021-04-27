@@ -8,10 +8,17 @@
 
   <div class="pagination pagination--top">
     <app-pagination pageCalled="myRec" (visibleContentAnime)="anime = $event" (visibleContentBook)="book = $event"
-    (visibleContentSerie)="serie = $event" [type]="type"></app-pagination>
+    (visibleContentSerie)="serie = $event" (cardLoad)="loading = $event" [type]="type"></app-pagination>
   </div>
 
-  <div class="list">
+  <div *ngIf="loading" class="list">
+    <div class="list__card" *ngFor="let content of loadingArray">
+      <!-- {{ content.title }} -->
+      <app-card pageCall="loading" [loading]="loading"></app-card>
+    </div>
+  </div>
+
+  <div *ngIf="!loading" class="list">
     <div class="list__card" *ngFor="let content of anime">
       <!-- {{ content.title }} -->
       <app-card [anime]="content.anime" [lookMyList]="false" pageCall="recommendation"></app-card>

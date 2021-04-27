@@ -20,6 +20,10 @@ export class FriendListComponent implements OnInit {
   serie : {serie : SerieCatalogo, content : content}[] = []
   book : {book : BookCatalogo, content : content}[] = []
 
+
+  loading = false
+  loadingArray = new Array(12).fill(0)
+
   constructor(
     actRoute: ActivatedRoute,
     public homeContext: HomeContextService,

@@ -28,6 +28,8 @@ export class PaginationComponent implements OnInit, OnChanges {
   @Output() visibleListSerie = new EventEmitter<SerieCatalogo[]>();
   @Output() visibleListBook = new EventEmitter<BookCatalogo[]>();
 
+  @Output() cardLoad = new EventEmitter<boolean>();
+
   @Output() visibleContentAnime = new EventEmitter<
     { anime: AnimeCatalogo; content: content }[]
   >();
@@ -77,13 +79,23 @@ export class PaginationComponent implements OnInit, OnChanges {
       case 'friendList':
       case 'myContent':
       case 'myRec':
-        this.changePageFriendList(this.pageCalled);
+        this.cardLoad.emit(true);
+        this.changePageFriendList(this.pageCalled).then(() => {
+          this.cardLoad.emit(false);
+        });
         break;
     }
   }
 
   async changePage(page: number) {
     // Execulta a cada troca de pagina
+
+    if (this.atualPage == page) {
+      return;
+    }
+    if (page <= 0 || page > this.totalPage) {
+      return;
+    }
     this.atualPage = page;
     switch (this.pageCalled) {
       case 'search':
@@ -93,7 +105,10 @@ export class PaginationComponent implements OnInit, OnChanges {
       case 'friendList':
       case 'myContent':
       case 'myRec':
-        this.changePageFriendList(this.pageCalled, page);
+        this.cardLoad.emit(true);
+        this.changePageFriendList(this.pageCalled, page).then(() => {
+          this.cardLoad.emit(false);
+        });
     }
   }
 
