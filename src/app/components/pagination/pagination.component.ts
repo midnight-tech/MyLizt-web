@@ -74,13 +74,13 @@ export class PaginationComponent implements OnInit, OnChanges {
     switch (this.pageCalled) {
       case 'search':
       case 'catalogo':
-        this.changePageSearch(this.pageCalled);
+        this.changePageCatalogo(this.pageCalled);
         break;
       case 'friendList':
       case 'myContent':
       case 'myRec':
         this.cardLoad.emit(true);
-        this.changePageFriendList(this.pageCalled).then(() => {
+        this.changePageWithContent(this.pageCalled).then(() => {
           this.cardLoad.emit(false);
         });
         break;
@@ -100,13 +100,13 @@ export class PaginationComponent implements OnInit, OnChanges {
     switch (this.pageCalled) {
       case 'search':
       case 'catalogo':
-        this.changePageSearch(this.pageCalled, page);
+        this.changePageCatalogo(this.pageCalled, page);
         break;
       case 'friendList':
       case 'myContent':
       case 'myRec':
         this.cardLoad.emit(true);
-        this.changePageFriendList(this.pageCalled, page).then(() => {
+        this.changePageWithContent(this.pageCalled, page).then(() => {
           this.cardLoad.emit(false);
         });
     }
@@ -151,9 +151,9 @@ export class PaginationComponent implements OnInit, OnChanges {
     // seleciona a page
   }
 
-  async changePageSearch(pageCalled: 'search' | 'catalogo', page?: number) {
+  async changePageCatalogo(pageCalled: 'search' | 'catalogo', page?: number) {
     // Paginação na tela search
-    if (this.query == undefined) {
+    if (pageCalled=='search' && this.query == undefined) {
       throw 'query canot be undefined in search page';
     }
     if (this.type == undefined) {
@@ -181,7 +181,7 @@ export class PaginationComponent implements OnInit, OnChanges {
         break;
       case 'search':
         result = await this.searchPagination.pageSearch(
-          this.query,
+          this.query!,
           page != undefined ? page : 1,
           this.type
         );
@@ -206,7 +206,7 @@ export class PaginationComponent implements OnInit, OnChanges {
     }
   }
 
-  async changePageFriendList(
+  async changePageWithContent(
     pageCalled: 'myContent' | 'friendList' | 'myRec',
     page?: number
   ) {
