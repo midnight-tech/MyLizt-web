@@ -20,7 +20,7 @@
     [back-cover-start title-start] minmax(auto, 8rem)
     [title-end front-cover-start] minmax(auto, 15rem)
     [cover-info-start] minmax(auto, 7rem)
-    [cover-info-end back-cover-end info-out-cover-start] minmax(auto, 14rem)
+    [cover-info-end back-cover-end info-out-cover-start] minmax(auto, 11rem)
     [info-out-cover-end front-cover-end];
 }
 
@@ -140,8 +140,7 @@
   grid-row: info-out-cover-start / info-out-cover-end;
   z-index: 1;
   margin: 2rem 0;
-  padding: 0 2rem;
-  border-right: 1px solid $white;
+  padding-left: 2rem;
   display: flex;
   align-items: flex-start;
 
@@ -154,21 +153,21 @@
   }
 
   &__title {
-    font-size: 2rem;
+    font-size: 1.6rem;
     color: $white;
     text-transform: uppercase;
     margin-bottom: 0.5rem;
   }
 
   &__info {
-    font-size: 2.6rem;
+    font-size: 2rem;
     color: $white;
     text-transform: uppercase;
     font-weight: bold;
   }
 
   &__caption {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     color: $white;
     text-transform: uppercase;
   }
@@ -179,7 +178,7 @@
   grid-row: info-out-cover-start / info-out-cover-end;
   z-index: 1;
   margin: 2rem 0;
-  padding: 0 2rem;
+  padding-left: 2rem;
   display: flex;
   align-items: flex-start;
 
@@ -192,21 +191,21 @@
   }
 
   &__title {
-    font-size: 2rem;
+    font-size: 1.6rem;
     color: $white;
     text-transform: uppercase;
     margin-bottom: 0.5rem;
   }
 
   &__info {
-    font-size: 2.6rem;
+    font-size: 2rem;
     color: $primary1;
     text-transform: uppercase;
     font-weight: bold;
   }
 
   &__input {
-    font-size: 2.6rem;
+    font-size: 2rem;
     border: none;
     width: 7.5rem;
     background-color: transparent;
@@ -231,10 +230,9 @@
   grid-row: info-out-cover-start / info-out-cover-end;
   z-index: 1;
   margin: 2rem 0;
-  padding: 0 2rem;
+  padding-left: 2rem;
   display: flex;
   align-items: flex-start;
-  border-left: 1px solid $white;
 
   &__flex {
     display: flex;
@@ -245,13 +243,13 @@
   }
 
   &__title {
-    font-size: 2rem;
+    font-size: 1.6rem;
     color: $white;
     text-transform: uppercase;
   }
 
   &__info {
-    font-size: 2.6rem;
+    font-size: 2rem;
     color: $white;
     text-transform: uppercase;
     font-weight: bold;
@@ -267,7 +265,7 @@
   justify-content: center;
   align-items: center;
   padding: 2rem;
-  align-self: center;
+  align-self: flex-start;
 
   &__flex {
     display: flex;
@@ -275,21 +273,21 @@
   }
 
   &__title {
-    font-size: 2rem;
+    font-size: 1.6rem;
     color: $white;
     text-transform: uppercase;
     margin-bottom: 1rem;
   }
 
   &__info {
-    font-size: 2rem;
+    font-size: 1.6rem;
     color: $white;
     text-transform: uppercase;
   }
 
   &__icon {
-    height: 3rem;
-    width: 3rem;
+    height: 2rem;
+    width: 2rem;
     margin: 0 0.5rem;
     fill: $white;
     cursor: pointer;
@@ -316,7 +314,7 @@
     }
 
     &::placeholder {
-      font-size: 2rem;
+      font-size: 1.6rem;
       font-family: inherit;
       opacity: 1;
     }
