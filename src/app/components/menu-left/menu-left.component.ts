@@ -4,6 +4,7 @@ import { CompleteAnime, CompleteBook, CompleteSerie } from 'src/app/data/interfa
 import { AnimeService } from 'src/app/services/anime/anime.service';
 import { BookService } from 'src/app/services/book/book.service';
 import { ListService } from 'src/app/services/list/list.service';
+import { LoadingService } from 'src/app/services/loading/loading.service';
 import { SerieService } from 'src/app/services/serie/serie.service';
 
 @Component({
@@ -22,7 +23,8 @@ export class MenuLeftComponent implements OnInit {
     private animeService: AnimeService,
     private bookService: BookService,
     private serieService: SerieService,
-    private router: Router
+    private router: Router,
+    private loading : LoadingService
   ) { }
 
   ngOnInit() {
@@ -60,10 +62,16 @@ export class MenuLeftComponent implements OnInit {
   }
 
   navigateToMyList(type: string) {
+    if(this.loading.isLoading){
+      return
+    }
     this.router.navigate(['home', 'my-list', type])
   }
 
   navigateToMyRecommendation(type: string) {
+    if(this.loading.isLoading){
+      return
+    }
     this.router.navigate(['home', 'recommendations', type])
   }
 

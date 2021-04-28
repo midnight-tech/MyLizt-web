@@ -12,6 +12,7 @@ import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
 import { content, search } from 'src/app/data/interfaces';
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { HomeContextService } from 'src/app/services/home-context/home.service';
+import { LoadingService } from 'src/app/services/loading/loading.service';
 import { CatalogoPaginationService } from 'src/app/services/pagination/catalogo-pagination.service';
 import { FriendListPaginationService } from 'src/app/services/pagination/friend-list-pagination.service';
 import { MyListPaginationService } from 'src/app/services/pagination/my-list-pagination.service';
@@ -27,8 +28,6 @@ export class PaginationComponent implements OnInit, OnChanges {
   @Output() visibleListAnime = new EventEmitter<AnimeCatalogo[]>();
   @Output() visibleListSerie = new EventEmitter<SerieCatalogo[]>();
   @Output() visibleListBook = new EventEmitter<BookCatalogo[]>();
-
-  @Output() cardLoad = new EventEmitter<boolean>();
 
   @Output() visibleContentAnime = new EventEmitter<
     { anime: AnimeCatalogo; content: content }[]
@@ -62,7 +61,8 @@ export class PaginationComponent implements OnInit, OnChanges {
     private catalogoPagination: CatalogoPaginationService,
     private friendListPagination: FriendListPaginationService,
     private myListPagination: MyListPaginationService,
-    private myRecPagination: MyRecsPaginationService
+    private myRecPagination: MyRecsPaginationService,
+    private loadingService: LoadingService
   ) {
     if (this.pageCalled) {
       this.pageCalled = 'search';
@@ -79,9 +79,9 @@ export class PaginationComponent implements OnInit, OnChanges {
       case 'friendList':
       case 'myContent':
       case 'myRec':
-        this.cardLoad.emit(true);
+        this.loadingService.isLoading = true;
         this.changePageWithContent(this.pageCalled).then(() => {
-          this.cardLoad.emit(false);
+          this.loadingService.isLoading = false;
         });
         break;
     }
@@ -89,7 +89,9 @@ export class PaginationComponent implements OnInit, OnChanges {
 
   async changePage(page: number) {
     // Execulta a cada troca de pagina
-
+    if (this.loadingService.isLoading) {
+      return;
+    }
     if (this.atualPage == page) {
       return;
     }
@@ -97,6 +99,7 @@ export class PaginationComponent implements OnInit, OnChanges {
       return;
     }
     this.atualPage = page;
+    // this.clean();
     switch (this.pageCalled) {
       case 'search':
       case 'catalogo':
@@ -105,9 +108,9 @@ export class PaginationComponent implements OnInit, OnChanges {
       case 'friendList':
       case 'myContent':
       case 'myRec':
-        this.cardLoad.emit(true);
+        this.loadingService.isLoading = true;
         this.changePageWithContent(this.pageCalled, page).then(() => {
-          this.cardLoad.emit(false);
+          this.loadingService.isLoading = false;
         });
     }
   }
@@ -153,7 +156,7 @@ export class PaginationComponent implements OnInit, OnChanges {
 
   async changePageCatalogo(pageCalled: 'search' | 'catalogo', page?: number) {
     // Paginação na tela search
-    if (pageCalled=='search' && this.query == undefined) {
+    if (pageCalled == 'search' && this.query == undefined) {
       throw 'query canot be undefined in search page';
     }
     if (this.type == undefined) {
@@ -210,12 +213,9 @@ export class PaginationComponent implements OnInit, OnChanges {
     pageCalled: 'myContent' | 'friendList' | 'myRec',
     page?: number
   ) {
-    // Paginação na tela friendList
-
     if (this.type == undefined) {
       throw 'type cannot be undefined';
     }
-
     let result:
       | false
       | {
@@ -301,6 +301,9 @@ export class PaginationComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    if(this.loadingService.isLoading){
+      return
+    }
     if (this.init) {
       if (changes.query || changes.type) {
         this.pages = [];

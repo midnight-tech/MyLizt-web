@@ -6,6 +6,7 @@ import { content, search } from 'src/app/data/interfaces';
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { HomeContextService } from 'src/app/services/home-context/home.service';
 import { ListService } from 'src/app/services/list/list.service';
+import { LoadingService } from 'src/app/services/loading/loading.service';
 
 @Component({
   selector: 'app-my-list',
@@ -17,13 +18,11 @@ export class MyListComponent implements OnInit {
   serie: { serie: SerieCatalogo; content: content }[] = [];
   book: { book: BookCatalogo; content: content }[] = [];
 
-  loading = false
-
   loadingArray = new Array(12).fill(0)
 
   type!: search;
 
-  constructor(actRoute: ActivatedRoute) {
+  constructor(actRoute: ActivatedRoute, public loadingService: LoadingService) {
     actRoute.params.subscribe((value) => {
       this.type = value.type.toUpperCase();
     });

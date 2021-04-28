@@ -5,27 +5,31 @@
 
   <div class="pagination pagination--top">
     <app-pagination pageCalled="friendList" (visibleContentAnime)="anime = $event" (visibleContentBook)="book = $event"
-      (visibleContentSerie)="serie = $event" (cardLoad)="loading = $event" [type]="type" [friendId]="friendId"></app-pagination>
+      (visibleContentSerie)="serie = $event" [type]="type" [friendId]="friendId"></app-pagination>
   </div>
 
-  <div *ngIf="loading" class="list">
+  <div *ngIf="loadingService.isLoading" class="list">
     <div class="list__card" *ngFor="let content of loadingArray">
       <!-- {{ content.title }} -->
-      <app-card pageCall="loading" [loading]="loading"></app-card>
+      <app-card pageCall="loading" [loading]="loadingService.isLoading"></app-card>
     </div>
   </div>
 
-  <div *ngIf="!loading" class="list">
+  <div *ngIf="!loadingService.isLoading && type == 'ANIME' " class="list">
     <div class="list__card" *ngFor="let content of anime">
       <!-- {{ content.title }} -->
       <app-card [anime]="content.anime" [friendContent]="content.content" [lookMyList]=false pageCall='friendList'>
       </app-card>
     </div>
+  </div>
+  <div *ngIf="!loadingService.isLoading && type == 'BOOK'" class="list">
     <div class="list__card" *ngFor="let content of book">
       <!-- {{ content.volumeInfo.title }} -->
       <app-card [book]="content.book" [friendContent]="content.content" [lookMyList]=false pageCall='friendList'>
       </app-card>
     </div>
+  </div>
+  <div *ngIf="!loadingService.isLoading && type == 'SERIE'" class="list">
     <div class="list__card" *ngFor="let content of serie">
       <!-- {{ content.name }} -->
       <app-card [serie]="content.serie" [friendContent]="content.content" [lookMyList]=false pageCall='friendList'>

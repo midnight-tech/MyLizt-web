@@ -1,4 +1,3 @@
-
 <div class="container-grid">
   <div class="title">
     <h1 *ngIf="type == 'ANIME'" class="title__text">My Anime</h1>
@@ -8,25 +7,29 @@
 
   <div class="pagination pagination--top">
     <app-pagination pageCalled="myRec" (visibleContentAnime)="anime = $event" (visibleContentBook)="book = $event"
-    (visibleContentSerie)="serie = $event" (cardLoad)="loading = $event" [type]="type"></app-pagination>
+      (visibleContentSerie)="serie = $event" [type]="type"></app-pagination>
   </div>
 
-  <div *ngIf="loading" class="list">
+  <div *ngIf="loadingService.isLoading" class="list">
     <div class="list__card" *ngFor="let content of loadingArray">
       <!-- {{ content.title }} -->
-      <app-card pageCall="loading" [loading]="loading"></app-card>
+      <app-card pageCall="loading" [loading]="loadingService.isLoading"></app-card>
     </div>
   </div>
 
-  <div *ngIf="!loading" class="list">
+  <div *ngIf="!loadingService.isLoading && type=='ANIME' " class="list">
     <div class="list__card" *ngFor="let content of anime">
       <!-- {{ content.title }} -->
       <app-card [anime]="content.anime" [lookMyList]="false" pageCall="recommendation"></app-card>
     </div>
+  </div>
+  <div *ngIf="!loadingService.isLoading && type=='SERIE' " class="list">
     <div class="list__card" *ngFor="let content of serie">
       <!-- {{ content.volumeInfo.title }} -->
       <app-card [serie]="content.serie" [lookMyList]="false" pageCall="recommendation"></app-card>
     </div>
+  </div>
+  <div *ngIf="!loadingService.isLoading && type=='BOOK' " class="list">
     <div class="list__card" *ngFor="let content of book">
       <!-- {{ content.name }} -->
       <app-card [book]="content.book" [lookMyList]="false" pageCall="recommendation"></app-card>

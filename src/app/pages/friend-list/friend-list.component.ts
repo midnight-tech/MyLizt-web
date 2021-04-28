@@ -5,6 +5,7 @@ import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
 import { content, search } from 'src/app/data/interfaces';
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { HomeContextService } from 'src/app/services/home-context/home.service';
+import { LoadingService } from 'src/app/services/loading/loading.service';
 
 @Component({
   selector: 'app-friend-list',
@@ -21,12 +22,12 @@ export class FriendListComponent implements OnInit {
   book : {book : BookCatalogo, content : content}[] = []
 
 
-  loading = false
   loadingArray = new Array(12).fill(0)
 
   constructor(
     actRoute: ActivatedRoute,
     public homeContext: HomeContextService,
+    public loadingService : LoadingService
 
   ) {
     actRoute.params.subscribe((value) => {

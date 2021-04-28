@@ -45,6 +45,8 @@ import { AutoFocusDirectiveDirective } from './directives/autoFocusDirective.dir
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { ContentCompletedComponent } from './components/content-completed/content-completed.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { LoadingService } from './services/loading/loading.service';
+import { CompleteScreenLoadComponent } from './components/completeScreenLoad/completeScreenLoad.component';
 
 const maskConfigFunction: () => Partial<IConfig> = () => {
   return {
@@ -152,6 +154,7 @@ const routes: Routes = [
     MyRecommendationsComponent,
     AutoFocusDirectiveDirective,
     ContentCompletedComponent,
+    CompleteScreenLoadComponent
   ],
   imports: [
     BrowserModule,
@@ -172,6 +175,7 @@ const routes: Routes = [
     HomeContextService,
     UserService,
     NotificationService,
+    LoadingService,
   ],
   bootstrap: [AppComponent],
 })
