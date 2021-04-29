@@ -29,6 +29,8 @@ export class HeaderDetailComponent implements OnInit {
   @Input() book!: CompleteBook;
   @Input() type!: search;
   @Input() watched!: boolean;
+  @Output() seasonAtualEmitter = new EventEmitter<number>();
+
   openCompleteWatched = false;
   rateInputControl = new FormControl('');
   episodeInputControl = new FormControl('');
@@ -40,7 +42,6 @@ export class HeaderDetailComponent implements OnInit {
 
   isActiveRecommend = false;
 
-  @Output() seasonAtualEmitter = new EventEmitter<number>();
   onMyList: boolean = false;
   updateState = false;
 

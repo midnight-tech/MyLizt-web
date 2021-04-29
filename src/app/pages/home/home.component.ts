@@ -8,6 +8,8 @@ import { LoadingService } from 'src/app/services/loading/loading.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  isMenuActive = false;
+
   constructor(
     private listService: ListService,
     public loadingService: LoadingService

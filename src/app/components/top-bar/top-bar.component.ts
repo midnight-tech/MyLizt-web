@@ -1,4 +1,11 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';
@@ -23,6 +30,8 @@ import { UserService } from 'src/app/services/user/user.service';
   styleUrls: ['./top-bar.component.scss'],
 })
 export class TopBarComponent implements OnInit, OnChanges {
+  @Output() showMenuEvent = new EventEmitter<boolean>();
+
   animes: AnimeCatalogo[] = [];
   series: SerieCatalogo[] = [];
   books: BookCatalogo[] = [];
@@ -94,8 +103,8 @@ export class TopBarComponent implements OnInit, OnChanges {
   totalSearch() {
     if (this.searchField.value.length >= 3) {
       this.isActiveSearch = false;
-      this.homeContext.query = this.searchField.value
-      this.homeContext.searchType = this.searchOptions[this.searchIndex]
+      this.homeContext.query = this.searchField.value;
+      this.homeContext.searchType = this.searchOptions[this.searchIndex];
       this.router.navigateByUrl('home/search');
     }
   }

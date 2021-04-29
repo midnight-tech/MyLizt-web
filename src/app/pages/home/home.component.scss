@@ -5,6 +5,7 @@
   background-color: $black3;
   display: grid;
   min-height: 100vh;
+  position: relative;
   grid-template-columns:
     [menu-start] 18vw [menu-end void-left-start ] minmax(12rem, 1fr)
     [ void-left-end content-start] repeat(
@@ -18,18 +19,43 @@
       [col-start] minmax(auto, 1fr) [col-end]
     )
     [content-end footer-start] min-content [footer-end];
+
+  @media only screen and (max-width: $bp-1360) {
+    grid-template-columns:
+      [ void-left-start ] minmax(12rem, 1fr)
+      [ void-left-end content-start] repeat(
+        8,
+        [col-start] minmax(min-content, 40rem) [col-end]
+      )
+      [content-end void-right-start] minmax(12rem, 1fr) [void-right-end];
+  }
 }
 
 .menu-container {
   display: grid;
   grid-column: menu-start / menu-end;
   grid-row: top-bar-start / -1;
+
+  @media only screen and (max-width: $bp-1360) {
+    display: none;
+    top: 0;
+    position: absolute;
+    height: 100%;
+    width: 18vw;
+    z-index: 10;
+  }
+
+  &__show {
+    @media only screen and (max-width: $bp-1360) {
+      display: grid;
+    }
+  }
 }
 
 .top-bar-container {
-  display: grid;
   grid-column: content-start / content-end;
   grid-row: top-bar-start / top-bar-end;
+  align-items: center;
 }
 
 .contents {
@@ -50,4 +76,15 @@
   flex: 1 1 auto;
   display: flex;
   overflow: hidden;
+}
+
+.membrana {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: default;
+  z-index: 5;
+  background-color: rgba($black3, 0.9);
 }

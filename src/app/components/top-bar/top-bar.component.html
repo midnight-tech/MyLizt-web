@@ -1,12 +1,15 @@
 <div class="flex-container">
   <ng-template #notImageFound>
-    <img
-      class="search__dropdown__item__image"
-      src="data:image/png;base64,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"
-    />
+    <img class="search__dropdown__item__image"
+      src="data:image/png;base64,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" />
   </ng-template>
 
+  <svg class="menu" (click)="showMenuEvent.emit(true)">
+    <use href="assets/symbol-defs.svg#icon-menu"></use>
+  </svg>
+
   <form class="search">
+
     <div class="search__container">
       <!-- Container Categoria -->
       <div [ngClass]="{ 'is-active': isActive }" class="dropdown is-right">
@@ -19,28 +22,16 @@
         <div class="dropdown-menu" id="dropdown-menu6" role="menu">
           <div (click)="dropdown()" class="membrana"></div>
           <div class="dropdown-content search__category__dropdown">
-            <a
-              class="dropdown-item search__category__dropdown__content"
-              *ngFor="let option of searchOptions; index as i"
-              (click)="setSearchIndex(i)"
-              >{{ option }}</a
-            >
+            <a class="dropdown-item search__category__dropdown__content"
+              *ngFor="let option of searchOptions; index as i" (click)="setSearchIndex(i)">{{ option }}</a>
           </div>
         </div>
       </div>
       <!-- Container dropdown search -->
-      <div
-        [ngClass]="{ 'is-active': isActiveSearch }"
-        class="dropdown search__dropdown__container"
-      >
+      <div [ngClass]="{ 'is-active': isActiveSearch }" class="dropdown search__dropdown__container">
         <div class="dropdown-trigger search__input__container">
-          <input
-            (focus)="searchEvent()"
-            type="text"
-            class="search__input"
-            placeholder="Search..."
-            [formControl]="searchField"
-          />
+          <input (focus)="searchEvent()" type="text" class="search__input" placeholder="Search..."
+            [formControl]="searchField" />
 
           <button type="button" class="search__button" (click)="totalSearch()">
             <svg class="search__icon">
@@ -49,99 +40,65 @@
           </button>
         </div>
         <!-- Coteudo Dropdown Search-->
-        <div
-          class="dropdown-menu search__dropdown"
-          id="dropdown-menu6"
-          role="menu"
-        >
+        <div class="dropdown-menu search__dropdown" id="dropdown-menu6" role="menu">
           <div (click)="closeSearchModal()" class="membrana"></div>
           <div class="dropdown-content search__dropdown__content">
-            <div
-              *ngFor="let anime of animes; index as i"
-              (click)="navigateToDetail(anime.mal_id.toString(), 'anime')"
-            >
+            <div *ngFor="let anime of animes; index as i" (click)="navigateToDetail(anime.mal_id.toString(), 'anime')">
               <!-- Templates for Aired Anime -->
               <ng-template #dateEndNull>
                 <ng-container *ngIf="anime.start_date; else dateStartNull">
-                  <p
-                    class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info"
-                  >
+                  <p class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info">
                     Aired: {{ anime.start_date | date: "MMM d, y" }} to ?
                   </p>
                 </ng-container>
               </ng-template>
               <ng-template #dateStartNull>
-                <p
-                  class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info"
-                >
+                <p class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info">
                   Aired: Not Available
                 </p>
               </ng-template>
               <!-- Template for Score Anime -->
               <ng-template #scoreNull>
-                <p
-                  class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info"
-                >
+                <p class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info">
                   Score: N/A
                 </p>
               </ng-template>
               <!-- Template for Status Anime -->
               <ng-template #finished>
-                <ng-container
-                  *ngIf="
+                <ng-container *ngIf="
                     !anime.airing && anime.start_date && anime.end_date;
                     else notYetAired
-                  "
-                >
-                  <p
-                    class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info"
-                  >
+                  ">
+                  <p class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info">
                     Status: Finished Airing
                   </p>
                 </ng-container>
               </ng-template>
               <ng-template #notYetAired>
-                <p
-                  class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info"
-                >
+                <p class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info">
                   Status: Not yet aired
                 </p>
               </ng-template>
 
               <div class="search__dropdown__item">
-                <div
-                  class="search__dropdown__item__container-image"
-                  *ngIf="anime.image_url; else notImageFound"
-                >
-                  <img
-                    [src]="anime.image_url"
-                    alt="Cover"
-                    class="search__dropdown__item__image"
-                  />
+                <div class="search__dropdown__item__container-image" *ngIf="anime.image_url; else notImageFound">
+                  <img [src]="anime.image_url" alt="Cover" class="search__dropdown__item__image" />
                 </div>
                 <div class="search__dropdown__item__container-content">
-                  <p
-                    class="dropdown-item search__dropdown__item__content search__dropdown__item__content--title"
-                  >
+                  <p class="dropdown-item search__dropdown__item__content search__dropdown__item__content--title">
                     {{ anime.title }}
                   </p>
-                  <p
-                    class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info"
-                    *ngIf="anime.start_date && anime.end_date; else dateEndNull"
-                  >
+                  <p class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info"
+                    *ngIf="anime.start_date && anime.end_date; else dateEndNull">
                     Aired: {{ anime.start_date | date: "MMM d, y" }} to
                     {{ anime.end_date | date: "MMM d, y" }}
                   </p>
-                  <p
-                    class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info"
-                    *ngIf="anime.score; else scoreNull"
-                  >
+                  <p class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info"
+                    *ngIf="anime.score; else scoreNull">
                     Score: {{ anime.score }}
                   </p>
-                  <p
-                    class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info"
-                    *ngIf="anime.airing && anime.score != 0; else finished"
-                  >
+                  <p class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info"
+                    *ngIf="anime.airing && anime.score != 0; else finished">
                     Status: Currently Airing
                   </p>
                 </div>
@@ -149,39 +106,27 @@
             </div>
 
             <div *ngFor="let serie of series; index as i">
-              <div
-                class="search__dropdown__item"
-                (mouseenter)="serie.getComplete()"
-                (click)="navigateToDetail(serie.id.toString(), 'serie')"
-              >
+              <div class="search__dropdown__item" (mouseenter)="serie.getComplete()"
+                (click)="navigateToDetail(serie.id.toString(), 'serie')">
                 <div class="search__dropdown__item__container-image">
-                  <img
-                    [src]="serie.poster_path"
-                    alt="Cover"
-                    class="search__dropdown__item__image"
-                  />
+                  <img [src]="serie.poster_path" alt="Cover" class="search__dropdown__item__image" />
                 </div>
                 <div class="search__dropdown__item__container-content">
-                  <p
-                    class="dropdown-item search__dropdown__item__content search__dropdown__item__content--title"
-                  >
+                  <p class="dropdown-item search__dropdown__item__content search__dropdown__item__content--title">
                     {{ serie.name }}
                   </p>
                   <div *ngIf="serie.complete">
                     <p
-                      class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info"
-                    >
+                      class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info">
                       aired: {{ serie.complete.first_air_date }} to
                       {{ serie.complete.last_air_date }}
                     </p>
                     <p
-                      class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info"
-                    >
+                      class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info">
                       Score: {{ serie.vote_average }}
                     </p>
                     <p
-                      class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info"
-                    >
+                      class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info">
                       status: {{ serie.complete.status }}
                     </p>
                   </div>
@@ -190,38 +135,27 @@
             </div>
 
             <div *ngFor="let book of books; index as i">
-              <div
-                class="search__dropdown__item"
-                (mouseenter)="book.getComplete()"
-                (click)="navigateToDetail(book.id, 'book')"
-              >
+              <div class="search__dropdown__item" (mouseenter)="book.getComplete()"
+                (click)="navigateToDetail(book.id, 'book')">
                 <div class="search__dropdown__item__container-image">
-                  <img
-                    [src]="book.volumeInfo.image"
-                    [alt]="book.volumeInfo.image"
-                    class="search__dropdown__item__image"
-                  />
+                  <img [src]="book.volumeInfo.image" [alt]="book.volumeInfo.image"
+                    class="search__dropdown__item__image" />
                 </div>
                 <div class="search__dropdown__item__container-content">
-                  <p
-                    class="dropdown-item search__dropdown__item__content search__dropdown__item__content--title"
-                  >
+                  <p class="dropdown-item search__dropdown__item__content search__dropdown__item__content--title">
                     {{ book.volumeInfo.title }}
                   </p>
                   <div *ngIf="book.complete">
                     <p
-                      class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info"
-                    >
+                      class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info">
                       aired: {{ book.complete.volumeInfo.publishedDate }}
                     </p>
                     <p
-                      class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info"
-                    >
+                      class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info">
                       score: {{ book.complete.volumeInfo.averageRating }}
                     </p>
                     <p
-                      class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info"
-                    >
+                      class="dropdown-item search__dropdown__item__content search__dropdown__item__content--extra-info">
                       authors: {{ book.complete.volumeInfo.authors }}
                     </p>
                   </div>
@@ -235,10 +169,7 @@
   </form>
 
   <div class="account">
-    <div
-      [ngClass]="{ 'is-active': isActiveNotification }"
-      class="dropdown is-right"
-    >
+    <div [ngClass]="{ 'is-active': isActiveNotification }" class="dropdown is-right">
       <div class="dropdown-trigger" (click)="dropdownNotification()">
         <svg class="account__icon account__icon--notification">
           <use href="assets/symbol-defs.svg#icon-notifications_on"></use>
@@ -250,72 +181,50 @@
       </div>
 
       <!-- Conteudo Dropdwon Notification -->
-      <div
-        class="dropdown-menu account__notification__menu"
-        id="dropdown-menu6"
-        role="menu"
-      >
+      <div class="dropdown-menu account__notification__menu" id="dropdown-menu6" role="menu">
         <div (click)="dropdownNotification()" class="membrana"></div>
         <div class="dropdown-content account__dropdown account__notification">
           <!-- Conteudo Vazio -->
-          <div
-            class="account__content dropdown-item account__notification__content"
-            *ngIf="!notificationService.notifications.length"
-          >
+          <div class="account__content dropdown-item account__notification__content"
+            *ngIf="!notificationService.notifications.length">
             <span class="account__notification__text"> Empty </span>
           </div>
 
           <div *ngFor="let notification of notificationService.notifications">
             <!-- Conteudo aceitar/recusar amizade -->
-            <div
-              class="account__content dropdown-item account__notification__content"
-              *ngIf="notification.type == 'FRIENDREQUEST'"
-            >
+            <div class="account__content dropdown-item account__notification__content"
+              *ngIf="notification.type == 'FRIENDREQUEST'">
               <span class="account__notification__text">
                 <span class="account__notification__highlight">{{
                   notification.message.name
-                }}</span>
-                send a request friend</span
-              >
+                  }}</span>
+                send a request friend</span>
 
               <div class="account__notification__buttons">
-                <svg
-                  class="account__notification__buttons--accept"
-                  (click)="
+                <svg class="account__notification__buttons--accept" (click)="
                     userService.acceptFriendRequest(
                       notification.data.idEmmiter!
                     )
-                  "
-                >
+                  ">
                   <use href="assets/symbol-defs.svg#icon-check"></use>
                 </svg>
 
-                <svg
-                  class="account__notification__buttons--delete"
-                  (click)="notificationService.deleteNotification(notification)"
-                >
+                <svg class="account__notification__buttons--delete"
+                  (click)="notificationService.deleteNotification(notification)">
                   <use href="assets/symbol-defs.svg#icon-clear"></use>
                 </svg>
               </div>
             </div>
 
             <!-- Conteudo de recomendacao -->
-            <div
-              class="account__content dropdown-item account__notification__content"
-              *ngIf="notification.type == 'RECOMENDATION'"
-            >
-              <span class="account__notification__text"
-                ><span class="account__notification__highlight"
-                  >Lukazukimo </span
-                >recommended
+            <div class="account__content dropdown-item account__notification__content"
+              *ngIf="notification.type == 'RECOMENDATION'">
+              <span class="account__notification__text"><span class="account__notification__highlight">Lukazukimo
+                </span>recommended
                 <span class="account__notification__highlight">Shingeki</span>
               </span>
-              <img
-                (click)="notificationService.deleteNotification(notification)"
-                src="../../../assets/icon-logout.svg"
-                alt="icon-logout"
-                class="account__notification__buttons--delete"
-              />
+              <img (click)="notificationService.deleteNotification(notification)" src="../../../assets/icon-logout.svg"
+                alt="icon-logout" class="account__notification__buttons--delete" />
             </div>
           </div>
         </div>
@@ -325,12 +234,8 @@
     <!-- Dropdown user -->
     <div [ngClass]="{ 'is-active': isActiveAccount }" class="dropdown is-right">
       <div class="dropdown-trigger account__user">
-        <a
-          class="button account__user__name"
-          aria-haspopup="true"
-          aria-controls="dropdown-menu6"
-          (click)="dropdownAccount()"
-        >
+        <a class="button account__user__name" aria-haspopup="true" aria-controls="dropdown-menu6"
+          (click)="dropdownAccount()">
           <span>{{ username }}</span>
         </a>
         <a class="button" aria-haspopup="true" aria-controls="dropdown-menu6">
@@ -341,10 +246,7 @@
       <div class="dropdown-menu" id="dropdown-menu6" role="menu">
         <div (click)="dropdownAccount()" class="membrana"></div>
         <div class="dropdown-content account__dropdown">
-          <div
-            class="account__content dropdown-item"
-            (click)="navigateToFriends()"
-          >
+          <div class="account__content dropdown-item" (click)="navigateToFriends()">
             <svg class="account__icon">
               <use href="assets/symbol-defs.svg#icon-group"></use>
             </svg>

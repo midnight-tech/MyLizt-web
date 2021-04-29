@@ -10,6 +10,19 @@
   height: 100%;
 }
 
+.menu {
+  display: none;
+
+  @media only screen and (max-width: $bp-1360) {
+    display: block;
+    height: 5rem;
+    width: 5rem;
+    margin-right: 2rem;
+    fill: $primary1;
+    cursor: pointer;
+  }
+}
+
 .search {
   flex: 0 0 60%;
   display: flex;
@@ -18,7 +31,7 @@
 
   &__container {
     display: flex;
-    width: 95%;
+    width: 100%;
     justify-content: center;
     align-items: center;
   }
