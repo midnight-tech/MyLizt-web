@@ -147,19 +147,12 @@ export class HeaderDetailComponent implements OnInit {
   }
 
   deleteToMyList() {
+    if(this.mycontent == undefined){
+      throw "myContent undefined"
+    }
     if (this.anime) {
       this.listService
-        .removeFromList(this.anime.mal_id.toString(), 'anime')
-        .then(() => {
-          this.isItInMyList();
-        });
-    } else if (this.book) {
-      this.listService.removeFromList(this.book.id, 'book').then(() => {
-        this.isItInMyList();
-      });
-    } else if (this.serie) {
-      this.listService
-        .removeFromList(this.serie.id.toString(), 'serie')
+        .removeFromList(this.mycontent)
         .then(() => {
           this.isItInMyList();
         });

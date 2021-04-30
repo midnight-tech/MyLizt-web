@@ -17,12 +17,16 @@ export class CardComponent implements OnInit {
   @Input() serie?: SerieCatalogo;
   @Input() book?: BookCatalogo;
   @Input() lookMyList: boolean = true;
-  @Input() pageCall? : 'myList' | 'recommendation' | 'friendList' | 'loading' | 'other' = 'other'
-  @Input() friendContent? : content
-  @Input() loading : boolean = false
+  @Input() pageCall?:
+    | 'myList'
+    | 'recommendation'
+    | 'friendList'
+    | 'loading'
+    | 'other' = 'other';
+  @Input() friendContent?: content;
+  @Input() loading: boolean = false;
   inMyList: boolean = false;
   mycontent?: content;
-  
 
   notRended = true;
 
@@ -35,12 +39,12 @@ export class CardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if(this.pageCall == undefined){
-      throw "pageCall in card can not be undefined"
+    if (this.pageCall == undefined) {
+      throw 'pageCall in card can not be undefined';
     }
-    if(this.pageCall == 'friendList'){
-      if(this.friendContent == undefined){
-        throw "friendContent undefined"
+    if (this.pageCall == 'friendList') {
+      if (this.friendContent == undefined) {
+        throw 'friendContent undefined';
       }
     }
     if (this.notRended) {
@@ -100,27 +104,32 @@ export class CardComponent implements OnInit {
     }
   }
 
-  deleteToMyList() {
-    if (this.anime) {
-      this.listService
-        .removeFromList(this.anime.mal_id.toString(), 'anime')
-        .then(() => {
-          this.notRended = true;
-          this.ngOnInit();
-        });
-    } else if (this.book) {
-      this.listService.removeFromList(this.book.id, 'book').then(() => {
-        this.notRended = true;
-        this.ngOnInit();
-      });
-    } else if (this.serie) {
-      this.listService
-        .removeFromList(this.serie.id.toString(), 'serie')
-        .then(() => {
-          this.notRended = true;
-          this.ngOnInit();
-        });
+  addToMyListFromRecommendation() {
+    if (this.mycontent == undefined) {
+      return;
     }
+    let contentCopy = this.mycontent;
+    contentCopy.recommended = null;
+    this.listService.setContentStopped(contentCopy).then((value) => {
+      (this.mycontent = value),
+        this.router.navigate(
+          ['home', 'recommendations', this.mycontent.contentType.toLowerCase()],
+          {
+            skipLocationChange: true,
+            replaceUrl: true,
+          }
+        );
+    });
+  }
+
+  deleteToMyList() {
+    if (this.mycontent == undefined) {
+      throw 'myContent undefined';
+    }
+    this.listService.removeFromList(this.mycontent).then(() => {
+      this.notRended = true;
+      this.ngOnInit();
+    });
   }
 
   isInMyList() {
@@ -167,18 +176,18 @@ export class CardComponent implements OnInit {
     this.isActiveRecommend = value;
   }
 
-  getComplete(){
-    if(this.anime){
-      this.anime.getComplete()
-      return
+  getComplete() {
+    if (this.anime) {
+      this.anime.getComplete();
+      return;
     }
-    if(this.serie){
-      this.serie.getComplete()
-      return
+    if (this.serie) {
+      this.serie.getComplete();
+      return;
     }
-    if(this.book){
-      this.book.getComplete()
-      return
+    if (this.book) {
+      this.book.getComplete();
+      return;
     }
   }
 }

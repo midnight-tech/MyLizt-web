@@ -6,7 +6,6 @@ import {
   QuerySnapshot,
 } from '@angular/fire/firestore';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';
-import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
 import { contentConverter, UserConverter } from 'src/app/data/converters';
 import { content, listInterface, search } from 'src/app/data/interfaces';
 import { List } from 'src/app/data/List';
@@ -15,6 +14,7 @@ import { AnimeService } from '../anime/anime.service';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { BookService } from '../book/book.service';
 import { SerieService } from '../serie/serie.service';
+import firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root',
@@ -53,11 +53,16 @@ export class ListService {
   }
 
   async addContent(id: string | number, type: search) {
-    this.auth.userFirestore?.myList
+    if (this.auth.userFirestore == undefined) {
+      return false;
+    }
+    const listDocRef = this.auth.userFirestore?.myList
       .collection(type.toLowerCase())
       .doc(id.toString())
-      .withConverter(contentConverter)
-      .set({
+      .withConverter(contentConverter);
+    await this.firestore.firestore.runTransaction(async (transaction) => {
+      transaction = this.changeQuantContCount(1, type, transaction);
+      transaction.set(listDocRef, {
         contentId: id as string,
         contentType: type,
         watched: false,
@@ -66,6 +71,8 @@ export class ListService {
         season: type == 'SERIE' ? 0 : null,
         mark: 0,
       });
+    });
+    return true;
   }
 
   async getAnimeContent(lastDoc?: DocumentData) {
@@ -147,8 +154,22 @@ export class ListService {
     return await Promise.all(finalResult);
   }
 
-  async removeFromList(id: string, type: 'anime' | 'serie' | 'book') {
-    await this.auth.userFirestore?.myList.collection(type).doc(id).delete();
+  async removeFromList(content: content) {
+    if (content.ref == undefined) {
+      throw 'ref undefined';
+    }
+    if (this.auth.userFirestore == undefined) {
+      throw 'user infos undefined';
+    }
+    const contentRef = content.ref;
+    await this.firestore.firestore.runTransaction(async (transaction) => {
+      transaction = this.changeQuantContCount(
+        -1,
+        content.contentType,
+        transaction
+      );
+      transaction.delete(contentRef);
+    });
   }
 
   async alterMyRating(documentReference: DocumentReference, value?: number) {
@@ -309,14 +330,53 @@ export class ListService {
       });
   }
 
-  async setContentStopped(content: content) {
+  async setContentStopped(content: content, count: boolean = false) {
+    if (content.ref == undefined) {
+      throw 'ContentRef Undefined';
+    }
     content.updatedAt = new Date(Date.now());
-    await content.ref!.update(content);
+    await this.firestore.firestore.runTransaction(async (transaction) => {
+      transaction = this.changeQuantContCount(
+        1,
+        content.contentType,
+        transaction
+      );
+      transaction.update(content.ref!, content);
+    });
     const newContentRaw = await content
       .ref!.withConverter(contentConverter)
       .get();
     const newContent = newContentRaw.data()!;
     newContent.ref = newContentRaw.ref;
     return newContent;
+  }
+
+  changeQuantContCount(
+    count: number,
+    contentType: search,
+    transaction: firebase.firestore.Transaction
+  ) {
+    let update;
+    switch (contentType) {
+      case 'ANIME':
+        update = {
+          animeCount: firebase.firestore.FieldValue.increment(count),
+        };
+        break;
+      case 'SERIE':
+        update = {
+          serieCount: firebase.firestore.FieldValue.increment(count),
+        };
+        break;
+      case 'BOOK':
+        update = {
+          bookCount: firebase.firestore.FieldValue.increment(count),
+        };
+        break;
+      default:
+        throw 'Type undefined';
+    }
+    transaction.update(this.auth.userFirestore!.myList, update);
+    return transaction;
   }
 }

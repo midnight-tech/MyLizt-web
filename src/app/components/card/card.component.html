@@ -165,10 +165,10 @@
         <!-- MyList end -->
         <!-- Recommendation -->
         <div class="container-flex" *ngIf="pageCall == 'recommendation'">
-          <div class="card__button-container card__button-container--add" (click)="deleteToMyList()">
-            <p class="card__button-container__text">Remove</p>
+          <div class="card__button-container card__button-container--add" (click)="addToMyListFromRecommendation()">
+            <p class="card__button-container__text">Add to list</p>
             <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
+              <use xlink:href="assets/symbol-defs.svg#icon-add"></use>
             </svg>
           </div>
 

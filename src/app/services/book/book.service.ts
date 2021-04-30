@@ -107,6 +107,7 @@ export class BookService {
         value.volumeInfo.image = value.volumeInfo.imageLinks.smallThumbnail
       }
     }
+    value.volumeInfo.image = value.volumeInfo.image.replace("http",'https')
     return value
   }
 
