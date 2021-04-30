@@ -110,7 +110,7 @@ export class CardComponent implements OnInit {
     }
     let contentCopy = this.mycontent;
     contentCopy.recommended = null;
-    this.listService.setContentStopped(contentCopy).then((value) => {
+    this.listService.setContentStopped(contentCopy,true).then((value) => {
       (this.mycontent = value),
         this.router.navigate(
           ['home', 'recommendations', this.mycontent.contentType.toLowerCase()],

@@ -339,11 +339,13 @@ export class ListService {
     }
     content.updatedAt = new Date(Date.now());
     await this.firestore.firestore.runTransaction(async (transaction) => {
-      transaction = this.changeQuantContCount(
-        1,
-        content.contentType,
-        transaction
-      );
+      if (count) {
+        transaction = this.changeQuantContCount(
+          1,
+          content.contentType,
+          transaction
+        );
+      }
       transaction.update(content.ref!, content);
     });
     const newContentRaw = await content
