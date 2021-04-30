@@ -4,6 +4,7 @@ import {
   CompleteAnime,
   CompleteBook,
   CompleteSerie,
+  content,
 } from 'src/app/data/interfaces';
 import { AnimeService } from 'src/app/services/anime/anime.service';
 import { BookService } from 'src/app/services/book/book.service';
@@ -19,9 +20,9 @@ import { SerieService } from 'src/app/services/serie/serie.service';
 export class MenuLeftComponent implements OnInit {
   @Output() menuLeftEvent = new EventEmitter<boolean>();
 
-  anime: CompleteAnime[] = [];
-  serie: CompleteSerie[] = [];
-  book: CompleteBook[] = [];
+  anime: { anime: CompleteAnime; content: content; }[] = []
+  serie: { serie: CompleteSerie; content: content; }[] = []
+  book: { book: CompleteBook; content: content; }[] = []
 
   constructor(
     private listService: ListService,
@@ -39,26 +40,29 @@ export class MenuLeftComponent implements OnInit {
   getContents() {
     this.listService.getHomeContent().then(({ anime, book, serie }) => {
       let result = 0;
-      anime!!.map(async (value, index) => {
-        let anime = await this.animeService.getAnimeComplete(
+      if(anime == undefined){
+        throw "content anime undefined"
+      }
+      anime!.map(async (value, index) => {
+        let animeMap = await this.animeService.getAnimeComplete(
           value.contentId as number,
           index
         );
-        this.anime.push(anime);
+        this.anime.push({'anime' : animeMap , 'content':value});
       });
 
       for (let i of book!!) {
         this.bookService
           .getBookComplete(i.contentId as string)
           .then((value) => {
-            this.book.push(value);
+            this.book.push({'book' : value, 'content' : i});
           });
       }
       for (let i of serie!!) {
         this.serieService
           .getSerieComplete(i.contentId as number)
           .then((value) => {
-            this.serie.push(value);
+            this.serie.push({'serie' : value , 'content' : i});
           });
       }
     });

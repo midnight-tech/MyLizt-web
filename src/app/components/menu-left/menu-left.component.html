@@ -20,11 +20,11 @@
     </span>
     <div class="categories__container" *ngFor="let iten of anime">
       <span
-        (click)="navigateToDetail(iten.mal_id.toString(), 'anime')"
+        (click)="navigateToDetail(iten.anime.mal_id.toString(), 'anime')"
         class="categories__item"
-        >{{ iten.title }}</span
+        >{{ iten.anime.title }}</span
       >
-      <svg class="categories__icon">
+      <svg *ngIf="iten.content.watched" class="categories__icon">
         <use href="assets/symbol-defs.svg#icon-check"></use>
       </svg>
     </div>
@@ -45,12 +45,12 @@
     </span>
     <div class="categories__container" *ngFor="let iten of serie">
       <span
-        (click)="navigateToDetail(iten.id.toString(), 'serie')"
+        (click)="navigateToDetail(iten.serie.id.toString(), 'serie')"
         class="categories__item"
-        >{{ iten.name }}</span
+        >{{ iten.serie.name }}</span
       >
 
-      <svg class="categories__icon">
+      <svg *ngIf="iten.content.watched" class="categories__icon">
         <use href="assets/symbol-defs.svg#icon-check"></use>
       </svg>
     </div>
@@ -71,11 +71,11 @@
     </span>
     <div class="categories__container" *ngFor="let iten of book">
       <span
-        (click)="navigateToDetail(iten.id, 'book')"
+        (click)="navigateToDetail(iten.book.id, 'book')"
         class="categories__item"
-        >{{ iten.volumeInfo.title }}</span
+        >{{ iten.book.volumeInfo.title }}</span
       >
-      <svg class="categories__icon">
+      <svg *ngIf="iten.content.watched" class="categories__icon">
         <use href="assets/symbol-defs.svg#icon-check"></use>
       </svg>
     </div>

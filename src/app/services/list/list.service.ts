@@ -183,16 +183,19 @@ export class ListService {
     let animeQuery = await this.auth.userFirestore?.myList
       .collection('anime')
       .where('recommended', '==', null)
+      .orderBy('watched')
       .limit(5)
       .get();
     let bookQuery = await this.auth.userFirestore?.myList
       .collection('book')
       .where('recommended', '==', null)
+      .orderBy('watched')
       .limit(5)
       .get();
     let serieQuery = await this.auth.userFirestore?.myList
       .collection('serie')
       .where('recommended', '==', null)
+      .orderBy('watched')
       .limit(5)
       .get();
     let anime = animeQuery?.docs.map((value) => {
