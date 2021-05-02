@@ -44,15 +44,20 @@ export class UserService {
       return false;
     }
     const userForeing = userQuery.docs[0];
-    this.notification.sendNotification({
-      message: {
-        name: this.auth.user?.displayName!,
-      },
-      type: 'FRIENDREQUEST',
-      data: {
-        idEmmiter: this.auth.userFirestore?.applicationUserId,
-        idReceiver: userForeing.data().applicationUserId,
-      },
+    await this.firestore.firestore.runTransaction(async (transaction) => {
+      this.notification.sendNotification(
+        {
+          message: {
+            name: this.auth.user?.displayName!,
+          },
+          type: 'FRIENDREQUEST',
+          data: {
+            idEmmiter: this.auth.userFirestore?.applicationUserId,
+            idReceiver: userForeing.data().applicationUserId,
+          },
+        },
+        transaction
+      );
     });
     return true;
   }

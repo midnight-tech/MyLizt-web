@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
+import PQueue from 'p-queue/dist';
 import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
 import { CompleteAnime } from 'src/app/data/interfaces';
 import { environment } from 'src/environments/environment';
@@ -18,22 +19,32 @@ const daysOfWeek = [
   providedIn: 'root',
 })
 export class AnimeService {
-  constructor() {}
+  queue: PQueue;
+  constructor() {
+    this.queue = new PQueue({ concurrency: 2, interval: 2000, intervalCap: 2 });
+  }
 
-  async getHomeCarroussel() : Promise<AnimeCatalogo[]> {
+  cleanQueue(){
+    this.queue.clear()
+  }
+
+  async getHomeCarroussel(): Promise<AnimeCatalogo[]> {
     let day = daysOfWeek[new Date(Date.now()).getDay()];
 
     let catalogo = await axios.get(`https://api.jikan.moe/v3/schedule/${day}`);
 
-    const loadedCatalogo = catalogo.data[day].map((value : any) => {
-      value.airing = true;
-      value.start_date = value.airing_start;
-      return new AnimeCatalogo(value, this);
-    }).sort((a:any,b:any)=>{
-      if(a.score == b.score) return 0
-      if(a.score > b.score) return -1
-      return 1
-    }).slice(0,5);
+    const loadedCatalogo = catalogo.data[day]
+      .map((value: any) => {
+        value.airing = true;
+        value.start_date = value.airing_start;
+        return new AnimeCatalogo(value, this);
+      })
+      .sort((a: any, b: any) => {
+        if (a.score == b.score) return 0;
+        if (a.score > b.score) return -1;
+        return 1;
+      })
+      .slice(0, 5);
 
     return [
       loadedCatalogo[3],
@@ -94,11 +105,8 @@ export class AnimeService {
 
   async getAnimeComplete(id: number = 1, index?: number) {
     try {
-      if (index) {
-        await this.wait(index * 800);
-      }
-      const result = await axios.get<CompleteAnime>(
-        `https://api.jikan.moe/v3/anime/${id}`
+      const result = await this.queue.add(() =>
+        axios.get<CompleteAnime>(`https://api.jikan.moe/v3/anime/${id}`)
       );
       return result.data;
     } catch (e) {
@@ -107,9 +115,5 @@ export class AnimeService {
       }
       throw 'Erro ao coletar as informaçoes deste anime';
     }
-  }
-
-  wait(ms: number) {
-    return new Promise((resolve, reject) => setTimeout(resolve, ms));
   }
 }

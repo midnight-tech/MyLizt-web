@@ -7,7 +7,12 @@ import {
 } from '@angular/fire/firestore';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';
 import { contentConverter, UserConverter } from 'src/app/data/converters';
-import { content, listInterface, search } from 'src/app/data/interfaces';
+import {
+  content,
+  listInterface,
+  search,
+  UserInterface,
+} from 'src/app/data/interfaces';
 import { List } from 'src/app/data/List';
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { AnimeService } from '../anime/anime.service';
@@ -15,6 +20,7 @@ import { AuthenticationService } from '../authentication/authentication.service'
 import { BookService } from '../book/book.service';
 import { SerieService } from '../serie/serie.service';
 import firebase from 'firebase';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +33,8 @@ export class ListService {
     private animeService: AnimeService,
     private serieService: SerieService,
     private BookService: BookService,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    private notificationService: NotificationService
   ) {}
 
   async getMyList() {
@@ -231,18 +238,42 @@ export class ListService {
     if (content.exists) {
       return false;
     }
-    await friend.docs[0]
+    const recommendationRef = friend.docs[0]
       .data()
       .myList.collection(type.toLowerCase())
       .withConverter(contentConverter)
-      .doc(contentId)
-      .set({
+      .doc(contentId);
+
+    await this.firestore.firestore.runTransaction(async (transaction) => {
+      transaction = this.changeRecCount(
+        1,
+        type,
+        friend.docs[0].data(),
+        transaction
+      );
+      transaction = await this.notificationService.sendNotification(
+        {
+          message: {
+            name: this.auth.userFirestore!.username,
+          },
+          type: 'RECOMENDATION',
+          data: {
+            idEmmiter: this.auth.userFirestore!.applicationUserId,
+            idReceiver: friend.docs[0].data().applicationUserId,
+            contentType: type.toLowerCase() as 'anime' | 'serie' | 'book',
+            idContent: contentId,
+          },
+        },
+        transaction
+      );
+      transaction.set(recommendationRef, {
         contentId: contentId,
         contentType: type,
         watched: false,
         createdAt: new Date(Date.now()),
         recommended: myUser,
       });
+    });
     return true;
   }
 
@@ -333,7 +364,11 @@ export class ListService {
       });
   }
 
-  async setContentStopped(content: content, count: boolean = false) {
+  async setContentStopped(
+    content: content,
+    count: boolean = false,
+    contentRec: boolean = false
+  ) {
     if (content.ref == undefined) {
       throw 'ContentRef Undefined';
     }
@@ -343,6 +378,17 @@ export class ListService {
         transaction = this.changeQuantContCount(
           1,
           content.contentType,
+          transaction
+        );
+      }
+      if (contentRec) {
+        if(this.auth.userFirestore == null){
+          throw "User Null"
+        }
+        transaction = this.changeRecCount(
+          -1,
+          content.contentType,
+          this.auth.userFirestore!,
           transaction
         );
       }
@@ -382,6 +428,36 @@ export class ListService {
         throw 'Type undefined';
     }
     transaction.update(this.auth.userFirestore!.myList, update);
+    return transaction;
+  }
+
+  changeRecCount(
+    count: number,
+    contentType: search,
+    friendDoc: UserInterface,
+    transaction: firebase.firestore.Transaction
+  ) {
+    let update;
+    switch (contentType) {
+      case 'ANIME':
+        update = {
+          animeCountRec: firebase.firestore.FieldValue.increment(count),
+        };
+        break;
+      case 'SERIE':
+        update = {
+          serieCountRec: firebase.firestore.FieldValue.increment(count),
+        };
+        break;
+      case 'BOOK':
+        update = {
+          bookCountRec: firebase.firestore.FieldValue.increment(count),
+        };
+        break;
+      default:
+        throw 'Type undefined';
+    }
+    transaction.update(friendDoc.myList, update);
     return transaction;
   }
 }

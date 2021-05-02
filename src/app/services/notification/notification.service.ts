@@ -2,6 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Notification, notificationConverter } from 'src/app/data/converters';
 import { AuthenticationService } from '../authentication/authentication.service';
+import firebase from 'firebase'
 
 @Injectable({
   providedIn: 'root',
@@ -17,17 +18,17 @@ export class NotificationService {
     this.createListener();
   }
 
-  async sendNotification(notification: Notification) {
+  async sendNotification(notification: Notification, transaction : firebase.firestore.Transaction) {
     const receiverQuery = await this.firestore.firestore
       .collection('User')
       .where('applicationUserId', '==', notification.data.idReceiver)
       .get();
     const receiver = receiverQuery.docs[0];
-    await receiver.ref.collection('notification').add(notification);
+    const docRefer = receiver.ref.collection('notification').doc() 
+    return  transaction.set(docRefer,notification);
   }
 
   async deleteNotification(notification: Notification) {
-    console.log(notification);
     if (notification.ref) {
       await notification.ref.delete();
       return true;
@@ -54,7 +55,6 @@ export class NotificationService {
               case 'removed':
                 this.notifications = this.notifications.filter(
                   (notification) => {
-                    console.log(notification.ref?.id, value.doc.id);
                     return value.doc.ref.id != notification.ref?.id;
                   }
                 );
