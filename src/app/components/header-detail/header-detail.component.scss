@@ -112,6 +112,7 @@
     &--serie {
       font-size: 1.6rem;
       text-transform: uppercase;
+      text-align: center;
     }
   }
 
@@ -119,9 +120,13 @@
     font-size: 2rem;
     text-transform: uppercase;
     font-weight: 700;
+    text-align: center;
+    margin: 0 1rem;
   }
 
   &__icon {
+    min-height: 2.5rem;
+    min-width: 2.5rem;
     height: 2.5rem;
     width: 2.5rem;
 
