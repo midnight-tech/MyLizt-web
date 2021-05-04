@@ -1,29 +1,19 @@
-<div class="content">
-  <img
-    class="content__logo"
-    [routerLink]="['home']"
-    src="../../../assets/logo.svg"
-  />
+<div class="menu">
+  <div class="menu__logo">
+    <img class="menu__img" [routerLink]="['home']" src="../../../assets/logo.svg" />
+    <svg class="menu__icon" (click)="closeMenu()">
+      <use href="assets/symbol-defs.svg#icon-clear"></use>
+    </svg>
+  </div>
   <div class="categories">
     <span class="categories categories__text">
-      <span
-        class="categories categories__title"
-        (click)="navigateToMyList('anime')"
-        >Anime</span
-      >
+      <span class="categories categories__title" (click)="navigateToMyList('anime')">Anime</span>
       &nbsp;/&nbsp;
-      <span
-        class="categories categories__title"
-        (click)="navigateToMyRecommendation('anime')"
-        >Recomendation</span
-      >
+      <span class="categories categories__title" (click)="navigateToMyRecommendation('anime')">Recommendation</span>
     </span>
     <div class="categories__container" *ngFor="let iten of anime">
-      <span
-        (click)="navigateToDetail(iten.anime.mal_id.toString(), 'anime')"
-        class="categories__item"
-        >{{ iten.anime.title }}</span
-      >
+      <span (click)="navigateToDetail(iten.anime.mal_id.toString(), 'anime')" class="categories__item">{{
+        iten.anime.title }}</span>
       <svg *ngIf="iten.content.watched" class="categories__icon">
         <use href="assets/symbol-defs.svg#icon-check"></use>
       </svg>
@@ -31,24 +21,13 @@
   </div>
   <div class="categories">
     <span class="categories categories__text">
-      <span
-        class="categories categories__title"
-        (click)="navigateToMyList('serie')"
-        >Serie</span
-      >
+      <span class="categories categories__title" (click)="navigateToMyList('serie')">Serie</span>
       &nbsp;/&nbsp;
-      <span
-        class="categories categories__title"
-        (click)="navigateToMyRecommendation('serie')"
-        >Recomendation</span
-      >
+      <span class="categories categories__title" (click)="navigateToMyRecommendation('serie')">Recommendation</span>
     </span>
     <div class="categories__container" *ngFor="let iten of serie">
-      <span
-        (click)="navigateToDetail(iten.serie.id.toString(), 'serie')"
-        class="categories__item"
-        >{{ iten.serie.name }}</span
-      >
+      <span (click)="navigateToDetail(iten.serie.id.toString(), 'serie')" class="categories__item">{{ iten.serie.name
+        }}</span>
 
       <svg *ngIf="iten.content.watched" class="categories__icon">
         <use href="assets/symbol-defs.svg#icon-check"></use>
@@ -57,24 +36,13 @@
   </div>
   <div class="categories">
     <span class="categories categories__text">
-      <span
-        class="categories categories__title"
-        (click)="navigateToMyList('book')"
-        >Book</span
-      >
+      <span class="categories categories__title" (click)="navigateToMyList('book')">Book</span>
       &nbsp;/&nbsp;
-      <span
-        class="categories categories__title"
-        (click)="navigateToMyRecommendation('book')"
-        >Recomendation</span
-      >
+      <span class="categories categories__title" (click)="navigateToMyRecommendation('book')">Recommendation</span>
     </span>
     <div class="categories__container" *ngFor="let iten of book">
-      <span
-        (click)="navigateToDetail(iten.book.id, 'book')"
-        class="categories__item"
-        >{{ iten.book.volumeInfo.title }}</span
-      >
+      <span (click)="navigateToDetail(iten.book.id, 'book')" class="categories__item">{{ iten.book.volumeInfo.title
+        }}</span>
       <svg *ngIf="iten.content.watched" class="categories__icon">
         <use href="assets/symbol-defs.svg#icon-check"></use>
       </svg>

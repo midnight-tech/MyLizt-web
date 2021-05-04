@@ -1,6 +1,6 @@
 @import "../../sass/abstract/variables";
 
-.content {
+.menu {
   display: flex;
   flex-direction: column;
   min-height: 100%;
@@ -9,10 +9,31 @@
   padding: 2rem;
 
   &__logo {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__img {
     margin-bottom: 6rem;
     cursor: pointer;
     align-self: baseline;
     height: 12rem;
+  }
+
+  &__icon {
+    display: none;
+
+    @media only screen and (max-width: $bp-1360) {
+      display: block;
+      width: 3rem;
+      height: 3rem;
+      fill: $white;
+      cursor: pointer;
+
+      &:hover {
+        fill: $primary1;
+      }
+    }
   }
 }
 
@@ -26,12 +47,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    min-height: 3rem;
   }
 
   &__text {
     display: flex;
     flex-direction: row;
-    font-size: 2rem;
+    font-size: 1.6rem;
     margin-bottom: 2rem;
     align-self: baseline;
   }
@@ -57,10 +79,26 @@
 
     // truncate string
     // width-container-grid - 2xpaddinng-content - width-icon
-    max-width: calc(18vw - 4rem - 3rem);
+    max-width: calc(18vw - 7rem);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    @media only screen and (max-width: $bp-1360) {
+      max-width: calc(25vw - 7rem);
+    }
+
+    @media only screen and (max-width: $bp-1000) {
+      max-width: calc(45vw - 7rem);
+    }
+
+    @media only screen and (max-width: $bp-600) {
+      max-width: calc(65vw - 7rem);
+    }
+
+    @media only screen and (max-width: $bp-340) {
+      max-width: calc(80vw - 7rem);
+    }
 
     &:hover {
       color: $primary1;
