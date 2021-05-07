@@ -30,7 +30,6 @@ export class ListService {
 
   constructor(
     private auth: AuthenticationService,
-    private animeService: AnimeService,
     private serieService: SerieService,
     private BookService: BookService,
     private firestore: AngularFirestore,
@@ -81,6 +80,7 @@ export class ListService {
         contentType: type,
         watched: false,
         createdAt: new Date(Date.now()),
+        updatedAt: new Date(0),
         recommended: null,
         season: type == 'SERIE' ? 0 : null,
         mark: 0,
@@ -94,41 +94,55 @@ export class ListService {
     if (lastDoc) {
       animeQuery = await this.auth
         .userFirestore!!.myList.collection('anime')
-        .orderBy('watched')
         .where('recommended', '==', null)
-        .startAfter(lastDoc)
-        .limit(60)
+        .orderBy('watched')
+        .orderBy('updatedAt', 'desc')
+        .startAfter(lastDoc.data().updatedAt)
+        .limit(12)
         .get();
     } else {
       animeQuery = await this.auth
         .userFirestore!!.myList.collection('anime')
-        .orderBy('watched')
         .where('recommended', '==', null)
-        .limit(60)
+        .orderBy('watched')
+        .orderBy('updatedAt', 'desc')
+        .limit(12)
         .get();
     }
     return animeQuery;
   }
-  async getAllSerieContent(lastDoc?: DocumentData) {
-    let serieQuery: QuerySnapshot<DocumentData>;
-    if (lastDoc) {
+  async getAllSerieContent(lastDoc?: content) {
+    if (this.auth.userFirestore == undefined) throw 'user data undefined';
+    const listRaw = await this.auth.userFirestore?.myList.get();
+    if (listRaw.exists == false) throw 'user list undefined';
+    const serieCount: number = listRaw.data()!.serieCount;
+    let serieQuery
+    if (lastDoc != undefined) {
+      console.log(lastDoc)
       serieQuery = await this.auth
-        .userFirestore!!.myList.collection('serie')
-        .orderBy('watched')
+        .userFirestore!.myList.collection('serie')
         .where('recommended', '==', null)
-        .startAfter(lastDoc)
-        .limit(60)
+        .orderBy('watched')
+        .orderBy('updatedAt', 'desc')
+        .orderBy('contentId')
+        .startAt(lastDoc.contentId)
+        .limit(12)
+        .withConverter(contentConverter)
         .get();
+        console.log(serieQuery.size)
     } else {
       serieQuery = await this.auth
-        .userFirestore!!.myList.collection('serie')
-        .orderBy('watched')
+        .userFirestore!.myList.collection('serie')
         .where('recommended', '==', null)
-        .limit(60)
+        .orderBy('watched')
+        .orderBy('updatedAt', 'desc')
+        .orderBy('contentId')
+        // .limit(12)
+        .withConverter(contentConverter)
         .get();
     }
     let finalResult = serieQuery.docs.map(async (serieData) => {
-      let serieFireResult = serieData.data() as content;
+      let serieFireResult = serieData.data();
       let serieResult = await this.serieService.getSerieComplete(
         serieFireResult.contentId as number
       );
@@ -136,24 +150,29 @@ export class ListService {
       let serieCatalogo = new SerieCatalogo(undefined, undefined, serieResult);
       return { serie: serieCatalogo, content: serieFireResult };
     });
-    return await Promise.all(finalResult);
+    return {
+      anime: await Promise.all(finalResult),
+      pages: Math.ceil(serieCount / 12),
+    };
   }
   async getAllBookContent(lastDoc?: DocumentData) {
     let bookQuery;
     if (lastDoc) {
       bookQuery = await this.auth
         .userFirestore!!.myList.collection('book')
-        .orderBy('watched')
         .where('recommended', '==', null)
+        .orderBy('watched')
+        .orderBy('updatedAt', 'desc')
         .startAfter(lastDoc)
-        .limit(60)
+        .limit(12)
         .get();
     } else {
       bookQuery = await this.auth
         .userFirestore!!.myList.collection('book')
-        .orderBy('watched')
         .where('recommended', '==', null)
-        .limit(60)
+        .orderBy('watched')
+        .orderBy('updatedAt', 'desc')
+        .limit(12)
         .get();
     }
     let finalResult = bookQuery.docs.map(async (bookData) => {
@@ -198,28 +217,34 @@ export class ListService {
       .collection('anime')
       .where('recommended', '==', null)
       .orderBy('watched')
+      .orderBy('updatedAt', 'desc')
       .limit(5)
+      .withConverter(contentConverter)
       .get();
     let bookQuery = await this.auth.userFirestore?.myList
       .collection('book')
       .where('recommended', '==', null)
       .orderBy('watched')
+      .orderBy('updatedAt', 'desc')
       .limit(5)
+      .withConverter(contentConverter)
       .get();
     let serieQuery = await this.auth.userFirestore?.myList
       .collection('serie')
       .where('recommended', '==', null)
       .orderBy('watched')
+      .orderBy('updatedAt', 'desc')
       .limit(5)
+      .withConverter(contentConverter)
       .get();
     let anime = animeQuery?.docs.map((value) => {
-      return value.data() as content;
+      return value.data();
     });
     let book = bookQuery?.docs.map((value) => {
-      return value.data() as content;
+      return value.data();
     });
     let serie = serieQuery?.docs.map((value) => {
-      return value.data() as content;
+      return value.data();
     });
     return { anime, book, serie };
   }

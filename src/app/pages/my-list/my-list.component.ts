@@ -4,8 +4,6 @@ import { BookCatalogo } from 'src/app/data/BookCatalogo';
 import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
 import { content, search } from 'src/app/data/interfaces';
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
-import { HomeContextService } from 'src/app/services/home-context/home.service';
-import { ListService } from 'src/app/services/list/list.service';
 import { LoadingService } from 'src/app/services/loading/loading.service';
 
 @Component({

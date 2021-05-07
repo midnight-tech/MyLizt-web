@@ -24,14 +24,16 @@ export class AnimeService {
     this.queue = new PQueue({ concurrency: 2, interval: 2000, intervalCap: 2 });
   }
 
-  cleanQueue(){
-    this.queue.clear()
+  cleanQueue() {
+    this.queue.clear();
   }
 
   async getHomeCarroussel(): Promise<AnimeCatalogo[]> {
     let day = daysOfWeek[new Date(Date.now()).getDay()];
 
-    let catalogo = await axios.get(`https://api.jikan.moe/v3/schedule/${day}`);
+    let catalogo = await this.queue.add(async () =>
+      axios.get(`https://api.jikan.moe/v3/schedule/${day}`)
+    );
 
     const loadedCatalogo = catalogo.data[day]
       .map((value: any) => {
@@ -105,7 +107,7 @@ export class AnimeService {
 
   async getAnimeComplete(id: number = 1, index?: number) {
     try {
-      const result = await this.queue.add(() =>
+      const result = await this.queue.add(async () =>
         axios.get<CompleteAnime>(`https://api.jikan.moe/v3/anime/${id}`)
       );
       return result.data;

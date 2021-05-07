@@ -42,6 +42,7 @@ export class PaginationComponent implements OnInit, OnChanges {
   @Input() type?: search;
   @Input() friendId: string = '';
   @Input() query?: string;
+  @Input() completePage = true
   @Input() pageCalled?:
     | 'search'
     | 'myContent'
@@ -89,6 +90,7 @@ export class PaginationComponent implements OnInit, OnChanges {
 
   async changePage(page: number) {
     // Execulta a cada troca de pagina
+    console.log(this.totalPage,page)
     if (this.loadingService.isLoading) {
       return;
     }
