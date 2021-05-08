@@ -74,7 +74,7 @@ export class MenuLeftComponent implements OnInit {
 
   navigateToDetail(id: string, type: string) {
     this.menuLeftEvent.emit(false);
-    this.router.navigate(['home', 'detail', type, id]);
+    this.router.navigate(['home', 'detail', type, id], { replaceUrl: true });
   }
 
   navigateToMyList(type: string) {
@@ -82,7 +82,7 @@ export class MenuLeftComponent implements OnInit {
     if (this.loading.isLoading) {
       return;
     }
-    this.router.navigate(['home', 'my-list', type]);
+    this.router.navigate(['home', 'my-list', type], { replaceUrl: true });
   }
 
   navigateToMyRecommendation(type: string) {
@@ -90,7 +90,9 @@ export class MenuLeftComponent implements OnInit {
     if (this.loading.isLoading) {
       return;
     }
-    this.router.navigate(['home', 'recommendations', type]);
+    this.router.navigate(['home', 'recommendations', type], {
+      replaceUrl: true,
+    });
   }
 
   closeMenu() {

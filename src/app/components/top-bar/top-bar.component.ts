@@ -160,7 +160,10 @@ export class TopBarComponent implements OnInit, OnChanges {
 
   navigateToDetail(id: string, type: string) {
     this.isActiveSearch = false;
-    this.router.navigate(['home', 'detail', type, id]);
+    this.isActiveNotification = false;
+    this.router.navigate(['home', 'detail', type, id],{
+      replaceUrl : true
+    });
   }
 
   navigateToFriends() {

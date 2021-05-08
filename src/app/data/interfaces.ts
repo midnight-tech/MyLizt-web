@@ -169,7 +169,7 @@ export type CompleteBook = {
   "etag": string,
   "selfLink": string,
   "volumeInfo": {
-    "title": String
+    "title": string
     "authors": string[],
     "publisher": string,
     "publishedDate": string,

@@ -219,9 +219,9 @@
             <!-- Conteudo de recomendacao -->
             <div class="account__content dropdown-item account__notification__content"
               *ngIf="notification.type == 'RECOMENDATION'">
-              <span class="account__notification__text"><span class="account__notification__highlight">Lukazukimo
+              <span class="account__notification__text"><span class="account__notification__highlight">{{notification.message.name}}
                 </span>recommended
-                <span class="account__notification__highlight">Shingeki</span>
+                <span class="account__notification__highlight" (click)="navigateToDetail(notification.data.idContent!,notification.data.contentType!)">{{notification.message.contentName}}</span>
               </span>
               <img (click)="notificationService.deleteNotification(notification)" src="../../../assets/icon-logout.svg"
                 alt="icon-logout" class="account__notification__buttons--delete" />

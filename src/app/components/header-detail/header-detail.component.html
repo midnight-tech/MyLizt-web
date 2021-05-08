@@ -186,13 +186,13 @@
       </svg>
     </div>
   </div>
-  <app-recommendation *ngIf="anime" type="ANIME" [contentId]="anime.mal_id.toString()"
+  <app-recommendation *ngIf="anime" type="ANIME" [contentName]="anime.title" [contentId]="anime.mal_id.toString()"
     [isActiveRecommend]="isActiveRecommend" (isActiveEvent)="disableReceiveRecommendation($event)">
   </app-recommendation>
-  <app-recommendation *ngIf="serie" type="SERIE" [contentId]="serie.id.toString()"
+  <app-recommendation *ngIf="serie" type="SERIE" [contentName]="serie.name" [contentId]="serie.id.toString()"
     [isActiveRecommend]="isActiveRecommend" (isActiveEvent)="disableReceiveRecommendation($event)">
   </app-recommendation>
-  <app-recommendation *ngIf="book" type="BOOK" [contentId]="book.id" [isActiveRecommend]="isActiveRecommend"
+  <app-recommendation *ngIf="book" type="BOOK" [contentName]="book.volumeInfo.title" [contentId]="book.id" [isActiveRecommend]="isActiveRecommend"
     (isActiveEvent)="disableReceiveRecommendation($event)">
   </app-recommendation>
 
