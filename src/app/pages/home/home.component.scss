@@ -17,7 +17,7 @@
     )
     [content-end void-right-start] minmax(12rem, 1fr) [void-right-end];
   grid-template-rows:
-    [top-bar-start] minmax(6rem, auto) [top-bar-end content-start] repeat(
+    [top-bar-start] 8rem [top-bar-end content-start] repeat(
       6,
       [col-start] minmax(auto, 1fr) [col-end]
     )
@@ -44,6 +44,16 @@
         [col-start] minmax(min-content, 40rem) [col-end]
       )
       [content-end void-right-start] minmax(6rem, 1fr) [void-right-end];
+  }
+
+  @media only screen and (max-width: $bp-500) {
+    grid-template-columns:
+      [ void-left-start ] minmax(3rem, 1fr)
+      [ void-left-end content-start] repeat(
+        8,
+        [col-start] minmax(min-content, 40rem) [col-end]
+      )
+      [content-end void-right-start] minmax(3rem, 1fr) [void-right-end];
   }
 }
 

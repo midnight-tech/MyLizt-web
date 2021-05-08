@@ -56,6 +56,7 @@ export class TopBarComponent implements OnInit, OnChanges {
   isActive = false;
   isActiveAccount = false;
   isActiveSearch = false;
+  isActiveMiniSearch = false;
   isActiveNotification = false;
   timeout?: NodeJS.Timeout;
   username = 'USERNAME';
@@ -129,6 +130,11 @@ export class TopBarComponent implements OnInit, OnChanges {
 
   closeSearchModal() {
     this.isActiveSearch = false;
+    this.isActiveMiniSearch = false;
+  }
+
+  showMiniSeach() {
+    this.isActiveMiniSearch = !this.isActiveMiniSearch;
   }
 
   search(searchtype: search) {
@@ -160,6 +166,7 @@ export class TopBarComponent implements OnInit, OnChanges {
 
   navigateToDetail(id: string, type: string) {
     this.isActiveSearch = false;
+    this.isActiveMiniSearch = false;
     this.router.navigate(['home', 'detail', type, id]);
   }
 
