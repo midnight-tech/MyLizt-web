@@ -12,6 +12,7 @@ export class RecommendationComponent implements OnInit {
   @Input() isActiveRecommend = false;
   @Input() type! : search
   @Input() contentId! : string
+  @Input() contentName!: string
   @Output() isActiveEvent = new EventEmitter<boolean>();
 
   friends? : UserInterface[]
@@ -42,7 +43,7 @@ export class RecommendationComponent implements OnInit {
   }
 
   recommend(userId: string){
-    this.listService.recomendContent(this.contentId,userId,this.type).then((value)=>{
+    this.listService.recomendContent(this.contentId,this.contentName,userId,this.type).then((value)=>{
       console.log(value)
     })
   }

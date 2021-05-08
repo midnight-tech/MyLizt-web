@@ -179,22 +179,30 @@
       </svg>
     </div>
 
-    <div *ngIf="onMyList == true" class="button__flex" (click)="deleteToMyList()">
+    <div *ngIf="onMyList == true && mycontent!.recommended == null" class="button__flex" (click)="deleteToMyList()">
       <p class="button__text">Remove</p>
       <svg class="button__icon">
         <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
       </svg>
     </div>
+    <div *ngIf="onMyList == true && mycontent!.recommended != null" class="button__flex"
+      (click)="addToMyListFromRecommendation()">
+      <p class="button__text">Add to list</p>
+      <svg class="button__icon">
+        <use xlink:href="assets/symbol-defs.svg#icon-add"></use>
+      </svg>
+    </div>
   </div>
-  <app-recommendation *ngIf="anime" type="ANIME" [contentId]="anime.mal_id.toString()"
+  <app-recommendation *ngIf="anime" type="ANIME" [contentName]="anime.title" [contentId]="anime.mal_id.toString()"
     [isActiveRecommend]="isActiveRecommend" (isActiveEvent)="disableReceiveRecommendation($event)">
   </app-recommendation>
-  <app-recommendation *ngIf="serie" type="SERIE" [contentId]="serie.id.toString()"
+  <app-recommendation *ngIf="serie" type="SERIE" [contentName]="serie.name" [contentId]="serie.id.toString()"
     [isActiveRecommend]="isActiveRecommend" (isActiveEvent)="disableReceiveRecommendation($event)">
   </app-recommendation>
-  <app-recommendation *ngIf="book" type="BOOK" [contentId]="book.id" [isActiveRecommend]="isActiveRecommend"
-    (isActiveEvent)="disableReceiveRecommendation($event)">
+  <app-recommendation *ngIf="book" type="BOOK" [contentName]="book.volumeInfo.title" [contentId]="book.id"
+    [isActiveRecommend]="isActiveRecommend" (isActiveEvent)="disableReceiveRecommendation($event)">
   </app-recommendation>
 
-  <app-content-completed [isActiveCompleted]="openCompleteWatched" (isActiveEvent)="openCompleteWatched = $event" (contentAlter)="mycontent = $event" [content]="mycontent"></app-content-completed>
+  <app-content-completed [isActiveCompleted]="openCompleteWatched" (isActiveEvent)="openCompleteWatched = $event"
+    (contentAlter)="mycontent = $event" [content]="mycontent"></app-content-completed>
 </div>

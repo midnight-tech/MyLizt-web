@@ -100,6 +100,19 @@ export class HeaderDetailComponent implements OnInit {
     }
   }
 
+  addToMyListFromRecommendation() {
+    if (this.mycontent == undefined) {
+      return;
+    }
+    let contentCopy = this.mycontent;
+    contentCopy.recommended = null;
+    this.listService
+      .setContentStopped(contentCopy, true, true)
+      .then((value) => {
+        this.mycontent = value;
+      });
+  }
+
   isItInMyList() {
     if (this.type == 'ANIME') {
       this.listService
@@ -147,15 +160,13 @@ export class HeaderDetailComponent implements OnInit {
   }
 
   deleteToMyList() {
-    if(this.mycontent == undefined){
-      throw "myContent undefined"
+    if (this.mycontent == undefined) {
+      throw 'myContent undefined';
     }
     if (this.anime) {
-      this.listService
-        .removeFromList(this.mycontent)
-        .then(() => {
-          this.isItInMyList();
-        });
+      this.listService.removeFromList(this.mycontent).then(() => {
+        this.isItInMyList();
+      });
     }
   }
 
