@@ -223,10 +223,16 @@
               <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
             </svg>
           </div>
-          <div class="card__button-container card__button-container--add" *ngIf="inMyList" (click)="deleteToMyList()">
+          <div class="card__button-container card__button-container--add" *ngIf="inMyList && mycontent!.recommended == null" (click)="deleteToMyList()">
             <p class="card__button-container__text">Remove</p>
             <svg class="card__button-container__icon">
               <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
+            </svg>
+          </div>
+          <div class="card__button-container card__button-container--add" *ngIf="inMyList && mycontent!.recommended != null" (click)="addToMyListFromRecommendation()">
+            <p class="card__button-container__text">Add to list</p>
+            <svg class="card__button-container__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-add"></use>
             </svg>
           </div>
           <div class="card__button-container card__button-container--recommend"
