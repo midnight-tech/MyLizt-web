@@ -239,8 +239,9 @@
 
               <div class="account__notification__buttons">
                 <svg class="account__notification__buttons--accept" (click)="
-                    userService.acceptFriendRequest(
-                      notification.data.idEmmiter!
+                    acceptUserFriendRequest(
+                      notification.data.idEmmiter!,
+                      notification
                     )
                   ">
                   <use href="assets/symbol-defs.svg#icon-check"></use>
@@ -273,7 +274,7 @@
       <div class="dropdown-trigger account__user">
         <div class="button account__user__name" aria-haspopup="true" aria-controls="dropdown-menu6"
           (click)="dropdownAccount()">
-          <span class="account__user__name__text">{{ username }}</span>
+          <span class="account__user__name__text" [title]="username">{{ username }}</span>
         </div>
         <a class="button" aria-haspopup="true" aria-controls="dropdown-menu6">
           <span>#{{ authService.userFirestore?.applicationUserId }}</span>

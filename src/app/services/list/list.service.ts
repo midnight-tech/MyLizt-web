@@ -217,7 +217,12 @@ export class ListService {
     return { anime, book, serie };
   }
 
-  async recomendContent(contentId: string,contentName : string, friendId: string, type: search) {
+  async recomendContent(
+    contentId: string,
+    contentName: string,
+    friendId: string,
+    type: search
+  ) {
     const myUser = this.firestore.firestore
       .collection('User')
       .doc(this.auth.user?.uid)
@@ -234,9 +239,20 @@ export class ListService {
       .data()
       .myList.collection(type.toLowerCase())
       .doc(contentId)
+      .withConverter(contentConverter)
       .get();
-    if (content.exists) {
-      return false;
+
+    if (content.exists && content.data()!.recommended != null) {
+      for (let i = 0; i < content.data()!.recommended!.length; i += 1) {
+        if (
+          this.userEqual(
+            content.data()!.recommended![i],
+            myUser
+          )
+        ) {
+          return false;
+        }
+      }
     }
     const recommendationRef = friend.docs[0]
       .data()
@@ -255,7 +271,7 @@ export class ListService {
         {
           message: {
             name: this.auth.userFirestore!.username,
-            contentName : contentName
+            contentName: contentName,
           },
           type: 'RECOMENDATION',
           data: {
@@ -272,10 +288,18 @@ export class ListService {
         contentType: type,
         watched: false,
         createdAt: new Date(Date.now()),
-        recommended: myUser,
-      });
+        // @ts-ignore
+        recommended: firebase.firestore.FieldValue.arrayUnion(myUser),
+      },{merge : true});
     });
     return true;
+  }
+
+  userEqual(
+    user1: DocumentReference<UserInterface>,
+    user2: DocumentReference<UserInterface>
+  ) {
+    return user1.path == user2.path;
   }
 
   async getFriendList(
@@ -383,8 +407,8 @@ export class ListService {
         );
       }
       if (contentRec) {
-        if(this.auth.userFirestore == null){
-          throw "User Null"
+        if (this.auth.userFirestore == null) {
+          throw 'User Null';
         }
         transaction = this.changeRecCount(
           -1,

@@ -119,17 +119,16 @@
         </h1>
 
         <!-- Lista de pessoas que recomendaram -->
-        <div class="tooltip">
+        <div *ngIf="mycontent && mycontent.recommended != null" class="tooltip">
           <div class="card__share">
             <svg class="card__share__icon">
               <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
             </svg>
-            <p class="card__share__text">3</p>
+            <p class="card__share__text">{{mycontent.recommended.length}}</p>
           </div>
 
           <div class="tooltip__container">
-            <span class="tooltip__name">Luaasdnlak</span>
-            <span class="tooltip__id">#asdjkhjka</span>
+            <span *ngFor="let name of userRec" class="tooltip__name">{{name}}</span>
           </div>
         </div>
       </div>

@@ -10,6 +10,7 @@ import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';
 import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
+import { Notification } from 'src/app/data/converters';
 import {
   CatalogoAnimeInterface,
   search,
@@ -182,5 +183,13 @@ export class TopBarComponent implements OnInit, OnChanges {
     this.authService.logout().then(() => {
       this.router.navigate(['/signin'], { replaceUrl: true });
     });
+  }
+
+  acceptUserFriendRequest(id : string,notification : Notification){
+    this.userService.acceptFriendRequest(id).then((value)=>{
+      if(value){
+        this.notificationService.deleteNotification(notification)
+      }
+    })
   }
 }

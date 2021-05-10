@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { friendConverter, UserConverter } from 'src/app/data/converters';
+import { UserInterface } from 'src/app/data/interfaces';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { NotificationService } from '../notification/notification.service';
 
@@ -45,7 +46,7 @@ export class UserService {
     }
     const userForeing = userQuery.docs[0];
     await this.firestore.firestore.runTransaction(async (transaction) => {
-      this.notification.sendNotification(
+      transaction = await this.notification.sendNotification(
         {
           message: {
             name: this.auth.user?.displayName!,
@@ -120,5 +121,12 @@ export class UserService {
       transaction.delete(friendQuery.docs[0].ref);
     });
     return true;
+  }
+
+  async getUserName(userList : DocumentReference<UserInterface>[]){
+    return await Promise.all(userList.map(async(value)=>{
+      const user = await value.get()
+      return user.data()!.username
+    }))
   }
 }

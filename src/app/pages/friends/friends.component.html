@@ -16,23 +16,23 @@
   <div class="friends">
     <div class="friends__container" *ngFor="let friend of friends">
       <div class="friends__user">
-        <span class="friends__user__name">{{ friend.username }}</span>
-        <span class="friends__user__id">#{{ friend.applicationUserId }}</span>
+        <span class="friends__user__name">{{ friend.user.username }}</span>
+        <span class="friends__user__id">#{{ friend.user.applicationUserId }}</span>
       </div>
       <span
         class="friends__category friends__category--anime"
-        (click)="redirectToFriendList(friend.applicationUserId, 'ANIME')"
-        >Anime (514)</span
+        (click)="redirectToFriendList(friend.user.applicationUserId, 'ANIME')"
+        >Anime ({{friend.aniCount}})</span
       >
       <span
         class="friends__category friends__category--serie"
-        (click)="redirectToFriendList(friend.applicationUserId, 'SERIE')"
-        >Serie (2)</span
+        (click)="redirectToFriendList(friend.user.applicationUserId, 'SERIE')"
+        >Serie ({{friend.serieCount}})</span
       >
       <span
         class="friends__category friends__category--book"
-        (click)="redirectToFriendList(friend.applicationUserId, 'BOOK')"
-        >Book (2)</span
+        (click)="redirectToFriendList(friend.user.applicationUserId, 'BOOK')"
+        >Book ({{friend.bookCount}})</span
       >
 
       <div class="title__button friends__remove" (click)="showRemoveFriends()">

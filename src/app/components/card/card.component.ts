@@ -6,6 +6,7 @@ import { content } from 'src/app/data/interfaces';
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { HomeContextService } from 'src/app/services/home-context/home.service';
 import { ListService } from 'src/app/services/list/list.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-card',
@@ -35,7 +36,8 @@ export class CardComponent implements OnInit {
   constructor(
     public listService: ListService,
     public router: Router,
-    public homeContext: HomeContextService
+    public homeContext: HomeContextService,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -55,6 +57,7 @@ export class CardComponent implements OnInit {
       }
       this.notRended = false;
     }
+    this.getUsernames();
   }
 
   addToMyList() {
@@ -86,13 +89,6 @@ export class CardComponent implements OnInit {
       .setContentStopped(contentCopy, true, true)
       .then((value) => {
         this.mycontent = value;
-        this.router.navigate(
-          ['home', 'recommendations', this.mycontent.contentType.toLowerCase()],
-          {
-            skipLocationChange: true,
-            replaceUrl: true,
-          }
-        );
       });
   }
 
@@ -162,6 +158,17 @@ export class CardComponent implements OnInit {
     if (this.book) {
       this.book.getComplete();
       return;
+    }
+  }
+
+  userRec: string[] = [];
+
+  async getUsernames() {
+    this.userRec = [];
+    if (this.mycontent && this.mycontent.recommended != null) {
+      this.userRec = await this.userService.getUserName(
+        this.mycontent!.recommended!
+      );
     }
   }
 }
