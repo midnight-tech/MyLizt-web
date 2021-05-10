@@ -123,10 +123,19 @@ export class UserService {
     return true;
   }
 
-  async getUserName(userList : DocumentReference<UserInterface>[]){
+  async getUserNameArray(userList : DocumentReference<UserInterface>[]){
     return await Promise.all(userList.map(async(value)=>{
       const user = await value.get()
       return user.data()!.username
     }))
+  }
+
+  async getUserName(id : string){
+    const userQuery = await this.firestore.firestore.collection('User').where("applicationUserId" ,'==', id).withConverter(UserConverter).get()
+    if(userQuery.empty){
+      throw "userQuery empty"
+    }
+    const userData = userQuery.docs[0].data()
+    return userData.username
   }
 }

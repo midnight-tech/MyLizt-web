@@ -170,7 +170,7 @@ export class CardComponent implements OnInit {
   async getUsernames() {
     this.userRec = [];
     if (this.mycontent && this.mycontent.recommended != null) {
-      this.userRec = await this.userService.getUserName(
+      this.userRec = await this.userService.getUserNameArray(
         this.mycontent!.recommended!
       );
     }

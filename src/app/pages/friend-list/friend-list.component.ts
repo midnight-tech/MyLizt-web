@@ -6,6 +6,7 @@ import { content, search } from 'src/app/data/interfaces';
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { HomeContextService } from 'src/app/services/home-context/home.service';
 import { LoadingService } from 'src/app/services/loading/loading.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-friend-list',
@@ -16,6 +17,7 @@ export class FriendListComponent implements OnInit {
 
   type!: search
   friendId: string = ""
+  friendName : string = ""
 
   anime : {anime : AnimeCatalogo, content : content}[] = []
   serie : {serie : SerieCatalogo, content : content}[] = []
@@ -27,12 +29,16 @@ export class FriendListComponent implements OnInit {
   constructor(
     actRoute: ActivatedRoute,
     public homeContext: HomeContextService,
-    public loadingService : LoadingService
+    public loadingService : LoadingService,
+    private userService : UserService
 
   ) {
     actRoute.params.subscribe((value) => {
       this.type = value.type.toUpperCase() as search
       this.friendId = value.friendId
+      this.userService.getUserName(this.friendId).then((name)=>{
+        this.friendName = name
+      })
     })
   }
 

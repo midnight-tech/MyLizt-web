@@ -1,6 +1,8 @@
 <div class="container-grid">
   <div class="title">
-    <h1 class="title__text">Resultados</h1>
+    <h1 *ngIf="type == 'ANIME'" class="title__text"> {{friendName}}'s anime</h1>
+    <h1 *ngIf="type == 'SERIE'" class="title__text"> {{friendName}}'s serie</h1>
+    <h1 *ngIf="type == 'BOOK'" class="title__text"> {{friendName}}'s book</h1>
   </div>
 
   <div class="pagination pagination--top">
