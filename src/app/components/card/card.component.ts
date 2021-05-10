@@ -111,6 +111,7 @@ export class CardComponent implements OnInit {
           if (value.exists) {
             this.mycontent = value.data()!;
             this.mycontent.ref = value.ref;
+            this.getUsernames();
           }
         });
     } else if (this.book) {
@@ -119,6 +120,8 @@ export class CardComponent implements OnInit {
         if (value.exists) {
           this.mycontent = value.data()!;
           this.mycontent.ref = value.ref;
+          this.getUsernames();
+
         }
       });
     } else if (this.serie) {
@@ -127,6 +130,7 @@ export class CardComponent implements OnInit {
         if (value.exists) {
           this.mycontent = value.data()!;
           this.mycontent.ref = value.ref;
+          this.getUsernames();
         }
       });
     }
