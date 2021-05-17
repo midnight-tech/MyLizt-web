@@ -24,10 +24,12 @@ export class UserService {
       .get();
     const friends = userFriendsQuery.docs.map(async (value) => {
       const userFriends = value.data();
-      const user = await userFriends.reference
+      const userData = await userFriends.reference
         .withConverter(UserConverter)
         .get();
-      return user.data()!;
+        let user = userData.data()!
+        user.ref = userData.ref
+      return user
     });
     if (friends) {
       return await Promise.all(friends);

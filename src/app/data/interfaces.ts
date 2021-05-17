@@ -326,6 +326,7 @@ export type search = 'ANIME' | 'SERIE' | 'BOOK';
 export interface UserInterface {
   applicationUserId: string;
   uid?: string;
+  ref : DocumentReference
   username: string;
   createdAt?: Date;
   updatedAt?: Date;

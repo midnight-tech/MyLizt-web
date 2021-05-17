@@ -35,7 +35,7 @@ export class ListService {
     private BookService: BookService,
     private firestore: AngularFirestore,
     private notificationService: NotificationService
-  ) {}
+  ) { }
 
   async getMyList() {
     const myUser = this.auth.userFirestore!!;
@@ -50,9 +50,16 @@ export class ListService {
     return this.myList;
   }
 
-  async contentInMyList(id: string | number, type: search) {
-    let contentQuery = await this.auth
-      .userFirestore!.myList.collection(type.toLowerCase())
+  async contentInMyList(id: string | number, type: search, friendList?: DocumentReference) {
+
+    let content
+
+    if (friendList == undefined) {
+      content = this.auth.userFirestore!.myList
+    } else {
+      content = friendList
+    }
+    let contentQuery = await content.collection(type.toLowerCase())
       .doc(id.toString())
       .withConverter(contentConverter)
       .get();
@@ -290,7 +297,7 @@ export class ListService {
         createdAt: new Date(Date.now()),
         // @ts-ignore
         recommended: firebase.firestore.FieldValue.arrayUnion(myUser),
-      },{merge : true});
+      }, { merge: true });
     });
     return true;
   }
