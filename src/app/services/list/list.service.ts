@@ -21,6 +21,7 @@ import { BookService } from '../book/book.service';
 import { SerieService } from '../serie/serie.service';
 import firebase from 'firebase';
 import { NotificationService } from '../notification/notification.service';
+import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +34,8 @@ export class ListService {
     private serieService: SerieService,
     private BookService: BookService,
     private firestore: AngularFirestore,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private animeService: AnimeService
   ) { }
 
   async getMyList() {
@@ -90,93 +92,71 @@ export class ListService {
   }
 
   async getAnimeContent(lastDoc?: DocumentData) {
-    let animeQuery: QuerySnapshot<DocumentData>;
-    if (lastDoc) {
-      animeQuery = await this.auth
-        .userFirestore!!.myList.collection('anime')
-        .where('recommended', '==', null)
-        .orderBy('watched')
-        .orderBy('updatedAt', 'desc')
-        .startAfter(lastDoc.data().updatedAt)
-        .limit(12)
-        .get();
-    } else {
-      animeQuery = await this.auth
-        .userFirestore!!.myList.collection('anime')
-        .where('recommended', '==', null)
-        .orderBy('watched')
-        .orderBy('updatedAt', 'desc')
-        .limit(12)
-        .get();
-    }
-    return animeQuery;
-  }
-  async getAllSerieContent(lastDoc?: content) {
-    if (this.auth.userFirestore == undefined) throw 'user data undefined';
-    const listRaw = await this.auth.userFirestore?.myList.get();
-    if (listRaw.exists == false) throw 'user list undefined';
-    const serieCount: number = listRaw.data()!.serieCount;
-    let serieQuery
+    let animeQuery = this.auth
+      .userFirestore!!.myList.collection('anime')
+      .where('recommended', '==', null)
+      .orderBy('watched', 'asc')
+      .orderBy('updatedAt', 'desc')
+      .orderBy('contentId', 'asc')
     if (lastDoc != undefined) {
-      console.log(lastDoc)
-      serieQuery = await this.auth
-        .userFirestore!.myList.collection('serie')
-        .where('recommended', '==', null)
-        .orderBy('watched')
-        .orderBy('updatedAt', 'desc')
-        .orderBy('contentId')
-        .startAt(lastDoc.contentId)
-        .limit(12)
-        .withConverter(contentConverter)
-        .get();
-        console.log(serieQuery.size)
-    } else {
-      serieQuery = await this.auth
-        .userFirestore!.myList.collection('serie')
-        .where('recommended', '==', null)
-        .orderBy('watched')
-        .orderBy('updatedAt', 'desc')
-        .orderBy('contentId')
-        // .limit(12)
-        .withConverter(contentConverter)
-        .get();
+      animeQuery = animeQuery.startAfter(lastDoc.watched, lastDoc.updatedAt, lastDoc.contentId)
     }
+    const animeResult = await animeQuery
+      .limit(12)
+      .withConverter(contentConverter)
+      .get();
+    let finalResult = animeResult.docs.map(async (animeData) => {
+      let animeFireResult = animeData.data();
+      let animeResult = await this.animeService.getAnimeComplete(
+        animeFireResult.contentId as number
+      );
+      let animeCatalogo = new AnimeCatalogo(undefined, undefined, animeResult);
+      return { anime: animeCatalogo, content: animeFireResult };
+    });
+    return await Promise.all(finalResult);
+  }
+
+  async getAllSerieContent(lastDoc?: content) {
+    let serieQueryRaw = this.auth
+      .userFirestore!.myList.collection('serie')
+      .where('recommended', '==', null)
+      .orderBy('watched', 'asc')
+      .orderBy('updatedAt', 'desc')
+      .orderBy('contentId', 'asc')
+    if (lastDoc != undefined) {
+      serieQueryRaw = serieQueryRaw.startAfter(lastDoc.watched, lastDoc.updatedAt, lastDoc.contentId)
+    }
+    let serieQuery = await serieQueryRaw
+      .limit(12)
+      .withConverter(contentConverter)
+      .get()
     let finalResult = serieQuery.docs.map(async (serieData) => {
       let serieFireResult = serieData.data();
       let serieResult = await this.serieService.getSerieComplete(
         serieFireResult.contentId as number
       );
-
       let serieCatalogo = new SerieCatalogo(undefined, undefined, serieResult);
       return { serie: serieCatalogo, content: serieFireResult };
     });
-    return {
-      anime: await Promise.all(finalResult),
-      pages: Math.ceil(serieCount / 12),
-    };
+    return await Promise.all(finalResult)
   }
+
   async getAllBookContent(lastDoc?: DocumentData) {
-    let bookQuery;
+    let bookQueryRaw = this.auth
+      .userFirestore!!.myList.collection('book')
+      .where('recommended', '==', null)
+      .orderBy('watched', 'asc')
+      .orderBy('updatedAt', 'desc')
+      .orderBy('contentId', 'asc')
     if (lastDoc) {
-      bookQuery = await this.auth
-        .userFirestore!!.myList.collection('book')
-        .where('recommended', '==', null)
-        .orderBy('watched')
-        .orderBy('updatedAt', 'desc')
-        .startAfter(lastDoc)
-        .limit(12)
-        .get();
-    } else {
-      bookQuery = await this.auth
-        .userFirestore!!.myList.collection('book')
-        .where('recommended', '==', null)
-        .orderBy('watched')
-        .orderBy('updatedAt', 'desc')
-        .limit(12)
-        .get();
+      bookQueryRaw = bookQueryRaw.startAfter(lastDoc)
     }
+    let bookQuery = await bookQueryRaw
+      .limit(12)
+      .withConverter(contentConverter)
+      .get();
     let finalResult = bookQuery.docs.map(async (bookData) => {
-      let bookFireResult = bookData.data() as content;
+      let bookFireResult = bookData.data();
       let bookResult = await this.BookService.getBookComplete(
         bookFireResult.contentId as string
       );
@@ -421,7 +401,7 @@ export class ListService {
       });
   }
 
-  async setContentStopped(
+  async editContent(
     content: content,
     count: boolean = false,
     contentRec: boolean = false
@@ -516,5 +496,15 @@ export class ListService {
     }
     transaction.update(friendDoc.myList, update);
     return transaction;
+  }
+
+  async getTotalContent(user: UserInterface) {
+    const userList = await user.myList.get()
+    return {
+      anime: userList.data()!.animeCount,
+      serie: userList.data()!.serieCount,
+      book: userList.data()!.bookCount
+
+    }
   }
 }

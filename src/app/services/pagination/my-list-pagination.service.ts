@@ -5,6 +5,7 @@ import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
 import { content, search } from 'src/app/data/interfaces';
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { AnimeService } from '../anime/anime.service';
+import { AuthenticationService } from '../authentication/authentication.service';
 import { BookService } from '../book/book.service';
 import { ListService } from '../list/list.service';
 import { SerieService } from '../serie/serie.service';
@@ -17,137 +18,63 @@ export class MyListPaginationService {
     public animeService: AnimeService,
     public bookService: BookService,
     public serieService: SerieService,
-    public listService: ListService
-  ) {}
+    public listService: ListService,
+    private authService: AuthenticationService
+  ) { }
 
-  animeAuxPage?: QueryDocumentSnapshot<DocumentData>[][];
-  serieAuxPage?: { serie: SerieCatalogo; content: content }[];
+  animeAuxPage?: { anime: AnimeCatalogo; content: content }[][];
+  serieAuxPage?: { serie: SerieCatalogo; content: content }[][];
   bookAuxPage?: { book: BookCatalogo; content: content }[][];
   totalPage: number = 0;
   async myListPage(page: number, type: search) {
     if (type == 'ANIME') {
       if (!this.animeAuxPage) {
-        this.animeAuxPage = [];
-        // const firstWave = await this.listService.getAnimeContent()
-        const animeQuery = await this.listService.getAnimeContent();
-
-        for (let i = 0, j = animeQuery.docs.length; i < j; i += 12) {
-          this.animeAuxPage.push(animeQuery.docs.slice(i, i + 12));
-        }
-        const result = this.animeAuxPage[page - 1].map(async (value, index) => {
-          const content = value.data() as content;
-          const animeRaw = await this.animeService.getAnimeComplete(
-            content.contentId as number,
-            index
-          );
-          const anime = new AnimeCatalogo(undefined, undefined, animeRaw);
-          return { anime, content };
-        });
-        return {
-          result: await Promise.all(result),
-          totalPage: this.animeAuxPage.length,
-        };
+        this.animeAuxPage = []
+        const pageCount = await this.listService.getTotalContent(this.authService.userFirestore!)
+        this.totalPage = Math.ceil(pageCount.anime / 12)
+        const query = await this.listService.getAnimeContent()
+        this.animeAuxPage.push(query)
+        return { result: this.animeAuxPage[0], totalPage: this.totalPage }
       }
-      if (page <= this.animeAuxPage.length) {
-        const result = this.animeAuxPage[page - 1].map(async (value, index) => {
-          const content = value.data() as content;
-          const animeRaw = await this.animeService.getAnimeComplete(
-            content.contentId as number,
-            index
-          );
-          const anime = new AnimeCatalogo(undefined, undefined, animeRaw);
-          return { anime, content };
-        });
-        return {
-          result: await Promise.all(result),
-          totalPage: this.animeAuxPage.length,
-        };
-      } else {
-        const animeQuery = await this.listService.getAnimeContent();
-        for (let i = 0, j = animeQuery.docs.length; i < j; i += 12) {
-          this.animeAuxPage.push(animeQuery.docs.slice(i, i + 12));
-        }
-        const result = this.animeAuxPage[page - 1].map(async (value, index) => {
-          const content = value.data() as content;
-          const animeRaw = await this.animeService.getAnimeComplete(
-            content.contentId as number,
-            index
-          );
-          const anime = new AnimeCatalogo(undefined, undefined, animeRaw);
-          return { anime, content };
-        });
-        return {
-          result: await Promise.all(result),
-          totalPage: this.animeAuxPage.length,
-        };
+      if (page > this.animeAuxPage.length) {
+        const lastElement = this.animeAuxPage[this.animeAuxPage.length - 1][11]
+        const response = await this.listService.getAnimeContent(lastElement.content)
+        this.animeAuxPage.push(response)
+        return { result: this.animeAuxPage[page - 1], totalPage: this.totalPage }
       }
+      return { result: this.animeAuxPage[page - 1], totalPage: this.totalPage }
     } else if (type == 'SERIE') {
       if (!this.serieAuxPage) {
-        const firstWave = await this.listService.getAllSerieContent();
-        this.serieAuxPage = firstWave.anime;
-        this.totalPage = firstWave.pages;
-        console.log(page, this.serieAuxPage);
-        return {
-          result: this.serieAuxPage.slice(
-            (page - 1) * 12,
-            (page - 1) * 12 + 12
-          ),
-          totalPage: this.totalPage,
-        };
+        this.serieAuxPage = []
+        const pageCount = await this.listService.getTotalContent(this.authService.userFirestore!)
+        this.totalPage = Math.ceil(pageCount.serie / 12)
+        const query = await this.listService.getAllSerieContent()
+        this.serieAuxPage.push(query)
+        return { result: this.serieAuxPage[0], totalPage: this.totalPage }
       }
-      if (page * 12 <= this.serieAuxPage.length) {
-        return {
-          result: this.serieAuxPage.slice(
-            (page - 1) * 12,
-            (page - 1) * 12 + 12
-          ),
-          totalPage: this.totalPage,
-        };
-      } else {
-        const newWave = await this.listService.getAllSerieContent(
-          this.serieAuxPage[this.serieAuxPage.length - 1].content
-        );
-        this.serieAuxPage.push(...newWave.anime);
-        this.totalPage = newWave.pages;
-        console.log(page, this.serieAuxPage);
-
-        return {
-          result: this.serieAuxPage.slice(
-            (page - 1) * 12,
-            (page - 1) * 12 + 12
-          ),
-          totalPage: this.totalPage,
-        };
+      if (page > this.serieAuxPage.length) {
+        const lastElement = this.serieAuxPage[this.serieAuxPage.length - 1][11]
+        const response = await this.listService.getAllSerieContent(lastElement.content)
+        this.serieAuxPage.push(response)
+        return { result: this.serieAuxPage[page - 1], totalPage: this.totalPage }
       }
+      return { result: this.serieAuxPage[page - 1], totalPage: this.totalPage }
     } else {
       if (!this.bookAuxPage) {
-        this.bookAuxPage = [];
-        const firstWave = await this.listService.getAllBookContent();
-        for (let i = 0, j = firstWave.length; i < j; i += 12) {
-          this.bookAuxPage.push(firstWave.slice(i, i + 12));
-        }
-        return {
-          result: this.bookAuxPage[page - 1],
-          totalPage: this.bookAuxPage.length,
-        };
+        this.bookAuxPage = []
+        const pageCount = await this.listService.getTotalContent(this.authService.userFirestore!)
+        this.totalPage = Math.ceil(pageCount.book / 12)
+        const query = await this.listService.getAllBookContent()
+        this.bookAuxPage.push(query)
+        return { result: this.bookAuxPage[0], totalPage: this.totalPage }
       }
-      if (page <= this.bookAuxPage.length) {
-        return {
-          result: this.bookAuxPage[page - 1],
-          totalPage: this.bookAuxPage.length,
-        };
-      } else {
-        const newWave = await this.listService.getAllBookContent(
-          this.bookAuxPage[this.bookAuxPage.length - 1][11]
-        );
-        for (let i = 0, j = newWave.length; i < j; i += 12) {
-          this.bookAuxPage.push(newWave.slice(i, i + 12));
-        }
-        return {
-          result: this.bookAuxPage[page - 1],
-          totalPage: this.bookAuxPage.length,
-        };
+      if (page > this.bookAuxPage.length) {
+        const lastElement = this.bookAuxPage[this.bookAuxPage.length - 1][11]
+        const response = await this.listService.getAllBookContent(lastElement.content)
+        this.bookAuxPage.push(response)
+        return { result: this.bookAuxPage[page - 1], totalPage: this.totalPage }
       }
+      return { result: this.bookAuxPage[page - 1], totalPage: this.totalPage }
     }
   }
 }

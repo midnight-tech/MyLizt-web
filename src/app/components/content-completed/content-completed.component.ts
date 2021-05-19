@@ -14,21 +14,21 @@ export class ContentCompletedComponent implements OnInit {
   @Output() contentAlter = new EventEmitter<content>();
 
   constructor(
-    private listService : ListService
-  ) {}
+    private listService: ListService
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  changeWhatched(watched : boolean){
-    if(this.content == undefined){
+  changeWhatched(watched: boolean) {
+    if (this.content == undefined) {
       throw "content is undefined"
     }
-    if(this.content.watched == watched){
+    if (this.content.watched == watched) {
       this.changeActiveCompleted()
       return
     }
     this.content.watched = watched
-    this.listService.setContentStopped(this.content).then((value)=>{
+    this.listService.editContent(this.content).then((value) => {
       this.changeActiveCompleted()
       this.contentAlter.emit(value)
     })

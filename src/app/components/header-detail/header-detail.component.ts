@@ -107,7 +107,7 @@ export class HeaderDetailComponent implements OnInit {
     let contentCopy = this.mycontent;
     contentCopy.recommended = null;
     this.listService
-      .setContentStopped(contentCopy, true, true)
+      .editContent(contentCopy, true, true)
       .then((value) => {
         this.mycontent = value;
       });
@@ -208,7 +208,7 @@ export class HeaderDetailComponent implements OnInit {
       if (
         this.mycontent?.season == this.serie.seasons.length - 1 &&
         this.mycontent.mark ==
-          this.serie.seasons[this.mycontent.season].episode_count
+        this.serie.seasons[this.mycontent.season].episode_count
       ) {
         this.openCompleteWatched = true;
         return;
@@ -229,12 +229,12 @@ export class HeaderDetailComponent implements OnInit {
       contentCopy.mark = value;
       contentCopy.season = this.seasonAtual;
       contentCopy.watched = false;
-      this.listService.setContentStopped(contentCopy).then((value) => {
+      this.listService.editContent(contentCopy).then((value) => {
         this.mycontent = value;
         if (
           this.mycontent.season == this.serie.seasons.length - 1 &&
           this.mycontent.mark ==
-            this.serie.seasons[this.mycontent.season].episode_count
+          this.serie.seasons[this.mycontent.season].episode_count
         ) {
           this.openCompleteWatched = true;
         }
@@ -269,7 +269,7 @@ export class HeaderDetailComponent implements OnInit {
     let contentCopy = this.mycontent!;
     contentCopy.mark = value;
     contentCopy.watched = false;
-    this.listService.setContentStopped(contentCopy).then((value) => {
+    this.listService.editContent(contentCopy).then((value) => {
       this.mycontent = value;
       if (
         this.mycontent.mark == this.anime?.episodes ||

@@ -38,7 +38,7 @@ export class CardComponent implements OnInit {
     public router: Router,
     public homeContext: HomeContextService,
     private userService: UserService
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (this.pageCall == undefined) {
@@ -86,7 +86,7 @@ export class CardComponent implements OnInit {
     let contentCopy = this.mycontent;
     contentCopy.recommended = null;
     this.listService
-      .setContentStopped(contentCopy, true, true)
+      .editContent(contentCopy, true, true)
       .then((value) => {
         this.mycontent = value;
       });
