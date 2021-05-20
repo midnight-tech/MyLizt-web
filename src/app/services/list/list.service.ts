@@ -193,39 +193,37 @@ export class ListService {
   }
 
   async getHomeContent() {
-    let animeQuery = await this.auth.userFirestore?.myList
-      .collection('anime')
-      .where('recommended', '==', null)
-      .orderBy('watched')
-      .orderBy('updatedAt', 'desc')
-      .limit(5)
-      .withConverter(contentConverter)
-      .get();
-    let bookQuery = await this.auth.userFirestore?.myList
-      .collection('book')
-      .where('recommended', '==', null)
-      .orderBy('watched')
-      .orderBy('updatedAt', 'desc')
-      .limit(5)
-      .withConverter(contentConverter)
-      .get();
-    let serieQuery = await this.auth.userFirestore?.myList
-      .collection('serie')
-      .where('recommended', '==', null)
-      .orderBy('watched')
-      .orderBy('updatedAt', 'desc')
-      .limit(5)
-      .withConverter(contentConverter)
-      .get();
-    let anime = animeQuery?.docs.map((value) => {
-      return value.data();
-    });
-    let book = bookQuery?.docs.map((value) => {
-      return value.data();
-    });
-    let serie = serieQuery?.docs.map((value) => {
-      return value.data();
-    });
+    let anime
+    let serie
+    let book
+    const types = ['anime', 'serie', 'book']
+
+    for (let type of types) {
+      let Query = await this.auth.userFirestore!.myList
+        .collection(type)
+        .where('recommended', '==', null)
+        .orderBy('watched')
+        .orderBy('updatedAt', 'desc')
+        .limit(5)
+        .withConverter(contentConverter)
+        .get();
+      switch (type) {
+        case 'anime':
+          anime = Query.docs.map((value) => {
+            return value.data();
+          });
+          break;
+        case 'serie':
+          serie = Query.docs.map((value) => {
+            return value.data();
+          });
+          break
+        case 'book':
+          book = Query.docs.map((value) => {
+            return value.data();
+          });
+      }
+    }
     return { anime, book, serie };
   }
 
@@ -327,78 +325,78 @@ export class ListService {
     if (friendQuery.empty) {
       return false;
     }
-    let content: QuerySnapshot<content>;
+    let contentQuery = friendQuery.docs[0]
+      .data()
+      .myList.collection(type.toLowerCase())
+      .where('recommended', '==', null)
+      .orderBy('watched')
     if (lastContent) {
-      content = await friendQuery.docs[0]
-        .data()
-        .myList.collection(type.toLowerCase())
-        .where('recommended', '==', null)
-        .orderBy('watched')
-        .startAfter(lastContent)
-        .limit(60)
-        .withConverter(contentConverter)
-        .get();
-    } else {
-      content = await friendQuery.docs[0]
-        .data()
-        .myList.collection(type.toLowerCase())
-        .where('recommended', '==', null)
-        .orderBy('watched')
-        .limit(60)
-        .withConverter(contentConverter)
-        .get();
+      contentQuery = contentQuery.startAfter(lastContent)
     }
-    if (content.empty) {
-      return false;
-    }
-    return content.docs.map((value) => {
-      let content = value.data();
-      content.ref = value.ref;
-      return content;
+    const contentResult = await contentQuery
+      .limit(12)
+      .withConverter(contentConverter)
+      .get();
+    let result = contentResult.docs.map(async (value) => {
+      let content = value.data()
+      content.ref = value.ref
+      let contentInfo
+      switch (type) {
+        case 'ANIME':
+          const resultAnime = await this.animeService.getAnimeComplete(content.contentId as number)
+          contentInfo = new AnimeCatalogo(undefined, undefined, resultAnime)
+          break;
+        case 'SERIE':
+          const resultSerie = await this.serieService.getSerieComplete(content.contentId as number)
+          contentInfo = new SerieCatalogo(undefined, undefined, resultSerie)
+          break
+        case 'BOOK':
+          const resultBook = await this.BookService.getBookComplete(content.contentId as string)
+          contentInfo = new BookCatalogo(undefined, undefined, resultBook)
+          break
+      }
+      return { content: content, result: contentInfo }
     });
+    return await Promise.all(result)
   }
 
-  async getMyRecommendatation(type: search, lastContent?: DocumentData) {
-    let content: QuerySnapshot<content>;
-    if (!this.auth.userFirestore) {
-      return false;
-    }
+  async getMyRecommendatation(type: search, lastContent?: content) {
+
+    let contentQuery = this.auth
+      .userFirestore!
+      .myList
+      .collection(type.toLowerCase())
+      .where('recommended', '!=', null)
     if (lastContent) {
-      content = await this.auth.userFirestore.myList
-        .collection(type.toLowerCase())
-        .where('recommended', '!=', null)
-        .startAfter(lastContent)
-        .limit(60)
-        .withConverter(contentConverter)
-        .get();
-    } else {
-      content = await this.auth.userFirestore.myList
-        .collection(type.toLowerCase())
-        .where('recommended', '!=', null)
-        .limit(60)
-        .withConverter(contentConverter)
-        .get();
+      contentQuery = contentQuery.startAfter(lastContent)
     }
+    const contentResult = await contentQuery
+      .limit(12)
+      .withConverter(contentConverter)
+      .get();
 
-    if (content.empty) {
-      return false;
-    }
+    let result = contentResult.docs.map(async (value) => {
+      let content = value.data()
+      content.ref = value.ref
+      let contentInfo
+      switch (type) {
+        case 'ANIME':
+          const resultAnime = await this.animeService.getAnimeComplete(content.contentId as number)
+          contentInfo = new AnimeCatalogo(undefined, undefined, resultAnime)
+          break;
+        case 'SERIE':
+          const resultSerie = await this.serieService.getSerieComplete(content.contentId as number)
+          contentInfo = new SerieCatalogo(undefined, undefined, resultSerie)
+          break
+        case 'BOOK':
+          const resultBook = await this.BookService.getBookComplete(content.contentId as string)
+          contentInfo = new BookCatalogo(undefined, undefined, resultBook)
+          break
+      }
+      return { content: content, result: contentInfo }
+    })
 
-    return content.docs
-      .map((value) => {
-        const cont = value.data();
-        cont.ref = value.ref;
-        return cont;
-      })
-      .sort((a, b) => {
-        if (a == b) {
-          return 0;
-        }
-        if (a.watched) {
-          return 1;
-        }
-        return -1;
-      });
+    return await Promise.all(result)
   }
 
   async editContent(
@@ -505,6 +503,15 @@ export class ListService {
       serie: userList.data()!.serieCount,
       book: userList.data()!.bookCount
 
+    }
+  }
+
+  async getTotalContentRec(user: UserInterface) {
+    const userList = await user.myList.get()
+    return {
+      anime: userList.data()!.animeCountRec,
+      serie: userList.data()!.serieCountRec,
+      book: userList.data()!.bookCountRec
     }
   }
 }

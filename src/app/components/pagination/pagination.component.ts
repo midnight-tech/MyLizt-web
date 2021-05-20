@@ -90,7 +90,7 @@ export class PaginationComponent implements OnInit, OnChanges {
 
   async changePage(page: number) {
     // Execulta a cada troca de pagina
-    console.log(this.totalPage,page)
+    console.log(this.totalPage, page)
     if (this.loadingService.isLoading) {
       return;
     }
@@ -166,17 +166,17 @@ export class PaginationComponent implements OnInit, OnChanges {
     }
     let result:
       | {
-          result: AnimeCatalogo[];
-          totalPage: number;
-        }
+        result: AnimeCatalogo[];
+        totalPage: number;
+      }
       | {
-          result: BookCatalogo[];
-          totalPage: number;
-        }
+        result: BookCatalogo[];
+        totalPage: number;
+      }
       | {
-          result: SerieCatalogo[];
-          totalPage: number;
-        };
+        result: SerieCatalogo[];
+        totalPage: number;
+      };
     switch (pageCalled) {
       case 'catalogo':
         result = await this.catalogoPagination.pageCatalogo(
@@ -219,31 +219,31 @@ export class PaginationComponent implements OnInit, OnChanges {
       throw 'type cannot be undefined';
     }
     let result:
-      | false
+      {
+        result: {
+          anime: AnimeCatalogo;
+          content: content;
+        }[];
+        totalPage: number;
+      }
       | {
-          result: {
-            anime: AnimeCatalogo;
-            content: content;
-          }[];
-          totalPage: number;
-        }
+        result: {
+          serie: SerieCatalogo;
+          content: content;
+        }[];
+        totalPage: number;
+      }
       | {
-          result: {
-            serie: SerieCatalogo;
-            content: content;
-          }[];
-          totalPage: number;
-        }
-      | {
-          result: {
-            book: BookCatalogo;
-            content: content;
-          }[];
-          totalPage: number;
-        };
+        result: {
+          book: BookCatalogo;
+          content: content;
+        }[];
+        totalPage: number;
+      };
 
     switch (pageCalled) {
       case 'friendList':
+        // @ts-ignore
         result = await this.friendListPagination.friendListPage(
           page != undefined ? page : 1,
           this.type,
@@ -262,10 +262,6 @@ export class PaginationComponent implements OnInit, OnChanges {
           this.type
         );
         break;
-    }
-
-    if (result == false) {
-      return;
     }
     switch (this.type) {
       case 'ANIME':
@@ -303,7 +299,7 @@ export class PaginationComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if(this.loadingService.isLoading){
+    if (this.loadingService.isLoading) {
       return
     }
     if (this.init) {

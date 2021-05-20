@@ -13,7 +13,7 @@ export class UserService {
     private firestore: AngularFirestore,
     private auth: AuthenticationService,
     private notification: NotificationService
-  ) {}
+  ) { }
 
   async getFriend() {
     const userFriendsQuery = await this.firestore.firestore
@@ -27,8 +27,8 @@ export class UserService {
       const userData = await userFriends.reference
         .withConverter(UserConverter)
         .get();
-        let user = userData.data()!
-        user.ref = userData.ref
+      let user = userData.data()!
+      user.ref = userData.ref
       return user
     });
     if (friends) {
@@ -125,19 +125,31 @@ export class UserService {
     return true;
   }
 
-  async getUserNameArray(userList : DocumentReference<UserInterface>[]){
-    return await Promise.all(userList.map(async(value)=>{
+  async getUserNameArray(userList: DocumentReference<UserInterface>[]) {
+    return await Promise.all(userList.map(async (value) => {
       const user = await value.get()
       return user.data()!.username
     }))
   }
 
-  async getUserName(id : string){
-    const userQuery = await this.firestore.firestore.collection('User').where("applicationUserId" ,'==', id).withConverter(UserConverter).get()
-    if(userQuery.empty){
+  async getUserName(id: string) {
+    const userQuery = await this.firestore.firestore.collection('User').where("applicationUserId", '==', id).withConverter(UserConverter).get()
+    if (userQuery.empty) {
       throw "userQuery empty"
     }
     const userData = userQuery.docs[0].data()
     return userData.username
+  }
+
+  async getUserFromIdApp(idApp: string) {
+    const friendQuery = await this.firestore.firestore
+      .collection('User')
+      .where('applicationUserId', '==', idApp)
+      .withConverter(UserConverter)
+      .get();
+    if (friendQuery.empty) {
+      return null
+    }
+    return friendQuery.docs[0].data()!
   }
 }

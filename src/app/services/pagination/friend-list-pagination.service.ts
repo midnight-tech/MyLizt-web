@@ -7,210 +7,136 @@ import { AnimeService } from '../anime/anime.service';
 import { BookService } from '../book/book.service';
 import { ListService } from '../list/list.service';
 import { SerieService } from '../serie/serie.service';
+import { UserService } from '../user/user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FriendListPaginationService {
-  friendAnimeAuxPage?: content[][];
-  friendSerieAuxPage?: content[][];
-  friendBookAuxPage?: content[][];
-
+  friendAnimeAuxPage?: { content: content; result: AnimeCatalogo }[][];
+  friendSerieAuxPage?: { content: content; result: SerieCatalogo }[][];
+  friendBookAuxPage?: { content: content; result: BookCatalogo }[][];
+  totalPage: number = 0
   constructor(
     public animeService: AnimeService,
     public bookService: BookService,
     public serieService: SerieService,
     public listService: ListService,
-  ) {}
+    private userService: UserService
+  ) { }
   async friendListPage(page: number, type: search, friendId: string) {
+    const friendDoc = await this.userService.getUserFromIdApp(friendId)
+    if (friendDoc == null) {
+      throw "friend not finded"
+    }
+    const total = await this.listService.getTotalContent(friendDoc)
     if (type == 'ANIME') {
-      if (!this.friendAnimeAuxPage) {
-        this.friendAnimeAuxPage = [];
-        const animeContent = await this.listService.getFriendList(
-          friendId,
-          type
-        );
-        if (animeContent == false) {
-          return false;
-        }
-        for (let i = 0, j = animeContent.length; i < j; i += 12) {
-          this.friendAnimeAuxPage.push(animeContent.slice(i, i + 12));
-        }
-        const result = this.friendAnimeAuxPage[page - 1].map(async (value, index) => {
-          const animeRaw = await this.animeService.getAnimeComplete(
-            value.contentId as number,
-            index
-          );
-          const anime = new AnimeCatalogo(undefined, undefined, animeRaw);
-          return { anime, content: value };
-        });
+      if (this.friendAnimeAuxPage == undefined) {
+        this.friendAnimeAuxPage = []
+        this.totalPage = Math.ceil(total.anime / 12)
+        const result = await this.listService.getMyRecommendatation('ANIME')
+        this.friendAnimeAuxPage.push(result as {
+          content: content;
+          result: AnimeCatalogo
+        }[])
         return {
-          result : await Promise.all(result),
-          totalPage : this.friendAnimeAuxPage.length
-        };
+          result: this.friendAnimeAuxPage[0].map((value) => {
+            return { anime: value.result, content: value.content }
+          }),
+          totalPage: this.totalPage
+        }
       }
-      if (page <= this.friendAnimeAuxPage.length) {
-        const result = this.friendAnimeAuxPage[page - 1].map(async (value, index) => {
-          const animeRaw = await this.animeService.getAnimeComplete(
-            value.contentId as number,
-            index
-          );
-          const anime = new AnimeCatalogo(undefined, undefined, animeRaw);
-          return { anime, content: value };
-        });
+      if (page > this.friendAnimeAuxPage.length) {
+        const lastElement = this.friendAnimeAuxPage[this.friendAnimeAuxPage.length][11]
+        const result = await this.listService.getMyRecommendatation('ANIME', lastElement.content)
+        this.friendAnimeAuxPage.push(result as {
+          content: content;
+          result: AnimeCatalogo
+        }[])
         return {
-          result : await Promise.all(result),
-          totalPage : this.friendAnimeAuxPage.length
-        };
-      } else {
-        const animeQuery = await this.listService.getFriendList(
-          friendId,
-          type,
-          this.friendAnimeAuxPage[this.friendAnimeAuxPage.length - 1][11]
-        );
-        if (animeQuery == false) {
-          return false;
+          result: this.friendAnimeAuxPage[page - 1].map((value) => {
+            return { anime: value.result, content: value.content }
+          }),
+          totalPage: this.totalPage
         }
-        for (let i = 0, j = animeQuery.length; i < j; i += 12) {
-          this.friendAnimeAuxPage.push(animeQuery.slice(i, i + 12));
-        }
-        const result = this.friendAnimeAuxPage[page - 1].map(async (value, index) => {
-          const animeRaw = await this.animeService.getAnimeComplete(
-            value.contentId as number,
-            index
-          );
-          const anime = new AnimeCatalogo(undefined, undefined, animeRaw);
-         return { anime, content: value };
-        });
-        return {
-          result : await Promise.all(result),
-          totalPage : this.friendAnimeAuxPage.length
-        };
+      }
+      return {
+        result: this.friendAnimeAuxPage[page - 1].map((value) => {
+          return { anime: value.result, content: value.content }
+        }),
+        totalPage: this.totalPage
       }
     } else if (type == 'SERIE') {
-      if (!this.friendSerieAuxPage) {
-        this.friendSerieAuxPage = [];
-        const firstWave = await this.listService.getFriendList(
-          friendId,
-          type
-        );
-        if (firstWave == false) {
-          return false;
-        }
-        for (let i = 0, j = firstWave.length; i < j; i += 12) {
-          this.friendSerieAuxPage.push(firstWave.slice(i, i + 12));
-        }
-        const result = this.friendSerieAuxPage[page - 1].map(async (value, index) => {
-          const serieComplete = await this.serieService.getSerieComplete(
-            value.contentId as number
-          );
-          const serie = new SerieCatalogo(undefined, undefined, serieComplete);
-          return { serie, content: value };
-        });
+      if (this.friendSerieAuxPage == undefined) {
+        this.friendSerieAuxPage = []
+        this.totalPage = Math.ceil(total.anime / 12)
+        const result = await this.listService.getMyRecommendatation('SERIE')
+        this.friendSerieAuxPage.push(result as {
+          content: content;
+          result: SerieCatalogo
+        }[])
         return {
-          result : await Promise.all(result),
-          totalPage : this.friendSerieAuxPage.length
-        };
+          result: this.friendSerieAuxPage[0].map((value) => {
+            return { anime: value.result, content: value.content }
+          }),
+          totalPage: this.totalPage
+        }
       }
-      if (page <= this.friendSerieAuxPage.length) {
-        const result = this.friendSerieAuxPage[page - 1].map(async (value, index) => {
-          const serieRaw = await this.serieService.getSerieComplete(
-            value.contentId as number
-          );
-          const serie = new SerieCatalogo(undefined, undefined, serieRaw);
-          return { serie, content: value };
-        });
+      if (page > this.friendSerieAuxPage.length) {
+        const lastElement = this.friendSerieAuxPage[this.friendSerieAuxPage.length][11]
+        const result = await this.listService.getMyRecommendatation('SERIE', lastElement.content)
+        this.friendSerieAuxPage.push(result as {
+          content: content;
+          result: SerieCatalogo
+        }[])
         return {
-          result : await Promise.all(result),
-          totalPage : this.friendSerieAuxPage.length
-        };
-      } else {
-        const newWave = await this.listService.getFriendList(
-          friendId,
-          type,
-          this.friendSerieAuxPage[this.friendSerieAuxPage.length - 1][
-            this.friendSerieAuxPage[this.friendSerieAuxPage.length - 1].length -
-              1
-          ]
-        );
-        if (newWave == false) {
-          return false;
+          result: this.friendSerieAuxPage[page - 1].map((value) => {
+            return { anime: value.result, content: value.content }
+          }),
+          totalPage: this.totalPage
         }
-        for (let i = 0, j = newWave.length; i < j; i += 12) {
-          this.friendSerieAuxPage.push(newWave.slice(i, i + 12));
-        }
-        const result = this.friendSerieAuxPage[page - 1].map(async (value, index) => {
-          const serieComplete = await this.serieService.getSerieComplete(
-            value.contentId as number
-          );
-          const serie = new SerieCatalogo(undefined, undefined, serieComplete);
-          return { serie, content: value };
-        });
-        return {
-          result : await Promise.all(result),
-          totalPage : this.friendSerieAuxPage.length
-        };
+      }
+      return {
+        result: this.friendSerieAuxPage[page - 1].map((value) => {
+          return { anime: value.result, content: value.content }
+        }),
+        totalPage: this.totalPage
       }
     } else {
-      if (!this.friendBookAuxPage) {
-        this.friendBookAuxPage = [];
-        const firstWave = await this.listService.getFriendList(
-          friendId,
-          type
-        );
-        if (firstWave == false) {
-          return false;
-        }
-        for (let i = 0, j = firstWave.length; i < j; i += 12) {
-          this.friendBookAuxPage.push(firstWave.slice(i, i + 12));
-        }
-        const result = this.friendBookAuxPage[page - 1].map(async (value, index) => {
-          const bookComplete = await this.bookService.getBookComplete(
-            value.contentId.toString()
-          );
-          const book = new BookCatalogo(undefined, undefined, bookComplete);
-          return { book, content: value };
-        });
+      if (this.friendBookAuxPage == undefined) {
+        this.friendBookAuxPage = []
+        this.totalPage = Math.ceil(total.anime / 12)
+        const result = await this.listService.getMyRecommendatation('BOOK')
+        this.friendBookAuxPage.push(result as {
+          content: content;
+          result: BookCatalogo
+        }[])
         return {
-          result : await Promise.all(result),
-          totalPage : this.friendBookAuxPage.length
-        };
+          result: this.friendBookAuxPage[0].map((value) => {
+            return { anime: value.result, content: value.content }
+          }),
+          totalPage: this.totalPage
+        }
       }
-      if (page <= this.friendBookAuxPage.length) {
-        const result = this.friendBookAuxPage[page - 1].map(async (value, index) => {
-          const bookRaw = await this.bookService.getBookComplete(
-            value.contentId.toString()
-          );
-          const book = new BookCatalogo(undefined, undefined, bookRaw);
-          return { book, content: value };
-        });
+      if (page > this.friendBookAuxPage.length) {
+        const lastElement = this.friendBookAuxPage[this.friendBookAuxPage.length][11]
+        const result = await this.listService.getMyRecommendatation('BOOK', lastElement.content)
+        this.friendBookAuxPage.push(result as {
+          content: content;
+          result: BookCatalogo
+        }[])
         return {
-          result : await Promise.all(result),
-          totalPage : this.friendBookAuxPage.length
-        };
-      } else {
-        const newWave = await this.listService.getFriendList(
-          friendId,
-          type ,
-          this.friendBookAuxPage[this.friendBookAuxPage.length - 1][11]
-        );
-        if (newWave == false) {
-          return false;
+          result: this.friendBookAuxPage[page - 1].map((value) => {
+            return { anime: value.result, content: value.content }
+          }),
+          totalPage: this.totalPage
         }
-        for (let i = 0, j = newWave.length; i < j; i += 12) {
-          this.friendBookAuxPage.push(newWave.slice(i, i + 12));
-        }
-        const result = this.friendBookAuxPage[page - 1].map(async (value, index) => {
-          const bookComplete = await this.bookService.getBookComplete(
-            value.contentId.toString()
-          );
-          const book = new BookCatalogo(undefined, undefined, bookComplete);
-          return { book, content: value };
-        });
-        return {
-          result : await Promise.all(result),
-          totalPage : this.friendBookAuxPage.length
-        };
+      }
+      return {
+        result: this.friendBookAuxPage[page - 1].map((value) => {
+          return { anime: value.result, content: value.content }
+        }),
+        totalPage: this.totalPage
       }
     }
   }
