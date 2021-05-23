@@ -34,7 +34,7 @@ export class FriendListPaginationService {
       if (this.friendAnimeAuxPage == undefined) {
         this.friendAnimeAuxPage = []
         this.totalPage = Math.ceil(total.anime / 12)
-        const result = await this.listService.getMyRecommendatation('ANIME')
+        const result = await this.listService.getFriendList(friendId, 'ANIME')
         this.friendAnimeAuxPage.push(result as {
           content: content;
           result: AnimeCatalogo
@@ -48,7 +48,7 @@ export class FriendListPaginationService {
       }
       if (page > this.friendAnimeAuxPage.length) {
         const lastElement = this.friendAnimeAuxPage[this.friendAnimeAuxPage.length][11]
-        const result = await this.listService.getMyRecommendatation('ANIME', lastElement.content)
+        const result = await this.listService.getFriendList(friendId, 'ANIME', lastElement.content)
         this.friendAnimeAuxPage.push(result as {
           content: content;
           result: AnimeCatalogo
@@ -70,35 +70,35 @@ export class FriendListPaginationService {
       if (this.friendSerieAuxPage == undefined) {
         this.friendSerieAuxPage = []
         this.totalPage = Math.ceil(total.anime / 12)
-        const result = await this.listService.getMyRecommendatation('SERIE')
+        const result = await this.listService.getFriendList(friendId, 'SERIE')
         this.friendSerieAuxPage.push(result as {
           content: content;
           result: SerieCatalogo
         }[])
         return {
           result: this.friendSerieAuxPage[0].map((value) => {
-            return { anime: value.result, content: value.content }
+            return { serie: value.result, content: value.content }
           }),
           totalPage: this.totalPage
         }
       }
       if (page > this.friendSerieAuxPage.length) {
         const lastElement = this.friendSerieAuxPage[this.friendSerieAuxPage.length][11]
-        const result = await this.listService.getMyRecommendatation('SERIE', lastElement.content)
+        const result = await this.listService.getFriendList(friendId, 'SERIE', lastElement.content)
         this.friendSerieAuxPage.push(result as {
           content: content;
           result: SerieCatalogo
         }[])
         return {
           result: this.friendSerieAuxPage[page - 1].map((value) => {
-            return { anime: value.result, content: value.content }
+            return { serie: value.result, content: value.content }
           }),
           totalPage: this.totalPage
         }
       }
       return {
         result: this.friendSerieAuxPage[page - 1].map((value) => {
-          return { anime: value.result, content: value.content }
+          return { serie: value.result, content: value.content }
         }),
         totalPage: this.totalPage
       }
@@ -106,35 +106,35 @@ export class FriendListPaginationService {
       if (this.friendBookAuxPage == undefined) {
         this.friendBookAuxPage = []
         this.totalPage = Math.ceil(total.anime / 12)
-        const result = await this.listService.getMyRecommendatation('BOOK')
+        const result = await this.listService.getFriendList(friendId, 'BOOK')
         this.friendBookAuxPage.push(result as {
           content: content;
           result: BookCatalogo
         }[])
         return {
           result: this.friendBookAuxPage[0].map((value) => {
-            return { anime: value.result, content: value.content }
+            return { book: value.result, content: value.content }
           }),
           totalPage: this.totalPage
         }
       }
       if (page > this.friendBookAuxPage.length) {
         const lastElement = this.friendBookAuxPage[this.friendBookAuxPage.length][11]
-        const result = await this.listService.getMyRecommendatation('BOOK', lastElement.content)
+        const result = await this.listService.getFriendList(friendId, 'BOOK', lastElement.content)
         this.friendBookAuxPage.push(result as {
           content: content;
           result: BookCatalogo
         }[])
         return {
           result: this.friendBookAuxPage[page - 1].map((value) => {
-            return { anime: value.result, content: value.content }
+            return { book: value.result, content: value.content }
           }),
           totalPage: this.totalPage
         }
       }
       return {
         result: this.friendBookAuxPage[page - 1].map((value) => {
-          return { anime: value.result, content: value.content }
+          return { book: value.result, content: value.content }
         }),
         totalPage: this.totalPage
       }

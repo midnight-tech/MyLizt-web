@@ -45,7 +45,7 @@ export class MyRecsPaginationService {
         }
       }
       if (page > this.myRecAnimeAuxPage.length) {
-        const lastElement = this.myRecAnimeAuxPage[this.myRecAnimeAuxPage.length][11]
+        const lastElement = this.myRecAnimeAuxPage[this.myRecAnimeAuxPage.length - 1][11]
         const result = await this.listService.getMyRecommendatation('ANIME', lastElement.content)
         this.myRecAnimeAuxPage.push(result as {
           content: content;
@@ -81,7 +81,7 @@ export class MyRecsPaginationService {
         }
       }
       if (page > this.myRecSerieAuxPage.length) {
-        const lastElement = this.myRecSerieAuxPage[this.myRecSerieAuxPage.length][11]
+        const lastElement = this.myRecSerieAuxPage[this.myRecSerieAuxPage.length - 1][11]
         const result = await this.listService.getMyRecommendatation('SERIE', lastElement.content)
         this.myRecSerieAuxPage.push(result as {
           content: content;
@@ -117,7 +117,7 @@ export class MyRecsPaginationService {
         }
       }
       if (page > this.myRecBookAuxPage.length) {
-        const lastElement = this.myRecBookAuxPage[this.myRecBookAuxPage.length][11]
+        const lastElement = this.myRecBookAuxPage[this.myRecBookAuxPage.length - 1][11]
         const result = await this.listService.getMyRecommendatation('BOOK', lastElement.content)
         this.myRecBookAuxPage.push(result as {
           content: content;

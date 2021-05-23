@@ -90,7 +90,6 @@ export class PaginationComponent implements OnInit, OnChanges {
 
   async changePage(page: number) {
     // Execulta a cada troca de pagina
-    console.log(this.totalPage, page)
     if (this.loadingService.isLoading) {
       return;
     }
@@ -303,10 +302,11 @@ export class PaginationComponent implements OnInit, OnChanges {
       return
     }
     if (this.init) {
-      if (changes.query || changes.type) {
+      if (changes.query || changes.type || changes.friendId) {
         this.pages = [];
         this.clean();
         this.atualPage = 1;
+        this.totalPage = 8
         this.initPages();
         return;
       }
@@ -323,6 +323,7 @@ export class PaginationComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    this.clean()
     this.initPages();
     this.init = true;
   }

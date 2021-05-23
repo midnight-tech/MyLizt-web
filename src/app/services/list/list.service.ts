@@ -323,7 +323,7 @@ export class ListService {
       .withConverter(UserConverter)
       .get();
     if (friendQuery.empty) {
-      return false;
+      throw "user not exist"
     }
     let contentQuery = friendQuery.docs[0]
       .data()
