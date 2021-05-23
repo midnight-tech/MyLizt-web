@@ -26,6 +26,12 @@ export class MyRecsPaginationService {
   myRecBookAuxPage?: { content: content; result: BookCatalogo }[][];
   totalPage: number = 0
 
+  clean() {
+    this.myRecAnimeAuxPage = undefined;
+    this.myRecSerieAuxPage = undefined;
+    this.myRecBookAuxPage = undefined;
+  }
+
   async MyRecListPage(page: number, type: search) {
     const total = await this.listService.getTotalContentRec(this.authService.userFirestore!)
     if (type == 'ANIME') {

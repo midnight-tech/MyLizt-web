@@ -24,6 +24,13 @@ export class FriendListPaginationService {
     public listService: ListService,
     private userService: UserService
   ) { }
+
+  clean() {
+    this.friendAnimeAuxPage = undefined
+    this.friendSerieAuxPage = undefined
+    this.friendBookAuxPage = undefined
+  }
+
   async friendListPage(page: number, type: search, friendId: string) {
     const friendDoc = await this.userService.getUserFromIdApp(friendId)
     if (friendDoc == null) {
@@ -47,7 +54,7 @@ export class FriendListPaginationService {
         }
       }
       if (page > this.friendAnimeAuxPage.length) {
-        const lastElement = this.friendAnimeAuxPage[this.friendAnimeAuxPage.length][11]
+        const lastElement = this.friendAnimeAuxPage[this.friendAnimeAuxPage.length - 1][11]
         const result = await this.listService.getFriendList(friendId, 'ANIME', lastElement.content)
         this.friendAnimeAuxPage.push(result as {
           content: content;
@@ -69,7 +76,7 @@ export class FriendListPaginationService {
     } else if (type == 'SERIE') {
       if (this.friendSerieAuxPage == undefined) {
         this.friendSerieAuxPage = []
-        this.totalPage = Math.ceil(total.anime / 12)
+        this.totalPage = Math.ceil(total.serie / 12)
         const result = await this.listService.getFriendList(friendId, 'SERIE')
         this.friendSerieAuxPage.push(result as {
           content: content;
@@ -83,7 +90,7 @@ export class FriendListPaginationService {
         }
       }
       if (page > this.friendSerieAuxPage.length) {
-        const lastElement = this.friendSerieAuxPage[this.friendSerieAuxPage.length][11]
+        const lastElement = this.friendSerieAuxPage[this.friendSerieAuxPage.length - 1][11]
         const result = await this.listService.getFriendList(friendId, 'SERIE', lastElement.content)
         this.friendSerieAuxPage.push(result as {
           content: content;
@@ -105,7 +112,7 @@ export class FriendListPaginationService {
     } else {
       if (this.friendBookAuxPage == undefined) {
         this.friendBookAuxPage = []
-        this.totalPage = Math.ceil(total.anime / 12)
+        this.totalPage = Math.ceil(total.serie / 12)
         const result = await this.listService.getFriendList(friendId, 'BOOK')
         this.friendBookAuxPage.push(result as {
           content: content;
@@ -119,7 +126,7 @@ export class FriendListPaginationService {
         }
       }
       if (page > this.friendBookAuxPage.length) {
-        const lastElement = this.friendBookAuxPage[this.friendBookAuxPage.length][11]
+        const lastElement = this.friendBookAuxPage[this.friendBookAuxPage.length - 1][11]
         const result = await this.listService.getFriendList(friendId, 'BOOK', lastElement.content)
         this.friendBookAuxPage.push(result as {
           content: content;

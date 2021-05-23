@@ -149,7 +149,7 @@ export class ListService {
       .orderBy('updatedAt', 'desc')
       .orderBy('contentId', 'asc')
     if (lastDoc) {
-      bookQueryRaw = bookQueryRaw.startAfter(lastDoc)
+      bookQueryRaw = bookQueryRaw.startAfter(lastDoc.watched, lastDoc.updatedAt, lastDoc.contentId)
     }
     let bookQuery = await bookQueryRaw
       .limit(12)
@@ -315,7 +315,7 @@ export class ListService {
   async getFriendList(
     friendId: string,
     type: search,
-    lastContent?: DocumentData
+    lastDoc?: content
   ) {
     const friendQuery = await this.firestore.firestore
       .collection('User')
@@ -329,9 +329,11 @@ export class ListService {
       .data()
       .myList.collection(type.toLowerCase())
       .where('recommended', '==', null)
-      .orderBy('watched')
-    if (lastContent) {
-      contentQuery = contentQuery.startAfter(lastContent)
+      .orderBy('watched', 'asc')
+      .orderBy('updatedAt', 'desc')
+      .orderBy('contentId', 'asc')
+    if (lastDoc) {
+      contentQuery = contentQuery.startAfter(lastDoc.watched, lastDoc.updatedAt, lastDoc.contentId)
     }
     const contentResult = await contentQuery
       .limit(12)
