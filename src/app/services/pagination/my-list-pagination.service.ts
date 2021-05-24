@@ -26,6 +26,13 @@ export class MyListPaginationService {
   serieAuxPage?: { serie: SerieCatalogo; content: content }[][];
   bookAuxPage?: { book: BookCatalogo; content: content }[][];
   totalPage: number = 0;
+
+  clean() {
+    this.animeAuxPage = undefined;
+    this.serieAuxPage = undefined;
+    this.bookAuxPage = undefined;
+  }
+
   async myListPage(page: number, type: search) {
     if (type == 'ANIME') {
       if (!this.animeAuxPage) {

@@ -243,6 +243,7 @@ export class PaginationComponent implements OnInit, OnChanges {
     if (page == undefined) {
       this.friendListPagination.clean()
       this.myRecPagination.clean()
+      this.myListPagination.clean()
     }
     switch (pageCalled) {
       case 'friendList':
