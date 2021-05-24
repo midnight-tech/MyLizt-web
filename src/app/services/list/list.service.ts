@@ -363,14 +363,15 @@ export class ListService {
   }
 
   async getMyRecommendatation(type: search, lastContent?: content) {
-
     let contentQuery = this.auth
       .userFirestore!
       .myList
       .collection(type.toLowerCase())
       .where('recommended', '!=', null)
+      .orderBy("recommended")
+      .orderBy("contentId")
     if (lastContent) {
-      contentQuery = contentQuery.startAfter(lastContent)
+      contentQuery = contentQuery.startAfter(lastContent.recommended, lastContent.contentId)
     }
     const contentResult = await contentQuery
       .limit(12)
@@ -395,6 +396,7 @@ export class ListService {
           contentInfo = new BookCatalogo(undefined, undefined, resultBook)
           break
       }
+      content.ref = value.ref
       return { content: content, result: contentInfo }
     })
 

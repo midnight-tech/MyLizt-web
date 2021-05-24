@@ -73,7 +73,7 @@ export class MyRecsPaginationService {
     } else if (type == 'SERIE') {
       if (this.myRecSerieAuxPage == undefined) {
         this.myRecSerieAuxPage = []
-        this.totalPage = Math.ceil(total.anime / 12)
+        this.totalPage = Math.ceil(total.serie / 12)
         const result = await this.listService.getMyRecommendatation('SERIE')
         this.myRecSerieAuxPage.push(result as {
           content: content;
@@ -109,7 +109,7 @@ export class MyRecsPaginationService {
     } else {
       if (this.myRecBookAuxPage == undefined) {
         this.myRecBookAuxPage = []
-        this.totalPage = Math.ceil(total.anime / 12)
+        this.totalPage = Math.ceil(total.book / 12)
         const result = await this.listService.getMyRecommendatation('BOOK')
         this.myRecBookAuxPage.push(result as {
           content: content;
