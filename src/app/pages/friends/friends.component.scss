@@ -18,11 +18,11 @@
 
   &__text {
     color: $primary1;
-    font-size: 4rem;
+    font-size: $font-size-extra-large;
     text-transform: uppercase;
     font-weight: 100;
     padding: 5rem 0;
-    letter-spacing: 0.5rem;
+    letter-spacing: 0.1rem;
   }
 
   &__button {
@@ -41,7 +41,7 @@
     cursor: pointer;
 
     &__text {
-      font-size: 1.3rem;
+      font-size: $font-size-medium;
       font-weight: bold;
       margin-right: 1rem;
       color: $black3;
@@ -80,7 +80,7 @@
 
   &__container {
     align-self: baseline;
-    font-size: 1.6rem;
+    font-size: $font-size-default;
     color: $white;
     align-items: center;
 
@@ -88,13 +88,32 @@
     grid-template-columns:
       [user-start] minmax(min-content, 1fr) [user-end content-start] repeat(
         4,
-        [col-start] max-content [col-end]
+        [col-start] 12rem [col-end]
       )
       [content-end];
     row-gap: 2rem;
 
     &:not(:last-child) {
       margin-bottom: 2rem;
+    }
+
+    @media only screen and (max-width: $bp-800) {
+      grid-template-rows: [user-start] min-content [user-end content-start content-start] min-content [content-end];
+      grid-template-columns:
+        [content-start] repeat(
+          3,
+          [col-start] minmax(max-content, 12rem) [col-end]
+        )
+        [content-end void-start] 1fr [void-end remove-start] 10rem
+        [remove-end];
+      row-gap: 0.5rem;
+    }
+
+    @media only screen and (max-width: $bp-340) {
+      grid-template-rows: [user-start] min-content [user-end content-start content-start] min-content [content-end];
+      grid-template-columns:
+        [content-start] repeat(3, [col-start] minmax(9rem, 1fr) [col-end])
+        [content-end];
     }
   }
 
@@ -104,10 +123,46 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+    margin-right: 1rem;
+
+    @media only screen and (max-width: $bp-800) {
+      grid-row: user-start / user-end;
+      grid-column: content-start / remove-end;
+      margin-right: 0rem;
+    }
+
+    @media only screen and (max-width: $bp-340) {
+      grid-row: user-start / user-end;
+      grid-column: content-start / content-end;
+    }
 
     &__name {
-      font-size: 1.8rem;
-      letter-spacing: 0.5rem;
+      font-size: $font-size-large;
+      letter-spacing: 0.1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 40rem;
+
+      @media only screen and (max-width: $bp-1360) {
+        width: 55rem;
+      }
+
+      @media only screen and (max-width: $bp-1100) {
+        width: 35rem;
+      }
+
+      @media only screen and (max-width: $bp-1000) {
+        width: 25rem;
+      }
+
+      @media only screen and (max-width: $bp-800) {
+        width: 35rem;
+      }
+
+      @media only screen and (max-width: $bp-500) {
+        width: 20rem;
+      }
     }
 
     &__id {
@@ -120,11 +175,25 @@
     flex-direction: row;
     justify-self: center;
     align-self: center;
-    margin: 0 0 0 2rem;
-    padding: 0.7rem;
     border-radius: $the-border-radius;
     cursor: pointer;
     text-transform: uppercase;
+    height: 100%;
+    align-items: center;
+    text-align: center;
+    padding: 0 1rem;
+
+    @media only screen and (max-width: $bp-800) {
+      grid-row: content-start / content-end;
+      padding: 0;
+      justify-self: flex-start;
+      margin-right: 1rem;
+    }
+
+    @media only screen and (max-width: $bp-340) {
+      margin-bottom: 0.5rem;
+      margin-right: 0;
+    }
 
     &--anime {
       grid-column: col-start 1 / col-end 1;
@@ -132,10 +201,18 @@
 
     &--serie {
       grid-column: col-start 2 / col-end 2;
+
+      @media only screen and (max-width: $bp-340) {
+        justify-self: center;
+      }
     }
 
     &--book {
       grid-column: col-start 3 / col-end 3;
+
+      @media only screen and (max-width: $bp-340) {
+        justify-self: flex-end;
+      }
     }
 
     &:hover {
@@ -146,6 +223,18 @@
   &__remove {
     grid-column: col-start 4 / col-end 4;
     margin-left: 2rem;
+    min-width: 10rem;
+
+    @media only screen and (max-width: $bp-800) {
+      grid-row: user-start / content-end;
+      grid-column: remove-start / remove-end;
+      margin-left: 0;
+    }
+
+    @media only screen and (max-width: $bp-340) {
+      grid-row: user-start / user-end;
+      grid-column: col-start 3 / col-end 3;
+    }
   }
 }
 
@@ -172,7 +261,7 @@
     width: 100%;
     min-height: 5rem;
     padding: 1.5rem 9rem 1.5rem 1.5rem;
-    font-size: 1.6rem;
+    font-size: $font-size-default;
     background-color: $black4;
     border: none;
     border-radius: $the-border-radius;
@@ -194,7 +283,7 @@
     padding: 0.5rem;
     border-radius: $the-border-radius;
     text-transform: uppercase;
-    font-size: 1.6rem;
+    font-size: $font-size-default;
     cursor: pointer;
     color: $primary1;
 
