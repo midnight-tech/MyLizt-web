@@ -19,23 +19,14 @@
         <span class="friends__user__name">{{ friend.user.username }}</span>
         <span class="friends__user__id">#{{ friend.user.applicationUserId }}</span>
       </div>
-      <span
-        class="friends__category friends__category--anime"
-        (click)="redirectToFriendList(friend.user.applicationUserId, 'ANIME')"
-        >Anime ({{friend.aniCount}})</span
-      >
-      <span
-        class="friends__category friends__category--serie"
-        (click)="redirectToFriendList(friend.user.applicationUserId, 'SERIE')"
-        >Serie ({{friend.serieCount}})</span
-      >
-      <span
-        class="friends__category friends__category--book"
-        (click)="redirectToFriendList(friend.user.applicationUserId, 'BOOK')"
-        >Book ({{friend.bookCount}})</span
-      >
+      <span class="friends__category friends__category--anime"
+        (click)="redirectToFriendList(friend.user.applicationUserId, 'ANIME')">Anime ({{friend.aniCount}})</span>
+      <span class="friends__category friends__category--serie"
+        (click)="redirectToFriendList(friend.user.applicationUserId, 'SERIE')">Serie ({{friend.serieCount}})</span>
+      <span class="friends__category friends__category--book"
+        (click)="redirectToFriendList(friend.user.applicationUserId, 'BOOK')">Book ({{friend.bookCount}})</span>
 
-      <div class="title__button friends__remove" (click)="showRemoveFriends()">
+      <div class="title__button friends__remove" (click)="showRemoveFriends(friend.user.applicationUserId)">
         <p class="title__button__text">Remove</p>
         <svg class="title__button__icon">
           <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
@@ -51,13 +42,7 @@
   <div [ngClass]="{ hidden: !isActiveAdd }" class="add-remove-friends">
     <div class="add-remove-friends membrana" (click)="showAddFriends()"></div>
     <form class="add-remove-friends__form">
-      <input
-        [formControl]="id"
-        type="text"
-        id="id"
-        placeholder="Insert Friend ID"
-        class="add-remove-friends__input"
-      />
+      <input [formControl]="id" type="text" id="id" placeholder="Insert Friend ID" class="add-remove-friends__input" />
 
       <div class="add-remove-friends__button" (click)="sendFriendRquest()">
         <a>Send</a>
@@ -66,18 +51,9 @@
   </div>
 
   <div [ngClass]="{ hidden: !isActiveRemove }" class="add-remove-friends">
-    <div
-      class="add-remove-friends membrana"
-      (click)="showRemoveFriends()"
-    ></div>
+    <div class="add-remove-friends membrana" (click)="showRemoveFriends()"></div>
     <form class="add-remove-friends__form">
-      <input
-        type="text"
-        id="id"
-        placeholder="Insert Friend ID"
-        class="add-remove-friends__input"
-        [formControl]="id"
-      />
+      <input type="text" id="id" placeholder="Insert Friend ID" class="add-remove-friends__input" [formControl]="id" />
 
       <div class="add-remove-friends__button" (click)="removeFriend()">
         <a>Remove</a>

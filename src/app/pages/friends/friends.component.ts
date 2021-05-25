@@ -20,6 +20,7 @@ export class FriendsComponent implements OnInit {
   }[] = [];
   id = new FormControl('');
   loading = false
+  selectedId = ""
 
   constructor(public userService: UserService, private router: Router) { }
 
@@ -72,10 +73,13 @@ export class FriendsComponent implements OnInit {
   }
 
   removeFriend() {
+    let id: string = this.id.value.toLowerCase().replace("#", "")
+    if (id != this.selectedId) {
+      return
+    }
     if (!this.loading) {
       this.loading = true
-      let id: string = this.id.value
-      this.userService.removeFriend(id.toLowerCase().replace("#", "")).then((value) => {
+      this.userService.removeFriend(id).then((value) => {
         if (value) {
           this.showRemoveFriends()
           this.friends = []
@@ -86,10 +90,12 @@ export class FriendsComponent implements OnInit {
     }
   }
 
-  showRemoveFriends() {
+  showRemoveFriends(friendId?: string) {
     if (this.isActiveRemove) {
       this.id.setValue('');
+      this.selectedId = ""
     }
+    this.selectedId = friendId?.toLocaleLowerCase().replace("#", "")!
     this.isActiveRemove = !this.isActiveRemove;
   }
 
