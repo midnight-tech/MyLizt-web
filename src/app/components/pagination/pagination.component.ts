@@ -247,8 +247,6 @@ export class PaginationComponent implements OnInit, OnChanges {
     }
     switch (pageCalled) {
       case 'friendList':
-
-        // @ts-ignore
         result = await this.friendListPagination.friendListPage(
           page != undefined ? page : 1,
           this.type,
