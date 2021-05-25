@@ -5,14 +5,14 @@
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
-    <div class="page-item" *ngIf="completePage == true">
+    <div class="container-item" *ngIf="completePage == true">
       <li class="page-item" *ngFor="let page of pages"
         [ngClass]="{activatedPage : atualPage == page, activatedClass : activated }" (click)="changePage(page)">
         <a [ngClass]="{activatedPage : atualPage == page}" class="page-link">{{page}}
         </a>
       </li>
     </div>
-    <div *ngIf="completePage == false">
+    <div class="container-item" *ngIf="completePage == false">
       <li class="page-item">
         <a class="page-link">{{atualPage}}
         </a>
