@@ -19,10 +19,15 @@ export class FriendsComponent implements OnInit {
     bookCount: number;
   }[] = [];
   id = new FormControl('');
+  loading = false
 
-  constructor(public userService: UserService, private router: Router) {}
+  constructor(public userService: UserService, private router: Router) { }
 
   ngOnInit() {
+    this.getFriends()
+  }
+
+  getFriends() {
     this.userService.getFriend().then((friends) => {
       const friendsPromises = friends.map(async (friend) => {
         const friendList = await friend.myList.get();
@@ -56,18 +61,29 @@ export class FriendsComponent implements OnInit {
   }
 
   sendFriendRquest() {
-    this.userService.sendFriendRequest(this.id.value).then((value) => {
-      console.log(value);
+    let id: string = this.id.value
+    this.userService.sendFriendRequest(id.toLowerCase().replace("#", "")).then((value) => {
       if (value) {
-        // ok
+        this.showAddFriends()
+        this.friends = []
+        this.getFriends()
       }
     });
   }
 
   removeFriend() {
-    this.userService.removeFriend(this.id.value).then((value) => {
-      console.log(value);
-    });
+    if (!this.loading) {
+      this.loading = true
+      let id: string = this.id.value
+      this.userService.removeFriend(id.toLowerCase().replace("#", "")).then((value) => {
+        if (value) {
+          this.showRemoveFriends()
+          this.friends = []
+          this.getFriends()
+        }
+        this.loading = false
+      });
+    }
   }
 
   showRemoveFriends() {
@@ -81,5 +97,5 @@ export class FriendsComponent implements OnInit {
     this.router.navigate(['home', 'friend-list', friendId, type.toLowerCase()]);
   }
 
-  getFriendContentQuant(friend: UserInterface, type: search) {}
+  getFriendContentQuant(friend: UserInterface, type: search) { }
 }

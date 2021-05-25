@@ -18,14 +18,15 @@ export class NotificationService {
     this.createListener();
   }
 
-  async sendNotification(notification: Notification, transaction : firebase.firestore.Transaction) {
+  async sendNotification(notification: Notification, transaction: firebase.firestore.Transaction) {
+    if (notification.data.idReceiver == this.auth.userFirestore!.applicationUserId) throw ""
     const receiverQuery = await this.firestore.firestore
       .collection('User')
       .where('applicationUserId', '==', notification.data.idReceiver)
       .get();
     const receiver = receiverQuery.docs[0];
-    const docRefer = receiver.ref.collection('notification').doc() 
-    return  transaction.set(docRefer,notification);
+    const docRefer = receiver.ref.collection('notification').doc()
+    return transaction.set(docRefer, notification);
   }
 
   async deleteNotification(notification: Notification) {

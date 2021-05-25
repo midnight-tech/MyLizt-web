@@ -80,10 +80,11 @@ export class UserService {
       return false;
     }
     await this.firestore.firestore.runTransaction(async (transaction) => {
-      const newFriendMyUser = myUser.ref.collection('friends').doc();
-      const newFriendMyForeign = userRequersterQuery.docs[0].ref
+      const newFriendMyUser = myUser.ref.collection('friends').doc(id);
+      const newFriendMyForeign = userRequersterQuery.docs[0]
+        .ref
         .collection('friends')
-        .doc();
+        .doc(myUser.data()!.applicationUserId);
       transaction.set(newFriendMyUser, {
         friendId: id,
         reference: userRequersterQuery.docs[0].ref,
