@@ -10,7 +10,7 @@
   </div>
 
   <div class="pagination pagination--top">
-    <app-pagination></app-pagination>
+    <app-pagination pageCalled="friend" (visibleFriend)="friends = $event" [update]="update"></app-pagination>
   </div>
 
   <div class="friends">
@@ -36,7 +36,7 @@
   </div>
 
   <div class="pagination pagination--bottom">
-    <app-pagination></app-pagination>
+    <!-- <app-pagination></app-pagination> -->
   </div>
 
   <div [ngClass]="{ hidden: !isActiveAdd }" class="add-remove-friends">

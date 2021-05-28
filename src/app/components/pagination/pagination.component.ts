@@ -9,12 +9,13 @@ import {
 } from '@angular/core';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';
 import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
-import { content, search } from 'src/app/data/interfaces';
+import { content, search, UserInterface } from 'src/app/data/interfaces';
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { HomeContextService } from 'src/app/services/home-context/home.service';
 import { LoadingService } from 'src/app/services/loading/loading.service';
 import { CatalogoPaginationService } from 'src/app/services/pagination/catalogo-pagination.service';
 import { FriendListPaginationService } from 'src/app/services/pagination/friend-list-pagination.service';
+import { FriendPaginationService } from 'src/app/services/pagination/friend-pagination.service';
 import { MyListPaginationService } from 'src/app/services/pagination/my-list-pagination.service';
 import { MyRecsPaginationService } from 'src/app/services/pagination/myRecs-pagination.service';
 import { SearchPaginationService } from 'src/app/services/pagination/search-pagination.service';
@@ -39,10 +40,18 @@ export class PaginationComponent implements OnInit, OnChanges {
     { book: BookCatalogo; content: content }[]
   >();
 
+  @Output() visibleFriend = new EventEmitter<{
+    user: UserInterface;
+    aniCount: any
+    serieCount: any
+    bookCount: any
+  }[]>()
+
   @Input() type?: search;
   @Input() friendId: string = '';
   @Input() query?: string;
   @Input() completePage = true
+  @Input() update: boolean = false
   @Input() pageCalled?:
     | 'search'
     | 'myContent'
@@ -63,6 +72,7 @@ export class PaginationComponent implements OnInit, OnChanges {
     private friendListPagination: FriendListPaginationService,
     private myListPagination: MyListPaginationService,
     private myRecPagination: MyRecsPaginationService,
+    private friendPagination: FriendPaginationService,
     private loadingService: LoadingService
   ) {
     if (this.pageCalled) {
@@ -85,6 +95,11 @@ export class PaginationComponent implements OnInit, OnChanges {
           this.loadingService.isLoading = false;
         });
         break;
+      case 'friend':
+        this.loadingService.isLoading = true;
+        this.paginationChangeFriend().then(() => {
+          this.loadingService.isLoading = false;
+        });
     }
   }
 
@@ -96,10 +111,12 @@ export class PaginationComponent implements OnInit, OnChanges {
     if (this.atualPage == page) {
       return;
     }
-    if (page <= 0 || page > this.totalPage) {
+    if (this.pageCalled != 'friend' && (page <= 0 || page > this.totalPage)) {
       return;
     }
-    this.atualPage = page;
+    if (this.pageCalled != 'friend') {
+      this.atualPage = page;
+    }
     // this.clean();
     switch (this.pageCalled) {
       case 'search':
@@ -111,6 +128,12 @@ export class PaginationComponent implements OnInit, OnChanges {
       case 'myRec':
         this.loadingService.isLoading = true;
         this.changePageWithContent(this.pageCalled, page).then(() => {
+          this.loadingService.isLoading = false;
+        });
+        break
+      case 'friend':
+        this.loadingService.isLoading = true;
+        this.paginationChangeFriend(page).then(() => {
           this.loadingService.isLoading = false;
         });
     }
@@ -210,6 +233,27 @@ export class PaginationComponent implements OnInit, OnChanges {
     }
   }
 
+  async paginationChangeFriend(page?: number) {
+    if (page == undefined) {
+      this.friendPagination.clean()
+    }
+    const result = await this.friendPagination.friendPagination(
+      page != undefined ? page : 1,
+    )
+    if (result == undefined || result.length == 0) {
+      return
+    }
+    if (page) {
+      this.atualPage = page
+    }
+    this.visibleFriend.emit(result)
+    if (page != undefined) {
+      this.paginationChageInterface();
+    } else {
+      this.paginationInterfaceInit(1)
+    }
+  }
+
   async changePageWithContent(
     pageCalled: 'myContent' | 'friendList' | 'myRec',
     page?: number
@@ -306,7 +350,7 @@ export class PaginationComponent implements OnInit, OnChanges {
       return
     }
     if (this.init) {
-      if (changes.query || changes.type || changes.friendId) {
+      if (changes.query || changes.type || changes.friendId || changes.update) {
         this.pages = [];
         this.clean();
         this.atualPage = 1;
@@ -324,6 +368,7 @@ export class PaginationComponent implements OnInit, OnChanges {
     this.visibleContentAnime.emit([]);
     this.visibleContentSerie.emit([]);
     this.visibleContentBook.emit([]);
+    this.visibleFriend.emit([]);
   }
 
   ngOnInit() {

@@ -15,14 +15,21 @@ export class UserService {
     private notification: NotificationService
   ) { }
 
-  async getFriend() {
-    const userFriendsQuery = await this.firestore.firestore
+  async getFriend(lastFriend?: UserInterface) {
+    let userFriendsQuery = this.firestore.firestore
       .collection('User')
       .doc(this.auth.user?.uid)
       .collection('friends')
+      .orderBy("friendId")
+
+    if (lastFriend != undefined) {
+      userFriendsQuery = userFriendsQuery.startAfter(lastFriend.applicationUserId)
+    }
+
+    const friendsQuery = await userFriendsQuery
       .withConverter(friendConverter)
       .get();
-    const friends = userFriendsQuery.docs.map(async (value) => {
+    const friends = friendsQuery.docs.map(async (value) => {
       const userFriends = value.data();
       const userData = await userFriends.reference
         .withConverter(UserConverter)

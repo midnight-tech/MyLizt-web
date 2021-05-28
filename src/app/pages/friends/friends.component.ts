@@ -21,37 +21,11 @@ export class FriendsComponent implements OnInit {
   id = new FormControl('');
   loading = false
   selectedId = ""
+  update = true
 
   constructor(public userService: UserService, private router: Router) { }
 
   ngOnInit() {
-    this.getFriends()
-  }
-
-  getFriends() {
-    this.userService.getFriend().then((friends) => {
-      const friendsPromises = friends.map(async (friend) => {
-        const friendList = await friend.myList.get();
-        return {
-          user: friend,
-          aniCount:
-            friendList.data()!.animeCount == undefined
-              ? 0
-              : friendList.data()!.animeCount,
-          serieCount:
-            friendList.data()!.serieCount == undefined
-              ? 0
-              : friendList.data()!.serieCount,
-          bookCount:
-            friendList.data()!.bookCount == undefined
-              ? 0
-              : friendList.data()!.bookCount,
-        };
-      });
-      Promise.all(friendsPromises).then((value) => {
-        this.friends = value;
-      });
-    });
   }
 
   showAddFriends() {
@@ -67,7 +41,6 @@ export class FriendsComponent implements OnInit {
       if (value) {
         this.showAddFriends()
         this.friends = []
-        this.getFriends()
       }
     });
   }
@@ -83,7 +56,8 @@ export class FriendsComponent implements OnInit {
         if (value) {
           this.showRemoveFriends()
           this.friends = []
-          this.getFriends()
+          // this.getFriends()
+          this.update = !this.update
         }
         this.loading = false
       });
