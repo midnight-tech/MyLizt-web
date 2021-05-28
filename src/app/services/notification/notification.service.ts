@@ -42,6 +42,7 @@ export class NotificationService {
       .collection('User')
       .doc(this.auth.user?.uid)
       .collection('notification')
+      .orderBy('time', 'asc')
       .withConverter(notificationConverter)
       .onSnapshot((Snapshot) => {
         this.ngZone.run(() => {
@@ -51,7 +52,7 @@ export class NotificationService {
               case 'added':
                 const notification = value.doc.data();
                 notification.ref = value.doc.ref;
-                this.notifications.push(notification);
+                this.notifications.unshift(notification);
                 break;
               case 'removed':
                 this.notifications = this.notifications.filter(

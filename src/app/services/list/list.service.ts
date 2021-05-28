@@ -290,6 +290,7 @@ export class ListService {
             contentType: type.toLowerCase() as 'anime' | 'serie' | 'book',
             idContent: contentId,
           },
+          time: new Date(Date.now())
         },
         transaction
       );

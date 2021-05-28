@@ -65,6 +65,7 @@ export class UserService {
             idEmmiter: this.auth.userFirestore?.applicationUserId,
             idReceiver: userForeing.data().applicationUserId,
           },
+          time: new Date(Date.now())
         },
         transaction
       );

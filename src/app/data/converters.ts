@@ -14,6 +14,7 @@ export interface Notification {
     contentType?: 'anime' | 'serie' | 'book';
   };
   ref?: DocumentReference;
+  time: Date
 }
 
 export const UserConverter = {
@@ -50,23 +51,23 @@ export const friendConverter = {
 };
 
 export const notificationConverter = {
-    toFirestore: function (notification: Notification) {
-        return {
-            ...notification
-        }
-    },
-    fromFirestore: function (snapshot: QueryDocumentSnapshot<any>, options: SnapshotOptions) {
-        return snapshot.data(options) as Notification
+  toFirestore: function (notification: Notification) {
+    return {
+      ...notification
     }
+  },
+  fromFirestore: function (snapshot: QueryDocumentSnapshot<any>, options: SnapshotOptions) {
+    return snapshot.data(options) as Notification
+  }
 }
 
 export const contentConverter = {
-    toFirestore: function (content: content) {
-        return {
-            ...content
-        }
-    },
-    fromFirestore: function (snapshot: QueryDocumentSnapshot<any>, options: SnapshotOptions) {
-        return snapshot.data(options) as content
+  toFirestore: function (content: content) {
+    return {
+      ...content
     }
+  },
+  fromFirestore: function (snapshot: QueryDocumentSnapshot<any>, options: SnapshotOptions) {
+    return snapshot.data(options) as content
+  }
 }
