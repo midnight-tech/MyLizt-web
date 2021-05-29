@@ -80,6 +80,7 @@ export class BookService {
       const result = await axios.get<CompleteBook>(`https://www.googleapis.com/books/v1/volumes/${id}`)
       let book = this.selectImage(result.data) as CompleteBook
       book.volumeInfo.averageRating *= 2
+      book.volumeInfo.description = book.volumeInfo.description?.replace(/<\/?[^>]+(>|$)/g, "");
       return book
     }
     catch (e) {
@@ -107,7 +108,7 @@ export class BookService {
         value.volumeInfo.image = value.volumeInfo.imageLinks.smallThumbnail
       }
     }
-    value.volumeInfo.image = value.volumeInfo.image.replace("http",'https')
+    value.volumeInfo.image = value.volumeInfo.image.replace("http", 'https')
     return value
   }
 
