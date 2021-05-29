@@ -47,6 +47,7 @@ import { ContentCompletedComponent } from './components/content-completed/conten
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { LoadingService } from './services/loading/loading.service';
 import { CompleteScreenLoadComponent } from './components/completeScreenLoad/completeScreenLoad.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 const maskConfigFunction: () => Partial<IConfig> = () => {
   return {
@@ -165,6 +166,12 @@ const routes: Routes = [
     AngularFirestoreModule.enablePersistence(),
     NgxMaskModule.forRoot(maskConfigFunction),
     NgxSkeletonLoaderModule.forRoot(),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   exports: [RouterModule],
   providers: [

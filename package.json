@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "start-pwa": "ng build --prod && http-server -S -C ./cert/cert.pem -K ./cert/key.pem -p 8080 -c-1 dist/MyLizt"
   },
   "private": true,
   "dependencies": {
@@ -20,6 +21,7 @@
     "@angular/platform-browser": "~11.2.4",
     "@angular/platform-browser-dynamic": "~11.2.4",
     "@angular/router": "~11.2.4",
+    "@angular/service-worker": "~11.2.4",
     "@types/gapi": "0.0.39",
     "@types/gapi.auth2": "0.0.54",
     "@types/p-queue": "^3.2.1",
@@ -50,6 +52,7 @@
     "codelyzer": "^6.0.0",
     "firebase-tools": "^8.0.0",
     "fuzzy": "^0.1.3",
+    "http-server": "^0.12.3",
     "inquirer": "^6.2.2",
     "inquirer-autocomplete-prompt": "^1.0.1",
     "jasmine-core": "~3.6.0",
