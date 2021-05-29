@@ -355,6 +355,12 @@ a.dropdown-item {
 
   &__notification {
     padding: 1rem 0;
+    max-height: 40rem;
+    overflow-y: scroll;
+
+    @media only screen and (max-width: $bp-700) {
+      width: 35rem;
+    }
 
     &__count {
       position: absolute;
@@ -396,6 +402,14 @@ a.dropdown-item {
     &__text {
       text-align: justify;
       font-size: $font-size-small;
+      width: 60rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      @media only screen and (max-width: $bp-1000) {
+        width: 40rem;
+      }
     }
 
     &__menu {
@@ -483,6 +497,14 @@ a.dropdown-item {
       width: 3rem;
       margin: 0 0 0 3rem;
       fill: $white;
+    }
+  }
+}
+
+.dropdown.is-right.is-active {
+  .account__notification__menu {
+    @media only screen and (max-width: $bp-600) {
+      right: -17.5rem;
     }
   }
 }

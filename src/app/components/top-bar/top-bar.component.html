@@ -206,6 +206,7 @@
   </form>
 
   <div [ngClass]="{ 'hidden': isActiveMiniSearch }" class="account">
+
     <div [ngClass]="{ 'is-active': isActiveNotification }" class="dropdown is-right">
       <div class="dropdown-trigger" (click)="dropdownNotification()">
         <svg class="account__icon account__icon--notification">
@@ -231,10 +232,7 @@
             <!-- Conteudo aceitar/recusar amizade -->
             <div class="account__content dropdown-item account__notification__content"
               *ngIf="notification.type == 'FRIENDREQUEST'">
-              <span class="account__notification__text">
-                <span class="account__notification__highlight">{{
-                  notification.message.name
-                  }}</span>
+              <span class="account__notification__text"> {{ notification.message.name }}
                 send a request friend</span>
 
               <div class="account__notification__buttons">
@@ -257,9 +255,9 @@
             <!-- Conteudo de recomendacao -->
             <div class="account__content dropdown-item account__notification__content"
               *ngIf="notification.type == 'RECOMENDATION'">
-              <span class="account__notification__text"><span class="account__notification__highlight">{{notification.message.name}}
-                </span>recommended
-                <span class="account__notification__highlight" (click)="navigateToDetail(notification.data.idContent!,notification.data.contentType!)">{{notification.message.contentName}}</span>
+              <span class="account__notification__text">{{notification.message.name}} recommended
+                <span class="account__notification__highlight"
+                  (click)="navigateToDetail(notification.data.idContent!,notification.data.contentType!)">{{notification.message.contentName}}</span>
               </span>
               <img (click)="notificationService.deleteNotification(notification)" src="../../../assets/icon-logout.svg"
                 alt="icon-logout" class="account__notification__buttons--delete" />
