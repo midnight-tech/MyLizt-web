@@ -111,17 +111,6 @@
         <use href="assets/symbol-defs.svg#icon-remove"></use>
       </svg>
 
-      <!-- <input
-        *ngIf="true"
-        type="text"
-        [formControl]="episodeInputControl"
-        appAutoFocusDirective
-        (blur)="changeEpisode()"
-        class="episodes__input"
-        autoSizeInput
-        [maxWidth]="60"
-      /> -->
-
       <span (click)="changeMarkInput()" *ngIf="type == 'ANIME'" class="episodes__info">
         <input *ngIf="markInput" type="text" [formControl]="episodeInputControl" appAutoFocusDirective
           (blur)="changeEpisode()" class="episodes__input" />

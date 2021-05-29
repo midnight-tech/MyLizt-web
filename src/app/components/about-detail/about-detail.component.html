@@ -4,124 +4,94 @@
     <h1 class="title__text">Alternative Titles</h1>
   </div>
   <div class="info">
-    <span class="info__type"
-      >English: <span class="info__value">{{ anime.title_english }}</span></span
-    >
+    <span class="info__type">English: <span class="info__value">{{ anime.title_english }}</span></span>
   </div>
   <div class="info">
-    <span class="info__type"
-      >Japanese:
-      <span class="info__value">{{ anime.title_japanese }}</span></span
-    >
+    <span class="info__type">Japanese:
+      <span class="info__value">{{ anime.title_japanese }}</span></span>
   </div>
   <div class="info" *ngIf="anime.title_synonyms">
-    <span class="info__type"
-      >Japanese:
-      <span class="info__value">{{ anime.title_synonyms }}</span></span
-    >
+    <span class="info__type">Japanese:
+      <span class="info__value">{{ anime.title_synonyms }}</span></span>
   </div>
 
   <div class="title">
     <h1 class="title__text">Information</h1>
   </div>
   <div class="info">
-    <span class="info__type"
-      >Type: <span class="info__value">{{ anime.type }}</span></span
-    >
+    <span class="info__type">Type: <span class="info__value">{{ anime.type }}</span></span>
   </div>
   <div class="info">
-    <span class="info__type"
-      >Episodes: <span class="info__value">{{ anime.episodes }}</span></span
-    >
+    <span class="info__type">Episodes: <span class="info__value">{{ anime.episodes }}</span></span>
   </div>
   <div class="info">
-    <span class="info__type"
-      >Status: <span class="info__value">{{ anime.status }}</span></span
-    >
+    <span class="info__type">Status: <span class="info__value">{{ anime.status }}</span></span>
   </div>
   <div class="info">
-    <span class="info__type"
-      >Aired: <span class="info__value">{{ anime.aired.string }}</span></span
-    >
+    <span class="info__type">Aired: <span class="info__value">{{ anime.aired.string }}</span></span>
   </div>
   <div class="info">
-    <span class="info__type"
-      >Premiered: <span class="info__value">{{ anime.premiered }}</span></span
-    >
+    <span class="info__type">Premiered: <span class="info__value">{{ anime.premiered }}</span></span>
   </div>
   <div class="info">
-    <span class="info__type"
-      >Brodcast: <span class="info__value">{{ anime.broadcast }}</span></span
-    >
+    <span class="info__type">Brodcast: <span class="info__value">{{ anime.broadcast }}</span></span>
   </div>
   <div class="info">
-    <span class="info__type"
-      >Producers:
-      <span class="info__value" *ngFor="let producer of anime.producers">
-        {{ producer.name }}
+    <span class="info__type">Producers:
+      <span class="info__value" *ngFor="let producer of anime.producers ; last as isLast">
+        {{ producer.name }}<span *ngIf="!isLast">,</span>
       </span>
     </span>
   </div>
   <div class="info">
     <span class="info__type">
       Licensors:
-      <span class="info__value" *ngFor="let licensor of anime.licensors">
-        {{ licensor.name }}
+      <span class="info__value" *ngFor="let licensor of anime.licensors; last as isLast">
+        {{ licensor.name }}<span *ngIf="!isLast">,</span>
       </span>
     </span>
   </div>
   <div class="info">
-    <span class="info__type" *ngFor="let studio of anime.studios"
-      >Studios: <span class="info__value"> {{ studio.name }} </span></span
-    >
+    <span class="info__type" *ngFor="let studio of anime.studios; last as isLast">Studios: <span class="info__value">
+        {{ studio.name }}<span *ngIf="!isLast">,</span>
+      </span></span>
   </div>
   <div class="info">
-    <span class="info__type"
-      >Sources: <span class="info__value">{{ anime.source }}</span></span
-    >
+    <span class="info__type">Sources: <span class="info__value">{{ anime.source }}</span></span>
   </div>
   <div class="info">
     <span class="info__type">
       Genres:
-      <span class="info__value" *ngFor="let genre of anime.genres"
-        >{{ genre.name }}
+      <span class="info__value" *ngFor="let genre of anime.genres; last as isLast">
+        {{ genre.name }}<span *ngIf="!isLast">,</span>
       </span>
     </span>
   </div>
   <div class="info">
-    <span class="info__type"
-      >Duration: <span class="info__value">{{ anime.duration }}</span>
+    <span class="info__type">Duration: <span class="info__value">{{ anime.duration }}</span>
     </span>
   </div>
   <div class="info">
-    <span class="info__type"
-      >Rating: <span class="info__value">{{ anime.rating }}</span></span
-    >
+    <span class="info__type">Rating: <span class="info__value">{{ anime.rating }}</span></span>
   </div>
   <div *ngIf="anime.related.Adaptation">
     <div class="title">
       <h1 class="title__text">Related Anime</h1>
     </div>
     <div class="info">
-      <span class="info__type"
-        >Adaption:
-        <span
-          class="info__value"
-          *ngFor="let adaptor of anime.related.Adaptation"
-          >{{ adaptor.name }}</span
-        ></span
-      >
+      <span class="info__type">Adaption:
+        <span class="info__value" *ngFor="let adaptor of anime.related.Adaptation; last as isLast">
+          {{ adaptor.name }}<span *ngIf="!isLast">,</span>
+        </span>
+      </span>
     </div>
   </div>
   <div *ngIf="anime.related.SideStory">
     <div class="info">
       <span class="info__type">
         side story:
-        <span
-          class="info__value"
-          *ngFor="let sideStory of anime.related.SideStory"
-        >
-          {{ sideStory.name }}
+        <span class="info__value" *ngFor="let sideStory of anime.related.SideStory; last as isLast">
+          {{ sideStory.name }}<span *ngIf="!isLast">,</span>
         </span>
       </span>
     </div>
@@ -130,8 +100,8 @@
     <div class="info">
       <span class="info__type">
         Sequel:
-        <span class="info__value" *ngFor="let sequel of anime.related.Sequel">
-          {{ sequel.name }}
+        <span class="info__value" *ngFor="let sequel of anime.related.Sequel; last as isLast">
+          {{ sequel.name }}<span *ngIf="!isLast">,</span>
         </span>
       </span>
     </div>
@@ -141,10 +111,9 @@
     <div class="info">
       <span class="info__type">
         Other:
-        <span class="info__value" *ngFor="let other of anime.related.Other">
-          {{ other.name }}
-        </span></span
-      >
+        <span class="info__value" *ngFor="let other of anime.related.Other; last as isLast">
+          {{ other.name }}<span *ngIf="!isLast">,</span>
+        </span></span>
     </div>
   </div>
 
@@ -178,54 +147,43 @@
     <h1 class="title__text">Information</h1>
   </div>
   <div class="info">
-    <span class="info__type"
-      >Type: <span class="info__value"> {{ serie.type }} </span></span
-    >
+    <span class="info__type">Type: <span class="info__value"> {{ serie.type }} </span></span>
   </div>
   <div class="info">
-    <span class="info__type"
-      >Episodes:
+    <span class="info__type">Episodes:
       <span class="info__value">
         {{ serie.seasons[season].episode_count }}
-      </span></span
-    >
+      </span></span>
   </div>
   <div class="info">
-    <span class="info__type"
-      >Status: <span class="info__value">{{ serie.status }}</span></span
-    >
+    <span class="info__type">Status: <span class="info__value">{{ serie.status }}</span></span>
   </div>
   <div class="info">
-    <span class="info__type"
-      >Aired:
+    <span class="info__type">Aired:
       <span class="info__value">{{
         serie.seasons[season].air_date
-      }}</span></span
-    >
+        }}</span></span>
   </div>
   <div class="info">
     <span class="info__type">
-      Producers:<span
-        class="info__value"
-        *ngFor="let created of serie.created_by"
-      >
-        {{ created.name }}
+      Producers:<span class="info__value" *ngFor="let created of serie.created_by; last as isLast">
+        {{ created.name }}<span *ngIf="!isLast">,</span>
       </span>
     </span>
   </div>
   <div class="info">
-    <span class="info__type"
-      >Genres:
-      <span class="info__value" *ngFor="let genre of serie.genres">{{
-        genre.name
-      }}</span></span
-    >
+    <span class="info__type">Genres:
+      <span class="info__value" *ngFor="let genre of serie.genres; last as isLast">
+        {{ genre.name }}<span *ngIf="!isLast">,</span>
+      </span>
+    </span>
   </div>
   <div class="info">
-    <span class="info__type"
-      >Original Country:
-      <span class="info__value">{{ serie.origin_country }}</span></span
-    >
+    <span class="info__type">Original Country:
+      <span class="info__value">
+        {{ serie.origin_country }}
+      </span>
+    </span>
   </div>
 </div>
 
@@ -245,37 +203,28 @@
     <span class="info__type">Type: <span class="info__value">Book</span></span>
   </div>
   <div class="info">
-    <span class="info__type"
-      >Pages:
-      <span class="info__value">{{ book.volumeInfo.pageCount }}</span></span
-    >
+    <span class="info__type">Pages:
+      <span class="info__value">{{ book.volumeInfo.pageCount }}</span></span>
   </div>
   <div class="info">
-    <span class="info__type"
-      >Categories:
+    <span class="info__type">Categories:
       <span class="info__value"> {{ book.volumeInfo.categories }} </span>
     </span>
   </div>
   <div class="info">
-    <span class="info__type"
-      >Publisher:
+    <span class="info__type">Publisher:
       <span class="info__value"> {{ book.volumeInfo.publisher }} </span>
     </span>
   </div>
   <div class="info">
-    <span class="info__type"
-      >Published Date:
+    <span class="info__type">Published Date:
       <span class="info__value"> {{ book.volumeInfo.publishedDate }} </span>
     </span>
   </div>
   <div class="info">
-    <span class="info__type"
-      >ISBN:
-      <span
-        class="info__value"
-        *ngFor="let indentifier of book.volumeInfo.industryIdentifiers"
-      >
-        {{ indentifier.identifier }}
+    <span class="info__type">ISBN:
+      <span class="info__value" *ngFor="let indentifier of book.volumeInfo.industryIdentifiers;last as isLast">
+        {{ indentifier.identifier }}<span *ngIf="!isLast">,</span>
       </span>
     </span>
   </div>

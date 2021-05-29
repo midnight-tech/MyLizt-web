@@ -10,8 +10,7 @@
         <div class="card__side--image--flip card__side--image--flip--back">
           <div class="card__side--image--flip--back--synopsis">
             <div *ngIf="loading" class="card__side--image--flip--back--synopsis--text">
-              <ngx-skeleton-loader animation="progress-dark"
-               [count]="5"></ngx-skeleton-loader>
+              <ngx-skeleton-loader animation="progress-dark" [count]="5"></ngx-skeleton-loader>
             </div>
             <p *ngIf="anime && !loading" class="card__side--image--flip--back--synopsis--text">
               {{ anime.complete?.synopsis }}
@@ -29,17 +28,19 @@
                 <ngx-skeleton-loader animation="progress-dark" [count]="2"></ngx-skeleton-loader>
               </div>
               <p *ngIf="anime && !loading" class="card__side--image--flip--back--description--category--text">
-                <span *ngFor="let category of anime.complete?.genres">
-                  {{ category.name }}
+                <span *ngFor="let category of anime.complete?.genres; last as isLast">
+                  {{ category.name }}<span *ngIf="!isLast">,</span>
                 </span>
               </p>
               <p *ngIf="book && !loading" class="card__side--image--flip--back--description--category--text">
-                {{ book.complete?.volumeInfo?.categories }}
+                <span *ngFor="let genre of book.complete?.volumeInfo?.categories; last as isLast">
+                  {{genre}}<span *ngIf="!isLast">,</span>
+                </span>
               </p>
               <p *ngIf="serie && !loading" class="card__side--image--flip--back--description--category--text">
-                <span *ngFor="let genre of serie.complete?.genres">{{
-                  genre.name
-                  }}</span>
+                <span *ngFor="let genre of serie.complete?.genres; last as isLast">
+                  {{ genre.name.trim() }}<span *ngIf="!isLast">,</span>
+                </span>
               </p>
             </div>
             <div class="card__side--image--flip--back--description--info">
@@ -105,7 +106,7 @@
       </div>
 
       <div class="card__side--title">
-        <div *ngIf="loading" >
+        <div *ngIf="loading">
           <ngx-skeleton-loader animation="progress-dark" [count]="1"></ngx-skeleton-loader>
         </div>
         <h1 *ngIf="anime && !loading" class="card__title" (click)="navigateToDetail()">
@@ -183,7 +184,8 @@
         <!-- My Friend List -->
         <div class="container-flex" *ngIf=" pageCall == 'friendList'">
           <div *ngIf="loading" class="card__epi-pag">
-            <ngx-skeleton-loader animation="progress-dark" class="card__epi-pag__text" [count]="1" ></ngx-skeleton-loader>
+            <ngx-skeleton-loader animation="progress-dark" class="card__epi-pag__text" [count]="1">
+            </ngx-skeleton-loader>
           </div>
           <div *ngIf="friendContent && anime && anime.complete && !loading" class="card__epi-pag">
             <span class="card__epi-pag__text"> Ep. &nbsp; {{friendContent.mark}} / {{anime.episodes}}</span>
@@ -222,13 +224,15 @@
               <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
             </svg>
           </div>
-          <div class="card__button-container card__button-container--add" *ngIf="inMyList && mycontent!.recommended == null" (click)="deleteToMyList()">
+          <div class="card__button-container card__button-container--add"
+            *ngIf="inMyList && mycontent!.recommended == null" (click)="deleteToMyList()">
             <p class="card__button-container__text">Remove</p>
             <svg class="card__button-container__icon">
               <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
             </svg>
           </div>
-          <div class="card__button-container card__button-container--add" *ngIf="inMyList && mycontent!.recommended != null" (click)="addToMyListFromRecommendation()">
+          <div class="card__button-container card__button-container--add"
+            *ngIf="inMyList && mycontent!.recommended != null" (click)="addToMyListFromRecommendation()">
             <p class="card__button-container__text">Add to list</p>
             <svg class="card__button-container__icon">
               <use xlink:href="assets/symbol-defs.svg#icon-add"></use>
@@ -256,8 +260,8 @@
       [isActiveRecommend]="isActiveRecommend" (isActiveEvent)="disableReceiveRecommendation($event)">
     </app-recommendation>
 
-    <app-recommendation *ngIf="book" type="BOOK" [contentName]="book.volumeInfo.title" [contentId]="book.id" [isActiveRecommend]="isActiveRecommend"
-      (isActiveEvent)="disableReceiveRecommendation($event)">
+    <app-recommendation *ngIf="book" type="BOOK" [contentName]="book.volumeInfo.title" [contentId]="book.id"
+      [isActiveRecommend]="isActiveRecommend" (isActiveEvent)="disableReceiveRecommendation($event)">
     </app-recommendation>
 
   </div>
