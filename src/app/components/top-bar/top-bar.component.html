@@ -116,6 +116,9 @@
                 </div>
               </div>
             </div>
+            <div *ngIf="searchIndex == 0 && animes.length == 0">
+              any anime found
+            </div>
 
             <div *ngFor="let serie of series; index as i">
               <div class="search__dropdown__item" (mouseenter)="serie.getComplete()"
@@ -162,6 +165,9 @@
                 </div>
               </div>
             </div>
+            <div *ngIf="searchIndex == 1 && series.length == 0">
+              any serie found
+            </div>
 
             <div *ngFor="let book of books; index as i">
               <div class="search__dropdown__item" (mouseenter)="book.getComplete()"
@@ -198,6 +204,9 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div *ngIf="searchIndex == 2 && books.length == 0">
+              any book found
             </div>
           </div>
         </div>

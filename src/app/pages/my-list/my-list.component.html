@@ -24,6 +24,9 @@
       </app-card>
     </div>
   </div>
+  <div *ngIf="!loadingService.isLoading && type == 'ANIME' && anime.length == 0">
+    You don't have any anime in your list
+  </div>
   <div *ngIf="!loadingService.isLoading && type == 'BOOK'" class="list">
     <div class="list__card" *ngFor="let content of book">
       <!-- {{ content.volumeInfo.title }} -->
@@ -31,12 +34,18 @@
       </app-card>
     </div>
   </div>
+  <div *ngIf="!loadingService.isLoading && type == 'BOOK' && book.length == 0">
+    You don't have any book in your list
+  </div>
   <div *ngIf="!loadingService.isLoading && type == 'SERIE'" class="list">
     <div class="list__card" *ngFor="let content of serie">
       <!-- {{ content.name }} -->
       <app-card [serie]="content.serie" [mycontent]="content.content" [lookMyList]=false pageCall='myList'>
       </app-card>
     </div>
+  </div>
+  <div *ngIf="!loadingService.isLoading && type == 'SERIE' && serie.length == 0">
+    You don't have any serie in your list
   </div>
 
   <div class="pagination pagination--bottom">

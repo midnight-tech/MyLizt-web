@@ -34,13 +34,22 @@
       <!-- {{ content.title }} -->
       <app-card [anime]="content"></app-card>
     </div>
+    <div *ngIf="homeContext.searchType == 'ANIME' && anime.length == 0">
+      any anime found
+    </div>
     <div class="list__card" *ngFor="let content of book">
       <!-- {{ content.volumeInfo.title }} -->
       <app-card [book]="content"></app-card>
     </div>
+    <div *ngIf="homeContext.searchType == 'BOOK' && book.length == 0">
+      any book found
+    </div>
     <div class="list__card" *ngFor="let content of serie">
       <!-- {{ content.name }} -->
       <app-card [serie]="content"></app-card>
+    </div>
+    <div *ngIf="homeContext.searchType == 'SERIE' && serie.length == 0">
+      any serie found
     </div>
   </div>
 

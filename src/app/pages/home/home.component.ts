@@ -13,11 +13,10 @@ export class HomeComponent implements OnInit {
   constructor(
     private listService: ListService,
     public loadingService: LoadingService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.listService.getMyList().then((value) => {
-      console.log(value);
     });
   }
 }

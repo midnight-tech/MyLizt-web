@@ -15,12 +15,12 @@ export class SerieService {
       `${environment.url_serie_proxy_base}/api/TMDB/carroussel`
     );
     return series.data.map((serie) => {
-      serie =  this.setImage(serie) as SerieCatalogo
-      return new SerieCatalogo(serie,this);
+      serie = this.setImage(serie) as SerieCatalogo
+      return new SerieCatalogo(serie, this);
     });
   }
 
-  async getCatalogo(page : number){
+  async getCatalogo(page: number) {
     type request = {
       content: SerieCatalogo[],
       lastPage: number
@@ -28,10 +28,9 @@ export class SerieService {
     const result = await axios.get<request>(
       `${environment.url_serie_proxy_base}/api/TMDB/catalogo?page=${page}`
     );
-    console.log(result.data)
     let withImage = result.data.content.map((serie) => {
-      serie =  this.setImage(serie) as SerieCatalogo
-      return new SerieCatalogo(serie,this);
+      serie = this.setImage(serie) as SerieCatalogo
+      return new SerieCatalogo(serie, this);
     });
     let pages = [];
     for (let i = 0, j = withImage.length; i < j; i += 12) {
@@ -47,8 +46,8 @@ export class SerieService {
         `${environment.url_serie_proxy_base}/api/TMDB/search?q=${query}&limit=${limit}`
       );
       return result.data.map((serie) => {
-        serie =  this.setImage(serie) as SerieCatalogo
-        return new SerieCatalogo(serie,this);
+        serie = this.setImage(serie) as SerieCatalogo
+        return new SerieCatalogo(serie, this);
       });
     } catch (e) {
       console.error(e);
@@ -65,8 +64,8 @@ export class SerieService {
       `${environment.url_serie_proxy_base}/api/TMDB/complete_search?q=${query}&page=${page}`
     );
     let withImage = result.data.content.map((serie) => {
-      serie =  this.setImage(serie) as SerieCatalogo
-      return new SerieCatalogo(serie,this);
+      serie = this.setImage(serie) as SerieCatalogo
+      return new SerieCatalogo(serie, this);
     });
     let pages = [];
     for (let i = 0, j = withImage.length; i < j; i += 12) {
@@ -75,27 +74,27 @@ export class SerieService {
     return { pages, lastPage: result.data.lastPage };
   }
 
-  async getSerieComplete(id:number = 1){
-    try{
+  async getSerieComplete(id: number = 1) {
+    try {
       const result = await axios.get<CompleteSerie>(`${environment.url_serie_proxy_base}/api/TMDB/complete/${id}`)
       let serie = this.setImage(result.data) as CompleteSerie
       return serie
     }
-    catch (e){
-      if(environment.production == false){
+    catch (e) {
+      if (environment.production == false) {
         console.error(e.message)
       }
       throw "Erro ao coletar as informaçoes deste anime"
     }
   }
 
-  setImage(value : SerieCatalogo | CompleteSerie){
+  setImage(value: SerieCatalogo | CompleteSerie) {
     if (value.backdrop_path != null) {
       value.backdrop_path = `https://image.tmdb.org/t/p/original${value.backdrop_path}`;
-    }else {
+    } else {
       value.backdrop_path = `./assets/notFoundImage.png`
     }
-    if(value.poster_path != null){
+    if (value.poster_path != null) {
       value.poster_path = `https://image.tmdb.org/t/p/original${value.poster_path}`;
     } else {
       value.poster_path = `./assets/notFoundImage.png`;
