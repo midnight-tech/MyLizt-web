@@ -167,6 +167,26 @@ export class ListService {
     return await Promise.all(finalResult);
   }
 
+  async removeRec(content: content) {
+    if (content.ref == undefined) {
+      throw 'ref undefined';
+    }
+    if (this.auth.userFirestore == undefined) {
+      throw 'user infos undefined';
+    }
+    const myUser = this.auth.userFirestore
+    const contentRef = content.ref;
+    await this.firestore.firestore.runTransaction(async (transaction) => {
+      transaction = this.changeRecCount(
+        -1,
+        content.contentType,
+        myUser,
+        transaction
+      );
+      transaction.delete(contentRef);
+    });
+  }
+
   async removeFromList(content: content) {
     if (content.ref == undefined) {
       throw 'ref undefined';
@@ -431,6 +451,10 @@ export class ListService {
           this.auth.userFirestore!,
           transaction
         );
+        content.mark = 0
+        if (content.contentType == 'SERIE') {
+          content.season = 0
+        }
       }
       transaction.update(content.ref!, content);
     });

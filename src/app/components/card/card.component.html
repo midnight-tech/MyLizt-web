@@ -164,20 +164,28 @@
         </div>
         <!-- MyList end -->
         <!-- Recommendation -->
-        <div class="container-flex" *ngIf="pageCall == 'recommendation'">
-          <div class="card__button-container card__button-container--add" (click)="addToMyListFromRecommendation()">
-            <p class="card__button-container__text">Add to list</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-add"></use>
-            </svg>
+        <div *ngIf="pageCall == 'recommendation'">
+          <div class="container-flex" *ngIf="!(removed || added)">
+            <div class="card__button-container card__button-container--add" (click)="addToMyListFromRecommendation()">
+              <p class="card__button-container__text">Add to list</p>
+              <svg class="card__button-container__icon">
+                <use xlink:href="assets/symbol-defs.svg#icon-add"></use>
+              </svg>
+            </div>
+            <div class="card__button-container card__button-container--recommend" (click)="deleteToMyListRec()">
+              <p class="card__button-container__text">Remove</p>
+              <svg class="card__button-container__icon">
+                <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
+              </svg>
+            </div>
           </div>
-
-          <div class="card__button-container card__button-container--recommend"
-            (click)="disableReceiveRecommendation(true)">
-            <p class="card__button-container__text">Recommend to...</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-            </svg>
+          <div class="container-flex" *ngIf="removed || added">
+            <div *ngIf="removed">
+              content removed
+            </div>
+            <div *ngIf="added">
+              content added to your list
+            </div>
           </div>
         </div>
         <!-- Recommendation end -->

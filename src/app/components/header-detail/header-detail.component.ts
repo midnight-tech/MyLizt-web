@@ -163,11 +163,10 @@ export class HeaderDetailComponent implements OnInit {
     if (this.mycontent == undefined) {
       throw 'myContent undefined';
     }
-    if (this.anime) {
-      this.listService.removeFromList(this.mycontent).then(() => {
-        this.isItInMyList();
-      });
-    }
+    this.listService.removeFromList(this.mycontent).then(() => {
+      this.isItInMyList();
+    });
+
   }
 
   disableReceiveRecommendation(value: boolean) {

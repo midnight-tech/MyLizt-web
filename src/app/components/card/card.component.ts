@@ -28,6 +28,8 @@ export class CardComponent implements OnInit {
   @Input() loading: boolean = false;
   inMyList: boolean = false;
   @Input() mycontent?: content;
+  removed = false
+  added = false
 
   notRended = true;
 
@@ -89,6 +91,7 @@ export class CardComponent implements OnInit {
       .editContent(contentCopy, true, true)
       .then((value) => {
         this.mycontent = value;
+        this.added = true
       });
   }
 
@@ -97,6 +100,17 @@ export class CardComponent implements OnInit {
       throw 'myContent undefined';
     }
     this.listService.removeFromList(this.mycontent).then(() => {
+      this.notRended = true;
+      this.ngOnInit();
+    });
+  }
+
+  deleteToMyListRec() {
+    if (this.mycontent == undefined) {
+      throw 'myContent undefined';
+    }
+    this.listService.removeRec(this.mycontent).then(() => {
+      this.removed = true
       this.notRended = true;
       this.ngOnInit();
     });
