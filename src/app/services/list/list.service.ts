@@ -28,6 +28,7 @@ import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
 })
 export class ListService {
   private myList?: List;
+  unsubListenerMenuLeft: any[] = []
 
   constructor(
     private auth: AuthenticationService,
@@ -212,39 +213,20 @@ export class ListService {
     return await documentReference.withConverter(contentConverter).get();
   }
 
-  async getHomeContent() {
-    let anime
-    let serie
-    let book
+  async getHomeContent(funcListener: any) {
     const types = ['anime', 'serie', 'book']
-
     for (let type of types) {
-      let Query = await this.auth.userFirestore!.myList
+      this.unsubListenerMenuLeft.push(this.auth.userFirestore!.myList
         .collection(type)
         .where('recommended', '==', null)
-        .orderBy('watched')
+        .orderBy('watched', 'asc')
         .orderBy('updatedAt', 'desc')
+        .orderBy('contentId', 'asc')
         .limit(5)
         .withConverter(contentConverter)
-        .get();
-      switch (type) {
-        case 'anime':
-          anime = Query.docs.map((value) => {
-            return value.data();
-          });
-          break;
-        case 'serie':
-          serie = Query.docs.map((value) => {
-            return value.data();
-          });
-          break
-        case 'book':
-          book = Query.docs.map((value) => {
-            return value.data();
-          });
-      }
+        .onSnapshot((snapshot) => funcListener(snapshot, type))
+      )
     }
-    return { anime, book, serie };
   }
 
   async recomendContent(

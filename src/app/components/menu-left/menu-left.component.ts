@@ -1,23 +1,25 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   CompleteAnime,
   CompleteBook,
   CompleteSerie,
   content,
+  search,
 } from 'src/app/data/interfaces';
 import { AnimeService } from 'src/app/services/anime/anime.service';
 import { BookService } from 'src/app/services/book/book.service';
 import { ListService } from 'src/app/services/list/list.service';
 import { LoadingService } from 'src/app/services/loading/loading.service';
 import { SerieService } from 'src/app/services/serie/serie.service';
+import firebase from 'firebase'
 
 @Component({
   selector: 'app-menu-left',
   templateUrl: './menu-left.component.html',
   styleUrls: ['./menu-left.component.scss'],
 })
-export class MenuLeftComponent implements OnInit {
+export class MenuLeftComponent implements OnInit, OnDestroy {
   @Output() menuLeftEvent = new EventEmitter<boolean>();
 
   anime: { anime: CompleteAnime; content: content }[] = [];
@@ -30,42 +32,43 @@ export class MenuLeftComponent implements OnInit {
     private bookService: BookService,
     private serieService: SerieService,
     private router: Router,
-    private loading: LoadingService
-  ) {}
+    private loading: LoadingService,
+    private nZone: NgZone
+  ) { }
+
+  ngOnDestroy(): void {
+    for (let unsub of this.listService.unsubListenerMenuLeft) {
+      unsub()
+    }
+  }
 
   ngOnInit() {
+    this.listService.unsubListenerMenuLeft = []
     this.getContents();
   }
 
   getContents() {
-    this.listService.getHomeContent().then(({ anime, book, serie }) => {
-      let result = 0;
-      if (anime == undefined) {
-        throw 'content anime undefined';
-      }
-      anime!.map(async (value, index) => {
-        let animeMap = await this.animeService.getAnimeComplete(
-          value.contentId as number,
-          index
-        );
-        this.anime.push({ anime: animeMap, content: value });
-      });
-
-      for (let i of book!!) {
-        this.bookService
-          .getBookComplete(i.contentId as string)
-          .then((value) => {
-            this.book.push({ book: value, content: i });
-          });
-      }
-      for (let i of serie!!) {
-        this.serieService
-          .getSerieComplete(i.contentId as number)
-          .then((value) => {
-            this.serie.push({ serie: value, content: i });
-          });
-      }
-    });
+    this.listService.getHomeContent((snapshot: firebase.firestore.QuerySnapshot<content>, type: string) => {
+      this.nZone.run(() => {
+        if (type == 'anime') this.anime = []
+        if (type == 'serie') this.serie = []
+        if (type == 'book') this.book = []
+        snapshot.docs.map(async (value) => {
+          const content = value.data()
+          switch (content.contentType) {
+            case 'ANIME':
+              this.anime.push({ content: content, anime: await this.animeService.getAnimeComplete(content.contentId as number) })
+              break
+            case 'BOOK':
+              this.book.push({ content: content, book: await this.bookService.getBookComplete(content.contentId as string) })
+              break
+            case 'SERIE':
+              this.serie.push({ content: content, serie: await this.serieService.getSerieComplete(content.contentId as number) })
+              break
+          }
+        })
+      })
+    })
   }
 
   reloadPage() {
