@@ -1,4 +1,4 @@
-import { DocumentReference, QueryDocumentSnapshot, SnapshotOptions } from "@angular/fire/firestore";
+import firebase from 'firebase/app'
 import { content, UserInterface } from "./interfaces";
 
 export interface Notification {
@@ -13,7 +13,7 @@ export interface Notification {
     idContent?: string;
     contentType?: 'anime' | 'serie' | 'book';
   };
-  ref?: DocumentReference;
+  ref?: firebase.firestore.DocumentReference;
   time: Date
 }
 
@@ -24,8 +24,8 @@ export const UserConverter = {
     };
   },
   fromFirestore: function (
-    snapshot: QueryDocumentSnapshot<any>,
-    options: SnapshotOptions
+    snapshot: firebase.firestore.QueryDocumentSnapshot<any>,
+    options: firebase.firestore.SnapshotOptions
   ) {
     return snapshot.data(options) as UserInterface;
   },
@@ -33,7 +33,7 @@ export const UserConverter = {
 
 interface FriendFire {
   friendId: string;
-  reference: DocumentReference;
+  reference: firebase.firestore.DocumentReference;
 }
 
 export const friendConverter = {
@@ -43,8 +43,8 @@ export const friendConverter = {
     };
   },
   fromFirestore: function (
-    snapshot: QueryDocumentSnapshot<any>,
-    options: SnapshotOptions
+    snapshot: firebase.firestore.QueryDocumentSnapshot<any>,
+    options: firebase.firestore.SnapshotOptions
   ) {
     return snapshot.data(options) as FriendFire;
   },
@@ -56,7 +56,7 @@ export const notificationConverter = {
       ...notification
     }
   },
-  fromFirestore: function (snapshot: QueryDocumentSnapshot<any>, options: SnapshotOptions) {
+  fromFirestore: function (snapshot: firebase.firestore.QueryDocumentSnapshot<any>, options: firebase.firestore.SnapshotOptions) {
     return snapshot.data(options) as Notification
   }
 }
@@ -67,7 +67,7 @@ export const contentConverter = {
       ...content
     }
   },
-  fromFirestore: function (snapshot: QueryDocumentSnapshot<any>, options: SnapshotOptions) {
+  fromFirestore: function (snapshot: firebase.firestore.QueryDocumentSnapshot<any>, options: firebase.firestore.SnapshotOptions) {
     return snapshot.data(options) as content
   }
 }

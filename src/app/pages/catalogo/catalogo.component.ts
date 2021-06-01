@@ -13,9 +13,9 @@ import { HomeContextService } from 'src/app/services/home-context/home.service';
 })
 export class CatalogoComponent implements OnInit {
   type!: search;
-  anime : AnimeCatalogo[] = []
-  serie : SerieCatalogo[] = []
-  book : BookCatalogo[] = []
+  anime: AnimeCatalogo[] = []
+  serie: SerieCatalogo[] = []
+  book: BookCatalogo[] = []
 
   constructor(
     public homeContext: HomeContextService,
@@ -24,12 +24,8 @@ export class CatalogoComponent implements OnInit {
     this.actRoute.params.subscribe((value) => {
       const { type } = value;
       this.type = value.type.toUpperCase() as search;
-      if (type == 'anime') {
-      } else if (type == 'serie') {
-      } else {
-      }
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }

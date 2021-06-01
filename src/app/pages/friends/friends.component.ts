@@ -56,7 +56,6 @@ export class FriendsComponent implements OnInit {
         if (value) {
           this.showRemoveFriends()
           this.friends = []
-          // this.getFriends()
           this.update = !this.update
         }
         this.loading = false
@@ -77,5 +76,4 @@ export class FriendsComponent implements OnInit {
     this.router.navigate(['home', 'friend-list', friendId, type.toLowerCase()]);
   }
 
-  getFriendContentQuant(friend: UserInterface, type: search) { }
 }

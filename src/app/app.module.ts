@@ -6,7 +6,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ChildAExampleComponent } from './pages/child-a-example/child-a-example.component';
 import { HomePageComponent } from './pages/home-page-example/home-page.component';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
@@ -20,7 +19,6 @@ import { LoggedShieldService } from './services/routes-shield/logged-shield.serv
 import { UnloggedShieldService } from './services/routes-shield/unlogged-shield.service';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { AnimeService } from './services/anime/anime.service';
-import { SandboxPageComponent } from './pages/sandbox-page/sandbox-page.component';
 import { BookService } from './services/book/book.service';
 import { SerieService } from './services/serie/serie.service';
 import { HomeContextService } from './services/home-context/home.service';
@@ -56,7 +54,6 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
 };
 
 const routes: Routes = [
-  { path: 'sandbox', component: SandboxPageComponent, pathMatch: 'full' },
   {
     path: '',
     component: LandingPageComponent,
@@ -129,7 +126,6 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     HomePageComponent,
-    ChildAExampleComponent,
     SignInComponent,
     LandingPageComponent,
     SignUpComponent,
@@ -138,7 +134,6 @@ const routes: Routes = [
     HomeComponent,
     MenuLeftComponent,
     TopBarComponent,
-    SandboxPageComponent,
     HomeSearchComponent,
     CardComponent,
     PaginationComponent,
@@ -186,4 +181,4 @@ const routes: Routes = [
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

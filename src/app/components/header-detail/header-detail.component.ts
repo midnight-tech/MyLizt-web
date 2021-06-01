@@ -114,49 +114,38 @@ export class HeaderDetailComponent implements OnInit {
   }
 
   isItInMyList() {
+    let id
     if (this.type == 'ANIME') {
-      this.listService
-        .contentInMyList(this.anime.mal_id, 'ANIME')
-        .then((value) => {
-          this.onMyList = value.exists;
-          if (value.exists) {
-            this.mycontent = value.data()!;
-            this.mycontent.ref = value.ref;
-          }
-        });
+      id = this.anime.mal_id
     } else if (this.type == 'SERIE') {
-      this.listService.contentInMyList(this.serie.id, 'SERIE').then((value) => {
-        this.onMyList = value.exists;
-        if (value.exists) {
-          this.mycontent = value.data()!;
-          this.mycontent.ref = value.ref;
-        }
-      });
+      id = this.serie.id
     } else {
-      this.listService.contentInMyList(this.book.id, 'BOOK').then((value) => {
+      id = this.book.id
+    }
+    this.listService
+      .contentInMyList(id, this.type)
+      .then((value) => {
         this.onMyList = value.exists;
         if (value.exists) {
           this.mycontent = value.data()!;
           this.mycontent.ref = value.ref;
         }
       });
-    }
   }
 
   addToMyList() {
+    let id
     if (this.type == 'ANIME') {
-      this.listService.addContent(this.anime.mal_id, 'ANIME').then(() => {
-        this.isItInMyList();
-      });
+      id = this.anime.mal_id
     } else if (this.type == 'SERIE') {
-      this.listService.addContent(this.serie.id, 'SERIE').then(() => {
-        this.isItInMyList();
-      });
+      id = this.serie.id
     } else {
-      this.listService.addContent(this.book.id, 'BOOK').then(() => {
-        this.isItInMyList();
-      });
+      id = this.book.id
     }
+    this.listService.addContent(id, this.type).then(() => {
+      this.isItInMyList();
+    });
+
   }
 
   deleteToMyList() {

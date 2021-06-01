@@ -1,8 +1,4 @@
-import {
-  CollectionReference,
-  DocumentData,
-  DocumentReference,
-} from '@angular/fire/firestore';
+import firebase from 'firebase/app'
 
 export interface CarrousselEntry {
   title: string;
@@ -326,20 +322,20 @@ export type search = 'ANIME' | 'SERIE' | 'BOOK';
 export interface UserInterface {
   applicationUserId: string;
   uid?: string;
-  ref : DocumentReference
+  ref: firebase.firestore.DocumentReference
   username: string;
   createdAt?: Date;
   updatedAt?: Date;
-  myList: firebase.default.firestore.DocumentReference;
-  friends: CollectionReference;
-  notifications: CollectionReference;
+  myList: firebase.firestore.DocumentReference;
+  friends: firebase.firestore.CollectionReference;
+  notifications: firebase.firestore.CollectionReference;
 }
 
 export interface listInterface {
   uid?: string;
-  anime: CollectionReference<DocumentData>;
-  serie: CollectionReference<DocumentData>;
-  book: CollectionReference<DocumentData>;
+  anime: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>;
+  serie: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>;
+  book: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>;
   createdAt: Date;
 }
 
@@ -352,6 +348,6 @@ export interface content {
   watched: boolean;
   season?: number | null;
   mark?: number;
-  recommended: DocumentReference<UserInterface>[] | null;
-  ref?: DocumentReference;
+  recommended: firebase.firestore.DocumentReference<UserInterface>[] | null;
+  ref?: firebase.firestore.DocumentReference;
 }

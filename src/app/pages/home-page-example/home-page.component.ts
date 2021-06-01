@@ -9,14 +9,13 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 })
 export class HomePageComponent implements OnInit {
 
-  constructor(public auth : AuthenticationService, public route : Router) { }
+  constructor(public auth: AuthenticationService, public route: Router) { }
 
   ngOnInit() {
   }
 
-  logout(){
+  logout() {
     this.auth.logout()
-    this.route.navigate([""], {replaceUrl: true})
   }
 
 }
