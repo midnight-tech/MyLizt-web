@@ -1,10 +1,4 @@
 import { Injectable } from '@angular/core';
-import {
-  AngularFirestore,
-  DocumentData,
-  DocumentReference,
-  QuerySnapshot,
-} from '@angular/fire/firestore';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';
 import { contentConverter, UserConverter } from 'src/app/data/converters';
 import {
@@ -19,9 +13,10 @@ import { AnimeService } from '../anime/anime.service';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { BookService } from '../book/book.service';
 import { SerieService } from '../serie/serie.service';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import { NotificationService } from '../notification/notification.service';
 import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
+
 
 @Injectable({
   providedIn: 'root',
@@ -34,7 +29,6 @@ export class ListService {
     private auth: AuthenticationService,
     private serieService: SerieService,
     private BookService: BookService,
-    private firestore: AngularFirestore,
     private notificationService: NotificationService,
     private animeService: AnimeService
   ) { }
@@ -52,7 +46,7 @@ export class ListService {
     return this.myList;
   }
 
-  async contentInMyList(id: string | number, type: search, friendList?: DocumentReference) {
+  async contentInMyList(id: string | number, type: search, friendList?: firebase.firestore.DocumentReference) {
 
     let content
 
@@ -76,7 +70,7 @@ export class ListService {
       .collection(type.toLowerCase())
       .doc(id.toString())
       .withConverter(contentConverter);
-    await this.firestore.firestore.runTransaction(async (transaction) => {
+    await firebase.firestore().runTransaction(async (transaction) => {
       transaction = this.changeQuantContCount(1, type, transaction);
       transaction.set(listDocRef, {
         contentId: id as string,
@@ -92,7 +86,7 @@ export class ListService {
     return true;
   }
 
-  async getAnimeContent(lastDoc?: DocumentData) {
+  async getAnimeContent(lastDoc?: firebase.firestore.DocumentData) {
     let animeQuery = this.auth
       .userFirestore!!.myList.collection('anime')
       .where('recommended', '==', null)
@@ -142,7 +136,7 @@ export class ListService {
     return await Promise.all(finalResult)
   }
 
-  async getAllBookContent(lastDoc?: DocumentData) {
+  async getAllBookContent(lastDoc?: firebase.firestore.DocumentData) {
     let bookQueryRaw = this.auth
       .userFirestore!!.myList.collection('book')
       .where('recommended', '==', null)
@@ -177,7 +171,7 @@ export class ListService {
     }
     const myUser = this.auth.userFirestore
     const contentRef = content.ref;
-    await this.firestore.firestore.runTransaction(async (transaction) => {
+    await firebase.firestore().runTransaction(async (transaction) => {
       transaction = this.changeRecCount(
         -1,
         content.contentType,
@@ -196,7 +190,7 @@ export class ListService {
       throw 'user infos undefined';
     }
     const contentRef = content.ref;
-    await this.firestore.firestore.runTransaction(async (transaction) => {
+    await firebase.firestore().runTransaction(async (transaction) => {
       transaction = this.changeQuantContCount(
         -1,
         content.contentType,
@@ -206,7 +200,7 @@ export class ListService {
     });
   }
 
-  async alterMyRating(documentReference: DocumentReference, value?: number) {
+  async alterMyRating(documentReference: firebase.firestore.DocumentReference, value?: number) {
     await documentReference.withConverter(contentConverter).update({
       myrating: value != undefined ? value : null,
     });
@@ -235,11 +229,11 @@ export class ListService {
     friendId: string,
     type: search
   ) {
-    const myUser = this.firestore.firestore
+    const myUser = firebase.firestore()
       .collection('User')
       .doc(this.auth.user?.uid)
       .withConverter(UserConverter);
-    const friend = await this.firestore.firestore
+    const friend = await firebase.firestore()
       .collection('User')
       .where('applicationUserId', '==', friendId)
       .withConverter(UserConverter)
@@ -272,7 +266,7 @@ export class ListService {
       .withConverter(contentConverter)
       .doc(contentId);
 
-    await this.firestore.firestore.runTransaction(async (transaction) => {
+    await firebase.firestore().runTransaction(async (transaction) => {
       transaction = this.changeRecCount(
         1,
         type,
@@ -309,8 +303,8 @@ export class ListService {
   }
 
   userEqual(
-    user1: DocumentReference<UserInterface>,
-    user2: DocumentReference<UserInterface>
+    user1: firebase.firestore.DocumentReference<UserInterface>,
+    user2: firebase.firestore.DocumentReference<UserInterface>
   ) {
     return user1.path == user2.path;
   }
@@ -320,7 +314,7 @@ export class ListService {
     type: search,
     lastDoc?: content
   ) {
-    const friendQuery = await this.firestore.firestore
+    const friendQuery = await firebase.firestore()
       .collection('User')
       .where('applicationUserId', '==', friendId)
       .withConverter(UserConverter)
@@ -415,7 +409,7 @@ export class ListService {
       throw 'ContentRef Undefined';
     }
     content.updatedAt = new Date(Date.now());
-    await this.firestore.firestore.runTransaction(async (transaction) => {
+    await firebase.firestore().runTransaction(async (transaction) => {
       if (count) {
         transaction = this.changeQuantContCount(
           1,

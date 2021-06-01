@@ -1,17 +1,10 @@
 import { Injectable } from '@angular/core';
-import {
-  DocumentData,
-  DocumentSnapshot,
-  QueryDocumentSnapshot,
-  QuerySnapshot,
-} from '@angular/fire/firestore';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';
 import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
 import {
   CompleteAnime,
   CompleteBook,
   CompleteSerie,
-  content,
   search,
 } from 'src/app/data/interfaces';
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
@@ -59,13 +52,4 @@ export class HomeContextService {
     this.searchType = 'ANIME';
     this.lastPageSerie = null;
   }
-
-  // myList Pagination
-  // animeAuxPage?: { anime: AnimeCatalogo; content: content<contentAnime>; }[][]
-
-  // friendListPagination
-
-  // my recommendation pagination
 }
-
-// catalogo Pagination

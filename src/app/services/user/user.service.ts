@@ -1,22 +1,21 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { friendConverter, UserConverter } from 'src/app/data/converters';
 import { UserInterface } from 'src/app/data/interfaces';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { NotificationService } from '../notification/notification.service';
+import firebase from "firebase/app"
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   constructor(
-    private firestore: AngularFirestore,
     private auth: AuthenticationService,
     private notification: NotificationService
   ) { }
 
   async getFriend(lastFriend?: UserInterface) {
-    let userFriendsQuery = this.firestore.firestore
+    let userFriendsQuery = firebase.firestore()
       .collection('User')
       .doc(this.auth.user?.uid)
       .collection('friends')
@@ -45,7 +44,7 @@ export class UserService {
   }
 
   async sendFriendRequest(id: string) {
-    const userQuery = await this.firestore.firestore
+    const userQuery = await firebase.firestore()
       .collection('User')
       .where('applicationUserId', '==', id)
       .withConverter(UserConverter)
@@ -54,7 +53,7 @@ export class UserService {
       return false;
     }
     const userForeing = userQuery.docs[0];
-    await this.firestore.firestore.runTransaction(async (transaction) => {
+    await firebase.firestore().runTransaction(async (transaction) => {
       transaction = await this.notification.sendNotification(
         {
           message: {
@@ -74,12 +73,12 @@ export class UserService {
   }
 
   async acceptFriendRequest(id: string) {
-    const myUser = await this.firestore.firestore
+    const myUser = await firebase.firestore()
       .collection('User')
       .doc(this.auth.user?.uid)
       .withConverter(UserConverter)
       .get();
-    const userRequersterQuery = await this.firestore.firestore
+    const userRequersterQuery = await firebase.firestore()
       .collection('User')
       .where('applicationUserId', '==', id)
       .withConverter(UserConverter)
@@ -87,7 +86,7 @@ export class UserService {
     if (userRequersterQuery.empty) {
       return false;
     }
-    await this.firestore.firestore.runTransaction(async (transaction) => {
+    await firebase.firestore().runTransaction(async (transaction) => {
       const newFriendMyUser = myUser.ref.collection('friends').doc(id);
       const newFriendMyForeign = userRequersterQuery.docs[0]
         .ref
@@ -106,7 +105,7 @@ export class UserService {
   }
 
   async removeFriend(id: string) {
-    const friendQuery = await this.firestore.firestore
+    const friendQuery = await firebase.firestore()
       .collection('User')
       .doc(this.auth.user?.uid)
       .collection('friends')
@@ -116,7 +115,7 @@ export class UserService {
     if (friendQuery.empty) {
       return false;
     }
-    const myUser = await this.firestore.firestore
+    const myUser = await firebase.firestore()
       .collection('User')
       .doc(this.auth.user?.uid)
       .withConverter(UserConverter)
@@ -127,14 +126,14 @@ export class UserService {
       .collection('friends')
       .where('friendId', '==', myUserData?.applicationUserId)
       .get();
-    await this.firestore.firestore.runTransaction(async (transaction) => {
+    await firebase.firestore().runTransaction(async (transaction) => {
       transaction.delete(myFriendrefer.docs[0].ref);
       transaction.delete(friendQuery.docs[0].ref);
     });
     return true;
   }
 
-  async getUserNameArray(userList: DocumentReference<UserInterface>[]) {
+  async getUserNameArray(userList: firebase.firestore.DocumentReference<UserInterface>[]) {
     return await Promise.all(userList.map(async (value) => {
       const user = await value.get()
       return user.data()!.username
@@ -142,7 +141,7 @@ export class UserService {
   }
 
   async getUserName(id: string) {
-    const userQuery = await this.firestore.firestore.collection('User').where("applicationUserId", '==', id).withConverter(UserConverter).get()
+    const userQuery = await firebase.firestore().collection('User').where("applicationUserId", '==', id).withConverter(UserConverter).get()
     if (userQuery.empty) {
       throw "userQuery empty"
     }
@@ -151,7 +150,7 @@ export class UserService {
   }
 
   async getUserFromIdApp(idApp: string) {
-    const friendQuery = await this.firestore.firestore
+    const friendQuery = await firebase.firestore()
       .collection('User')
       .where('applicationUserId', '==', idApp)
       .withConverter(UserConverter)

@@ -1,8 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Notification, notificationConverter } from 'src/app/data/converters';
 import { AuthenticationService } from '../authentication/authentication.service';
-import firebase from 'firebase'
+import firebase from 'firebase/app'
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +10,6 @@ export class NotificationService {
   notifications: Notification[] = [];
 
   constructor(
-    private firestore: AngularFirestore,
     private auth: AuthenticationService,
     private ngZone: NgZone
   ) {
@@ -20,7 +18,7 @@ export class NotificationService {
 
   async sendNotification(notification: Notification, transaction: firebase.firestore.Transaction) {
     if (notification.data.idReceiver == this.auth.userFirestore!.applicationUserId) throw ""
-    const receiverQuery = await this.firestore.firestore
+    const receiverQuery = await firebase.firestore()
       .collection('User')
       .where('applicationUserId', '==', notification.data.idReceiver)
       .get();
@@ -38,7 +36,7 @@ export class NotificationService {
   }
 
   createListener() {
-    this.auth.unsub = this.firestore.firestore
+    this.auth.unsub = firebase.firestore()
       .collection('User')
       .doc(this.auth.user?.uid)
       .collection('notification')
