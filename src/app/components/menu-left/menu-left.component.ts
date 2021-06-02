@@ -5,7 +5,6 @@ import {
   CompleteBook,
   CompleteSerie,
   content,
-  search,
 } from 'src/app/data/interfaces';
 import { AnimeService } from 'src/app/services/anime/anime.service';
 import { BookService } from 'src/app/services/book/book.service';

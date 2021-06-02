@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BookCatalogo } from 'src/app/data/BookCatalogo';
 import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
-import { content } from 'src/app/data/interfaces';
+import { content, search } from 'src/app/data/interfaces';
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { HomeContextService } from 'src/app/services/home-context/home.service';
 import { ListService } from 'src/app/services/list/list.service';
@@ -63,22 +63,27 @@ export class CardComponent implements OnInit {
   }
 
   addToMyList() {
+    let type: search
+    let id
+
     if (this.anime) {
-      this.listService.addContent(this.anime.mal_id, 'ANIME').then(() => {
-        this.notRended = true;
-        this.ngOnInit();
-      });
-    } else if (this.book) {
-      this.listService.addContent(this.book.id, 'BOOK').then(() => {
-        this.notRended = true;
-        this.ngOnInit();
-      });
-    } else if (this.serie) {
-      this.listService.addContent(this.serie.id, 'SERIE').then(() => {
-        this.notRended = true;
-        this.ngOnInit();
-      });
+      type = 'ANIME'
+      id = this.anime.mal_id
     }
+    else if (this.book) {
+      type = 'BOOK'
+      id = this.book.id
+    }
+    else if (this.serie) {
+      type = 'SERIE'
+      id = this.serie.id
+    } else {
+      throw "content invalid"
+    }
+    this.listService.addContent(id, type).then(() => {
+      this.notRended = true;
+      this.ngOnInit();
+    });
   }
 
   addToMyListFromRecommendation() {
@@ -117,29 +122,26 @@ export class CardComponent implements OnInit {
   }
 
   isInMyList() {
-    if (this.anime) {
-      this.listService
-        .contentInMyList(this.anime.mal_id, 'ANIME')
-        .then((value) => {
-          this.inMyList = value.exists;
-          if (value.exists) {
-            this.mycontent = value.data()!;
-            this.mycontent.ref = value.ref;
-            this.getUsernames();
-          }
-        });
-    } else if (this.book) {
-      this.listService.contentInMyList(this.book.id, 'BOOK').then((value) => {
-        this.inMyList = value.exists;
-        if (value.exists) {
-          this.mycontent = value.data()!;
-          this.mycontent.ref = value.ref;
-          this.getUsernames();
+    let type: search
+    let id
 
-        }
-      });
-    } else if (this.serie) {
-      this.listService.contentInMyList(this.serie.id, 'SERIE').then((value) => {
+    if (this.anime) {
+      type = 'ANIME'
+      id = this.anime.mal_id
+    }
+    else if (this.book) {
+      type = 'BOOK'
+      id = this.book.id
+    }
+    else if (this.serie) {
+      type = 'SERIE'
+      id = this.serie.id
+    } else {
+      throw "content invalid"
+    }
+    this.listService
+      .contentInMyList(id, type)
+      .then((value) => {
         this.inMyList = value.exists;
         if (value.exists) {
           this.mycontent = value.data()!;
@@ -147,7 +149,7 @@ export class CardComponent implements OnInit {
           this.getUsernames();
         }
       });
-    }
+
   }
 
   navigateToDetail() {

@@ -76,11 +76,6 @@ const routes: Routes = [
     canActivate: [UnloggedShieldService],
   },
   {
-    path: 'home2',
-    component: HomeComponent,
-    canActivate: [UnloggedShieldService],
-  }, //teste
-  {
     path: 'home',
     component: HomeComponent,
     canActivate: [LoggedShieldService],

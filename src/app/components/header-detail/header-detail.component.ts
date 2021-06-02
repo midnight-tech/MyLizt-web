@@ -4,8 +4,6 @@ import {
   OnInit,
   Output,
   EventEmitter,
-  ViewChild,
-  ElementRef,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
