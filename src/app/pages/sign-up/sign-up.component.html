@@ -2,10 +2,14 @@
   <div class="content">
     <form class="form">
       <input [formControl]="username" type="text" id="username" placeholder="Username" class="form-control" />
+      <div *ngIf="error.username.length != 0"> {{error.username}}</div>
       <input [formControl]="email" type="email" id="email" placeholder="Email" class="form-control" />
+      <div *ngIf="error.email.length != 0"> {{error.email}}</div>
       <input [formControl]="password" type="password" id="password" placeholder="Password" class="form-control" />
+      <div *ngIf="error.password.length != 0"> {{error.password}}</div>
       <input [formControl]="confirm_password" type="password" id="confirm-password" placeholder="Confirm Passoword"
         class="form-control" />
+      <div *ngIf="error.confirm_password.length != 0"> {{error.confirm_password}}</div>
       <span class="terms-caption">
         By registering, you accept our terms of use and our privacy policy</span>
       <button type="button" class="button__register" (click)="register()">

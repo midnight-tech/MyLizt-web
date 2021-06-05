@@ -15,38 +15,41 @@ export class AuthenticationService {
   user: firebase.User | null = null
   userFirestore: UserInterface | null = null
   authLoaded = false
-  unsub! : Function
+  unsub!: Function
 
-  constructor(public fireAuth: AngularFireAuth, public fireStore: AngularFirestore, router: Router, ngZone: NgZone) {
+  constructor(public fireAuth: AngularFireAuth, public fireStore: AngularFirestore, private router: Router, ngZone: NgZone) {
     fireAuth.onAuthStateChanged((user) => {
       ngZone.run(() => {
         this.authLoaded = true
         if (user) {
-          if (user.emailVerified) {
-            this.user = user
-            this.isLogged = true
-            fireStore.firestore.collection('User').doc(user.uid).get().then((value) => {
-              this.userFirestore = value.data() as UserInterface
-              router.navigate(['home'])
-            })
+          if (user.emailVerified == false) {
             return
           }
-          router.navigateByUrl('/verification')
-          this.logout()
+          this.user = user
+          this.isLogged = true
+          fireStore.firestore.collection('User').doc(user.uid).get().then((value) => {
+            this.userFirestore = value.data() as UserInterface
+            router.navigate(['home'])
+          })
           return
         }
         this.isLogged = false
         this.user = user
-        router.navigate([''])
       })
     })
   }
 
   async signIn(email: string, password: string) {
     let user = await this.fireAuth.signInWithEmailAndPassword(email, password)
-    if (user.additionalUserInfo?.isNewUser) {
-      await this.initUser(user.user?.uid!!, user.user?.displayName!!)
+    console.log(user)
+    if (user.user?.emailVerified == false) {
+      console.log("redirect")
+      this.isLogged = false
+      this.router.navigate(['verification'])
+      await user.user.sendEmailVerification()
+      await this.fireAuth.signOut()
     }
+
   }
 
   async signInWithGoogle() {
@@ -80,6 +83,9 @@ export class AuthenticationService {
     await user.user?.updateProfile({ displayName: userName })
     if (user.additionalUserInfo?.isNewUser) {
       await this.initUser(user.user?.uid!!, user.user?.displayName!!)
+      this.isLogged = false
+      this.router.navigate(['verification'])
+      await this.fireAuth.signOut()
     }
   }
 

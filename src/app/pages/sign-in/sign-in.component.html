@@ -7,8 +7,10 @@
     <form class="form">
       <input [formControl]="email" [value]="email.value" type="email" id="email" placeholder="E-mail"
         class="form-control" />
+      <div *ngIf="emailError.length != 0">{{emailError}}</div>
       <input [formControl]="password" [value]="password.value" type="password" id="password" placeholder="Password"
         class="form-control" />
+      <div *ngIf="passwordError.length != 0">{{passwordError}}</div>
       <button type="button" (click)="loginWithEmail()" class="button__login">
         <p class="button__login__text">Login</p>
       </button>
