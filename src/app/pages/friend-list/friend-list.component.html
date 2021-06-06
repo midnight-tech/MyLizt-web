@@ -14,7 +14,7 @@
   <div *ngIf="loadingService.isLoading" class="list">
     <div class="list__card" *ngFor="let content of loadingArray">
       <!-- {{ content.title }} -->
-      <app-card pageCall="loading" [loading]="loadingService.isLoading"></app-card>
+      <app-card pageCall="loading" [loading]="loadingService.isLoading" [lookMyList]=false></app-card>
     </div>
   </div>
 
