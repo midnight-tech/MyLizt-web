@@ -208,20 +208,6 @@
               &nbsp;{{friendContent.mark}} /
               {{serie.complete.seasons[friendContent.season].episode_count}}</span>
           </div>
-          <div class="card__button-container card__button-container--recommend" *ngIf="!inMyList"
-            (click)="addToMyList()">
-            <p class="card__button-container__text">Add to list</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
-            </svg>
-          </div>
-          <div class="card__button-container card__button-container--recommend" *ngIf="inMyList"
-            (click)="deleteToMyList()">
-            <p class="card__button-container__text">Remove</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
-            </svg>
-          </div>
         </div>
         <!-- My Friend List end -->
         <!-- Other -->
