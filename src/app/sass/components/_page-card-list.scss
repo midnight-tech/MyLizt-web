@@ -1,0 +1,84 @@
+@import "../../sass/abstract/variables";
+
+.container-grid {
+  display: grid;
+  grid-template-columns:
+    [content-start] repeat(4, [col-start] 1fr [col-end])
+    [content-end];
+  grid-template-rows:
+    [title-start] min-content [title-end pagination-top-start] min-content
+    [pagination-top-end cards-start] minmax(auto, 1fr)
+    [cards-end pagination-bottom-start] min-content
+    [pagination-bottom-end];
+  height: 100%;
+}
+
+.title {
+  display: grid;
+  grid-column: content-start / content-end;
+  grid-row: title-start / title-end;
+
+  &__text {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: $primary1;
+    font-size: $font-size-extra-large;
+    text-transform: uppercase;
+    font-weight: 100;
+    padding: 5rem 0;
+    letter-spacing: 0.1rem;
+  }
+}
+
+.pagination {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  grid-column: content-start / content-end;
+
+  &--top {
+    grid-row: pagination-top-start / pagination-top-end;
+    padding-top: 0rem;
+  }
+
+  &--bottom {
+    grid-row: pagination-bottom-start / pagination-bottom-end;
+  }
+}
+
+.list {
+  display: grid;
+  grid-column: content-start / content-end;
+  grid-row: cards-start / cards-end;
+  grid-template-columns: repeat(auto-fit, minmax(22rem, (1fr / 4)));
+  align-items: flex-start;
+  row-gap: 2.5rem;
+  column-gap: 2.5rem;
+
+  @media only screen and (max-width: $bp-1920) {
+    grid-template-columns: repeat(auto-fit, minmax(26rem, (1fr / 4)));
+  }
+
+  @media only screen and (max-width: $bp-1600) {
+    grid-template-columns: repeat(auto-fit, minmax(22rem, (1fr / 4)));
+  }
+
+  @media only screen and (max-width: $bp-1360) {
+    grid-template-columns: repeat(auto-fit, minmax(24rem, (1fr / 4)));
+  }
+
+  @media only screen and (max-width: $bp-1100) {
+    grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+  }
+
+  &__card {
+    display: grid;
+    width: auto;
+    max-height: 100%;
+
+    &__container {
+    }
+  }
+}

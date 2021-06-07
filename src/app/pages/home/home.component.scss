@@ -23,7 +23,7 @@
     )
     [content-end footer-start] min-content [footer-end];
 
-  @media only screen and (max-width: $bp-1600) {
+  @media only screen and (max-width: $bp-1700) {
     grid-template-columns:
       [menu-start] minmax(18vw, min-content) [menu-end void-left-start ] minmax(
         6rem,

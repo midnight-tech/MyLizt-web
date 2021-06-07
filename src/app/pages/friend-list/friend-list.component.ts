@@ -11,38 +11,36 @@ import { UserService } from 'src/app/services/user/user.service';
 @Component({
   selector: 'app-friend-list',
   templateUrl: './friend-list.component.html',
-  styleUrls: ['./friend-list.component.scss']
+  styleUrls: [
+    '../../sass/components/_page-card-list.scss',
+    './friend-list.component.scss',
+  ],
 })
 export class FriendListComponent implements OnInit {
+  type!: search;
+  friendId: string = '';
+  friendName: string = '';
 
-  type!: search
-  friendId: string = ""
-  friendName : string = ""
+  anime: { anime: AnimeCatalogo; content: content }[] = [];
+  serie: { serie: SerieCatalogo; content: content }[] = [];
+  book: { book: BookCatalogo; content: content }[] = [];
 
-  anime : {anime : AnimeCatalogo, content : content}[] = []
-  serie : {serie : SerieCatalogo, content : content}[] = []
-  book : {book : BookCatalogo, content : content}[] = []
-
-
-  loadingArray = new Array(12).fill(0)
+  loadingArray = new Array(12).fill(0);
 
   constructor(
     actRoute: ActivatedRoute,
     public homeContext: HomeContextService,
-    public loadingService : LoadingService,
-    private userService : UserService
-
+    public loadingService: LoadingService,
+    private userService: UserService
   ) {
     actRoute.params.subscribe((value) => {
-      this.type = value.type.toUpperCase() as search
-      this.friendId = value.friendId
-      this.userService.getUserName(this.friendId).then((name)=>{
-        this.friendName = name
-      })
-    })
+      this.type = value.type.toUpperCase() as search;
+      this.friendId = value.friendId;
+      this.userService.getUserName(this.friendId).then((name) => {
+        this.friendName = name;
+      });
+    });
   }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

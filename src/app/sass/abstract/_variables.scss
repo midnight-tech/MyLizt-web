@@ -23,6 +23,8 @@ $font-size-large: 2rem;
 $font-size-default: 1.6rem;
 // medium font
 $font-size-medium: 1.4rem;
+// medium-small font
+$font-size-medium-small: 1.3rem;
 // small font
 $font-size-small: 1.2rem;
 
@@ -46,8 +48,14 @@ $scale-carrousel-m: 0.95;
 $scale-carrousel-l: 1;
 
 // RESPOSIVE BREAKPOINTS
+// 1920px
+$bp-1920: 120em;
+// 1700px
+$bp-1700: 106.25em;
 // 1600px
 $bp-1600: 100em;
+// 1400px
+$bp-1400: 87.5em;
 // 1360px
 $bp-1360: 85em;
 // 1200px

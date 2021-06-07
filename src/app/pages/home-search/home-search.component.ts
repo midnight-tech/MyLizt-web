@@ -7,14 +7,17 @@ import { HomeContextService } from 'src/app/services/home-context/home.service';
 @Component({
   selector: 'app-home-search',
   templateUrl: './home-search.component.html',
-  styleUrls: ['./home-search.component.scss'],
+  styleUrls: [
+    '../../sass/components/_page-card-list.scss',
+    './home-search.component.scss',
+  ],
 })
 export class HomeSearchComponent implements OnInit {
   anime: AnimeCatalogo[] = [];
   serie: SerieCatalogo[] = [];
   book: BookCatalogo[] = [];
 
-  constructor(public homeContext: HomeContextService) { }
+  constructor(public homeContext: HomeContextService) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 }

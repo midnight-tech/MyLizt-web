@@ -10,30 +10,29 @@ import { LoadingService } from 'src/app/services/loading/loading.service';
 @Component({
   selector: 'app-my-recommendations',
   templateUrl: './my-recommendations.component.html',
-  styleUrls: ['./my-recommendations.component.scss']
+  styleUrls: [
+    '../../sass/components/_page-card-list.scss',
+    './my-recommendations.component.scss',
+  ],
 })
 export class MyRecommendationsComponent implements OnInit {
-
   anime: { anime: AnimeCatalogo; content: content }[] = [];
   serie: { serie: SerieCatalogo; content: content }[] = [];
   book: { book: BookCatalogo; content: content }[] = [];
 
-  type! : search 
+  type!: search;
 
-  loadingArray = new Array(12).fill(0)
+  loadingArray = new Array(12).fill(0);
 
   constructor(
     public homeContext: HomeContextService,
     actRoute: ActivatedRoute,
-    public loadingService : LoadingService
-
+    public loadingService: LoadingService
   ) {
     actRoute.params.subscribe((value) => {
-      this.type = value.type.toUpperCase()
-    })
+      this.type = value.type.toUpperCase();
+    });
   }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }
