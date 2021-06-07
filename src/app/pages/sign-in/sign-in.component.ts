@@ -11,58 +11,85 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 export class SignInComponent implements OnInit {
 
   email = new FormControl("")
+  emailError = ""
   password = new FormControl("")
-  authService : AuthenticationService
-  thisRoute : ActivatedRoute
-  routes : Router
+  passwordError = ""
 
-  constructor(auth : AuthenticationService,routes : Router,thisRoute : ActivatedRoute) {
-    this.thisRoute = thisRoute
-    this.routes = routes
-    this.authService = auth
+
+  constructor(
+    private authService: AuthenticationService,
+    private routes: Router,
+  ) {
+    this.email.valueChanges.subscribe((value) => {
+      this.cleanError()
+    })
+    this.password.valueChanges.subscribe((value) => {
+      this.cleanError()
+    })
+  }
+
+  private cleanError() {
+    this.emailError = ""
+    this.passwordError = ""
   }
 
   ngOnInit() {
   }
 
   loginWithEmail() {
-    this.authService.signIn(this.email.value,this.password.value).then(()=>{
+    if (this.email.value.length == 0) {
+      this.emailError = "Email empty"
+      return
+    }
+    if (this.password.value.length == 0) {
+      this.passwordError = "Password empty"
+      return
+    }
+    this.authService.signIn(this.email.value, this.password.value).then(() => {
       // Success
-
-    }).catch((error)=>{
-      if(error == "User email is not verified."){
-        this.routes.navigate(['/verification'])
-      }
       this.email.setValue("")
       this.password.setValue("")
+    }).catch((error) => {
+      if (error == "User email is not verified.") {
+        this.routes.navigate(['/verification'])
+        this.email.setValue("")
+        this.password.setValue("")
+      }
+      switch (error.code) {
+        case 'auth/wrong-password':
+          this.passwordError = "the password is invalid"
+          return
+        case 'auth/user-not-found':
+          this.emailError = "There is no user corresponding to this email"
+      }
     })
   }
 
   loginWithGoogle() {
-    this.authService.signInWithGoogle().then(()=>{
-    }).catch((error)=>{
+    this.authService.signInWithGoogle().then(() => {
+    }).catch((error) => {
       this.email
     })
   }
 
   loginWithFacebook() {
-    this.authService.signInWithFacebook().then(()=>{
-    }).catch((error)=>{
+    this.authService.signInWithFacebook().then(() => {
+    }).catch((error) => {
 
     })
   }
 
   loginWithTwitter() {
-    this.authService.signInWithTwitter().then(()=>{
-    }).catch((error)=>{
+    this.authService.signInWithTwitter().then(() => {
+    }).catch((error) => {
 
     })
   }
 
   loginWithApple() {
-    this.authService.signInWithApple().then(()=>{
-    }).catch((error)=>{
-      
+    this.authService.signInWithApple().then(() => {
+    }).catch((error) => {
+
     })
   }
 
