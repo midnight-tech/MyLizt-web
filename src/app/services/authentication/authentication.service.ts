@@ -94,6 +94,21 @@ export class AuthenticationService {
     this.unsub()
   }
 
+  async resetPassword(email: string) {
+    try {
+      await this.fireAuth.sendPasswordResetEmail(email)
+      return {
+        correct: true,
+        message: "email sent"
+      }
+    } catch (e) {
+      return {
+        correct: false,
+        message: e.message as string
+      }
+    }
+  }
+
   async initUser(uid: string, username: string) {
     let list = this.fireStore.firestore.collection('List').doc()
     await list.set({

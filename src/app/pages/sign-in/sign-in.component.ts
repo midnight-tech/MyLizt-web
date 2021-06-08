@@ -12,6 +12,7 @@ export class SignInComponent implements OnInit {
 
   email = new FormControl("")
   emailError = ""
+  emailMessage = ""
   password = new FormControl("")
   passwordError = ""
 
@@ -31,6 +32,7 @@ export class SignInComponent implements OnInit {
   private cleanError() {
     this.emailError = ""
     this.passwordError = ""
+    this.emailMessage = ""
   }
 
   ngOnInit() {
@@ -90,6 +92,16 @@ export class SignInComponent implements OnInit {
     this.authService.signInWithApple().then(() => {
     }).catch((error) => {
 
+    })
+  }
+
+  resetPassword() {
+    this.authService.resetPassword(this.email.value).then((value) => {
+      if (value.correct) {
+        this.emailMessage = value.message
+      } else {
+        this.emailError = value.message
+      }
     })
   }
 
