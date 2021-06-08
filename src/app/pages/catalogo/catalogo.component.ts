@@ -9,13 +9,16 @@ import { HomeContextService } from 'src/app/services/home-context/home.service';
 @Component({
   selector: 'app-catalogo',
   templateUrl: './catalogo.component.html',
-  styleUrls: ['./catalogo.component.scss'],
+  styleUrls: [
+    '../../sass/components/_page-card-list.scss',
+    './catalogo.component.scss',
+  ],
 })
 export class CatalogoComponent implements OnInit {
   type!: search;
-  anime: AnimeCatalogo[] = []
-  serie: SerieCatalogo[] = []
-  book: BookCatalogo[] = []
+  anime: AnimeCatalogo[] = [];
+  serie: SerieCatalogo[] = [];
+  book: BookCatalogo[] = [];
 
   constructor(
     public homeContext: HomeContextService,
@@ -27,5 +30,5 @@ export class CatalogoComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 }
