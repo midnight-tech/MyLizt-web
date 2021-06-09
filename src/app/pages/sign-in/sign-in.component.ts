@@ -86,10 +86,10 @@ export class SignInComponent implements OnInit {
   loginWithTwitter() {
     this.providerError = "signin with twitter not implemented yet";
     return;
-    this.authService.signInWithTwitter().then(() => {
-    }).catch((error) => {
-      this.providerError = error.message;
-    })
+    // this.authService.signInWithTwitter().then(() => {
+    // }).catch((error) => {
+    //   this.providerError = error.message;
+    // })
   }
 
   loginWithApple() {
