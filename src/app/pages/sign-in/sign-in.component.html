@@ -9,6 +9,7 @@
         class="form-control" />
       <div *ngIf="emailError.length != 0">{{emailError}}</div>
       <div *ngIf="emailMessage.length != 0">{{emailMessage}}</div>
+      <div *ngIf="providerError.length != 0">{{providerError}}</div>
       <input [formControl]="password" [value]="password.value" type="password" id="password" placeholder="Password"
         class="form-control" />
       <div *ngIf="passwordError.length != 0">{{passwordError}}</div>

@@ -15,6 +15,7 @@ export class SignInComponent implements OnInit {
   emailMessage = ""
   password = new FormControl("")
   passwordError = ""
+  providerError = ""
 
 
   constructor(
@@ -33,6 +34,7 @@ export class SignInComponent implements OnInit {
     this.emailError = ""
     this.passwordError = ""
     this.emailMessage = ""
+    this.providerError = ""
   }
 
   ngOnInit() {
@@ -70,28 +72,30 @@ export class SignInComponent implements OnInit {
   loginWithGoogle() {
     this.authService.signInWithGoogle().then(() => {
     }).catch((error) => {
-      this.email
+      this.providerError = error.message;
     })
   }
 
   loginWithFacebook() {
     this.authService.signInWithFacebook().then(() => {
     }).catch((error) => {
-
+      this.providerError = error.message;
     })
   }
 
   loginWithTwitter() {
+    this.providerError = "signin with twitter not implemented yet";
+    return;
     this.authService.signInWithTwitter().then(() => {
     }).catch((error) => {
-
+      this.providerError = error.message;
     })
   }
 
   loginWithApple() {
     this.authService.signInWithApple().then(() => {
     }).catch((error) => {
-
+      this.providerError = error.message;
     })
   }
 
