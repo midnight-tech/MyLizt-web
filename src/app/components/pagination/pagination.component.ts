@@ -186,19 +186,16 @@ export class PaginationComponent implements OnInit, OnChanges {
     if (this.type == undefined) {
       throw 'type cannot be undefined in search page';
     }
-    let result:
-      | {
-        result: AnimeCatalogo[];
-        totalPage: number;
-      }
-      | {
-        result: BookCatalogo[];
-        totalPage: number;
-      }
-      | {
-        result: SerieCatalogo[];
-        totalPage: number;
-      };
+    let result: {
+      result: AnimeCatalogo[];
+      totalPage: number;
+    } | {
+      result: BookCatalogo[];
+      totalPage: number;
+    } | {
+      result: SerieCatalogo[];
+      totalPage: number;
+    };
     switch (pageCalled) {
       case 'catalogo':
         result = await this.catalogoPagination.pageCatalogo(
@@ -219,6 +216,7 @@ export class PaginationComponent implements OnInit, OnChanges {
         this.totalPage = result.totalPage;
         break;
       case 'SERIE':
+        console.log(result)
         this.visibleListSerie.emit(result.result as SerieCatalogo[]);
         this.totalPage = result.totalPage;
         break;
@@ -351,6 +349,7 @@ export class PaginationComponent implements OnInit, OnChanges {
     }
     if (this.init) {
       if (changes.query || changes.type || changes.friendId || changes.update) {
+        this.searchPagination.cleanPage()
         this.pages = [];
         this.clean();
         this.atualPage = 1;
