@@ -14,10 +14,15 @@ export class AppComponent {
       console.info("Not enabled update")
       return;
     }
-    appUpdate.available.subscribe((value) => {
-      appUpdate.activateUpdate().then(() => {
-        document.location.reload();
+    appUpdate.checkForUpdate().then(() => {
+      appUpdate.available.subscribe((value) => {
+        alert("update avaliable")
+        appUpdate.activateUpdate().then(() => {
+          document.location.reload();
+        })
       })
+
     })
+
   }
 }
