@@ -8,5 +8,6 @@ export const environment = {
     messagingSenderId: "114615679015",
     appId: "1:114615679015:web:d64dc5bb7d3dbdc7757602",
   },
-  url_serie_proxy_base: "https://proxy-mylizt.herokuapp.com"
+  url_serie_proxy_base: "https://proxy-mylizt.herokuapp.com",
+  version: "0.0.1"
 };
