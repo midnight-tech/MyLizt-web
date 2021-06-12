@@ -96,6 +96,7 @@ export class PaginationComponent implements OnInit, OnChanges {
         });
         break;
       case 'friend':
+        this.paginationInterfaceInit(1);
         this.loadingService.isLoading = true;
         this.paginationChangeFriend().then(() => {
           this.loadingService.isLoading = false;
@@ -248,7 +249,7 @@ export class PaginationComponent implements OnInit, OnChanges {
     if (page != undefined) {
       this.paginationChageInterface();
     } else {
-      this.paginationInterfaceInit(1)
+      // this.paginationInterfaceInit(1)
     }
   }
 
