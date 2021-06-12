@@ -66,17 +66,17 @@
   <div class="score">
     <div class="score__flex">
       <p class="score__title">Score</p>
-      <p *ngIf="type == 'ANIME'" class="score__info">{{ anime.score }}</p>
+      <p *ngIf="type == 'ANIME'" class="score__info">{{ anime.scored_by ? anime.score : 'N/A' }}</p>
       <p *ngIf="type == 'SERIE'" class="score__info">
-        {{ serie.vote_average }}
+        {{ serie.vote_count != 0 ? serie.vote_average : 'N/A' }}
       </p>
       <p *ngIf="type == 'BOOK'" class="score__info">
-        {{ book.volumeInfo.averageRating }}
+        {{ book.volumeInfo.averageRating ? book.volumeInfo.averageRating * 2 : 'N/A' }}
       </p>
-      <p *ngIf="type == 'ANIME'" class="score__caption">
+      <p *ngIf="type == 'ANIME' && anime.scored_by " class="score__caption">
         {{ anime.scored_by }} users
       </p>
-      <p *ngIf="type == 'SERIE'" class="score__caption">
+      <p *ngIf="type == 'SERIE' && serie.vote_count != 0" class="score__caption">
         {{ serie.vote_count }} users
       </p>
     </div>
