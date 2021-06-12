@@ -65,6 +65,9 @@ export class SignInComponent implements OnInit {
           return
         case 'auth/user-not-found':
           this.emailError = "There is no user corresponding to this email"
+          break;
+        case 'auth/invalid-email':
+          this.emailError = error.message
       }
     })
   }
