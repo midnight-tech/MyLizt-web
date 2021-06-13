@@ -13,13 +13,13 @@
               <ngx-skeleton-loader animation="progress-dark" [count]="5"></ngx-skeleton-loader>
             </div>
             <p *ngIf="anime && !loading" class="card__side--image--flip--back--synopsis--text">
-              {{ anime.complete?.synopsis }}
+              {{ anime.complete?.synopsis || 'No description found' }}
             </p>
             <p *ngIf="book && !loading" class="card__side--image--flip--back--synopsis--text">
-              {{ book.complete?.volumeInfo?.description }}
+              {{ book.complete?.volumeInfo?.description || 'No description found' }}
             </p>
             <p *ngIf="serie && !loading" class="card__side--image--flip--back--synopsis--text">
-              {{ serie.complete?.overview }}
+              {{ serie.complete?.overview || 'No description found' }}
             </p>
           </div>
           <div class="card__side--image--flip--back--description">

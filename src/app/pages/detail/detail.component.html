@@ -13,13 +13,13 @@
   </div>
   <div class="synopsis">
     <h1 class="synopsis__title">Synopsis</h1>
-    <p class="synopsis__content" *ngIf="anime">{{ anime.synopsis }}</p>
+    <p class="synopsis__content" *ngIf="anime">{{ anime.synopsis || 'No description found' }}</p>
     <p class="synopsis__content" *ngIf="serie">
       <!-- magia -->
-      {{ serie.seasons[season].overview || serie.overview }}
+      {{ serie.seasons[season].overview || serie.overview || 'No description found' }}
     </p>
     <p class="synopsis__content" *ngIf="book">
-      {{ book.volumeInfo.description }}
+      {{ book.volumeInfo.description || 'No description found' }}
     </p>
   </div>
 </div>
