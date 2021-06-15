@@ -82,7 +82,7 @@
     </div>
   </div>
 
-  <div class="my-score" *ngIf="onMyList">
+  <div class="my-score" *ngIf="onMyList && mycontent?.recommended == null">
     <div class="my-score__flex">
       <p class="my-score__title">My Score</p>
       <p class="my-score__info" (click)="changeRateInput()" *ngIf="!rateInput">
@@ -103,7 +103,7 @@
     </div>
   </div>
 
-  <div class="episodes" *ngIf="onMyList">
+  <div class="episodes" *ngIf="onMyList && mycontent?.recommended == null">
     <p *ngIf="mycontent && mycontent.watched == true" class="episodes__title">Watched</p>
     <p *ngIf="mycontent && mycontent.watched == false" class="episodes__title">Watching</p>
     <div class="episodes__flex">
@@ -154,34 +154,36 @@
   </div>
 
   <div class="button">
-    <div class="button__flex button__flex--recommend" (click)="disableReceiveRecommendation(true)">
-      <p class="button__text">Recommend to...</p>
-      <svg class="button__icon">
-        <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
-      </svg>
+
+    <!-- Botão para recomendação (Aparece em todas as condiçoes exceto quando conteudo é um recomendação) -->
+    <div *ngIf="!(onMyList && mycontent?.recommended != null)" class="button">
+      <div class="button__flex button__flex--recommend" (click)="disableReceiveRecommendation(true)">
+        <p class="button__text">Recommend to...</p>
+        <svg class="button__icon">
+          <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
+        </svg>
+      </div>
     </div>
 
-    <div *ngIf="onMyList == false" class="button__flex" (click)="addToMyList()">
+    <!-- Botão ara add conteudo quando conteudo não está na lista -->
+    <div *ngIf="!(onMyList == true && mycontent?.recommended == null)" class="button__flex"
+      (click)="onMyList ? addToMyListFromRecommendation() : addToMyList()">
       <p class="button__text">Add to list</p>
       <svg class="button__icon">
         <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
       </svg>
     </div>
 
-    <div *ngIf="onMyList == true && mycontent!.recommended == null" class="button__flex" (click)="deleteToMyList()">
+    <!-- Botão para remover conteudo da lista e da recomendação -->
+    <div *ngIf="onMyList == true" class="button__flex" (click)="deleteToMyList()">
       <p class="button__text">Remove</p>
       <svg class="button__icon">
         <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
       </svg>
     </div>
-    <div *ngIf="onMyList == true && mycontent!.recommended != null" class="button__flex"
-      (click)="addToMyListFromRecommendation()">
-      <p class="button__text">Add to list</p>
-      <svg class="button__icon">
-        <use xlink:href="assets/symbol-defs.svg#icon-add"></use>
-      </svg>
-    </div>
   </div>
+
+
   <app-recommendation *ngIf="anime" type="ANIME" [contentName]="anime.title" [contentId]="anime.mal_id.toString()"
     [isActiveRecommend]="isActiveRecommend" (isActiveEvent)="disableReceiveRecommendation($event)">
   </app-recommendation>
