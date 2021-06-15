@@ -5,13 +5,13 @@
     <img *ngIf="type == 'BOOK'" class="backcover__image" [src]="book.volumeInfo.image" alt="BackCover" />
   </div>
 
-  <div class="title" *ngIf="type == 'ANIME'">
-    <h1 class="title__text">{{ anime.title }}</h1>
-    <h2 class="title__second-text">{{ anime.title_english }}</h2>
+  <div class="title container-text-overlflow " *ngIf="type == 'ANIME'">
+    <h1 class="title__text text-overflow">{{ anime.title }}</h1>
+    <h2 class="title__second-text text-overflow">{{ anime.title_english }}</h2>
   </div>
 
-  <div class="title" *ngIf="type == 'BOOK'">
-    <h1 class="title__text">{{ book.volumeInfo.title }}</h1>
+  <div class="title container-text-overlflow" *ngIf="type == 'BOOK'">
+    <h1 class="title__text text-overflow">{{ book.volumeInfo.title }}</h1>
   </div>
 
   <div class="frontcover">
@@ -20,7 +20,7 @@
     <img *ngIf="type == 'BOOK'" class="frontcover__image" [src]="book.volumeInfo.image" alt="FrontCover" />
   </div>
 
-  <div class="cover-info" *ngIf="type == 'ANIME'">
+  <div class="cover-info cover-info--anime" *ngIf="type == 'ANIME'">
     <div class="cover-info__flex">
       <p class="cover-info__title">Ranked</p>
       <p class="cover-info__info">#{{ anime.rank }}</p>
@@ -35,26 +35,26 @@
     </div>
   </div>
 
-  <div class="cover-info" *ngIf="type == 'SERIE'">
+  <div class="cover-info cover-info--serie container-text-overlflow" *ngIf="type == 'SERIE'">
     <div [ngClass]="{ hidden: seasonAtual == 0 }" (click)="changeSeason(seasonAtual - 1)"
       class="cover-info__flex--serie">
       <svg class="cover-info__icon cover-info__icon--left">
         <use href="assets/symbol-defs.svg#icon-arrow_back"></use>
       </svg>
 
-      <p class="cover-info__title--serie" *ngIf="seasonAtual != 0">
-        {{ serie.seasons[seasonAtual - 1].name }}
+      <p class="cover-info__title--serie">
+        {{ seasonAtual == 0 ? serie.seasons[0]?.name : serie.seasons[seasonAtual - 1]?.name }}
       </p>
     </div>
-    <div class="cover-info__flex">
-      <p class="cover-info__info">
+    <div class="cover-info__flex text-overflow">
+      <p class="cover-info__info cover-info__info--serie text-overflow">
         {{ serie.name }} ({{ serie.seasons[seasonAtual].name }} )
       </p>
     </div>
     <div [ngClass]="{ hidden: seasonAtual == serie.seasons.length - 1 }" (click)="changeSeason(seasonAtual + 1)"
       class="cover-info__flex--serie">
-      <p class="cover-info__title--serie" *ngIf="seasonAtual != serie.seasons.length - 1">
-        {{ serie.seasons[seasonAtual + 1].name }}
+      <p class="cover-info__title--serie">
+        {{ seasonAtual == serie.seasons.length - 1 ? serie.seasons[0]?.name : serie.seasons[seasonAtual + 1]?.name }}
       </p>
 
       <svg class="cover-info__icon cover-info__icon--right">
@@ -82,7 +82,7 @@
     </div>
   </div>
 
-  <div class="my-score" *ngIf="onMyList">
+  <div class="my-score" *ngIf="onMyList" [ngClass]="{ 'my-score--anime-book': type == 'ANIME' || type == 'BOOK' }">
     <div class="my-score__flex">
       <p class="my-score__title">My Score</p>
       <p class="my-score__info" (click)="changeRateInput()" *ngIf="!rateInput">
@@ -107,7 +107,7 @@
     <p *ngIf="mycontent && mycontent.watched == true" class="episodes__title">Watched</p>
     <p *ngIf="mycontent && mycontent.watched == false" class="episodes__title">Watching</p>
     <div class="episodes__flex">
-      <svg class="episodes__icon" (click)="changeEpisode(mycontent!.mark! - 1)">
+      <svg class="episodes__icon episodes__icon--left" (click)="changeEpisode(mycontent!.mark! - 1)">
         <use href="assets/symbol-defs.svg#icon-remove"></use>
       </svg>
 
@@ -147,7 +147,7 @@
         </span>
       </span>
 
-      <svg class="episodes__icon" (click)="changeEpisode(mycontent!.mark! + 1)">
+      <svg class="episodes__icon episodes__icon--right" (click)="changeEpisode(mycontent!.mark! + 1)">
         <use href="assets/symbol-defs.svg#icon-add"></use>
       </svg>
     </div>
@@ -155,7 +155,7 @@
 
   <div class="button">
     <div class="button__flex button__flex--recommend" (click)="disableReceiveRecommendation(true)">
-      <p class="button__text">Recommend to...</p>
+      <p class="button__text">Share</p>
       <svg class="button__icon">
         <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
       </svg>
@@ -168,7 +168,8 @@
       </svg>
     </div>
 
-    <div *ngIf="onMyList == true && mycontent!.recommended == null" class="button__flex" (click)="deleteToMyList()">
+    <div *ngIf="onMyList == true && mycontent!.recommended == null" class="button__flex button__flex--remove"
+      (click)="deleteToMyList()">
       <p class="button__text">Remove</p>
       <svg class="button__icon">
         <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
