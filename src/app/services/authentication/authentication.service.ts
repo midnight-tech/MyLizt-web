@@ -111,16 +111,25 @@ export class AuthenticationService {
 
   async initUser(uid: string, username: string) {
     let list = this.fireStore.firestore.collection('List').doc()
-    await list.set({
-      createdAt: new Date(Date.now())
-    } as listInterface)
-    await this.fireStore.firestore.collection('User').doc(uid).set({
-      applicationUserId: time(),
-      myList: list,
-      friends: [],
-      notifications: [],
-      username: username,
-      createdAt: new Date(Date.now())
+    let user = this.fireStore.firestore.collection('User').doc(uid)
+    await firebase.firestore().runTransaction(async (transaction) => {
+      transaction.set(list, {
+        createdAt: new Date(Date.now()),
+        animeCount: 0,
+        animeCountRec: 0,
+        bookCount: 0,
+        bookCountRec: 0,
+        serieCount: 0,
+        serieCountRec: 0
+      })
+      transaction.set(user, {
+        applicationUserId: time(),
+        myList: list,
+        friends: [],
+        notifications: [],
+        username: username,
+        createdAt: new Date(Date.now())
+      })
     })
   }
 }

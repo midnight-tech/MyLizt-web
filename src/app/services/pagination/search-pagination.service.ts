@@ -20,7 +20,12 @@ export class SearchPaginationService {
     public animeService: AnimeService,
     public bookService: BookService,
     public serieService: SerieService
-  ) {}
+  ) { }
+
+  cleanPage() {
+    this.seriePages = [];
+    this.lastPageSerie = null;
+  }
 
   async pageSearch(
     query: string,

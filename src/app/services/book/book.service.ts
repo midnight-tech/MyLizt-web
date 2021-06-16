@@ -79,7 +79,6 @@ export class BookService {
     try {
       const result = await axios.get<CompleteBook>(`https://www.googleapis.com/books/v1/volumes/${id}`)
       let book = this.selectImage(result.data) as CompleteBook
-      book.volumeInfo.averageRating *= 2
       book.volumeInfo.description = book.volumeInfo.description?.replace(/<\/?[^>]+(>|$)/g, "");
       return book
     }

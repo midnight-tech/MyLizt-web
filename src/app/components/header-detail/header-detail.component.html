@@ -66,23 +66,24 @@
   <div class="score">
     <div class="score__flex">
       <p class="score__title">Score</p>
-      <p *ngIf="type == 'ANIME'" class="score__info">{{ anime.score }}</p>
+      <p *ngIf="type == 'ANIME'" class="score__info">{{ anime.scored_by ? anime.score : 'N/A' }}</p>
       <p *ngIf="type == 'SERIE'" class="score__info">
-        {{ serie.vote_average }}
+        {{ serie.vote_count != 0 ? serie.vote_average : 'N/A' }}
       </p>
       <p *ngIf="type == 'BOOK'" class="score__info">
-        {{ book.volumeInfo.averageRating }}
+        {{ book.volumeInfo.averageRating ? book.volumeInfo.averageRating * 2 : 'N/A' }}
       </p>
-      <p *ngIf="type == 'ANIME'" class="score__caption">
+      <p *ngIf="type == 'ANIME' && anime.scored_by " class="score__caption">
         {{ anime.scored_by }} users
       </p>
-      <p *ngIf="type == 'SERIE'" class="score__caption">
+      <p *ngIf="type == 'SERIE' && serie.vote_count != 0" class="score__caption">
         {{ serie.vote_count }} users
       </p>
     </div>
   </div>
 
-  <div class="my-score" *ngIf="onMyList" [ngClass]="{ 'my-score--anime-book': type == 'ANIME' || type == 'BOOK' }">
+  <div class="my-score" *ngIf="onMyList && mycontent?.recommended == null"
+    [ngClass]="{ 'my-score--anime-book': type == 'ANIME' || type == 'BOOK' }">
     <div class="my-score__flex">
       <p class="my-score__title">My Score</p>
       <p class="my-score__info" (click)="changeRateInput()" *ngIf="!rateInput">
@@ -103,7 +104,7 @@
     </div>
   </div>
 
-  <div class="episodes" *ngIf="onMyList">
+  <div class="episodes" *ngIf="onMyList && mycontent?.recommended == null">
     <p *ngIf="mycontent && mycontent.watched == true" class="episodes__title">Watched</p>
     <p *ngIf="mycontent && mycontent.watched == false" class="episodes__title">Watching</p>
     <div class="episodes__flex">
@@ -154,35 +155,36 @@
   </div>
 
   <div class="button">
-    <div class="button__flex button__flex--recommend" (click)="disableReceiveRecommendation(true)">
+
+    <!-- Botão para recomendação (Aparece em todas as condiçoes exceto quando conteudo é um recomendação) -->
+    <div *ngIf="!(onMyList && mycontent?.recommended != null)"
+      class="button__flex button__flex--recommend button__flex--top" (click)="disableReceiveRecommendation(true)">
       <p class="button__text">Share</p>
       <svg class="button__icon">
         <use xlink:href="assets/symbol-defs.svg#icon-share"></use>
       </svg>
     </div>
 
-    <div *ngIf="onMyList == false" class="button__flex" (click)="addToMyList()">
+    <!-- Botão ara add conteudo quando conteudo não está na lista -->
+    <div *ngIf="!(onMyList == true && mycontent?.recommended == null)" class="button__flex button__flex--top"
+      [ngClass]="{'button__flex--bottom': !(onMyList && mycontent?.recommended != null)}"
+      (click)="onMyList ? addToMyListFromRecommendation() : addToMyList()">
       <p class="button__text">Add to list</p>
       <svg class="button__icon">
         <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
       </svg>
     </div>
 
-    <div *ngIf="onMyList == true && mycontent!.recommended == null" class="button__flex button__flex--remove"
-      (click)="deleteToMyList()">
+    <!-- Botão para remover conteudo da lista e da recomendação -->
+    <div *ngIf="onMyList == true" class="button__flex button__flex--remove" (click)="deleteToMyList()">
       <p class="button__text">Remove</p>
       <svg class="button__icon">
         <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
       </svg>
     </div>
-    <div *ngIf="onMyList == true && mycontent!.recommended != null" class="button__flex"
-      (click)="addToMyListFromRecommendation()">
-      <p class="button__text">Add to list</p>
-      <svg class="button__icon">
-        <use xlink:href="assets/symbol-defs.svg#icon-add"></use>
-      </svg>
-    </div>
   </div>
+
+
   <app-recommendation *ngIf="anime" type="ANIME" [contentName]="anime.title" [contentId]="anime.mal_id.toString()"
     [isActiveRecommend]="isActiveRecommend" (isActiveEvent)="disableReceiveRecommendation($event)">
   </app-recommendation>
