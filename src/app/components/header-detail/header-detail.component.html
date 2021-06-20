@@ -1,4 +1,5 @@
-<div class="grid-container-header">
+<div class="grid-container-header"
+  [ngClass]="{'grid-container-header--500': !onMyList || (mycontent?.recommended != null)}">
   <div class="backcover">
     <img *ngIf="type == 'ANIME'" class="backcover__image" [src]="anime.image_url" alt="BackCover" />
     <img *ngIf="type == 'SERIE'" class="backcover__image" [src]="serie.backdrop_path" alt="BackCover" />
@@ -97,7 +98,8 @@
     </div>
   </div>
 
-  <div class="popularity-serie" *ngIf="type == 'SERIE'">
+  <div class="popularity-serie" *ngIf="type == 'SERIE'"
+    [ngClass]="{'popularity-serie--500': !onMyList || (mycontent?.recommended != null)}">
     <div class="popularity-serie__flex">
       <p class="popularity-serie__title">Popularity</p>
       <p class="popularity-serie__info">{{ serie.popularity }}</p>
@@ -154,8 +156,7 @@
     </div>
   </div>
 
-  <div class="button">
-
+  <div class="button" [ngClass]="{'button--500': !onMyList || (mycontent?.recommended != null)}">
     <!-- Botão para recomendação (Aparece em todas as condiçoes exceto quando conteudo é um recomendação) -->
     <div *ngIf="!(onMyList && mycontent?.recommended != null)"
       class="button__flex button__flex--recommend button__flex--top" (click)="disableReceiveRecommendation(true)">
