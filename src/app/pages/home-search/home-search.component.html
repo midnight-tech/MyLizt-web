@@ -1,24 +1,3 @@
-<!-- <div>
-  <p>
-    home-search works!
-  </p>
-  <div class="content">
-    <div *ngFor="let content of homeContext.animeResult">
-      {{content.title}}
-    </div>
-  </div>
-  <div class="content">
-    <div *ngFor="let content of homeContext.bookResult">
-      {{content.volumeInfo.title}}
-    </div>
-  </div>
-  <div class="content">
-    <div *ngFor="let content of homeContext.serieResult">
-      {{content.name}}
-    </div>
-  </div>
-</div> -->
-
 <div class="container-grid">
   <div class="title">
     <h1 class="title__text">Resultados</h1>
@@ -31,21 +10,18 @@
 
   <div class="list">
     <div class="list__card" *ngFor="let content of anime">
-      <!-- {{ content.title }} -->
       <app-card [anime]="content"></app-card>
     </div>
     <div *ngIf="homeContext.searchType == 'ANIME' && anime.length == 0">
       any anime found
     </div>
     <div class="list__card" *ngFor="let content of book">
-      <!-- {{ content.volumeInfo.title }} -->
       <app-card [book]="content"></app-card>
     </div>
     <div *ngIf="homeContext.searchType == 'BOOK' && book.length == 0">
       any book found
     </div>
     <div class="list__card" *ngFor="let content of serie">
-      <!-- {{ content.name }} -->
       <app-card [serie]="content"></app-card>
     </div>
     <div *ngIf="homeContext.searchType == 'SERIE' && serie.length == 0">
