@@ -2,16 +2,16 @@
   <div class="fixed-container membrana" (click)="disableRecommendation()"></div>
 
   <div class="flex-container">
-    <h1 class="flex-container__title">Recommend to...</h1>
+    <h1 class="flex-container__title">Share to...</h1>
 
     <div *ngFor="let friend of friends">
-      <div class="recommend">
-        <div class="recommend__user">
-          <span class="recommend__user__name">{{friend.username}}</span>
-          <span class="recommend__user__id">#{{friend.applicationUserId}}</span>
+      <div class="recommend container-text-overlflow">
+        <div class="recommend__user text-overflow">
+          <span class="recommend__user__name text-overflow">{{friend.username}}</span>
+          <span class="recommend__user__id text-overflow">#{{friend.applicationUserId}}</span>
         </div>
 
-        <a class="recommend__button recommend__button--1" (click)="recommend(friend.applicationUserId)">Recommend</a>
+        <a class="recommend__button recommend__button--1" (click)="recommend(friend.applicationUserId)">Share</a>
       </div>
     </div>
   </div>
