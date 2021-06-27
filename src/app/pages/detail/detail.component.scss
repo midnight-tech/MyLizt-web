@@ -9,12 +9,31 @@
     )
     [about-end synopsis-start] minmax(min-content, 1fr)
     [synopsis-end header-end];
+
   grid-template-rows:
-    [header-start] min-content [header-end content-start] minmax(
+    [header-start] min-content [header-end about-start synopsis-start] minmax(
       min-content,
       1fr
     )
-    [content-end];
+    [about-end synopsis-end];
+
+  @media only screen and (max-width: $bp-900) {
+    grid-template-columns:
+      [header-start about-start] minmax(min-content, 24rem)
+      [about-end synopsis-start] minmax(min-content, 1fr)
+      [synopsis-end header-end];
+  }
+
+  @media only screen and (max-width: $bp-700) {
+    grid-template-columns:
+      [header-start about-start synopsis-start] minmax(min-content, 1fr)
+      [header-end about-end synopsis-end];
+
+    grid-template-rows:
+      [header-start] min-content [header-end about-start ] min-content
+      [about-end synopsis-start] minmax(min-content, 1fr)
+      [synopsis-end];
+  }
 }
 
 .header {
@@ -24,18 +43,21 @@
 
 .about {
   grid-column: about-start / about-end;
-  grid-row: content-start / content-end;
+  grid-row: about-start / about-end;
 }
 
 .synopsis {
   grid-column: synopsis-start / synopsis-end;
-  grid-row: content-start / content-end;
-  padding-top: 4rem;
-  padding-left: 2rem;
+  grid-row: synopsis-start / synopsis-end;
+  padding: 4rem 0 0 2rem;
   color: $white;
 
+  @media only screen and (max-width: $bp-700) {
+    padding: 4rem 0 0 0;
+  }
+
   &__title {
-    font-size: 2rem;
+    font-size: $font-size-large;
     text-transform: uppercase;
     font-weight: bold;
     letter-spacing: 0.3rem;
@@ -43,7 +65,7 @@
   }
 
   &__content {
-    font-size: 1.4rem;
+    font-size: $font-size-medium;
     text-align: justify;
     letter-spacing: 0.3rem;
     line-height: 1.6;

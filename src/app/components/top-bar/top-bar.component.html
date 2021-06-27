@@ -40,8 +40,8 @@
       <!-- Container dropdown search -->
       <div [ngClass]="{ 'is-active': isActiveSearch }" class="dropdown search__dropdown__container">
         <div class="dropdown-trigger search__input__container">
-          <input (focus)="searchEvent()" type="text" class="search__input" placeholder="Search..."
-            [formControl]="searchField" />
+          <input (blur)="searchIsFocused = false" (focus)="searchEvent()" type="text" class="search__input"
+            placeholder="Search..." [formControl]="searchField" />
 
           <button type="button" class="search__button" (click)="totalSearch()">
             <svg class="search__icon">

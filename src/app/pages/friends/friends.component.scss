@@ -255,6 +255,22 @@
     top: 25%;
     display: flex;
     align-items: center;
+
+    @media only screen and (max-width: $bp-1400) {
+      width: 50%;
+    }
+
+    @media only screen and (max-width: $bp-1000) {
+      width: 60%;
+    }
+
+    @media only screen and (max-width: $bp-800) {
+      width: 70%;
+    }
+
+    @media only screen and (max-width: $bp-600) {
+      width: 80%;
+    }
   }
 
   &__input {

@@ -19,3 +19,14 @@
   border-bottom: 1px solid $white1;
   padding-bottom: 2rem;
 }
+
+.container-text-overlflow {
+  display: flex;
+  max-width: 100%;
+}
+
+.text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

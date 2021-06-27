@@ -1,4 +1,5 @@
 @import "../../sass/abstract/variables";
+@import "../../sass/base/utilities";
 
 .grid-container-header {
   margin-top: 3rem;
@@ -22,6 +23,60 @@
     [cover-info-start] minmax(auto, 7rem)
     [cover-info-end back-cover-end info-out-cover-start] minmax(auto, 11rem)
     [info-out-cover-end front-cover-end];
+
+  @media only screen and (max-width: $bp-900) {
+    grid-template-rows:
+      [back-cover-start title-start] minmax(auto, 8rem)
+      [title-end front-cover-start] minmax(auto, 22rem)
+      [back-cover-end] minmax(auto, 11rem)
+      [front-cover-end cover-info-start] auto
+      [cover-info-end info-out-cover-start] minmax(auto, 11rem)
+      [info-out-cover-end];
+
+    grid-template-columns:
+      [back-cover-start title-start front-cover-start score-start] auto
+      [score-end my-score-start] auto
+      [my-score-end serie-info-start] auto
+      [serie-info-end void-space-start] 1fr
+      [void-space-end episodes-start] auto
+      [episodes-end buttons-start] auto
+      [buttons-end back-cover-end title-end];
+  }
+
+  @media only screen and (max-width: $bp-500) {
+    grid-template-rows:
+      [back-cover-start title-start] minmax(auto, 8rem)
+      [title-end front-cover-start] minmax(auto, 22rem)
+      [back-cover-end] minmax(auto, 11rem)
+      [front-cover-end cover-info-start] auto
+      [cover-info-end info-out-cover-start] repeat(
+        2,
+        [row-start] auto [row-end]
+      )
+      [info-out-cover-end];
+
+    grid-template-columns:
+      [back-cover-start title-start front-cover-start score-start episodes-start] auto
+      [score-end episodes-end my-score-start] minmax(auto, 1fr)
+      [my-score-end serie-info-start buttons-start] auto
+      [back-cover-end title-end front-cover-end serie-info-end buttons-end];
+  }
+
+  // media query 500
+  &--500 {
+    @media only screen and (max-width: $bp-500) {
+      grid-template-rows:
+        [back-cover-start title-start] minmax(auto, 8rem)
+        [title-end front-cover-start] minmax(auto, 22rem)
+        [back-cover-end] minmax(auto, 11rem)
+        [front-cover-end cover-info-start] auto
+        [cover-info-end info-out-cover-start] repeat(
+          1,
+          [row-start] auto [row-end]
+        )
+        [info-out-cover-end];
+    }
+  }
 }
 
 .backcover {
@@ -48,6 +103,11 @@
   flex-direction: column;
   justify-content: flex-end;
 
+  @media only screen and (max-width: $bp-900) {
+    text-align: center;
+    padding: 2rem 2rem 1rem 2rem;
+  }
+
   &__text {
     text-transform: uppercase;
     color: $white;
@@ -56,7 +116,7 @@
   &__second-text {
     text-transform: uppercase;
     color: rgba($white, 0.8);
-    font-size: 1.6rem;
+    font-size: $font-size-default;
   }
 }
 
@@ -65,11 +125,21 @@
   grid-row: front-cover-start / front-cover-end;
   z-index: 1;
 
+  @media only screen and (max-width: $bp-900) {
+    grid-row: front-cover-start / front-cover-end;
+    display: flex;
+    justify-content: center;
+  }
+
   &__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: $the-border-radius;
+
+    @media only screen and (max-width: $bp-900) {
+      width: 24rem;
+    }
   }
 }
 
@@ -82,6 +152,28 @@
   align-items: center;
   padding: 0 2rem;
   color: $white;
+
+  @media only screen and (max-width: $bp-900) {
+    grid-row: title-start / title-end;
+    grid-column: back-cover-start / back-cover-end;
+  }
+
+  &--anime {
+    @media only screen and (max-width: $bp-900) {
+      grid-row: cover-info-start / cover-info-end;
+      padding: 4rem 0 2rem 0;
+    }
+
+    @media only screen and (max-width: $bp-500) {
+      padding: 4rem 0 0 0;
+    }
+  }
+
+  &--serie {
+    @media only screen and (max-width: $bp-900) {
+      width: 100%;
+    }
+  }
 
   &__flex {
     display: flex;
@@ -106,22 +198,28 @@
   }
 
   &__title {
-    font-size: 2rem;
+    font-size: $font-size-large;
     text-transform: uppercase;
 
     &--serie {
-      font-size: 1.6rem;
+      font-size: $font-size-default;
       text-transform: uppercase;
       text-align: center;
     }
   }
 
   &__info {
-    font-size: 2rem;
+    font-size: $font-size-large;
     text-transform: uppercase;
     font-weight: 700;
     text-align: center;
     margin: 0 1rem;
+
+    width: 100%;
+
+    &--serie {
+      padding: 0 2rem;
+    }
   }
 
   &__icon {
@@ -144,10 +242,20 @@
   grid-column: score-start / score-end;
   grid-row: info-out-cover-start / info-out-cover-end;
   z-index: 1;
-  margin: 2rem 0;
+  padding: 2rem 0;
   padding-left: 2rem;
   display: flex;
   align-items: flex-start;
+
+  @media only screen and (max-width: $bp-900) {
+    padding-left: 0;
+  }
+
+  @media only screen and (max-width: $bp-500) {
+    padding-top: 4rem;
+    grid-row: row-start 1 / row-end 1;
+    // border-bottom: solid 1px $white;
+  }
 
   &__flex {
     display: flex;
@@ -158,21 +266,21 @@
   }
 
   &__title {
-    font-size: 1.6rem;
+    font-size: $font-size-default;
     color: $white;
     text-transform: uppercase;
     margin-bottom: 0.5rem;
   }
 
   &__info {
-    font-size: 2rem;
+    font-size: $font-size-large;
     color: $white;
     text-transform: uppercase;
     font-weight: bold;
   }
 
   &__caption {
-    font-size: 1.4rem;
+    font-size: $font-size-medium;
     color: $white;
     text-transform: uppercase;
   }
@@ -182,10 +290,25 @@
   grid-column: my-score-start / my-score-end;
   grid-row: info-out-cover-start / info-out-cover-end;
   z-index: 1;
-  margin: 2rem 0;
+  padding: 2rem 0;
   padding-left: 2rem;
   display: flex;
   align-items: flex-start;
+
+  @media only screen and (max-width: $bp-500) {
+    grid-row: row-start 1 / row-end 1;
+    justify-content: center;
+    padding-top: 4rem;
+    padding-left: 0;
+    // border-bottom: solid 1px $white;
+  }
+
+  &--anime-book {
+    @media only screen and (max-width: $bp-500) {
+      grid-column: serie-info-start / serie-info-end;
+      justify-content: flex-end;
+    }
+  }
 
   &__flex {
     display: flex;
@@ -196,21 +319,21 @@
   }
 
   &__title {
-    font-size: 1.6rem;
+    font-size: $font-size-default;
     color: $white;
     text-transform: uppercase;
     margin-bottom: 0.5rem;
   }
 
   &__info {
-    font-size: 2rem;
+    font-size: $font-size-large;
     color: $primary1;
     text-transform: uppercase;
     font-weight: bold;
   }
 
   &__input {
-    font-size: 2rem;
+    font-size: $font-size-large;
     border: none;
     width: 7.5rem;
     background-color: transparent;
@@ -223,7 +346,7 @@
     }
 
     &::placeholder {
-      font-size: 1.6rem;
+      font-size: $font-size-default;
       font-family: inherit;
       opacity: 1;
     }
@@ -234,10 +357,22 @@
   grid-column: serie-info-start / serie-info-end;
   grid-row: info-out-cover-start / info-out-cover-end;
   z-index: 1;
-  margin: 2rem 0;
-  padding-left: 2rem;
+  padding: 2rem 0 2rem 2rem;
   display: flex;
   align-items: flex-start;
+
+  @media only screen and (max-width: $bp-500) {
+    padding-top: 4rem;
+    grid-row: row-start 1 / row-end 1;
+  }
+
+  &--500 {
+    @media only screen and (max-width: $bp-500) {
+      grid-column: my-score-start / my-score-end;
+      justify-content: center;
+      padding: 4rem 0 2rem 0;
+    }
+  }
 
   &__flex {
     display: flex;
@@ -248,13 +383,13 @@
   }
 
   &__title {
-    font-size: 1.6rem;
+    font-size: $font-size-default;
     color: $white;
     text-transform: uppercase;
   }
 
   &__info {
-    font-size: 2rem;
+    font-size: $font-size-large;
     color: $white;
     text-transform: uppercase;
     font-weight: bold;
@@ -272,20 +407,29 @@
   padding: 2rem;
   align-self: flex-start;
 
+  @media only screen and (max-width: $bp-500) {
+    grid-row: row-start 2 / row-end 2;
+    padding: 2rem 0;
+  }
+
   &__flex {
     display: flex;
     text-align: center;
+
+    @media only screen and (max-width: $bp-500) {
+      align-self: flex-start;
+    }
   }
 
   &__title {
-    font-size: 1.6rem;
+    font-size: $font-size-default;
     color: $white;
     text-transform: uppercase;
     margin-bottom: 1rem;
   }
 
   &__info {
-    font-size: 1.6rem;
+    font-size: $font-size-default;
     color: $white;
     text-transform: uppercase;
   }
@@ -300,10 +444,22 @@
     &:hover {
       fill: $primary1;
     }
+
+    &--right {
+      @media only screen and (max-width: $bp-500) {
+        margin: 0 0 0 0.5rem;
+      }
+    }
+
+    &--left {
+      @media only screen and (max-width: $bp-500) {
+        margin: 0 0.5rem 0 0;
+      }
+    }
   }
 
   &__input {
-    font-size: 2rem;
+    font-size: $font-size-large;
     border: none;
     width: 2.75rem;
     background-color: transparent;
@@ -319,7 +475,7 @@
     }
 
     &::placeholder {
-      font-size: 1.6rem;
+      font-size: $font-size-default;
       font-family: inherit;
       opacity: 1;
     }
@@ -340,12 +496,26 @@
   align-self: center;
   padding: 1.5rem 0;
 
+  @media only screen and (max-width: $bp-500) {
+    grid-row: row-start 2 / row-end 2;
+  }
+
+  &--500 {
+    @media only screen and (max-width: $bp-500) {
+      grid-row: row-start 1 / row-end 1;
+      padding: 0;
+      justify-content: end;
+      align-self: end;
+    }
+  }
+
   &__flex {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0.5rem;
-    background-image: linear-gradient(105deg, $primary1 74%, $primary2 26%);
+    // defalut Add to List
+    background-image: linear-gradient(105deg, $primary1 65%, $primary2 35%);
     background-color: transparent;
     border-radius: $the-border-radius;
     border-bottom: 0.2rem solid rgba($primary3, 1);
@@ -355,7 +525,19 @@
     cursor: pointer;
 
     &--recommend {
+      background-image: linear-gradient(105deg, $primary1 57%, $primary2 43%);
+    }
+
+    &--remove {
+      background-image: linear-gradient(105deg, $primary1 62%, $primary2 38%);
+    }
+
+    &--top {
       margin-bottom: 1.5rem;
+    }
+
+    &--bottom {
+      margin-bottom: 0;
     }
 
     &:hover {
@@ -364,7 +546,7 @@
   }
 
   &__text {
-    font-size: 1.3rem;
+    font-size: $font-size-medium-small;
     font-weight: bold;
     margin-right: 1rem;
     color: $black3;

@@ -13,13 +13,13 @@
               <ngx-skeleton-loader animation="progress-dark" [count]="5"></ngx-skeleton-loader>
             </div>
             <p *ngIf="anime && !loading" class="card__side--image--flip--back--synopsis--text">
-              {{ anime.complete?.synopsis }}
+              {{ anime.complete?.synopsis || 'No description found' }}
             </p>
             <p *ngIf="book && !loading" class="card__side--image--flip--back--synopsis--text">
-              {{ book.complete?.volumeInfo?.description }}
+              {{ book.complete?.volumeInfo?.description || 'No description found' }}
             </p>
             <p *ngIf="serie && !loading" class="card__side--image--flip--back--synopsis--text">
-              {{ serie.complete?.overview }}
+              {{ serie.complete?.overview || 'No description found' }}
             </p>
           </div>
           <div class="card__side--image--flip--back--description">
@@ -49,7 +49,7 @@
                   <ngx-skeleton-loader animation="progress-dark" [count]="2"></ngx-skeleton-loader>
                 </div>
                 <div class="card__side--image--flip--back--description--info--content">
-                  <div *ngIf="inMyList == false && anime && !loading">
+                  <div *ngIf="!(inMyList && mycontent?.recommended == null) && anime && !loading">
                     <p class="card__side--image--flip--back--description--info--flex-text">
                       Episodes
                     </p>
@@ -57,7 +57,7 @@
                       {{ anime.complete?.episodes }}
                     </p>
                   </div>
-                  <div *ngIf="inMyList == false && book && !loading">
+                  <div *ngIf="!(inMyList && mycontent?.recommended == null) && book && !loading">
                     <p class="card__side--image--flip--back--description--info--flex-text">
                       pages
                     </p>
@@ -65,7 +65,7 @@
                       {{ book.complete?.volumeInfo?.pageCount }}
                     </p>
                   </div>
-                  <div *ngIf="inMyList == false && serie && !loading">
+                  <div *ngIf="!(inMyList && mycontent?.recommended == null) && serie && !loading">
                     <p class="card__side--image--flip--back--description--info--flex-text">
                       Seasons
                     </p>
@@ -73,7 +73,7 @@
                       {{ serie.complete?.number_of_seasons }}
                     </p>
                   </div>
-                  <div *ngIf="inMyList && !loading">
+                  <div *ngIf="(inMyList && mycontent?.recommended == null) && !loading">
                     <p class="card__side--image--flip--back--description--info--flex-text">
                       My Score
                     </p>
@@ -209,20 +209,6 @@
             <span class="card__epi-pag__text"> S &nbsp; {{friendContent.season}} &nbsp; | &nbsp; Ep.
               &nbsp;{{friendContent.mark}} /
               {{serie.complete.seasons[friendContent.season].episode_count}}</span>
-          </div>
-          <div class="card__button-container card__button-container--recommend card__button-container--right"
-            *ngIf="!inMyList" (click)="addToMyList()">
-            <p class="card__button-container__text">Add</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-library_add"></use>
-            </svg>
-          </div>
-          <div class="card__button-container card__button-container--remove card__button-container--right"
-            *ngIf="inMyList" (click)="deleteToMyList()">
-            <p class="card__button-container__text">Remove</p>
-            <svg class="card__button-container__icon">
-              <use xlink:href="assets/symbol-defs.svg#icon-delete"></use>
-            </svg>
           </div>
         </div>
         <!-- My Friend List end -->

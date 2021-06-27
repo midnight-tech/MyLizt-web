@@ -61,6 +61,7 @@ export class TopBarComponent implements OnInit, OnChanges {
   isActiveNotification = false;
   timeout?: NodeJS.Timeout;
   username = 'USERNAME';
+  searchIsFocused = false;
 
   constructor(
     public animeService: AnimeService,
@@ -80,6 +81,12 @@ export class TopBarComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.searchField.enable({ emitEvent: true });
+    document.body.addEventListener("keydown", (event) => {
+      if (event.key == "Enter" && this.searchIsFocused == true) {
+        event.preventDefault()
+        this.totalSearch()
+      }
+    })
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -87,6 +94,7 @@ export class TopBarComponent implements OnInit, OnChanges {
   }
 
   searchEvent() {
+    this.searchIsFocused = true;
     if (this.searchField.value.length < 3) {
       this.cleanList();
       this.isActiveSearch = false;
@@ -185,9 +193,9 @@ export class TopBarComponent implements OnInit, OnChanges {
     });
   }
 
-  acceptUserFriendRequest(id : string,notification : Notification){
-    this.userService.acceptFriendRequest(id).then((value)=>{
-      if(value){
+  acceptUserFriendRequest(id: string, notification: Notification) {
+    this.userService.acceptFriendRequest(id).then((value) => {
+      if (value) {
         this.notificationService.deleteNotification(notification)
       }
     })

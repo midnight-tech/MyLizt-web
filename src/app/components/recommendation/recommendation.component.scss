@@ -1,4 +1,5 @@
 @import "../../sass/abstract/variables";
+@import "../../sass/base/utilities";
 
 .fixed-container {
   position: fixed;
@@ -20,8 +21,24 @@
   border-radius: $the-border-radius;
   z-index: 20;
 
+  @media only screen and (max-width: $bp-1400) {
+    width: 50%;
+  }
+
+  @media only screen and (max-width: $bp-1000) {
+    width: 60%;
+  }
+
+  @media only screen and (max-width: $bp-800) {
+    width: 70%;
+  }
+
+  @media only screen and (max-width: $bp-600) {
+    width: 80%;
+  }
+
   &__title {
-    font-size: 2rem;
+    font-size: $font-size-large;
     color: $primary1;
     text-transform: uppercase;
     margin-bottom: 2rem;
@@ -33,7 +50,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  font-size: 1.6rem;
+  font-size: $font-size-default;
 
   &:not(:last-child) {
     margin-bottom: 1rem;
@@ -43,9 +60,10 @@
     display: flex;
     flex-direction: column;
     color: $white;
+    margin-right: 1rem;
 
     &__name {
-      font-size: 1.8rem;
+      font-size: $font-size-default;
       letter-spacing: 0.5rem;
     }
 
