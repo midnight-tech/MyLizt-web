@@ -13,9 +13,7 @@ export class LoggedShieldService implements CanActivate {
     if (this.auth.isLogged) {
       return true
     }
-    if (this.auth.authLoaded) {
-      this.router.navigate(['/signin'], { replaceUrl: true })
-    }
+    // this.router.navigate(['/'], { replaceUrl: true })
     return false
   }
 }

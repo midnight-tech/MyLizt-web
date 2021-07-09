@@ -58,22 +58,22 @@ const routes: Routes = [
     path: '',
     component: LandingPageComponent,
     pathMatch: 'full',
-    canActivate: [UnloggedShieldService],
+    // canActivate: [UnloggedShieldService],
   },
   {
     path: 'signin',
     component: SignInComponent,
-    canActivate: [UnloggedShieldService],
+    // canActivate: [UnloggedShieldService],
   },
   {
     path: 'signup',
     component: SignUpComponent,
-    canActivate: [UnloggedShieldService],
+    // canActivate: [UnloggedShieldService],
   },
   {
     path: 'verification',
     component: VerificationComponent,
-    canActivate: [UnloggedShieldService],
+    // canActivate: [UnloggedShieldService],
   },
   {
     path: 'home',

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
+import { AuthenticationService } from './services/authentication/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { SwUpdate } from '@angular/service-worker';
 export class AppComponent {
   title = 'MyLizt';
 
-  constructor(appUpdate: SwUpdate) {
+  constructor(appUpdate: SwUpdate, public authenticationService: AuthenticationService) {
     if (!appUpdate.isEnabled) {
       console.info("Not enabled update")
       return;
@@ -21,8 +22,6 @@ export class AppComponent {
           document.location.reload();
         })
       })
-
     })
-
   }
 }

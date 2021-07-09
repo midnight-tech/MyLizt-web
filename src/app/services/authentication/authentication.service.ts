@@ -3,8 +3,9 @@ import firebase from 'firebase/app'
 import { AngularFirestore } from '@angular/fire/firestore'
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { listInterface, UserInterface } from 'src/app/data/interfaces';
+import { UserInterface } from 'src/app/data/interfaces';
 import { time } from 'uniqid'
+import { UserConverter } from 'src/app/data/converters';
 
 @Injectable({
   providedIn: 'root'
@@ -17,24 +18,29 @@ export class AuthenticationService {
   authLoaded = false
   unsub!: Function
 
+
   constructor(public fireAuth: AngularFireAuth, public fireStore: AngularFirestore, private router: Router, ngZone: NgZone) {
     fireAuth.onAuthStateChanged((user) => {
       ngZone.run(() => {
-        this.authLoaded = true
         if (user) {
           if (user.emailVerified == false) {
+            router.navigate(['verification'])
             return
           }
           this.user = user
           this.isLogged = true
-          fireStore.firestore.collection('User').doc(user.uid).get().then((value) => {
-            this.userFirestore = value.data() as UserInterface
-            router.navigate(['home'])
+          fireStore.firestore.collection('User').doc(user.uid).withConverter(UserConverter).get().then((value) => {
+            this.userFirestore = value.data()!
+            router.navigate(['home']).then((value) => {
+              this.authLoaded = true;
+            })
           })
           return
         }
+        router.navigate(["/"])
         this.isLogged = false
         this.user = user
+        this.authLoaded = true;
       })
     })
   }
