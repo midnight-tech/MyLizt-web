@@ -9,18 +9,19 @@ import { CarrousselEntry } from 'src/app/data/interfaces';
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class CarrouselComponent implements OnInit {
-  
-  @Input() contents! : CarrousselEntry[]
-  
-  @Input() type! : string
+  @Input() contents!: CarrousselEntry[];
 
-  constructor(
-    private router : Router
-  ) {}
+  @Input() type!: string;
 
-  ngOnInit() {}
+  constructor(private router: Router) {
+    console.log(window.innerWidth);
+  }
 
-  navigateToDetail(type: string, id : string){
-    this.router.navigate(['home','detail',type,id])
+  ngOnInit() {
+    console.log('Eu sou diferente', window.innerWidth);
+  }
+
+  navigateToDetail(type: string, id: string) {
+    this.router.navigate(['home', 'detail', type, id]);
   }
 }

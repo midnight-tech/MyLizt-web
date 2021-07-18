@@ -1,27 +1,17 @@
-<div class="container">
-  <input type="radio" name="slider" id="item-1" />
-  <input type="radio" name="slider" id="item-2" />
-  <input type="radio" name="slider" id="item-3" checked />
-  <input type="radio" name="slider" id="item-4" />
-  <input type="radio" name="slider" id="item-5" />
-  <div class="cards">
-    <label
-      *ngFor="let content of contents; index as i"
-      [class]="'card card--' + (i + 1)"
-      [for]="'item-' + (i + 1)"
-      [id]="'song-' + (i + 1)"
-    >
-      <div class="darkness" [id]="'shadow-' + (i + 1)"></div>
-      <div class="card__hover">
-        <span class="card__text">{{ content.title }}</span>
-        <div class="card__button" (click)="navigateToDetail(type, content.id)">
-          <p class="card__button__text">View More</p>
-          <svg class="card__button__icon">
-            <use xlink:href="assets/symbol-defs.svg#icon-arrow_right_alt"></use>
-          </svg>
-        </div>
-      </div>
-      <img [src]="content.img" alt="song" />
-    </label>
+<swiper class="teste">
+  <div class="swiper-slide">
+    <h1 class="texto">Swiper slide content 1</h1>
   </div>
-</div>
+  <div class="swiper-slide">
+    <h1 class="texto">Swiper slide content 2</h1>
+  </div>
+  <div class="swiper-slide">
+    <h1 class="texto">Swiper slide content 3</h1>
+  </div>
+  <div class="swiper-slide">
+    <h1 class="texto">Swiper slide content 4</h1>
+  </div>
+  <div class="swiper-slide">
+    <h1 class="texto">Swiper slide content 5</h1>
+  </div>
+</swiper>

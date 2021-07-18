@@ -46,6 +46,17 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { LoadingService } from './services/loading/loading.service';
 import { CompleteScreenLoadComponent } from './components/completeScreenLoad/completeScreenLoad.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { SwiperModule } from 'ngx-swiper-wrapper';
+import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
+import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+import { TesteComponent } from './pages/teste/teste.component';
+
+const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
+  slidesPerView: 3.5,
+  spaceBetween: 30,
+  freeMode: true,
+  loop: true,
+};
 
 const maskConfigFunction: () => Partial<IConfig> = () => {
   return {
@@ -145,7 +156,8 @@ const routes: Routes = [
     MyRecommendationsComponent,
     AutoFocusDirectiveDirective,
     ContentCompletedComponent,
-    CompleteScreenLoadComponent
+    CompleteScreenLoadComponent,
+    TesteComponent,
   ],
   imports: [
     BrowserModule,
@@ -156,11 +168,12 @@ const routes: Routes = [
     AngularFirestoreModule.enablePersistence(),
     NgxMaskModule.forRoot(maskConfigFunction),
     NgxSkeletonLoaderModule.forRoot(),
+    SwiperModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
   exports: [RouterModule],
@@ -173,7 +186,11 @@ const routes: Routes = [
     UserService,
     NotificationService,
     LoadingService,
+    {
+      provide: SWIPER_CONFIG,
+      useValue: DEFAULT_SWIPER_CONFIG,
+    },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
