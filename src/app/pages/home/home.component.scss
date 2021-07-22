@@ -43,12 +43,29 @@
   }
 }
 
+.menu {
+  width: 100%;
+}
+
 .mini-container {
   display: flex;
   flex-direction: column;
   width: calc(100vw - 18vw);
   height: 100%;
   position: relative;
+  padding: 0 12rem;
+
+  @media only screen and (max-width: $bp-1700) {
+    padding: 0 6rem;
+  }
+
+  @media only screen and (max-width: $bp-1360) {
+    width: 100%;
+  }
+
+  @media only screen and (max-width: $bp-500) {
+    padding: 0 3rem;
+  }
 }
 
 .top-bar-container {
@@ -58,6 +75,7 @@
 
 .contents {
   display: flex;
+  width: 100%;
 }
 
 .footer {
@@ -81,4 +99,8 @@
   cursor: default;
   z-index: 5;
   background-color: rgba($black3, 0.9);
+}
+
+.full-width {
+  width: 100%;
 }

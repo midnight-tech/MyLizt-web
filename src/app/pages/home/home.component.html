@@ -1,22 +1,18 @@
 <div class="flex-container" fxFlexFill>
   <div *ngIf="isMenuActive" class="membrana" (click)="isMenuActive = false"></div>
   <div [ngClass]="{ 'menu-container__show': isMenuActive }" class="menu-container">
-    <app-menu-left (menuLeftEvent)="isMenuActive=$event"></app-menu-left>
+    <app-menu-left class="menu" (menuLeftEvent)="isMenuActive=$event"></app-menu-left>
   </div>
-
-  <!-- <div class="menu-container">
-    <h1>teste</h1>
-  </div> -->
 
   <div class="mini-container">
     <div class="top-bar-container">
-      <app-top-bar (showMenuEvent)="isMenuActive=$event"></app-top-bar>
+      <app-top-bar class="full-width" (showMenuEvent)="isMenuActive=$event"></app-top-bar>
     </div>
 
     <div class="contents">
-      <!-- <div fxFlex> -->
-      <router-outlet></router-outlet>
-      <!-- </div> -->
+      <div fxFlex class="full-width">
+        <router-outlet class="full-width"></router-outlet>
+      </div>
     </div>
 
     <div class="footer">

@@ -1,17 +1,21 @@
-<swiper class="teste">
-  <div class="swiper-slide">
-    <h1 class="texto">Swiper slide content 1</h1>
-  </div>
-  <div class="swiper-slide">
-    <h1 class="texto">Swiper slide content 2</h1>
-  </div>
-  <div class="swiper-slide">
-    <h1 class="texto">Swiper slide content 3</h1>
-  </div>
-  <div class="swiper-slide">
-    <h1 class="texto">Swiper slide content 4</h1>
-  </div>
-  <div class="swiper-slide">
-    <h1 class="texto">Swiper slide content 5</h1>
+<swiper [config]='config' class="carrousel__container">
+  <div *ngFor="let content of contents;">
+    <div class="swiper-slide">
+      <div class="carrousel__card">
+        <div class="carrousel__layer">
+          <h1 class="carrousel__title">{{ content.title }}</h1>
+
+          <div class="carrousel__button" (click)="navigateToDetail(type, content.id)">
+            <p class="carrousel__button__text">View More</p>
+            <svg class="carrousel__button__icon">
+              <use xlink:href="assets/symbol-defs.svg#icon-arrow_right_alt"></use>
+            </svg>
+          </div>
+        </div>
+        <div class="carrousel__content">
+          <img class="carrousel__cover" [src]="content.img" alt="">
+        </div>
+      </div>
+    </div>
   </div>
 </swiper>
