@@ -12,9 +12,11 @@ import { CarrousselEntry } from 'src/app/data/interfaces'
 })
 export class HomeCarrouselComponent implements OnInit {
 
-  anime: CarrousselEntry [] = []
+  anime: CarrousselEntry[] = []
   serie: CarrousselEntry[] = []
   book: CarrousselEntry[] = []
+  rederSwipper: number = 0
+
 
   constructor(
     private router: Router,
@@ -33,6 +35,7 @@ export class HomeCarrouselComponent implements OnInit {
           id
         })
       })
+      this.rederSwipper += 1
     })
     this.serieService.getCarroussel().then((value) => {
       value.map((serie) => {
@@ -45,6 +48,7 @@ export class HomeCarrouselComponent implements OnInit {
           id
         })
       })
+      this.rederSwipper += 1
     })
     this.bookService.getHomeCarroussel().then((value) => {
       value.map((book) => {
@@ -57,6 +61,7 @@ export class HomeCarrouselComponent implements OnInit {
           id
         })
       })
+      this.rederSwipper += 1
     })
   }
 

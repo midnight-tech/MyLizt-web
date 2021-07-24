@@ -32,13 +32,12 @@ export class CarrouselComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    this.mediaQueryCarrousel();
+  }
 
   ngOnInit() {
-    console.log(window.innerWidth);
-    setTimeout(() => {
-      this.mediaQueryCarrousel();
-    }, 0);
+    // console.log(window.innerWidth);
   }
 
   navigateToDetail(type: string, id: string) {
