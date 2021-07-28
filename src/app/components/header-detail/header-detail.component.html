@@ -7,12 +7,12 @@
   </div>
 
   <div class="title container-text-overlflow " *ngIf="type == 'ANIME'">
-    <h1 class="title__text text-overflow">{{ anime.title }}</h1>
+    <h1 class="title__text text-overflow" (click)="copyToClipBoard()">{{ anime.title }}</h1>
     <h2 class="title__second-text text-overflow">{{ anime.title_english }}</h2>
   </div>
 
   <div class="title container-text-overlflow" *ngIf="type == 'BOOK'">
-    <h1 class="title__text text-overflow">{{ book.volumeInfo.title }}</h1>
+    <h1 class="title__text text-overflow" (click)="copyToClipBoard()">{{ book.volumeInfo.title }}</h1>
   </div>
 
   <div class="frontcover">
@@ -48,7 +48,7 @@
       </p>
     </div>
     <div class="cover-info__flex text-overflow">
-      <p class="cover-info__info cover-info__info--serie text-overflow">
+      <p class="cover-info__info cover-info__info--serie text-overflow" (click)="copyToClipBoard()">
         {{ serie.name }} ({{ serie.seasons[seasonAtual].name }} )
       </p>
     </div>

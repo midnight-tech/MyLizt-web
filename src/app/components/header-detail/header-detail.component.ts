@@ -49,6 +49,19 @@ export class HeaderDetailComponent implements OnInit {
     });
   }
 
+  async copyToClipBoard() {
+    let title = "";
+    if (this.anime) title = this.anime.title
+    else if (this.serie) title = this.serie.name
+    else title = this.book.volumeInfo.title
+    try {
+      await navigator.clipboard.writeText(title)
+      // Ative o informante aqui
+    } catch (e) {
+      // Caso queira por um erro
+    }
+  }
+
   changeRateInput() {
     if (this.rateInput == false) {
       this.rateInputControl.setValue(this.mycontent?.myrating || 'N/A');
