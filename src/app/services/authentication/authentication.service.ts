@@ -31,7 +31,7 @@ export class AuthenticationService {
           this.isLogged = true
           fireStore.firestore.collection('User').doc(user.uid).withConverter(UserConverter).get().then((value) => {
             this.userFirestore = value.data()!
-            router.navigate(['home']).then((value) => {
+            router.navigate(['home'], { replaceUrl: true }).then((value) => {
               this.authLoaded = true;
             })
           })

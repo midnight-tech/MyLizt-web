@@ -15,7 +15,9 @@ export class HomeCarrouselComponent implements OnInit {
   anime: CarrousselEntry[] = []
   serie: CarrousselEntry[] = []
   book: CarrousselEntry[] = []
-  rederSwipper: number = 0
+  animeLoaded: boolean = false
+  serieLoaded: boolean = false
+  bookLoaded: boolean = false
 
 
   constructor(
@@ -35,7 +37,7 @@ export class HomeCarrouselComponent implements OnInit {
           id
         })
       })
-      this.rederSwipper += 1
+      this.animeLoaded = true
     })
     this.serieService.getCarroussel().then((value) => {
       value.map((serie) => {
@@ -48,7 +50,7 @@ export class HomeCarrouselComponent implements OnInit {
           id
         })
       })
-      this.rederSwipper += 1
+      this.serieLoaded = true
     })
     this.bookService.getHomeCarroussel().then((value) => {
       value.map((book) => {
@@ -61,7 +63,7 @@ export class HomeCarrouselComponent implements OnInit {
           id
         })
       })
-      this.rederSwipper += 1
+      this.bookLoaded = true
     })
   }
 
