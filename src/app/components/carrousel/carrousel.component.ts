@@ -20,10 +20,11 @@ export class CarrouselComponent implements OnInit, AfterViewInit {
   @Input() type!: string;
 
   config = {
-    slidesPerView: 3.5,
+    slidesPerView: 3.6,
     spaceBetween: 30,
     freeMode: true,
     loop: true,
+    loopAdditionalSlides: 15,
   };
 
   constructor(private router: Router) {
@@ -61,7 +62,7 @@ export class CarrouselComponent implements OnInit, AfterViewInit {
       this.config.slidesPerView = 3.25;
       this.config.spaceBetween = 30;
     } else {
-      this.config.slidesPerView = 4;
+      this.config.slidesPerView = 3.5;
       this.config.spaceBetween = 30;
     }
   }
