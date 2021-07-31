@@ -6,12 +6,12 @@
     <img *ngIf="type == 'BOOK'" class="backcover__image" [src]="book.volumeInfo.image" alt="BackCover" />
   </div>
 
-  <div class="title container-text-overlflow " *ngIf="type == 'ANIME'">
+  <div class="title container-text-overflow " *ngIf="type == 'ANIME'">
     <h1 class="title__text text-overflow" (click)="copyToClipBoard()">{{ anime.title }}</h1>
     <h2 class="title__second-text text-overflow">{{ anime.title_english }}</h2>
   </div>
 
-  <div class="title container-text-overlflow" *ngIf="type == 'BOOK'">
+  <div class="title container-text-overflow" *ngIf="type == 'BOOK'">
     <h1 class="title__text text-overflow" (click)="copyToClipBoard()">{{ book.volumeInfo.title }}</h1>
   </div>
 
@@ -36,7 +36,7 @@
     </div>
   </div>
 
-  <div class="cover-info cover-info--serie container-text-overlflow" *ngIf="type == 'SERIE'">
+  <div class="cover-info cover-info--serie container-text-overflow" *ngIf="type == 'SERIE'">
     <div [ngClass]="{ hidden: seasonAtual == 0 }" (click)="changeSeason(seasonAtual - 1)"
       class="cover-info__flex--serie">
       <svg class="cover-info__icon cover-info__icon--left">

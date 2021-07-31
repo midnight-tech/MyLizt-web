@@ -6,13 +6,14 @@
     </svg>
   </div>
   <div class="categories">
-    <span class="categories categories__text">
-      <span class="categories categories__title" (click)="navigateToMyList('anime')">Anime</span>
+    <span class="categories categories__text container-text-overflow">
+      <span class="categories categories__title" (click)="navigateToMyList('anime')" title="Anime">Anime</span>
       &nbsp;/&nbsp;
-      <span class="categories categories__title" (click)="navigateToMyRecommendation('anime')">Recommendation</span>
+      <span class="categories__title text-overflow" (click)="navigateToMyRecommendation('anime')"
+        title="Recommendation">Recommendation</span>
     </span>
-    <div class="categories__container" *ngFor="let iten of anime">
-      <span (click)="navigateToDetail(iten.anime.mal_id.toString(), 'anime')" class="categories__item"
+    <div class="categories__container container-text-overflow" *ngFor="let iten of anime">
+      <span (click)="navigateToDetail(iten.anime.mal_id.toString(), 'anime')" class="categories__item text-overflow"
         [title]="iten.anime.title">{{
         iten.anime.title }}</span>
       <svg *ngIf="iten.content.watched" class="categories__icon">
@@ -24,13 +25,14 @@
     </div>
   </div>
   <div class="categories">
-    <span class="categories categories__text">
-      <span class="categories categories__title" (click)="navigateToMyList('serie')">Serie</span>
+    <span class="categories categories__text container-text-overflow">
+      <span class="categories categories__title" (click)="navigateToMyList('serie')" title="Serie">Serie</span>
       &nbsp;/&nbsp;
-      <span class="categories categories__title" (click)="navigateToMyRecommendation('serie')">Recommendation</span>
+      <span class="categories__title text-overflow" (click)="navigateToMyRecommendation('serie')"
+        title="Recommendation">Recommendation</span>
     </span>
-    <div class="categories__container" *ngFor="let iten of serie">
-      <span (click)="navigateToDetail(iten.serie.id.toString(), 'serie')" class="categories__item"
+    <div class="categories__container container-text-overflow" *ngFor="let iten of serie">
+      <span (click)="navigateToDetail(iten.serie.id.toString(), 'serie')" class="categories__item text-overflow"
         [title]="iten.serie.name">{{ iten.serie.name }}
       </span>
       <svg *ngIf="iten.content.watched" class="categories__icon">
@@ -42,13 +44,14 @@
     </div>
   </div>
   <div class="categories">
-    <span class="categories categories__text">
-      <span class="categories categories__title" (click)="navigateToMyList('book')">Book</span>
+    <span class="categories categories__text container-text-overflow">
+      <span class="categories categories__title" (click)="navigateToMyList('book')" title="Book">Book</span>
       &nbsp;/&nbsp;
-      <span class="categories categories__title" (click)="navigateToMyRecommendation('book')">Recommendation</span>
+      <span class="categories__title text-overflow" (click)="navigateToMyRecommendation('book')"
+        title="Recommendation">Recommendation</span>
     </span>
-    <div class="categories__container" *ngFor="let iten of book">
-      <span (click)="navigateToDetail(iten.book.id, 'book')" class="categories__item"
+    <div class="categories__container container-text-overflow" *ngFor="let iten of book">
+      <span (click)="navigateToDetail(iten.book.id, 'book')" class="categories__item text-overflow"
         [title]="iten.book.volumeInfo.title">{{ iten.book.volumeInfo.title }}
       </span>
       <svg *ngIf="iten.content.watched" class="categories__icon">
