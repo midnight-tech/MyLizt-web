@@ -1,93 +1,92 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PopUpComponent } from 'src/app/components/pop-up/pop-up.component';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss']
+  styleUrls: ['./sign-in.component.scss'],
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent implements OnInit, AfterViewInit {
+  email = new FormControl('');
+  emailError = '';
+  emailMessage = '';
+  password = new FormControl('');
+  passwordError = '';
+  providerError = '';
 
-  email = new FormControl("")
-  emailError = ""
-  emailMessage = ""
-  password = new FormControl("")
-  passwordError = ""
-  providerError = ""
+  popUpLoaded = false;
 
+  @ViewChild('popUpLogin') popUpView!: PopUpComponent;
 
   constructor(
     private authService: AuthenticationService,
-    private routes: Router,
-  ) {
-    this.email.valueChanges.subscribe((value) => {
-      this.cleanError()
-    })
-    this.password.valueChanges.subscribe((value) => {
-      this.cleanError()
-    })
+    private routes: Router
+  ) {}
+
+  ngAfterViewInit(): void {
+    this.popUpLoaded = true;
   }
 
-  private cleanError() {
-    this.emailError = ""
-    this.passwordError = ""
-    this.emailMessage = ""
-    this.providerError = ""
-  }
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   loginWithEmail() {
     if (this.email.value.length == 0) {
-      this.emailError = "Email empty"
-      return
+      this.activatePopUp('Email empty');
+      return;
     }
     if (this.password.value.length == 0) {
-      this.passwordError = "Password empty"
-      return
+      this.activatePopUp('Password empty');
+      return;
     }
-    this.authService.signIn(this.email.value, this.password.value).then(() => {
-      // Success
-      this.email.setValue("")
-      this.password.setValue("")
-    }).catch((error) => {
-      if (error == "User email is not verified.") {
-        this.routes.navigate(['/verification'])
-        this.email.setValue("")
-        this.password.setValue("")
-      }
-      switch (error.code) {
-        case 'auth/wrong-password':
-          this.passwordError = "the password is invalid"
-          return
-        case 'auth/user-not-found':
-          this.emailError = "There is no user corresponding to this email"
-          break;
-        case 'auth/invalid-email':
-          this.emailError = error.message
-      }
-    })
+    this.authService
+      .signIn(this.email.value, this.password.value)
+      .then(() => {
+        // Success
+        this.email.setValue('');
+        this.password.setValue('');
+      })
+      .catch((error) => {
+        if (error == 'User email is not verified.') {
+          this.routes.navigate(['/verification']);
+          this.email.setValue('');
+          this.password.setValue('');
+        }
+        switch (error.code) {
+          case 'auth/wrong-password':
+            this.activatePopUp('the password is invalid');
+            return;
+          case 'auth/user-not-found':
+            this.activatePopUp('There is no user corresponding to this email');
+            break;
+          case 'auth/invalid-email':
+            this.activatePopUp(error.message);
+        }
+      });
   }
 
   loginWithGoogle() {
-    this.authService.signInWithGoogle().then(() => {
-    }).catch((error) => {
-      this.providerError = error.message;
-    })
+    this.authService
+      .signInWithGoogle()
+      .then(() => {})
+      .catch((error) => {
+        this.activatePopUp(error.message);
+      });
   }
 
   loginWithFacebook() {
-    this.authService.signInWithFacebook().then(() => {
-    }).catch((error) => {
-      this.providerError = error.message;
-    })
+    this.authService
+      .signInWithFacebook()
+      .then(() => {})
+      .catch((error) => {
+        this.activatePopUp(error.message);
+      });
   }
 
   loginWithTwitter() {
-    this.providerError = "signin with twitter not implemented yet";
+    this.activatePopUp('signin with twitter not implemented yet');
     return;
     // this.authService.signInWithTwitter().then(() => {
     // }).catch((error) => {
@@ -96,20 +95,27 @@ export class SignInComponent implements OnInit {
   }
 
   loginWithApple() {
-    this.authService.signInWithApple().then(() => {
-    }).catch((error) => {
-      this.providerError = error.message;
-    })
+    this.authService
+      .signInWithApple()
+      .then(() => {})
+      .catch((error) => {
+        this.activatePopUp('signin with twitter not implemented yet');
+      });
   }
 
   resetPassword() {
     this.authService.resetPassword(this.email.value).then((value) => {
       if (value.correct) {
-        this.emailMessage = value.message
+        this.emailMessage = value.message;
       } else {
-        this.emailError = value.message
+        this.emailError = value.message;
       }
-    })
+    });
   }
 
+  activatePopUp(message: string) {
+    if (this.popUpLoaded) {
+      this.popUpView.showPopUp(message);
+    }
+  }
 }

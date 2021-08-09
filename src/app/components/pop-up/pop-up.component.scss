@@ -1,0 +1,52 @@
+@import "../../sass/abstract/variables";
+
+.pop-up {
+  position: fixed;
+  right: 0;
+  top: 0;
+  padding: 1rem;
+  background-color: transparent;
+
+  &__container {
+    display: none;
+  }
+
+  &__show {
+    display: flex;
+    background-color: $primary1;
+    padding: 1rem;
+    max-width: 35rem;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0.4rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    animation-name: fade;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+  }
+
+  &__fade {
+    transition: opacity 0.15s linear;
+
+    &:not(.pop-up__show) {
+      opacity: 0;
+    }
+  }
+
+  &__message {
+    color: black3;
+    font-weight: bold;
+    font-size: $font-size-default;
+  }
+
+  &__icon {
+    width: 2rem;
+    height: 2rem;
+    color: $black3;
+    margin-left: 1rem;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
