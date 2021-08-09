@@ -1,10 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   CompleteAnime,
   CompleteBook,
   CompleteSerie,
   search,
 } from 'src/app/data/interfaces';
+
+interface JikanLinkInterface {
+  mal_id: number;
+  type: string;
+  name: string;
+  url: string;
+}
 
 @Component({
   selector: 'app-about-detail',
@@ -18,7 +26,14 @@ export class AboutDetailComponent implements OnInit {
   @Input() type!: search;
   @Input() season!: number
 
-  constructor() {}
+  constructor(private router: Router) { }
 
-  ngOnInit() {}
+  navigateTopage(info: JikanLinkInterface) {
+    if (info.type == 'anime') {
+      this.router.navigate(['home', 'detail', 'anime', info.mal_id.toString(),])
+    }
+  }
+
+  ngOnInit() {
+  }
 }
