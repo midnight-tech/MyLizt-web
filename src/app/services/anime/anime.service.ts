@@ -48,13 +48,7 @@ export class AnimeService {
       })
       .slice(0, 5);
 
-    return [
-      loadedCatalogo[3],
-      loadedCatalogo[1],
-      loadedCatalogo[0],
-      loadedCatalogo[2],
-      loadedCatalogo[4],
-    ];
+    return loadedCatalogo
   }
 
   async getCatalogo(page: number) {
