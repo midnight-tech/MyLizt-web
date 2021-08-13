@@ -17,7 +17,9 @@ export class HomeSearchComponent implements OnInit {
   serie: SerieCatalogo[] = [];
   book: BookCatalogo[] = [];
 
-  constructor(public homeContext: HomeContextService) {}
+  softLoading = false
 
-  ngOnInit() {}
+  constructor(public homeContext: HomeContextService) { }
+
+  ngOnInit() { }
 }

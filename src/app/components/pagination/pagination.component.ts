@@ -3,6 +3,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
@@ -25,7 +26,7 @@ import { SearchPaginationService } from 'src/app/services/pagination/search-pagi
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss'],
 })
-export class PaginationComponent implements OnInit, OnChanges {
+export class PaginationComponent implements OnInit, OnChanges, OnDestroy {
   @Output() visibleListAnime = new EventEmitter<AnimeCatalogo[]>();
   @Output() visibleListSerie = new EventEmitter<SerieCatalogo[]>();
   @Output() visibleListBook = new EventEmitter<BookCatalogo[]>();
@@ -47,6 +48,8 @@ export class PaginationComponent implements OnInit, OnChanges {
     bookCount: any
   }[]>()
 
+  @Output() softLoading = new EventEmitter<boolean>(false)
+
   @Input() type?: search;
   @Input() friendId: string = '';
   @Input() query?: string;
@@ -65,6 +68,7 @@ export class PaginationComponent implements OnInit, OnChanges {
   init = false;
   activated = false;
 
+
   constructor(
     public homeContext: HomeContextService,
     private searchPagination: SearchPaginationService,
@@ -79,13 +83,20 @@ export class PaginationComponent implements OnInit, OnChanges {
       this.pageCalled = 'search';
     }
   }
+  ngOnDestroy(): void {
+    this.softLoading.emit(false)
+    this.clean()
+  }
 
   async initPages() {
     // Quando o componente inicializa
     switch (this.pageCalled) {
       case 'search':
       case 'catalogo':
-        this.changePageCatalogo(this.pageCalled);
+        this.clean()
+        this.softLoading.emit(true)
+        await this.changePageCatalogo(this.pageCalled);
+        this.softLoading.emit(false)
         break;
       case 'friendList':
       case 'myContent':
@@ -122,7 +133,9 @@ export class PaginationComponent implements OnInit, OnChanges {
     switch (this.pageCalled) {
       case 'search':
       case 'catalogo':
-        this.changePageCatalogo(this.pageCalled, page);
+        this.softLoading.emit(true)
+        await this.changePageCatalogo(this.pageCalled, page);
+        this.softLoading.emit(false)
         break;
       case 'friendList':
       case 'myContent':

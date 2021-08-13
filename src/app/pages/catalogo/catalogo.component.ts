@@ -20,6 +20,8 @@ export class CatalogoComponent implements OnInit {
   serie: SerieCatalogo[] = [];
   book: BookCatalogo[] = [];
 
+  softLoad = false
+
   constructor(
     public homeContext: HomeContextService,
     public actRoute: ActivatedRoute
@@ -30,5 +32,5 @@ export class CatalogoComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }

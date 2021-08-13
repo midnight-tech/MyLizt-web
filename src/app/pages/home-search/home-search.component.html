@@ -5,10 +5,11 @@
 
   <div class="pagination pagination--top">
     <app-pagination pageCalled="search" (visibleListAnime)="anime = $event" (visibleListBook)="book = $event"
-      (visibleListSerie)="serie = $event" [query]="homeContext.query" [type]="homeContext.searchType"></app-pagination>
+      (visibleListSerie)="serie = $event" [query]="homeContext.query" [type]="homeContext.searchType"
+      (softLoading)="softLoading = $event"></app-pagination>
   </div>
 
-  <div class="list">
+  <div *ngIf="!softLoading" class="list">
     <div class="list__card" *ngFor="let content of anime">
       <app-card [anime]="content"></app-card>
     </div>
@@ -27,6 +28,9 @@
     <div *ngIf="homeContext.searchType == 'SERIE' && serie.length == 0">
       any serie found
     </div>
+  </div>
+  <div *ngIf="softLoading">
+    Loading...
   </div>
 
   <div class="pagination pagination--bottom">
