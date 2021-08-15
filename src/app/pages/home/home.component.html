@@ -4,14 +4,16 @@
     <app-menu-left class="menu" (menuLeftEvent)="isMenuActive=$event"></app-menu-left>
   </div>
 
-  <div class="mini-container">
-    <div class="top-bar-container">
-      <app-top-bar class="full-width" (showMenuEvent)="isMenuActive=$event"></app-top-bar>
-    </div>
+  <div class="main-container">
+    <div class="mini-container">
+      <div class="top-bar-container">
+        <app-top-bar class="full-width" (showMenuEvent)="isMenuActive=$event"></app-top-bar>
+      </div>
 
-    <div class="contents">
-      <div fxFlex class="full-width">
-        <router-outlet class="full-width"></router-outlet>
+      <div class="contents">
+        <div fxFlex class="full-width">
+          <router-outlet class="full-width"></router-outlet>
+        </div>
       </div>
     </div>
 

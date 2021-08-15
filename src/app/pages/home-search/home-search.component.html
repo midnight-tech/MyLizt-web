@@ -29,8 +29,12 @@
       any serie found
     </div>
   </div>
-  <div *ngIf="softLoading">
-    Loading...
+
+  <!-- Loading -->
+  <div *ngIf="softLoading" class="list">
+    <div class="list__card" *ngFor="let content of loadingArray">
+      <app-card pageCall="loading" [loading]="softLoading" [lookMyList]=false></app-card>
+    </div>
   </div>
 
   <div class="pagination pagination--bottom">

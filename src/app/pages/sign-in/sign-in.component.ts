@@ -11,11 +11,7 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 })
 export class SignInComponent implements OnInit, AfterViewInit {
   email = new FormControl('');
-  emailError = '';
-  emailMessage = '';
   password = new FormControl('');
-  passwordError = '';
-  providerError = '';
 
   popUpLoaded = false;
 
@@ -56,7 +52,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
         }
         switch (error.code) {
           case 'auth/wrong-password':
-            this.activatePopUp('the password is invalid');
+            this.activatePopUp('The password is invalid');
             return;
           case 'auth/user-not-found':
             this.activatePopUp('There is no user corresponding to this email');
@@ -105,11 +101,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
 
   resetPassword() {
     this.authService.resetPassword(this.email.value).then((value) => {
-      if (value.correct) {
-        this.emailMessage = value.message;
-      } else {
-        this.emailError = value.message;
-      }
+      this.activatePopUp(value.message);
     });
   }
 

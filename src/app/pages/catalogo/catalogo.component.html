@@ -5,10 +5,10 @@
 
   <div class="pagination pagination--top">
     <app-pagination pageCalled="catalogo" (visibleListAnime)="anime = $event" (visibleListBook)="book = $event"
-      (visibleListSerie)="serie = $event" [type]="type" (softLoading)="softLoad = $event"></app-pagination>
+      (visibleListSerie)="serie = $event" [type]="type" (softLoading)="softLoading = $event"></app-pagination>
   </div>
 
-  <div *ngIf="!softLoad" class="list">
+  <div *ngIf="!softLoading" class="list">
     <div class="list__card" *ngFor="let content of anime">
       <!-- {{ content.title }} -->
       <app-card [anime]="content"></app-card>
@@ -22,8 +22,11 @@
       <app-card [serie]="content"></app-card>
     </div>
   </div>
-  <div *ngIf="softLoad">
-    Loading...
+
+  <div *ngIf="softLoading" class="list">
+    <div class="list__card" *ngFor="let content of loadingArray">
+      <app-card pageCall="loading" [loading]="softLoading" [lookMyList]=false></app-card>
+    </div>
   </div>
 
   <div class="pagination pagination--bottom">
