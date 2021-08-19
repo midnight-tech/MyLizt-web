@@ -195,7 +195,7 @@
   <app-recommendation *ngIf="book" type="BOOK" [contentName]="book.volumeInfo.title" [contentId]="book.id"
     [isActiveRecommend]="isActiveRecommend" (isActiveEvent)="disableReceiveRecommendation($event)">
   </app-recommendation>
-
+  <app-pop-up #popUpHeaderDetail></app-pop-up>
   <app-content-completed [isActiveCompleted]="openCompleteWatched" (isActiveEvent)="openCompleteWatched = $event"
     (contentAlter)="mycontent = $event" [content]="mycontent"></app-content-completed>
 </div>

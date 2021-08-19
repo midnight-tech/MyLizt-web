@@ -4,6 +4,7 @@ import {
   OnInit,
   Output,
   EventEmitter,
+  ViewChild,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
@@ -15,6 +16,7 @@ import {
   search,
 } from 'src/app/data/interfaces';
 import { ListService } from 'src/app/services/list/list.service';
+import { PopUpComponent } from '../pop-up/pop-up.component';
 
 @Component({
   selector: 'app-header-detail',
@@ -28,6 +30,7 @@ export class HeaderDetailComponent implements OnInit {
   @Input() type!: search;
   @Input() watched!: boolean;
   @Output() seasonAtualEmitter = new EventEmitter<number>();
+  @ViewChild("popUpHeaderDetail") popUp?: PopUpComponent
 
   openCompleteWatched = false;
   rateInputControl = new FormControl('');
@@ -56,9 +59,8 @@ export class HeaderDetailComponent implements OnInit {
     else title = this.book.volumeInfo.title
     try {
       await navigator.clipboard.writeText(title)
-      // Ative o informante aqui
+      this.popUp?.showPopUp("text copied to clipboard")
     } catch (e) {
-      // Caso queira por um erro
     }
   }
 
