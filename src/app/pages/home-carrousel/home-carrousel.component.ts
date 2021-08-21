@@ -71,7 +71,7 @@ export class HomeCarrouselComponent implements OnInit {
   }
 
   navigateToCatalogo(type: string) {
-    this.router.navigate(['home', 'catalogo', type])
+    this.router.navigate(['home', 'catalogo', type, 1])
   }
 
 }

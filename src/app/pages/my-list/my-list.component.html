@@ -6,8 +6,8 @@
   </div>
 
   <div class="pagination pagination--top">
-    <app-pagination pageCalled="myContent" (visibleContentAnime)="anime = $event" (visibleContentBook)="book = $event"
-      (visibleContentSerie)="serie = $event" [type]="type" [completePage]="false"></app-pagination>
+    <app-pagination pageCalled="myContent" [type]="type" [atualPage]="page" [totalPage]="totalPage"
+      [completePage]="false"></app-pagination>
   </div>
 
   <div *ngIf="loadingService.isLoading" class="list">

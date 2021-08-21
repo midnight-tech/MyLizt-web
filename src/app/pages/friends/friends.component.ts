@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { search, UserInterface } from 'src/app/data/interfaces';
+import { LoadingService } from 'src/app/services/loading/loading.service';
+import { FriendPaginationService } from 'src/app/services/pagination/friend-pagination.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -22,10 +24,34 @@ export class FriendsComponent implements OnInit {
   loading = false
   selectedId = ""
   update = true
+  page: number = 1
+  totalPage: number = -1
 
-  constructor(public userService: UserService, private router: Router) { }
+  constructor
+    (
+      actRoute: ActivatedRoute,
+      public userService: UserService,
+      private router: Router,
+      private friendPagination: FriendPaginationService,
+      private loadingService: LoadingService
+    ) {
+    actRoute.params.subscribe((value) => {
+      this.page = Number.parseInt(value.page);
+      loadingService.isLoading = true
+      this.changePage().then(() => {
+        loadingService.isLoading = false
+      })
+    });
+  }
 
   ngOnInit() {
+  }
+
+  async changePage() {
+    const response = await this.friendPagination.friendPagination(
+      this.page
+    )
+    this.friends = response
   }
 
   showAddFriends() {
@@ -73,7 +99,7 @@ export class FriendsComponent implements OnInit {
   }
 
   redirectToFriendList(friendId: string, type: search) {
-    this.router.navigate(['home', 'friend-list', friendId, type.toLowerCase()]);
+    this.router.navigate(['home', 'friend-list', friendId, type.toLowerCase(), 1]);
   }
 
 }

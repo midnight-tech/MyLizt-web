@@ -10,7 +10,7 @@
   </div>
 
   <div class="pagination pagination--top">
-    <app-pagination pageCalled="friend" (visibleFriend)="friends = $event" [update]="update"></app-pagination>
+    <app-pagination pageCalled="friend" [atualPage]="page" [totalPage]="totalPage"></app-pagination>
   </div>
 
   <div class="friends">

@@ -4,8 +4,8 @@
   </div>
 
   <div class="pagination pagination--top">
-    <app-pagination pageCalled="catalogo" (visibleListAnime)="anime = $event" (visibleListBook)="book = $event"
-      (visibleListSerie)="serie = $event" [type]="type" (softLoading)="softLoading = $event"></app-pagination>
+    <app-pagination pageCalled="catalogo" [atualPage]="page" [type]="type" [totalPage]="totalPage">
+    </app-pagination>
   </div>
 
   <div *ngIf="!softLoading" class="list">

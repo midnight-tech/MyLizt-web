@@ -113,9 +113,8 @@ export class TopBarComponent implements OnInit, OnChanges {
   totalSearch() {
     if (this.searchField.value.length >= 3) {
       this.isActiveSearch = false;
-      this.homeContext.query = this.searchField.value;
       this.homeContext.searchType = this.searchOptions[this.searchIndex];
-      this.router.navigateByUrl('home/search');
+      this.router.navigate(['home', 'search', this.searchField.value, this.searchOptions[this.searchIndex].toLocaleLowerCase(), 1]);
     }
   }
 
@@ -184,7 +183,7 @@ export class TopBarComponent implements OnInit, OnChanges {
 
   navigateToFriends() {
     this.isActiveAccount = false;
-    this.router.navigate(['home', 'friends']);
+    this.router.navigate(['home', 'friends', 1]);
   }
 
   logout() {

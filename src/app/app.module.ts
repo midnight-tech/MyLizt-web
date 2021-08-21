@@ -97,7 +97,7 @@ const routes: Routes = [
         component: HomeCarrouselComponent,
       },
       {
-        path: 'search',
+        path: 'search/:keySearch/:type/:page',
         component: HomeSearchComponent,
       },
       {
@@ -105,23 +105,23 @@ const routes: Routes = [
         component: DetailComponent,
       },
       {
-        path: 'my-list/:type',
+        path: 'my-list/:type/:page',
         component: MyListComponent,
       },
       {
-        path: 'catalogo/:type',
+        path: 'catalogo/:type/:page',
         component: CatalogoComponent,
       },
       {
-        path: 'friends',
+        path: 'friends/:page',
         component: FriendsComponent,
       },
       {
-        path: 'friend-list/:friendId/:type',
+        path: 'friend-list/:friendId/:type/:page',
         component: FriendListComponent,
       },
       {
-        path: 'recommendations/:type',
+        path: 'recommendations/:type/:page',
         component: MyRecommendationsComponent,
       },
     ],
@@ -195,4 +195,4 @@ const routes: Routes = [
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

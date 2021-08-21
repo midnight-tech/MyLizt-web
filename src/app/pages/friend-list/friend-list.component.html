@@ -6,8 +6,8 @@
   </div>
 
   <div class="pagination pagination--top">
-    <app-pagination pageCalled="friendList" (visibleContentAnime)="anime = $event" (visibleContentBook)="book = $event"
-      (visibleContentSerie)="serie = $event" [type]="type" [friendId]="friendId" [completePage]="false">
+    <app-pagination pageCalled="friendList" [type]="type" [friendId]="friendId" [atualPage]="page"
+      [totalPage]="totalPage">
     </app-pagination>
   </div>
 
