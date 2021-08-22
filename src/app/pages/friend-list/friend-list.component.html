@@ -7,7 +7,7 @@
 
   <div class="pagination pagination--top">
     <app-pagination pageCalled="friendList" [type]="type" [friendId]="friendId" [atualPage]="page"
-      [totalPage]="totalPage">
+      [totalPage]="totalPage" [completePage]="false">
     </app-pagination>
   </div>
 
@@ -50,6 +50,8 @@
   </div>
 
   <div class="pagination pagination--bottom">
-    <!-- <app-pagination [type]="type" pageCalled="friendList"></app-pagination> -->
+    <app-pagination pageCalled="friendList" [type]="type" [friendId]="friendId" [atualPage]="page"
+      [totalPage]="totalPage" [completePage]="false">
+    </app-pagination>
   </div>
 </div>
