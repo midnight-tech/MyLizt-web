@@ -24,7 +24,7 @@ export class CarrouselComponent implements OnInit, AfterViewInit {
     spaceBetween: 30,
     freeMode: true,
     loop: true,
-    loopAdditionalSlides: 15,
+    // loopAdditionalSlides: 15,
   };
 
   constructor(private router: Router) {
@@ -35,6 +35,7 @@ export class CarrouselComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.mediaQueryCarrousel();
+    this.contents = this.contents.concat(this.contents, this.contents, this.contents)
   }
 
   ngOnInit() {
