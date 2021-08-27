@@ -86,6 +86,7 @@ export class PaginationComponent implements OnInit, OnChanges, OnDestroy {
       case 'friend':
         this.router.navigate(['home', 'friends', page])
     }
+    window.scroll(0, 0)
   }
 
   paginationInterfaceInit(totalPage: number) {
