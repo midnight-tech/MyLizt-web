@@ -20,8 +20,8 @@
         <use href="assets/symbol-defs.svg#icon-check"></use>
       </svg>
     </div>
-    <div *ngIf="anime.length == 0">
-      You don't have any anime in your list
+    <div *ngIf="anime.length == 0" class="categories categories__text container-text-overflow">
+      <span class="categories__item categories__item--empty text-overflow">Nothing Here...</span>
     </div>
   </div>
   <div class="categories">
@@ -39,8 +39,8 @@
         <use href="assets/symbol-defs.svg#icon-check"></use>
       </svg>
     </div>
-    <div *ngIf="serie.length == 0">
-      You don't have any serie in your list
+    <div *ngIf="serie.length == 0" class="categories categories__text container-text-overflow">
+      <span class="categories__item categories__item--empty text-overflow">Nothing Here...</span>
     </div>
   </div>
   <div class="categories">
@@ -58,8 +58,8 @@
         <use href="assets/symbol-defs.svg#icon-check"></use>
       </svg>
     </div>
-    <div *ngIf="book.length == 0">
-      You don't have any book in your list
+    <div *ngIf="book.length == 0" class="categories categories__text container-text-overflow">
+      <span class="categories__item categories__item--empty text-overflow">Nothing Here...</span>
     </div>
   </div>
 </div>

@@ -1,0 +1,13 @@
+@import "../../sass/abstract/variables";
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.text {
+  margin-top: 4rem;
+  font-size: $font-size-extra-large;
+  color: $white;
+}

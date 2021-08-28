@@ -287,6 +287,12 @@
       transform: translateY(0px);
     }
   }
+
+  &__no-result {
+    margin: 0.5rem;
+    font-size: $font-size-default;
+    text-align: center;
+  }
 }
 
 .dropdown-menu {

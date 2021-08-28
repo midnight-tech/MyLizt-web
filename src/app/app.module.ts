@@ -51,6 +51,7 @@ import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { TesteComponent } from './pages/teste/teste.component';
 import { PopUpComponent } from './components/pop-up/pop-up.component';
+import { EmptyComponent } from './components/empty/empty.component';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   slidesPerView: 3.5,
@@ -160,6 +161,7 @@ const routes: Routes = [
     CompleteScreenLoadComponent,
     TesteComponent,
     PopUpComponent,
+    EmptyComponent,
   ],
   imports: [
     BrowserModule,
@@ -195,4 +197,4 @@ const routes: Routes = [
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

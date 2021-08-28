@@ -71,6 +71,9 @@
 
 .mini-container {
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .top-bar-container {
@@ -81,6 +84,7 @@
 .contents {
   display: flex;
   width: 100%;
+  height: 100%;
 }
 
 .footer {
@@ -105,6 +109,7 @@
   background-color: rgba($black3, 0.9);
 }
 
-.full-width {
+.full-width-height {
   width: 100%;
+  height: 100%;
 }

@@ -17,6 +17,7 @@
     </div>
   </div>
 
+
   <div *ngIf="!loadingService.isLoading && type=='ANIME' " class="list">
     <div class="list__card" *ngFor="let content of anime">
       <!-- {{ content.title }} -->
@@ -24,9 +25,11 @@
       </app-card>
     </div>
   </div>
-  <div *ngIf="!loadingService.isLoading && type == 'ANIME' && anime.length == 0">
-    You don't have any anime recommendation
+
+  <div *ngIf="!loadingService.isLoading && type == 'ANIME' && anime.length == 0" class="list list__empty">
+    <app-empty></app-empty>
   </div>
+
   <div *ngIf="!loadingService.isLoading && type=='SERIE' " class="list">
     <div class="list__card" *ngFor="let content of serie">
       <!-- {{ content.volumeInfo.title }} -->
@@ -34,9 +37,11 @@
       </app-card>
     </div>
   </div>
-  <div *ngIf="!loadingService.isLoading && type == 'SERIE' && serie.length == 0">
-    You don't have any serie recommendation
+
+  <div *ngIf="!loadingService.isLoading && type == 'SERIE' && serie.length == 0" class="list list__empty">
+    <app-empty></app-empty>
   </div>
+
   <div *ngIf="!loadingService.isLoading && type=='BOOK' " class="list">
     <div class="list__card" *ngFor="let content of book">
       <!-- {{ content.name }} -->
@@ -44,8 +49,9 @@
       </app-card>
     </div>
   </div>
-  <div *ngIf="!loadingService.isLoading && type == 'BOOK' && book.length == 0">
-    You don't have any book recommendation
+
+  <div *ngIf="!loadingService.isLoading && type == 'BOOK' && book.length == 0" class="list list__empty">
+    <app-empty></app-empty>
   </div>
 
   <div class="pagination pagination--bottom">

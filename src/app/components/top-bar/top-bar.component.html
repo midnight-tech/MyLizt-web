@@ -116,8 +116,8 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="searchIndex == 0 && animes.length == 0">
-              any anime found
+            <div *ngIf="searchIndex == 0 && animes.length == 0" class="search__no-result">
+              <p>No result found...</p>
             </div>
 
             <div *ngFor="let serie of series; index as i">
@@ -165,8 +165,8 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="searchIndex == 1 && series.length == 0">
-              any serie found
+            <div *ngIf="searchIndex == 1 && series.length == 0" class="search__no-result">
+              <p>No result found...</p>
             </div>
 
             <div *ngFor="let book of books; index as i">
@@ -205,8 +205,8 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="searchIndex == 2 && books.length == 0">
-              any book found
+            <div *ngIf="searchIndex == 2 && books.length == 0" class="search__no-result">
+              <p>No result found...</p>
             </div>
           </div>
         </div>
