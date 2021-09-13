@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PopUpComponent } from 'src/app/components/pop-up/pop-up.component';
 import { search, UserInterface } from 'src/app/data/interfaces';
 import { LoadingService } from 'src/app/services/loading/loading.service';
 import { FriendPaginationService } from 'src/app/services/pagination/friend-pagination.service';
@@ -11,7 +12,7 @@ import { UserService } from 'src/app/services/user/user.service';
   templateUrl: './friends.component.html',
   styleUrls: ['./friends.component.scss'],
 })
-export class FriendsComponent implements OnInit {
+export class FriendsComponent implements OnInit, OnDestroy {
   isActiveAdd = false;
   isActiveRemove = false;
   friends: {
@@ -25,7 +26,8 @@ export class FriendsComponent implements OnInit {
   selectedId = ""
   update = true
   page: number = 1
-  totalPage: number = -1
+  totalPage: number = 1
+  @ViewChild("popUpFriends") popUpMenu?: PopUpComponent;
 
   constructor
     (
@@ -43,14 +45,25 @@ export class FriendsComponent implements OnInit {
       })
     });
   }
+  ngOnDestroy(): void {
+    this.friendPagination.clean()
+  }
 
   ngOnInit() {
+  }
+
+  async copyToClipboard(friendId: string) {
+    await navigator.clipboard.writeText(friendId)
+    this.popUpMenu?.showPopUp("text copied to clipboard")
   }
 
   async changePage() {
     const response = await this.friendPagination.friendPagination(
       this.page
     )
+    if (response.length == 11) {
+      this.totalPage += 1;
+    }
     this.friends = response
   }
 
@@ -66,7 +79,7 @@ export class FriendsComponent implements OnInit {
     this.userService.sendFriendRequest(id.toLowerCase().replace("#", "")).then((value) => {
       if (value) {
         this.showAddFriends()
-        this.friends = []
+        this.popUpMenu?.showPopUp("Friend request sended successfully")
       }
     });
   }
@@ -81,8 +94,7 @@ export class FriendsComponent implements OnInit {
       this.userService.removeFriend(id).then((value) => {
         if (value) {
           this.showRemoveFriends()
-          this.friends = []
-          this.update = !this.update
+          this.router.navigate(['home'])
         }
         this.loading = false
       });

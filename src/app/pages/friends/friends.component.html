@@ -17,7 +17,8 @@
     <div class="friends__container" *ngFor="let friend of friends">
       <div class="friends__user">
         <span class="friends__user__name">{{ friend.user.username }}</span>
-        <span class="friends__user__id">#{{ friend.user.applicationUserId }}</span>
+        <span class="friends__user__id" (click)="copyToClipboard(friend.user.applicationUserId)">#{{
+          friend.user.applicationUserId }}</span>
       </div>
       <span class="friends__category friends__category--anime"
         (click)="redirectToFriendList(friend.user.applicationUserId, 'ANIME')">Anime ({{friend.aniCount}})</span>
@@ -64,4 +65,5 @@
       </div>
     </form>
   </div>
+  <app-pop-up #popUpFriends></app-pop-up>
 </div>

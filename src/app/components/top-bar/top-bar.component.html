@@ -284,7 +284,7 @@
           <span class="account__user__name__text" [title]="username">{{ username }}</span>
         </div>
         <a class="button" aria-haspopup="true" aria-controls="dropdown-menu6">
-          <span>#{{ authService.userFirestore?.applicationUserId }}</span>
+          <span (click)="copyToClipboard()">#{{ authService.userFirestore?.applicationUserId }}</span>
         </a>
       </div>
       <!-- Conteudo dropdown account -->
@@ -308,4 +308,5 @@
       </div>
     </div>
   </div>
+  <app-pop-up #popUpTopBar></app-pop-up>
 </div>
