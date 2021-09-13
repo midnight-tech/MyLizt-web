@@ -33,8 +33,9 @@
         </svg>
       </div>
     </div>
-    <div *ngIf="friends.length == 0">
-      you don't have any friends
+
+    <div *ngIf="friends.length == 0" class="friends__empty">
+      <app-empty></app-empty>
     </div>
   </div>
 

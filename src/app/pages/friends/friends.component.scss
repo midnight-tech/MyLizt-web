@@ -77,6 +77,8 @@
 
 .friends {
   grid-row: content-start / content-end;
+  display: flex;
+  justify-content: center;
 
   &__container {
     align-self: baseline;
@@ -235,6 +237,12 @@
       grid-row: user-start / user-end;
       grid-column: col-start 3 / col-end 3;
     }
+  }
+
+  &__empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
