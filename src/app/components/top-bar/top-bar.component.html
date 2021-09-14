@@ -268,8 +268,14 @@
                 <span class="account__notification__highlight"
                   (click)="navigateToDetail(notification.data.idContent!,notification.data.contentType!)">{{notification.message.contentName}}</span>
               </span>
-              <img (click)="notificationService.deleteNotification(notification)" src="../../../assets/icon-logout.svg"
-                alt="icon-logout" class="account__notification__buttons--delete" />
+
+              <div class="account__notification__buttons">
+                <svg class="account__notification__buttons--delete"
+                  (click)="notificationService.deleteNotification(notification)">
+                  <use href="assets/symbol-defs.svg#icon-clear"></use>
+                </svg>
+              </div>
+
             </div>
           </div>
         </div>
@@ -308,5 +314,5 @@
       </div>
     </div>
   </div>
-  <app-pop-up #popUpTopBar></app-pop-up>
 </div>
+<app-pop-up #popUpTopBar></app-pop-up>
