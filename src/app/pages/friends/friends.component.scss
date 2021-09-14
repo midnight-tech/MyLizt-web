@@ -78,10 +78,13 @@
 .friends {
   grid-row: content-start / content-end;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+
+  &--center {
+    justify-content: center;
+  }
 
   &__container {
-    align-self: baseline;
     font-size: $font-size-default;
     color: $white;
     align-items: center;

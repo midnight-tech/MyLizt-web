@@ -13,7 +13,7 @@
     <app-pagination pageCalled="friend" [atualPage]="page" [totalPage]="totalPage"></app-pagination>
   </div>
 
-  <div class="friends">
+  <div class="friends" [ngClass]="{'friends--center': friends.length == 0}">
     <div class="friends__container" *ngFor="let friend of friends">
       <div class="friends__user">
         <span class="friends__user__name">{{ friend.user.username }}</span>
