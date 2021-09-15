@@ -10,7 +10,8 @@
     "e2e": "ng e2e",
     "start-pwa": "ng build --prod && http-server -S -C ./cert/cert.pem -K ./cert/key.pem -p 4201 -c-1 dist/MyLizt",
     "start-pwa-dev": "ng build && http-server -S -C ./cert/cert.pem -K ./cert/key.pem -p 4201 -c-1 dist/MyLizt",
-    "start-pwa-http": "ng build --prod && http-server -p 4201 -c-1 dist/MyLizt"
+    "start-pwa-http": "ng build --prod && http-server -p 4201 -c-1 dist/MyLizt",
+    "start-broadcast": "ng build && http-server -p 4201 -a 0.0.0.0 -c-1 dist/MyLizt"
   },
   "private": true,
   "dependencies": {
