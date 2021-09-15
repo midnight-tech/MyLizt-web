@@ -50,6 +50,9 @@ export class BookService {
     const limit = isAll ? 9 : 3
     try {
       const result = await axios.get<request>(`https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=${limit}`)
+      if (!result.data.items) {
+        return []
+      }
       return result.data.items.map((value) => {
         value = this.selectImage(value) as BookCatalogo
         return new BookCatalogo(value, this)
@@ -66,6 +69,9 @@ export class BookService {
       items: BookCatalogo[]
     }
     const results = await axios.get<request>(`https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=12&startIndex=${(page - 1) * 12}`)
+    if (!results.data.items) {
+      return { content: [], lastPage: 1 }
+    }
     return {
       content: results.data.items.map((value) => {
         value = this.selectImage(value) as BookCatalogo
