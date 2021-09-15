@@ -52,9 +52,11 @@
     </span>
   </div>
   <div class="info">
-    <span class="info__type" *ngFor="let studio of anime.studios; last as isLast">Studios: <span class="info__value">
+    <span class="info__type">Studios:
+      <span class="info__value" *ngFor="let studio of anime.studios; last as isLast">
         {{ studio.name }}<span *ngIf="!isLast">,</span>
-      </span></span>
+      </span>
+    </span>
   </div>
   <div class="info">
     <span class="info__type">Sources: <span class="info__value">{{ anime.source }}</span></span>
@@ -181,7 +183,8 @@
   </div>
   <div class="info">
     <span class="info__type">
-      Producers:<span class="info__value" *ngFor="let created of serie.created_by; last as isLast">
+      Producers:
+      <span class="info__value" *ngFor="let created of serie.created_by; last as isLast">
         {{ created.name }}<span *ngIf="!isLast">,</span>
       </span>
     </span>
