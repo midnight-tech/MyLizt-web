@@ -181,12 +181,13 @@
               </svg>
             </div>
           </div>
+          <!-- Mensagem do evento Adicionado ou Removido da lista Recomendacao-->
           <div class="container-flex" *ngIf="removed || added">
-            <div *ngIf="removed">
-              content removed
+            <div *ngIf="removed" class="container-event">
+              <span class="container-event__text">Content removed</span>
             </div>
-            <div *ngIf="added">
-              content added to your list
+            <div *ngIf="added" class="container-event">
+              <span class="container-event__text">Content added</span>
             </div>
           </div>
         </div>
