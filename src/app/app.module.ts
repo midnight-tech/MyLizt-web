@@ -52,6 +52,7 @@ import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { TesteComponent } from './pages/teste/teste.component';
 import { PopUpComponent } from './components/pop-up/pop-up.component';
 import { EmptyComponent } from './components/empty/empty.component';
+import { RecAuxService } from './services/rec-aux/rec-aux-service.service';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   slidesPerView: 3.5,
@@ -190,6 +191,7 @@ const routes: Routes = [
     UserService,
     NotificationService,
     LoadingService,
+    RecAuxService,
     {
       provide: SWIPER_CONFIG,
       useValue: DEFAULT_SWIPER_CONFIG,
@@ -197,4 +199,4 @@ const routes: Routes = [
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

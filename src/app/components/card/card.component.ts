@@ -6,6 +6,7 @@ import { content, search } from 'src/app/data/interfaces';
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { HomeContextService } from 'src/app/services/home-context/home.service';
 import { ListService } from 'src/app/services/list/list.service';
+import { RecAuxService } from 'src/app/services/rec-aux/rec-aux-service.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -39,7 +40,8 @@ export class CardComponent implements OnInit {
     public listService: ListService,
     public router: Router,
     public homeContext: HomeContextService,
-    private userService: UserService
+    private userService: UserService,
+    private recAuxService: RecAuxService,
   ) { }
 
   ngOnInit() {
@@ -50,6 +52,10 @@ export class CardComponent implements OnInit {
       if (this.friendContent == undefined) {
         throw 'friendContent undefined';
       }
+    }
+    if (this.pageCall == 'recommendation') {
+      this.added = this.recAuxService.contentInAddedContent(this.mycontent!.contentId.toString());
+      this.removed = this.recAuxService.contentInRemovedContent(this.mycontent!.contentId.toString());
     }
     if (this.notRended) {
       if (this.lookMyList) {
@@ -97,6 +103,7 @@ export class CardComponent implements OnInit {
       .then((value) => {
         this.mycontent = value;
         this.added = true
+        this.recAuxService.addAddedContent(this.mycontent.contentId.toString())
       });
   }
 
@@ -116,6 +123,7 @@ export class CardComponent implements OnInit {
     }
     this.listService.removeRec(this.mycontent).then(() => {
       this.removed = true
+      this.recAuxService.addRemovedContent(this.mycontent!.contentId.toString())
       this.notRended = true;
       this.ngOnInit();
     });
