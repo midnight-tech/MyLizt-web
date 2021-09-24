@@ -100,6 +100,14 @@ export type CompleteAnime = {
         url: string;
       }
     ];
+    Prequel: [
+      {
+        mal_id: number;
+        type: string;
+        name: string;
+        url: string;
+      }
+    ];
   };
   producers: [
     {

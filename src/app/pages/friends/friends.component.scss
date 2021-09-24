@@ -77,9 +77,14 @@
 
 .friends {
   grid-row: content-start / content-end;
+  display: flex;
+  flex-direction: column;
+
+  &--center {
+    justify-content: center;
+  }
 
   &__container {
-    align-self: baseline;
     font-size: $font-size-default;
     color: $white;
     align-items: center;
@@ -235,6 +240,12 @@
       grid-row: user-start / user-end;
       grid-column: col-start 3 / col-end 3;
     }
+  }
+
+  &__empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 

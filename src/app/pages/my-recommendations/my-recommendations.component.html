@@ -6,8 +6,8 @@
   </div>
 
   <div class="pagination pagination--top">
-    <app-pagination pageCalled="myRec" (visibleContentAnime)="anime = $event" (visibleContentBook)="book = $event"
-      (visibleContentSerie)="serie = $event" [type]="type" [completePage]="false"></app-pagination>
+    <app-pagination pageCalled="myRec" [atualPage]="page" [totalPage]="totalPage" [type]="type" [completePage]="false">
+    </app-pagination>
   </div>
 
   <div *ngIf="loadingService.isLoading" class="list">
@@ -17,6 +17,7 @@
     </div>
   </div>
 
+
   <div *ngIf="!loadingService.isLoading && type=='ANIME' " class="list">
     <div class="list__card" *ngFor="let content of anime">
       <!-- {{ content.title }} -->
@@ -24,9 +25,11 @@
       </app-card>
     </div>
   </div>
-  <div *ngIf="!loadingService.isLoading && type == 'ANIME' && anime.length == 0">
-    You don't have any anime recommendation
+
+  <div *ngIf="!loadingService.isLoading && type == 'ANIME' && anime.length == 0" class="list list__empty">
+    <app-empty></app-empty>
   </div>
+
   <div *ngIf="!loadingService.isLoading && type=='SERIE' " class="list">
     <div class="list__card" *ngFor="let content of serie">
       <!-- {{ content.volumeInfo.title }} -->
@@ -34,9 +37,11 @@
       </app-card>
     </div>
   </div>
-  <div *ngIf="!loadingService.isLoading && type == 'SERIE' && serie.length == 0">
-    You don't have any serie recommendation
+
+  <div *ngIf="!loadingService.isLoading && type == 'SERIE' && serie.length == 0" class="list list__empty">
+    <app-empty></app-empty>
   </div>
+
   <div *ngIf="!loadingService.isLoading && type=='BOOK' " class="list">
     <div class="list__card" *ngFor="let content of book">
       <!-- {{ content.name }} -->
@@ -44,11 +49,13 @@
       </app-card>
     </div>
   </div>
-  <div *ngIf="!loadingService.isLoading && type == 'BOOK' && book.length == 0">
-    You don't have any book recommendation
+
+  <div *ngIf="!loadingService.isLoading && type == 'BOOK' && book.length == 0" class="list list__empty">
+    <app-empty></app-empty>
   </div>
 
   <div class="pagination pagination--bottom">
-    <!-- <app-pagination  pageCalled="myRec" [type]="type"></app-pagination> -->
+    <app-pagination pageCalled="myRec" [atualPage]="page" [totalPage]="totalPage" [type]="type" [completePage]="false">
+    </app-pagination>
   </div>
 </div>

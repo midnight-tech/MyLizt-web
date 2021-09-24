@@ -1,98 +1,60 @@
 @import "../../sass/abstract/variables";
+@import "~swiper/swiper.min.css";
 
-// @TODO Descobrir o bug do hover apenas no image 4
+.carrousel {
+  &__container {
+    display: flex;
+    height: 45rem;
+    position: relative;
+    width: 100%;
 
-*,
-*::after,
-*::before {
-  margin: 0;
-  padding: 0;
-  box-sizing: inherit;
-}
-
-html {
-  font-size: 62.5%;
-}
-
-input[type="radio"] {
-  display: none;
-}
-
-img {
-  width: 100%;
-  height: 100%;
-  border-radius: $the-border-radius;
-  object-fit: cover;
-}
-
-.container {
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.cards {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-columns: repeat(12, [col-start] minmax(auto, 1fr) [col-end]);
-  grid-template-rows: minmax(auto, 50rem);
-}
-
-.card {
-  position: relative;
-
-  width: 100%;
-  transition: transform 0.4s ease;
-  cursor: pointer;
-  border-radius: $the-border-radius;
-  overflow: hidden;
-
-  &--1 {
-    grid-column: 1 / span 4;
-    grid-row: 1 / -1;
-  }
-  &--2 {
-    grid-column: 3 / span 4;
-    grid-row: 1 / -1;
-    z-index: 1;
-  }
-  &--3 {
-    grid-column: 5 / span 4;
-    grid-row: 1 / -1;
-    z-index: 2;
-  }
-  &--4 {
-    grid-column: 7 / span 4;
-    grid-row: 1 / -1;
-    z-index: 1;
-  }
-  &--5 {
-    grid-column: 9 / span 4;
-    grid-row: 1 / -1;
+    &:hover {
+      cursor: grab;
+    }
   }
 
-  &__hover {
+  &__layer {
+    position: absolute;
+    top: 100%;
+    left: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    height: 100%;
     width: 100%;
-    top: -100%;
-    padding: 2rem 2rem;
-    border-radius: $the-border-radius;
-    position: absolute;
-    transition: transform 0.4s ease;
+    height: 100%;
+    z-index: 1;
+    transition: 0.5s;
   }
 
-  &__text {
-    font-size: 2rem;
-    color: $white;
-    text-transform: uppercase;
+  &__card {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    position: relative;
+    overflow: hidden;
+
+    &:hover .carrousel__layer {
+      top: 0;
+      background-color: rgba($black3, 0.9);
+    }
+  }
+
+  &__content {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__cover {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__title {
+    font-size: $font-size-large;
+    color: $primary1;
+    padding: 2rem;
     text-align: center;
   }
 
@@ -108,6 +70,7 @@ img {
     border-right: 0.2rem solid rgba($primary3, 1);
     box-shadow: 0 0.5rem 1rem -0.5rem rgba($black, 1);
     transition: all 0.4s ease;
+    height: 3rem;
 
     &__text {
       font-size: 1.3rem;
@@ -124,296 +87,7 @@ img {
 
     &:hover {
       transform: scale(1.05);
-    }
-  }
-}
-
-.darkness {
-  position: absolute;
-  background-color: black;
-  z-index: 10;
-  width: 100%;
-  height: 100%;
-  border-radius: $the-border-radius;
-  transition: opacity 0.4s ease;
-}
-
-// hover
-#item-3:checked:hover ~ .cards #shadow-3 {
-  opacity: $opacity-tertiary;
-
-  & + .card__hover {
-    transform: translateY(100%);
-    z-index: 15;
-  }
-}
-
-// 1 Checked
-#item-1:checked {
-  & ~ .cards {
-    & #song-1 {
-      transform: translateX(100%) scale($scale-carrousel-l);
-      z-index: 5;
-    }
-
-    & #shadow-1 {
-      opacity: $opacity-primary;
-    }
-
-    & #song-2 {
-      transform: translateX(100%) scale($scale-carrousel-m);
-      z-index: 4;
-    }
-
-    & #shadow-2 {
-      opacity: $opacity-secondary;
-    }
-
-    & #song-3 {
-      transform: translateX(100%) scale($scale-carrousel-s);
-      z-index: 3;
-    }
-
-    & #shadow-3 {
-      opacity: $opacity-tertiary;
-    }
-
-    & #song-5 {
-      transform: translateX(-150%) scale($scale-carrousel-m);
-      z-index: 4;
-    }
-
-    & #shadow-5 {
-      opacity: $opacity-secondary;
-    }
-
-    & #song-4 {
-      transform: translateX(-150%) scale($scale-carrousel-s);
-      z-index: 3;
-    }
-
-    & #shadow-4 {
-      opacity: $opacity-tertiary;
-    }
-  }
-
-  &:hover ~ .cards #shadow-1 {
-    opacity: $opacity-tertiary;
-
-    & + .card__hover {
-      transform: translateY(100%);
-      z-index: 15;
-    }
-  }
-}
-
-// 2 Checked
-#item-2:checked {
-  & ~ .cards {
-    & #song-2 {
-      z-index: 5;
-      transform: translateX(50%) scale($scale-carrousel-l);
-    }
-
-    & #shadow-2 {
-      opacity: $opacity-primary;
-    }
-
-    & #song-1,
-    & #song-3 {
-      z-index: 4;
-      transform: translateX(50%) scale($scale-carrousel-m);
-    }
-
-    & #shadow-1,
-    & #shadow-3 {
-      opacity: $opacity-secondary;
-    }
-
-    & #song-4,
-    & #song-5 {
-      z-index: 3;
-      transform: translateX(50%) scale($scale-carrousel-s);
-    }
-
-    & #shadow-4,
-    & #shadow-5 {
-      opacity: $opacity-tertiary;
-    }
-
-    & #song-5 {
-      transform: translateX(-200%) scale($scale-carrousel-s);
-    }
-  }
-
-  &:hover ~ .cards #shadow-2 {
-    opacity: $opacity-tertiary;
-
-    & + .card__hover {
-      transform: translateY(100%);
-      z-index: 15;
-    }
-  }
-}
-
-// 3 Checked
-#item-3:checked {
-  & ~ .cards {
-    & #song-1 {
-      transform: translatex(0) scale($scale-carrousel-s);
-    }
-
-    & #shadow-1 {
-      opacity: $opacity-tertiary;
-    }
-
-    & #song-2 {
-      transform: translatex(0) scale($scale-carrousel-m);
-    }
-
-    & #shadow-2 {
-      opacity: $opacity-secondary;
-    }
-
-    & #song-3 {
-      transform: translatex(0) scale($scale-carrousel-l);
-    }
-
-    & #shadow-3 {
-      opacity: $opacity-primary;
-    }
-
-    & #song-4 {
-      transform: translatex(0) scale($scale-carrousel-m);
-    }
-
-    & #shadow-4 {
-      opacity: $opacity-secondary;
-    }
-
-    & #song-5 {
-      transform: translatex(0) scale($scale-carrousel-s);
-    }
-
-    & #shadow-5 {
-      opacity: $opacity-tertiary;
-    }
-  }
-
-  &:hover ~ .cards #shadow-3 {
-    opacity: $opacity-tertiary;
-
-    & + .card__hover {
-      transform: translateY(100%);
-      z-index: 15;
-    }
-  }
-}
-
-// 4 Checked
-#item-4:checked {
-  & ~ .cards {
-    & #song-4 {
-      z-index: 5;
-      transform: translateX(-50%) scale($scale-carrousel-l);
-    }
-
-    & #shadow-4 {
-      opacity: $opacity-primary;
-    }
-
-    & #song-3,
-    & #song-5 {
-      z-index: 4;
-      transform: translateX(-50%) scale($scale-carrousel-m);
-    }
-
-    & #shadow-3,
-    & #shadow-5 {
-      opacity: $opacity-secondary;
-    }
-
-    & #song-1,
-    & #song-2 {
-      z-index: 3;
-      transform: translateX(-50%) scale($scale-carrousel-s);
-    }
-
-    & #shadow-1,
-    & #shadow-2 {
-      opacity: $opacity-tertiary;
-    }
-
-    & #song-1 {
-      transform: translateX(200%) scale($scale-carrousel-s);
-    }
-  }
-
-  &:hover ~ .cards #shadow-4 {
-    opacity: $opacity-tertiary;
-
-    & + .card__hover {
-      transform: translateY(100%);
-      z-index: 15;
-    }
-  }
-}
-
-// 5 Checked
-#item-5:checked {
-  & ~ .cards {
-    & #song-5 {
-      transform: translateX(-100%) scale($scale-carrousel-l);
-      z-index: 5;
-    }
-
-    #shadow-5 {
-      opacity: $opacity-primary;
-    }
-
-    & #song-4 {
-      transform: translateX(-100%) scale($scale-carrousel-m);
-      z-index: 4;
-    }
-
-    & #shadow-4 {
-      opacity: $opacity-secondary;
-    }
-
-    & #song-3 {
-      transform: translateX(-100%) scale($scale-carrousel-s);
-      z-index: 3;
-    }
-
-    & #shadow-3 {
-      opacity: $opacity-tertiary;
-    }
-
-    & #song-1 {
-      transform: translateX(150%) scale($scale-carrousel-m);
-      z-index: 4;
-    }
-
-    & #shadow-1 {
-      opacity: $opacity-secondary;
-    }
-
-    & #song-2 {
-      transform: translateX(150%) scale($scale-carrousel-s);
-      z-index: 3;
-    }
-
-    & #shadow-2 {
-      opacity: $opacity-tertiary;
-    }
-  }
-
-  &:hover ~ .cards #shadow-5 {
-    opacity: $opacity-tertiary;
-
-    & + .card__hover {
-      transform: translateY(100%);
-      z-index: 15;
+      cursor: pointer;
     }
   }
 }

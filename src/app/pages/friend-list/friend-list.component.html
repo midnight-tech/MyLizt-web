@@ -6,8 +6,8 @@
   </div>
 
   <div class="pagination pagination--top">
-    <app-pagination pageCalled="friendList" (visibleContentAnime)="anime = $event" (visibleContentBook)="book = $event"
-      (visibleContentSerie)="serie = $event" [type]="type" [friendId]="friendId" [completePage]="false">
+    <app-pagination pageCalled="friendList" [type]="type" [friendId]="friendId" [atualPage]="page"
+      [totalPage]="totalPage" [completePage]="false">
     </app-pagination>
   </div>
 
@@ -25,8 +25,8 @@
       </app-card>
     </div>
   </div>
-  <div *ngIf="!loadingService.isLoading && type == 'ANIME' && anime.length == 0">
-    This friend don't have any anime in his list, recommend some content to him
+  <div *ngIf="!loadingService.isLoading && type == 'ANIME' && anime.length == 0" class="list list__empty">
+    <app-empty></app-empty>
   </div>
   <div *ngIf="!loadingService.isLoading && type == 'BOOK'" class="list">
     <div class="list__card" *ngFor="let content of book">
@@ -35,8 +35,8 @@
       </app-card>
     </div>
   </div>
-  <div *ngIf="!loadingService.isLoading && type == 'BOOK' && book.length == 0">
-    This friend don't have any book in his list, recommend some content to him
+  <div *ngIf="!loadingService.isLoading && type == 'BOOK' && book.length == 0" class="list list__empty">
+    <app-empty></app-empty>
   </div>
   <div *ngIf="!loadingService.isLoading && type == 'SERIE'" class="list">
     <div class="list__card" *ngFor="let content of serie">
@@ -45,11 +45,13 @@
       </app-card>
     </div>
   </div>
-  <div *ngIf="!loadingService.isLoading && type == 'SERIE' && serie.length == 0">
-    This friend don't have any serie in his list, recommend some content to him
+  <div *ngIf="!loadingService.isLoading && type == 'SERIE' && serie.length == 0" class="list list__empty">
+    <app-empty></app-empty>
   </div>
 
   <div class="pagination pagination--bottom">
-    <!-- <app-pagination [type]="type" pageCalled="friendList"></app-pagination> -->
+    <app-pagination pageCalled="friendList" [type]="type" [friendId]="friendId" [atualPage]="page"
+      [totalPage]="totalPage" [completePage]="false">
+    </app-pagination>
   </div>
 </div>

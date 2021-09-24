@@ -52,9 +52,11 @@
     </span>
   </div>
   <div class="info">
-    <span class="info__type" *ngFor="let studio of anime.studios; last as isLast">Studios: <span class="info__value">
+    <span class="info__type">Studios:
+      <span class="info__value" *ngFor="let studio of anime.studios; last as isLast">
         {{ studio.name }}<span *ngIf="!isLast">,</span>
-      </span></span>
+      </span>
+    </span>
   </div>
   <div class="info">
     <span class="info__type">Sources: <span class="info__value">{{ anime.source }}</span></span>
@@ -80,7 +82,8 @@
     </div>
     <div class="info">
       <span class="info__type">Adaption:
-        <span class="info__value" *ngFor="let adaptor of anime.related.Adaptation; last as isLast">
+        <span class="info__value" [ngClass]="{ 'hoverElement' : adaptor.type == 'anime' }"
+          *ngFor="let adaptor of anime.related.Adaptation; last as isLast" (click)="navigateTopage(adaptor)">
           {{ adaptor.name }}<span *ngIf="!isLast">,</span>
         </span>
       </span>
@@ -90,7 +93,8 @@
     <div class="info">
       <span class="info__type">
         side story:
-        <span class="info__value" *ngFor="let sideStory of anime.related.SideStory; last as isLast">
+        <span class="info__value" [ngClass]="{ 'hoverElement' : sideStory.type == 'anime' }"
+          *ngFor="let sideStory of anime.related.SideStory; last as isLast" (click)="navigateTopage(sideStory)">
           {{ sideStory.name }}<span *ngIf="!isLast">,</span>
         </span>
       </span>
@@ -100,8 +104,20 @@
     <div class="info">
       <span class="info__type">
         Sequel:
-        <span class="info__value" *ngFor="let sequel of anime.related.Sequel; last as isLast">
+        <span class="info__value" [ngClass]="{ 'hoverElement' : sequel.type == 'anime' }"
+          *ngFor="let sequel of anime.related.Sequel; last as isLast" (click)="navigateTopage(sequel)">
           {{ sequel.name }}<span *ngIf="!isLast">,</span>
+        </span>
+      </span>
+    </div>
+  </div>
+  <div *ngIf="anime.related.Prequel">
+    <div class="info">
+      <span class="info__type">
+        Prequel:
+        <span class="info__value" [ngClass]="{ 'hoverElement' : prequel.type == 'anime' }"
+          *ngFor="let prequel of anime.related.Prequel; last as isLast" (click)="navigateTopage(prequel)">
+          {{ prequel.name }}<span *ngIf="!isLast">,</span>
         </span>
       </span>
     </div>
@@ -111,7 +127,8 @@
     <div class="info">
       <span class="info__type">
         Other:
-        <span class="info__value" *ngFor="let other of anime.related.Other; last as isLast">
+        <span class="info__value" [ngClass]="{ 'hoverElement' : other.type == 'anime' }"
+          *ngFor="let other of anime.related.Other; last as isLast" (click)="navigateTopage(other)">
           {{ other.name }}<span *ngIf="!isLast">,</span>
         </span></span>
     </div>
@@ -166,7 +183,8 @@
   </div>
   <div class="info">
     <span class="info__type">
-      Producers:<span class="info__value" *ngFor="let created of serie.created_by; last as isLast">
+      Producers:
+      <span class="info__value" *ngFor="let created of serie.created_by; last as isLast">
         {{ created.name }}<span *ngIf="!isLast">,</span>
       </span>
     </span>

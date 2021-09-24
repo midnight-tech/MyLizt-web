@@ -1,0 +1,9 @@
+<div class="pop-up">
+  <div class="pop-up__container pop-up__fade" [ngClass]="{ 'pop-up__show': popUpTrigger }">
+    <span class="pop-up__message">{{ popUpMessage }}</span>
+
+    <svg class="pop-up__icon" (click)="dismissPopUp()">
+      <use xlink:href="assets/symbol-defs.svg#icon-clear"></use>
+    </svg>
+  </div>
+</div>

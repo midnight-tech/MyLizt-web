@@ -4,32 +4,42 @@
   </div>
 
   <div class="pagination pagination--top">
-    <app-pagination pageCalled="search" (visibleListAnime)="anime = $event" (visibleListBook)="book = $event"
-      (visibleListSerie)="serie = $event" [query]="homeContext.query" [type]="homeContext.searchType"></app-pagination>
+    <app-pagination pageCalled="search" [type]="type" [keySearch]="keySearch" [atualPage]="page"
+      [totalPage]="totalPage">
+    </app-pagination>
   </div>
 
-  <div class="list">
+  <div *ngIf="!softLoading" class="list">
     <div class="list__card" *ngFor="let content of anime">
       <app-card [anime]="content"></app-card>
     </div>
-    <div *ngIf="homeContext.searchType == 'ANIME' && anime.length == 0">
-      any anime found
+    <div *ngIf="type == 'ANIME' && anime.length == 0" class="list list_empty">
+      <app-empty></app-empty>
     </div>
     <div class="list__card" *ngFor="let content of book">
       <app-card [book]="content"></app-card>
     </div>
-    <div *ngIf="homeContext.searchType == 'BOOK' && book.length == 0">
-      any book found
+    <div *ngIf="type == 'BOOK' && book.length == 0" class="list list_empty">
+      <app-empty></app-empty>
     </div>
     <div class="list__card" *ngFor="let content of serie">
       <app-card [serie]="content"></app-card>
     </div>
-    <div *ngIf="homeContext.searchType == 'SERIE' && serie.length == 0">
-      any serie found
+    <div *ngIf="type == 'SERIE' && serie.length == 0" class="list list_empty">
+      <app-empty></app-empty>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="softLoading" class="list">
+    <div class="list__card" *ngFor="let content of loadingArray">
+      <app-card pageCall="loading" [loading]="softLoading" [lookMyList]=false></app-card>
     </div>
   </div>
 
   <div class="pagination pagination--bottom">
-    <!-- <app-pagination pageCalled="search"></app-pagination> -->
+    <app-pagination pageCalled="search" [type]="type" [keySearch]="keySearch" [atualPage]="page"
+      [totalPage]="totalPage">
+    </app-pagination>
   </div>
 </div>

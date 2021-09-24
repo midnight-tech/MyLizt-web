@@ -116,8 +116,8 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="searchIndex == 0 && animes.length == 0">
-              any anime found
+            <div *ngIf="searchIndex == 0 && animes.length == 0" class="search__no-result">
+              <p>No result found...</p>
             </div>
 
             <div *ngFor="let serie of series; index as i">
@@ -165,8 +165,8 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="searchIndex == 1 && series.length == 0">
-              any serie found
+            <div *ngIf="searchIndex == 1 && series.length == 0" class="search__no-result">
+              <p>No result found...</p>
             </div>
 
             <div *ngFor="let book of books; index as i">
@@ -205,8 +205,8 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="searchIndex == 2 && books.length == 0">
-              any book found
+            <div *ngIf="searchIndex == 2 && books.length == 0" class="search__no-result">
+              <p>No result found...</p>
             </div>
           </div>
         </div>
@@ -268,8 +268,14 @@
                 <span class="account__notification__highlight"
                   (click)="navigateToDetail(notification.data.idContent!,notification.data.contentType!)">{{notification.message.contentName}}</span>
               </span>
-              <img (click)="notificationService.deleteNotification(notification)" src="../../../assets/icon-logout.svg"
-                alt="icon-logout" class="account__notification__buttons--delete" />
+
+              <div class="account__notification__buttons">
+                <svg class="account__notification__buttons--delete"
+                  (click)="notificationService.deleteNotification(notification)">
+                  <use href="assets/symbol-defs.svg#icon-clear"></use>
+                </svg>
+              </div>
+
             </div>
           </div>
         </div>
@@ -284,7 +290,7 @@
           <span class="account__user__name__text" [title]="username">{{ username }}</span>
         </div>
         <a class="button" aria-haspopup="true" aria-controls="dropdown-menu6">
-          <span>#{{ authService.userFirestore?.applicationUserId }}</span>
+          <span (click)="copyToClipboard()">#{{ authService.userFirestore?.applicationUserId }}</span>
         </a>
       </div>
       <!-- Conteudo dropdown account -->
@@ -309,3 +315,4 @@
     </div>
   </div>
 </div>
+<app-pop-up #popUpTopBar></app-pop-up>

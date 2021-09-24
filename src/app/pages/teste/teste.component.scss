@@ -1,0 +1,55 @@
+@import "~swiper/swiper.min.css";
+
+.pai {
+  display: flex;
+  flex-direction: row;
+  max-width: 100vw;
+  min-height: 100vh;
+}
+
+.menu {
+  display: flex;
+  min-width: 18vw;
+  min-height: 100%;
+  background-color: yellow;
+}
+
+.mini-container {
+  display: flex;
+  flex-direction: column;
+  width: calc(100vw - 18vw);
+  height: 100%;
+  position: relative;
+}
+
+.top-bar {
+  display: flex;
+  height: 5rem;
+  background-color: green;
+  // width: 100%;
+}
+
+.swiper {
+  display: flex;
+  width: 100%;
+  // width: 100%;
+  background-color: orange;
+  height: 100%;
+}
+
+.teste {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: red;
+}
+
+.swiper-slide {
+  width: 30px;
+  height: 400px;
+  background-color: blue;
+}
+
+.texto {
+  height: 500px;
+}

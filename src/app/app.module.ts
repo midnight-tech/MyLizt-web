@@ -46,6 +46,20 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { LoadingService } from './services/loading/loading.service';
 import { CompleteScreenLoadComponent } from './components/completeScreenLoad/completeScreenLoad.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { SwiperModule } from 'ngx-swiper-wrapper';
+import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
+import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+import { TesteComponent } from './pages/teste/teste.component';
+import { PopUpComponent } from './components/pop-up/pop-up.component';
+import { EmptyComponent } from './components/empty/empty.component';
+import { RecAuxService } from './services/rec-aux/rec-aux-service.service';
+
+const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
+  slidesPerView: 3.5,
+  spaceBetween: 30,
+  freeMode: true,
+  loop: true,
+};
 
 const maskConfigFunction: () => Partial<IConfig> = () => {
   return {
@@ -58,22 +72,22 @@ const routes: Routes = [
     path: '',
     component: LandingPageComponent,
     pathMatch: 'full',
-    canActivate: [UnloggedShieldService],
+    // canActivate: [UnloggedShieldService],
   },
   {
     path: 'signin',
     component: SignInComponent,
-    canActivate: [UnloggedShieldService],
+    // canActivate: [UnloggedShieldService],
   },
   {
     path: 'signup',
     component: SignUpComponent,
-    canActivate: [UnloggedShieldService],
+    // canActivate: [UnloggedShieldService],
   },
   {
     path: 'verification',
     component: VerificationComponent,
-    canActivate: [UnloggedShieldService],
+    // canActivate: [UnloggedShieldService],
   },
   {
     path: 'home',
@@ -85,7 +99,7 @@ const routes: Routes = [
         component: HomeCarrouselComponent,
       },
       {
-        path: 'search',
+        path: 'search/:keySearch/:type/:page',
         component: HomeSearchComponent,
       },
       {
@@ -93,23 +107,23 @@ const routes: Routes = [
         component: DetailComponent,
       },
       {
-        path: 'my-list/:type',
+        path: 'my-list/:type/:page',
         component: MyListComponent,
       },
       {
-        path: 'catalogo/:type',
+        path: 'catalogo/:type/:page',
         component: CatalogoComponent,
       },
       {
-        path: 'friends',
+        path: 'friends/:page',
         component: FriendsComponent,
       },
       {
-        path: 'friend-list/:friendId/:type',
+        path: 'friend-list/:friendId/:type/:page',
         component: FriendListComponent,
       },
       {
-        path: 'recommendations/:type',
+        path: 'recommendations/:type/:page',
         component: MyRecommendationsComponent,
       },
     ],
@@ -145,7 +159,10 @@ const routes: Routes = [
     MyRecommendationsComponent,
     AutoFocusDirectiveDirective,
     ContentCompletedComponent,
-    CompleteScreenLoadComponent
+    CompleteScreenLoadComponent,
+    TesteComponent,
+    PopUpComponent,
+    EmptyComponent,
   ],
   imports: [
     BrowserModule,
@@ -156,11 +173,12 @@ const routes: Routes = [
     AngularFirestoreModule.enablePersistence(),
     NgxMaskModule.forRoot(maskConfigFunction),
     NgxSkeletonLoaderModule.forRoot(),
+    SwiperModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
   exports: [RouterModule],
@@ -173,6 +191,11 @@ const routes: Routes = [
     UserService,
     NotificationService,
     LoadingService,
+    RecAuxService,
+    {
+      provide: SWIPER_CONFIG,
+      useValue: DEFAULT_SWIPER_CONFIG,
+    },
   ],
   bootstrap: [AppComponent],
 })

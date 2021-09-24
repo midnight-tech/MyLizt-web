@@ -1,4 +1,5 @@
 @import "../../sass/abstract/variables";
+@import "../../sass/base/utilities";
 
 .menu {
   display: flex;
@@ -62,7 +63,7 @@
     text-decoration: none;
     text-transform: uppercase;
     margin-bottom: 0;
-    display: flex;
+    // display: flex;
     align-self: baseline;
     cursor: pointer;
 
@@ -76,32 +77,18 @@
     font-size: 1.6rem;
     margin-right: 1rem;
     cursor: pointer;
-
-    // truncate string
-    // width-container-grid - 2xpaddinng-content - width-icon
-    max-width: calc(18vw - 7rem);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    @media only screen and (max-width: $bp-1360) {
-      max-width: calc(25vw - 7rem);
-    }
-
-    @media only screen and (max-width: $bp-1000) {
-      max-width: calc(45vw - 7rem);
-    }
-
-    @media only screen and (max-width: $bp-600) {
-      max-width: calc(65vw - 7rem);
-    }
-
-    @media only screen and (max-width: $bp-340) {
-      max-width: calc(80vw - 7rem);
-    }
+    margin-left: 1rem;
 
     &:hover {
       color: $primary1;
+    }
+
+    &--empty {
+      cursor: default;
+
+      &:hover {
+        color: $white;
+      }
     }
   }
 

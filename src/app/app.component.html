@@ -1,1 +1,4 @@
-<router-outlet></router-outlet>
+<router-outlet *ngIf="authenticationService.authLoaded"></router-outlet>
+<!-- <h1 *ngIf="!authenticationService.authLoaded">Loading...</h1> -->
+
+<!-- <app-teste></app-teste> -->

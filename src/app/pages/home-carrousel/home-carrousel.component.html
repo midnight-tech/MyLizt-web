@@ -1,8 +1,8 @@
 <div class="flex-container">
   <h1 class="title" (click)="navigateToCatalogo('anime')">Anime</h1>
-  <app-carrousel type="anime" [contents]="anime" ></app-carrousel>
+  <app-carrousel *ngIf="animeLoaded" class="full-width" type="anime" [contents]="anime"></app-carrousel>
   <h1 class="title" (click)="navigateToCatalogo('serie')">Serie</h1>
-  <app-carrousel type="serie" [contents]="serie" ></app-carrousel>
+  <app-carrousel *ngIf="serieLoaded" class="full-width" type="serie" [contents]="serie"></app-carrousel>
   <h1 class="title" (click)="navigateToCatalogo('book')">Book</h1>
-  <app-carrousel type="book" [contents]="book"></app-carrousel>
+  <app-carrousel *ngIf="bookLoaded" class="full-width" type="book" [contents]="book"></app-carrousel>
 </div>

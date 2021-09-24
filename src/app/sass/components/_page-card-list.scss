@@ -73,6 +73,11 @@
     grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
   }
 
+  &__empty {
+    align-items: center;
+    justify-content: center;
+  }
+
   &__card {
     display: grid;
     width: auto;

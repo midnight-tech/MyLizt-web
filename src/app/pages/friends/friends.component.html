@@ -10,14 +10,15 @@
   </div>
 
   <div class="pagination pagination--top">
-    <app-pagination pageCalled="friend" (visibleFriend)="friends = $event" [update]="update"></app-pagination>
+    <app-pagination pageCalled="friend" [atualPage]="page" [totalPage]="totalPage"></app-pagination>
   </div>
 
-  <div class="friends">
+  <div class="friends" [ngClass]="{'friends--center': friends.length == 0}">
     <div class="friends__container" *ngFor="let friend of friends">
       <div class="friends__user">
         <span class="friends__user__name">{{ friend.user.username }}</span>
-        <span class="friends__user__id">#{{ friend.user.applicationUserId }}</span>
+        <span class="friends__user__id" (click)="copyToClipboard(friend.user.applicationUserId)">#{{
+          friend.user.applicationUserId }}</span>
       </div>
       <span class="friends__category friends__category--anime"
         (click)="redirectToFriendList(friend.user.applicationUserId, 'ANIME')">Anime ({{friend.aniCount}})</span>
@@ -33,8 +34,9 @@
         </svg>
       </div>
     </div>
-    <div *ngIf="friends.length == 0">
-      you don't have any friends
+
+    <div *ngIf="friends.length == 0" class="friends__empty">
+      <app-empty></app-empty>
     </div>
   </div>
 
@@ -63,4 +65,8 @@
       </div>
     </form>
   </div>
+  <div class="pagination pagination--botton">
+    <app-pagination pageCalled="friend" [atualPage]="page" [totalPage]="totalPage"></app-pagination>
+  </div>
+  <app-pop-up #popUpFriends></app-pop-up>
 </div>

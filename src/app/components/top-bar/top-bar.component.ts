@@ -5,6 +5,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -24,6 +25,7 @@ import { HomeContextService } from 'src/app/services/home-context/home.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { SerieService } from 'src/app/services/serie/serie.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { PopUpComponent } from '../pop-up/pop-up.component';
 
 @Component({
   selector: 'app-top-bar',
@@ -62,6 +64,8 @@ export class TopBarComponent implements OnInit, OnChanges {
   timeout?: NodeJS.Timeout;
   username = 'USERNAME';
   searchIsFocused = false;
+  @ViewChild("popUpTopBar") popUpMenu?: PopUpComponent;
+
 
   constructor(
     public animeService: AnimeService,
@@ -93,6 +97,12 @@ export class TopBarComponent implements OnInit, OnChanges {
     this.username = this.authService.user?.displayName!!;
   }
 
+  async copyToClipboard() {
+    if (this.authService.userFirestore == null) return;
+    await navigator.clipboard.writeText(this.authService.userFirestore.applicationUserId)
+    this.popUpMenu?.showPopUp("text copied to clipboard")
+  }
+
   searchEvent() {
     this.searchIsFocused = true;
     if (this.searchField.value.length < 3) {
@@ -113,9 +123,8 @@ export class TopBarComponent implements OnInit, OnChanges {
   totalSearch() {
     if (this.searchField.value.length >= 3) {
       this.isActiveSearch = false;
-      this.homeContext.query = this.searchField.value;
       this.homeContext.searchType = this.searchOptions[this.searchIndex];
-      this.router.navigateByUrl('home/search');
+      this.router.navigate(['home', 'search', this.searchField.value, this.searchOptions[this.searchIndex].toLocaleLowerCase(), 1]);
     }
   }
 
@@ -184,7 +193,7 @@ export class TopBarComponent implements OnInit, OnChanges {
 
   navigateToFriends() {
     this.isActiveAccount = false;
-    this.router.navigate(['home', 'friends']);
+    this.router.navigate(['home', 'friends', 1]);
   }
 
   logout() {

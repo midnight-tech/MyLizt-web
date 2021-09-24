@@ -1,0 +1,22 @@
+@import "../../sass/abstract/variables";
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.image {
+  height: 100%;
+  width: 100%;
+}
+
+.text {
+  margin-top: 4rem;
+  font-size: $font-size-extra-large;
+  color: $white;
+
+  @media only screen and (max-width: $bp-500) {
+    text-align: center;
+  }
+}

@@ -84,7 +84,7 @@ export class MenuLeftComponent implements OnInit, OnDestroy {
     if (this.loading.isLoading) {
       return;
     }
-    this.router.navigate(['home', 'my-list', type], { replaceUrl: true });
+    this.router.navigate(['home', 'my-list', type, 1], { replaceUrl: true });
   }
 
   navigateToMyRecommendation(type: string) {
@@ -92,7 +92,7 @@ export class MenuLeftComponent implements OnInit, OnDestroy {
     if (this.loading.isLoading) {
       return;
     }
-    this.router.navigate(['home', 'recommendations', type], {
+    this.router.navigate(['home', 'recommendations', type, 1], {
       replaceUrl: true,
     });
   }

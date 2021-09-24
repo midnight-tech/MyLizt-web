@@ -12,9 +12,13 @@ import { CarrousselEntry } from 'src/app/data/interfaces'
 })
 export class HomeCarrouselComponent implements OnInit {
 
-  anime: CarrousselEntry [] = []
+  anime: CarrousselEntry[] = []
   serie: CarrousselEntry[] = []
   book: CarrousselEntry[] = []
+  animeLoaded: boolean = false
+  serieLoaded: boolean = false
+  bookLoaded: boolean = false
+
 
   constructor(
     private router: Router,
@@ -33,6 +37,7 @@ export class HomeCarrouselComponent implements OnInit {
           id
         })
       })
+      this.animeLoaded = true
     })
     this.serieService.getCarroussel().then((value) => {
       value.map((serie) => {
@@ -45,6 +50,7 @@ export class HomeCarrouselComponent implements OnInit {
           id
         })
       })
+      this.serieLoaded = true
     })
     this.bookService.getHomeCarroussel().then((value) => {
       value.map((book) => {
@@ -57,6 +63,7 @@ export class HomeCarrouselComponent implements OnInit {
           id
         })
       })
+      this.bookLoaded = true
     })
   }
 
@@ -64,7 +71,7 @@ export class HomeCarrouselComponent implements OnInit {
   }
 
   navigateToCatalogo(type: string) {
-    this.router.navigate(['home', 'catalogo', type])
+    this.router.navigate(['home', 'catalogo', type, 1])
   }
 
 }

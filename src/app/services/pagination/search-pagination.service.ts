@@ -56,6 +56,6 @@ export class SearchPaginationService {
       this.totalPage = result.lastPage;
       this.lastPageSerie = Math.ceil(page / 5);
     }
-    return this.seriePages[(page - 1) % 5];
+    return this.seriePages[(page - 1) % 5] ?? [];
   }
 }

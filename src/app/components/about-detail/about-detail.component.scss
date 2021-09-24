@@ -39,3 +39,8 @@
     margin-right: 0;
   }
 }
+
+.hoverElement:hover {
+  cursor:  pointer;
+  color: $primary1; 
+}
