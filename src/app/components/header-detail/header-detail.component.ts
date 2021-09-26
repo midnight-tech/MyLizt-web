@@ -142,6 +142,9 @@ export class HeaderDetailComponent implements OnInit {
         if (value.exists) {
           this.mycontent = value.data()!;
           this.mycontent.ref = value.ref;
+          if (this.type == 'SERIE') {
+            this.seasonAtual = this.mycontent.season ?? 0
+          }
         }
       });
   }
