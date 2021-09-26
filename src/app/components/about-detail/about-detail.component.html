@@ -167,6 +167,12 @@
     <span class="info__type">Type: <span class="info__value"> {{ serie.type }} </span></span>
   </div>
   <div class="info">
+    <span class="info__type">Seasons:
+      <span class="info__value">
+        {{ serie.number_of_seasons }}
+      </span></span>
+  </div>
+  <div class="info">
     <span class="info__type">Episodes:
       <span class="info__value">
         {{ serie.seasons[season].episode_count }}
