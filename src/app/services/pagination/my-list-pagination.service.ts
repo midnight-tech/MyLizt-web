@@ -80,9 +80,9 @@ export class MyListPaginationService {
       this.serieAuxPage.push(response)
       return { result: this.serieAuxPage[page - 1], totalPage: this.totalPage }
     }
-    let firstElementOfPage = this.serieAuxPage[page - 1][0].content
-    const response = await this.listService.getAllSerieContent(firstElementOfPage)
-    this.serieAuxPage[page - 1] = response
+    // let firstElementOfPage = this.serieAuxPage[page - 1][0].content
+    // const response = await this.listService.getAllSerieContent(firstElementOfPage)
+    // this.serieAuxPage[page - 1] = response
     return { result: this.serieAuxPage[page - 1], totalPage: this.totalPage }
   }
 
