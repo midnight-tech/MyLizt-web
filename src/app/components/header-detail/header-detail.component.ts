@@ -52,6 +52,14 @@ export class HeaderDetailComponent implements OnInit {
     });
   }
 
+  ngOnInit() {
+    this.isItInMyList();
+    if (this.type == 'SERIE') {
+      this.seasonAtualEmitter.emit(0);
+      return;
+    }
+  }
+
   async copyToClipBoard() {
     let title = "";
     if (this.anime) title = this.anime.title
@@ -99,13 +107,7 @@ export class HeaderDetailComponent implements OnInit {
       });
   }
 
-  ngOnInit() {
-    this.isItInMyList();
-    if (this.type == 'SERIE') {
-      this.seasonAtualEmitter.emit(0);
-      return;
-    }
-  }
+
 
   changeSeason(season: number) {
     if (season >= 0 && season <= this.serie.number_of_seasons) {
@@ -142,6 +144,9 @@ export class HeaderDetailComponent implements OnInit {
         if (value.exists) {
           this.mycontent = value.data()!;
           this.mycontent.ref = value.ref;
+          if (this.type == 'SERIE') {
+            this.seasonAtual = this.mycontent.season ?? 0
+          }
         }
       });
   }
@@ -196,82 +201,40 @@ export class HeaderDetailComponent implements OnInit {
       }
       value = Number.parseFloat(this.episodeInputControl.value);
     }
-    if (Number.isNaN(value) || Number.isInteger(value) == false) {
-      // Usuario inseriu algo que não é um numero ou um numero inteiro
+    if (this.isUserHasInsertedNumber(value)) {
       return;
     }
     if (value < 0) {
-      // valor negativo
       return;
     }
     if (this.type == 'SERIE') {
-      // serie por causa das temporadas precisa de uma tratativa diferente
-      if (
-        this.mycontent?.season == this.serie.seasons.length - 1 &&
-        this.mycontent.mark ==
-        this.serie.seasons[this.mycontent.season].episode_count
-      ) {
-        this.openCompleteWatched = true;
-        return;
-      }
-      if (
-        value == this.mycontent?.mark &&
-        this.seasonAtual == this.mycontent.season
-      ) {
-        // usuario não alterou os campos
-        return;
-      }
-      if (value > this.serie.seasons[this.seasonAtual].episode_count) {
-        // não fazer nada, episodio acima do limite da temporada
-        return;
-      }
-
-      let contentCopy = this.mycontent!;
-      contentCopy.mark = value;
-      contentCopy.season = this.seasonAtual;
-      contentCopy.watched = false;
-      this.listService.editContent(contentCopy).then((value) => {
-        this.mycontent = value;
-        if (
-          this.mycontent.season == this.serie.seasons.length - 1 &&
-          this.mycontent.mark ==
-          this.serie.seasons[this.mycontent.season].episode_count
-        ) {
-          this.openCompleteWatched = true;
-        }
-      });
+      this.setEpisodeAndSeasonInSerie(value)
       return;
     }
+    this.setAnimeEpisodeOrBookPage(value)
+  }
 
-    if (
-      (this.mycontent?.mark == this.anime?.episodes &&
-        value > this.anime?.episodes) ||
-      (this.mycontent?.mark == this.book?.volumeInfo.pageCount &&
-        value > this.anime?.episodes)
-    ) {
+  setAnimeEpisodeOrBookPage(mark_number: number) {
+    if (this.isLastEpisodeAnime(mark_number) || this.isLastBookPage(mark_number)) {
       this.openCompleteWatched = true;
       return;
     }
-    // tratativas livros e anime
-    if (value == this.mycontent?.mark) {
-      // Não fazer nada livro serie
+    if (mark_number == this.mycontent?.mark) {
       return;
     }
 
-    if (this.anime && value > this.anime.episodes) {
-      // Não fazer nada, é um anime e o episodio acima do limite
+    if (this.isAnimeEpisodeInValidRange(mark_number)) {
       return;
     }
-    if (this.book && value > this.book.volumeInfo.pageCount) {
-      // Não fazer nada, é um livro e a pagina acima do limite
+    if (this.isBookPageInValidRange(mark_number)) {
       return;
     }
 
     let contentCopy = this.mycontent!;
-    contentCopy.mark = value;
+    contentCopy.mark = mark_number;
     contentCopy.watched = false;
-    this.listService.editContent(contentCopy).then((value) => {
-      this.mycontent = value;
+    this.listService.editContent(contentCopy).then((newContent) => {
+      this.mycontent = newContent;
       if (
         this.mycontent.mark == this.anime?.episodes ||
         this.mycontent.mark == this.book?.volumeInfo.pageCount
@@ -279,6 +242,63 @@ export class HeaderDetailComponent implements OnInit {
         this.openCompleteWatched = true;
       }
     });
+  }
+
+  isAnimeEpisodeInValidRange(episode: number) {
+    return this.anime && this.anime.episodes && episode > this.anime.episodes
+  }
+
+  isBookPageInValidRange(page: number) {
+    return this.book && page > this.book.volumeInfo.pageCount;
+  }
+
+  isLastEpisodeAnime(episode: number) {
+    return this.mycontent?.mark == this.anime?.episodes && episode > this.anime?.episodes
+  }
+
+  isLastBookPage(page: number) {
+    return this.mycontent?.mark == this.book?.volumeInfo.pageCount &&
+      page > this.book?.volumeInfo.pageCount
+  }
+
+  isUserHasInsertedNumber(episode: number) {
+    return Number.isNaN(episode) || Number.isInteger(episode) == false
+  }
+
+  setEpisodeAndSeasonInSerie(markNumberSerie: number) {
+    if (
+      this.isLastEpisodeOfSerie(markNumberSerie)
+    ) {
+      this.openCompleteWatched = true;
+      return;
+    }
+    if (this.isUserNotChangedMarkFieldOfSerie(markNumberSerie)) {
+      return;
+    }
+    if (markNumberSerie > this.serie.seasons[this.seasonAtual].episode_count) {
+      return;
+    }
+
+    let contentCopy = this.mycontent!;
+    contentCopy.mark = markNumberSerie;
+    contentCopy.season = this.seasonAtual;
+    contentCopy.watched = false;
+    this.listService.editContent(contentCopy).then((value) => {
+      this.mycontent = value;
+      if (this.isLastEpisodeOfSerie(markNumberSerie)) {
+        this.openCompleteWatched = true;
+      }
+    });
+  }
+
+  isUserNotChangedMarkFieldOfSerie(mark: number) {
+    return mark == this.mycontent?.mark && this.seasonAtual == this.mycontent.season
+  }
+
+  isLastEpisodeOfSerie(episode: number) {
+    return this.mycontent?.season == this.serie.seasons.length - 1 &&
+      this.mycontent.mark == this.serie.seasons[this.mycontent.season].episode_count &&
+      episode >= this.serie.seasons[this.mycontent.season].episode_count
   }
 
   changeMarkInput() {

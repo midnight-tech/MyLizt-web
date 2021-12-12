@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { BookCatalogo } from 'src/app/data/BookCatalogo';
-import { AnimeCatalogo } from 'src/app/data/CatalogoAnime';
 import { search } from 'src/app/data/interfaces';
 import { SerieCatalogo } from 'src/app/data/SerieCatalogo';
 import { AnimeService } from '../anime/anime.service';
@@ -41,6 +39,9 @@ export class SearchPaginationService {
         let valueBook = await this.bookService.search(query, page);
         return { result: valueBook.content, totalPage: valueBook.lastPage };
       case 'SERIE':
+        if(page == 1){
+          this.cleanPage();
+        }
         let valueSerie = await this.seriePageManager(query, page);
         return { result: valueSerie, totalPage: this.totalPage };
     }
