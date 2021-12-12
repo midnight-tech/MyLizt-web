@@ -1,24 +1,117 @@
-<!-- <div class="container-sm">100% wide until small breakpoint</div>
-<div class="container-md">100% wide until medium breakpoint</div>
-<div class="container-lg">100% wide until large breakpoint</div>
-<div class="container-xl">100% wide until extra large breakpoint</div>
-<div class="container-xxl">100% wide until extra extra large breakpoint</div>
-<div class="container-fluid">...</div> -->
-
-<header class="container-fluid header">
+<header class="header">
   <nav class="navbar header__nav">
     <img class="header__brand" src="../../../assets/logo.svg" />
-    <ul class="nav justify-content-end">
+    <ul class="nav justify-content-end ">
       <li class="nav-item">
-        <a class="nav-link btn btn-outline-primary" [routerLink]="['signin']"
-          >Sign In</a
-        >
+        <a class="nav-link btn btn-outline-primary" [routerLink]="['signin']">Sign In</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link btn btn-outline-primary" [routerLink]="['signup']"
-          >Sign Up</a
-        >
+        <a class="nav-link btn btn-outline-primary" [routerLink]="['signup']">Sign Up</a>
       </li>
     </ul>
   </nav>
+
+  <div class="header__title">
+    <div class="header__title--container">
+      <h1 class="header__title__text">Don't forget where you left off...</h1>
+      <img src="../../../assets/feather.svg" class="header__title__image">
+    </div>
+  </div>
 </header>
+
+<section class="feature">
+  <figure class="feature__web-vision feature__web-vision--image-1">
+    <img src="../../../assets/Image-Home-1.png" class="feature__image">
+  </figure>
+
+  <figure class="feature__web-vision feature__web-vision--image-2">
+    <img src="../../../assets/Image-Home-2.png" class="feature__image">
+  </figure>
+
+  <figure class="feature__web-vision feature__web-vision--image-3">
+    <img src="../../../assets/Image-Home-3.png" class="feature__image">
+  </figure>
+
+  <div class="feature__web-vision--caption-1">
+    <span class="feature__text">
+      Search for anime, series and book of your choice
+    </span>
+  </div>
+
+  <div class="feature__web-vision--caption-2">
+    <span class="feature__text">
+      List and recommendations can be accessed on the left menu
+    </span>
+  </div>
+</section>
+
+<section class="feature feature--2">
+  <figure class="feature__mobile-vision feature__mobile-vision--image-1">
+    <img src="../../../assets/Image-MyList-1.png" class="feature__image">
+  </figure>
+
+  <figure class="feature__mobile-vision feature__mobile-vision--image-2">
+    <img src="../../../assets/Image-MyList-2.png" class="feature__image">
+  </figure>
+
+  <figure class="feature__mobile-vision feature__mobile-vision--image-3">
+    <img src="../../../assets/Image-MyList-3.png" class="feature__image">
+  </figure>
+
+  <div class="feature__mobile-vision--text-1">
+    <span class="feature__text">
+      Check where you left off in the added content and share it with your friends
+    </span>
+  </div>
+
+  <div class="feature__mobile-vision--text-2">
+    <span class="feature__text">
+      Check the details of the contents on the back of the card
+    </span>
+  </div>
+</section>
+
+
+<section class="feature feature--3">
+  <figure class="feature__web-mobile-vision feature__web-mobile-vision--image-1">
+    <img src="../../../assets/Image-Detail-1.png" class="feature__image">
+  </figure>
+
+  <figure class="feature__web-mobile-vision feature__web-mobile-vision--image-2">
+    <img src="../../../assets/Image-FriendList-1.png" class="feature__image">
+  </figure>
+
+  <figure class="feature__web-mobile-vision feature__web-mobile-vision--image-3">
+    <img src="../../../assets/Image-Detail-2.png" class="feature__image">
+  </figure>
+
+  <figure class="feature__web-mobile-vision feature__web-mobile-vision--image-4">
+    <img src="../../../assets/Image-Detail-3.png" class="feature__image">
+  </figure>
+
+  <figure class="feature__web-mobile-vision feature__web-mobile-vision--image-5">
+    <img src="../../../assets/Image-FriendList-2.png" class="feature__image">
+  </figure>
+
+  <div class="feature__web-mobile-vision--text-1">
+    <span class="feature__text">
+      Check more information about the chosen content
+    </span>
+  </div>
+
+  <div class="feature__web-mobile-vision--text-2">
+    <span class="feature__text">
+      Add the content to your list and share it with your friends
+    </span>
+  </div>
+
+  <div class="feature__web-mobile-vision--text-3">
+    <span class="feature__text">
+      Check what your friends are following
+    </span>
+  </div>
+</section>
+
+<footer class="footer">
+  <app-footer-company></app-footer-company>
+</footer>
